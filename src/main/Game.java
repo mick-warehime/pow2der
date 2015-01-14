@@ -17,8 +17,6 @@ import commands.RotateCommand;
 import gameobjects.ProgressPoint;
 import actors.Player;
 
-//  To doo to doo to do to do do do to doooooo
-
 // Figure out how PlayerGraphics.render is putting the hover flame in the
 // right place... 
 
@@ -32,19 +30,6 @@ import actors.Player;
 //  what happens when a timed door needs to come back and there is an ether object that was put in the way?
 
 // refactor action engine a bit (w.r.t. jump timers, etc.)
-
-
-// TO DO 
-// 1) doors that stay open?, turret switch (panel on wall)
-// 1.5) walls to shoot through but not walk through. walks to walk through but not shoot through
-// 1.5.1) rotate held object (enemy / elevator / platform)
-// 2) start menu, lemming types
-// 3) dog
-// 4) item upgrades, doors to other areas, save points, map travel
-// 0/5) graphics/ animations/particl effects
-//
-// 6) turret shoould update based on a clock not on frame updates // are there other methods that do this?
-
 
 //mick to do
 //
