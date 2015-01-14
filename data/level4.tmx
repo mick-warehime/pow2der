@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="100" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="metroidtiles" tilewidth="16" tileheight="16">
+  <image source="metroidtiles.png" width="1024" height="800"/>
+ </tileset>
+ <tileset firstgid="3201" name="lemmings" tilewidth="32" tileheight="48">
+  <image source="lemmings.png" width="384" height="384"/>
+ </tileset>
+ <layer name="tiles" width="40" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2XWwrCMBRE+2t/dWe6ubozXY39MAgXE2kmrefCHJDgg2aY6VzT5TRN9/VFY3nrWqD6Hqum5+mz0rB/GvZPg+4fXR89X7o+56th/zTo+uj50vU5Xw37p1F8o+orupxvH+6HBt2/LP2l6qPn6/mnQc83S3/p/lH1ZekHXV+WfM/zNF1mzhr7e10/u82clX7/Zelvln7QsH8aWc4HVP/o+rLkS9VH7y/dP/dDg64vS75UffT+2j8NWj+iDlq+MUdavvZPo6aP6h/t/7emj+Jf1OF8t/GrvzHvf61RX/Rx6/vR16n5N2IteyrXKfT2t/X7kfdybz/o+lq/HzmreudfS98e/v17PtfmDOX8Ups7FP+2zh0KFP9q0M4HEXq+tPNfJEu+9q8P90PD81kjS77f/Dta87f9Wuet8t1Rz72t/fZ6jh29D3V9AUArsEGAPgAA
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object type="progressPoint" x="304" y="1488" width="16" height="48">
+   <properties>
+    <property name="index" value="0"/>
+    <property name="x" value="4"/>
+    <property name="y" value="93"/>
+   </properties>
+  </object>
+  <object type="ladder" x="576" y="1008" width="32" height="224"/>
+  <object name="door1" type="multiDoor" x="512" y="1216" width="16" height="64">
+   <properties>
+    <property name="numberOfLocks" value="2"/>
+   </properties>
+  </object>
+  <object type="multiWeightedSwitch" x="576" y="1536" width="16" height="16">
+   <properties>
+    <property name="duration" value="2"/>
+    <property name="index" value="1"/>
+    <property name="prox" value="8"/>
+    <property name="target" value="door1"/>
+   </properties>
+  </object>
+  <object type="multiWeightedSwitch" x="48" y="1536" width="16" height="16">
+   <properties>
+    <property name="duration" value="2"/>
+    <property name="index" value="0"/>
+    <property name="prox" value="8"/>
+    <property name="target" value="door1"/>
+   </properties>
+  </object>
+  <object type="timedPlatform" x="192" y="1280" width="144" height="16">
+   <properties>
+    <property name="duration" value="5"/>
+   </properties>
+  </object>
+  <object type="timedPlatform" x="128" y="1424" width="144" height="16">
+   <properties>
+    <property name="duration" value="5"/>
+   </properties>
+  </object>
+  <object type="etherEnemy" x="256" y="1216" width="32" height="48"/>
+  <object type="spawnLocation" x="368" y="1520" width="32" height="32">
+   <properties>
+    <property name="sx" value="23"/>
+    <property name="sy" value="91"/>
+    <property name="waitTime" value="3"/>
+   </properties>
+  </object>
+  <object type="deadly" x="176" y="1520" width="64" height="32"/>
+ </objectgroup>
+ <layer name="ether" width="40" height="100" opacity="0.25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3UywnCQBSF4QuZRQKCjehOu9JaXNqEdqA1iG+L0J3ZKXgWSkAIWYxjrvJ/cBgCeRy4kzEDAAAAAAAAAAAAAAAAAADejXKzcd52i3ozdZs77ndWt4vjfsw3jvf59gqzftF2i3rsvzje9x/zjeNtvt23a2/nyyTx+6eduOdT94u1+vD71pnZRtkqO2WvHJSjcnoGAJAe5zHwH676V8usWpssgtkypO/1MtC3hqFam9x0z/2L/fB7HrMXLmWAPgAA
+  </data>
+ </layer>
+</map>
