@@ -94,7 +94,7 @@ public class EtherObject extends GameObject implements Etherable {
 	@Override
 	public boolean canPut(){
 		boolean checkTransparent = true;
-		boolean answer = !collisionHandler.lineOfSightCollisionToPlayer(shape,checkTransparent);
+		boolean answer = !collisionHandler.lineOfSightCollisionToPlayer(shape);
 		answer = answer && collisionHandler.canPlaceEtherAt(shape);
 		return answer;
 	}

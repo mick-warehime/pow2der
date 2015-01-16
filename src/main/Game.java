@@ -8,12 +8,10 @@ import org.newdawn.slick.command.MouseButtonControl;
 import org.newdawn.slick.gui.TextField;
 
 import commands.ClimbCommand;
-import commands.FireCommand;
 import commands.InteractCommand;
 import commands.JumpCommand;
 import commands.MoveCommand;
-import commands.RestoreCommand;
-import commands.RotateCommand;
+import controls.GameControls;
 import gameobjects.ProgressPoint;
 import actors.Player;
 
@@ -47,16 +45,17 @@ public class Game extends BasicGame {
 	static boolean showFPS = true;
 	static String title = "Dvir is the woooorst.";
 	static int fpslimit = 59;
-	private InputProvider keyboardInputProvider;
+	
 	private Player terri;
 	private Level level;
-	private int currentLevel = 4;
+	private int currentLevel = 0;
 	private ProgressPoint progress;
 	private int gameState = LOAD_STATE;
 	private TextField inputText;
+	private GameControls controls;
 
 
-	private int[] mousePos = new int[2];
+	
 
 	public Game() {
 		super("Mick is not a nice guy");
@@ -64,12 +63,7 @@ public class Game extends BasicGame {
 
 	@Override
 	public void update(GameContainer gc, int t) throws SlickException {
-
-
 		if (gameState == LOAD_STATE){
-
-			
-
 			if (gc.getInput().isKeyPressed(Input.KEY_ENTER)){
 				gameState = LEVEL_STATE;
 				currentLevel = Integer.parseInt(inputText.getText());
@@ -80,8 +74,10 @@ public class Game extends BasicGame {
 
 		if (gameState == LEVEL_STATE){
 
-			mousePos[0] = gc.getInput().getMouseX()+level.getMapX();
-			mousePos[1] = gc.getInput().getMouseY()+level.getMapY();
+			int mouseX = gc.getInput().getMouseX()+level.getMapX();
+			int mouseY = gc.getInput().getMouseY()+level.getMapY();
+			controls.setMousePosition(mouseX,mouseY);
+			
 
 			terri.update();
 			level.update();
@@ -95,13 +91,14 @@ public class Game extends BasicGame {
 
 
 		}
+		
 		if( gc.getInput().isKeyPressed(Input.KEY_ESCAPE)){gc.exit();}
 	}
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-
-		initializeKeyBindings(gc);
+		
+		controls = new GameControls(gc);
 
 		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
 		
@@ -117,51 +114,19 @@ public class Game extends BasicGame {
 		}
 
 		level.setProgressPoint(progress);
-		level.setMousePosition(mousePos);
+		level.setMousePosition(controls.getMousePos());
 		// i dont like this initialization
 		CollisionHandler collisionHandler = level.getCollisionHandler();
 
-		terri = new Player(level.getProgressX(),level.getProgressY(),collisionHandler, mousePos);
+		terri = new Player(level.getProgressX(),level.getProgressY(),collisionHandler, controls.getMousePos());
 
 
 		//Keyboard stuff
-		keyboardInputProvider.addListener(terri.getListener());
+		controls.addPlayerListener(terri.getListener());
 
 	}
 
-	private void initializeKeyBindings(GameContainer gc){
-		//This translates keyboard/mouse inputs into commands, for the appropriate listeners
-		keyboardInputProvider = new InputProvider(gc.getInput());
-		//The listener is linked to the provider		
-
-		//Define action commands for provider
-		Command jump = new JumpCommand();
-		//Command moveDown = new MoveCommand("move down", 0 ,8);
-		Command moveLeft = new MoveCommand( -1);
-		Command moveRight = new MoveCommand( 1);
-		Command shootCommand = new FireCommand();
-		Command restore = new RestoreCommand();
-		Command interact = new InteractCommand();
-		Command ascend = new ClimbCommand(-1);
-		Command descend = new ClimbCommand(+1);
-		Command rotateCW = new RotateCommand(true);
-		Command rotateCCW = new RotateCommand(false);
-		
-
-		//Bind commands to keys
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_SPACE), jump);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_W), ascend);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_S), descend);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_F), interact);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_E), rotateCW);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_Q), rotateCCW);
-		
-		keyboardInputProvider.bindCommand(new MouseButtonControl(0), shootCommand);
-		keyboardInputProvider.bindCommand(new MouseButtonControl(1), restore);
-		
-	}
+	
 
 
 

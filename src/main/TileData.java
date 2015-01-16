@@ -19,7 +19,6 @@ import gameobjects.Teleporter;
 import gameobjects.TimedEtherElevator;
 import gameobjects.TimedPlatform;
 import gameobjects.TimedSwitch;
-import gameobjects.Transparent;
 import gameobjects.Turret;
 import gameobjects.WeightedSwitch;
 
@@ -89,7 +88,6 @@ public class TileData {
 		parserDict.put("etherEnemy", EtherEnemy.class);
 		parserDict.put("etherElevator", EtherElevator.class);
 		parserDict.put("spawnLocation", SpawnLocation.class);
-		parserDict.put("transparent", Transparent.class);
 
 	}
 

@@ -15,8 +15,6 @@ import gameobjects.Etherable;
 import gameobjects.GameObject;
 import gameobjects.Interactive;
 import gameobjects.InteractiveCollideable;
-import gameobjects.Transparent;
-
 
 public class CollisionHandler implements CommandProvider {
 
@@ -209,7 +207,7 @@ public class CollisionHandler implements CommandProvider {
 
 	//Checks if the straight line between two shapes intersects
 	// any other collideable shape
-	public boolean lineOfSightCollision(Shape shape, Shape shape2, Boolean checkTransparent) {
+	public boolean lineOfSightCollision(Shape shape, Shape shape2) {
 
 
 		//Make a line from centers of player and object
@@ -223,21 +221,13 @@ public class CollisionHandler implements CommandProvider {
 		//Check if collideable Game objects are intersecting 
 		// this line, other than the inputs
 		for(GameObject gObj: gameObjects){
-			if(gObj.canCollide() & !(gObj instanceof Transparent)){
-				if(gObj.getShape() != shape && gObj.getShape() != shape2 ){
-					if(line.intersects(gObj.getShape())){
-						return true;
-					}
+			if(gObj.getShape() != shape && gObj.getShape() != shape2 ){
+				if(line.intersects(gObj.getShape())){
+					return true;
 				}
 			}
 		}
-		
-		// optionally check line of sight collisions with transparent objects
-		if(checkTransparent){
-			if(lineOfSightTransparent(shape,shape2,line)){
-				return true;
-			}
-		}
+	
 
 		for (Actor actor: actors){
 			if(actor.canCollide()){
@@ -262,33 +252,12 @@ public class CollisionHandler implements CommandProvider {
 	}
 
 
-	public boolean lineOfSightTransparent(Shape shape, Shape shape2, Line line) {
-
-		//Check if collideable Game objects are intersecting 
-		// this line, other than the inputs
-		for(GameObject gObj: gameObjects){
-			if(gObj instanceof Transparent){
-				// check if the transparent wall is transparent to shooting (canCollide = true)
-				// or transparent to walking canCollide = false
-				// only check for line of sight collisions with the transparent objects with canCollide = false
-				if(!gObj.canCollide()){
-					if(gObj.getShape() != shape && gObj.getShape() != shape2 ){
-						if(line.intersects(gObj.getShape())){
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-
-	}
 
 
 	//Returns if the line of sight from the player to an EtherObject
 	// is collided with any game objects
-	public boolean lineOfSightCollisionToPlayer(Shape shape,Boolean checkTransparent){
-		return lineOfSightCollision(shape,playerRect,checkTransparent);
+	public boolean lineOfSightCollisionToPlayer(Shape shape){
+		return lineOfSightCollision(shape,playerRect);
 	}
 
 

@@ -12,7 +12,7 @@ import gameobjects.GameObject;
 //Takes in command inputs and implements corresponding actions
 public class PlayerActionEngine extends ActionEngine {
 
-	private Gun gun;
+	
 	
 //	private ArrayList <Action> actions;
 
@@ -35,26 +35,17 @@ public class PlayerActionEngine extends ActionEngine {
 	
 
 
-	public PlayerActionEngine(GlobalInputListener listener, Status status, Gun gun){
+	public PlayerActionEngine(GlobalInputListener listener, Status status){
 		super(listener,status);
-		this.gun = gun;
+		
 		this.runAcc = 2;
 		this.maxSpeed = 5;
 		this.climbSpeed = (float) 1.5;
 	}
 
-	public void attemptShoot(){
-
-		if (gun.canShoot()){
-			gun.shootEtherBeam();
-		}
-		return;
-	}
 	
-	public void attemptRotate(boolean rotateClockwise){
-		gun.attemptRotate(rotateClockwise);
-		
-	}
+	
+	
 
 	public void attemptInteract(){
 		//Get nearby objects to interact with
@@ -70,9 +61,7 @@ public class PlayerActionEngine extends ActionEngine {
 		}
 	}
 	
-	public void restoreActive(){
-		gun.restoreActiveObject();
-	}
+	
 
 	public void attemptJump() {
 		//Check that player is on solid ground

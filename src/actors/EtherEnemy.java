@@ -96,7 +96,7 @@ public class EtherEnemy extends Enemy implements Etherable{
 	@Override
 	public boolean canPut(){
 		boolean checkTransparent = true;
-		boolean answer = !collisionHandler.lineOfSightCollisionToPlayer(rect,checkTransparent);
+		boolean answer = !collisionHandler.lineOfSightCollisionToPlayer(rect);
 		answer = answer && collisionHandler.canPlaceEtherAt(rect);
  		return answer;
 	}

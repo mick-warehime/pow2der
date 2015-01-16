@@ -15,7 +15,6 @@ import commands.KeyboardInputListener;
 public class Player extends Actor {
 
 	private KeyboardInputListener keyboard;
-	private Gun gun;
 	private Rectangle rect;
 	
 
@@ -36,8 +35,7 @@ public class Player extends Actor {
 
 		collisionHandler.addPlayerRect(status.getRect());
 
-		gun = new Gun(collisionHandler, mousePos);
-		engine = new PlayerActionEngine(listener,status, gun);
+		engine = new PlayerActionEngine(listener,status);
 		
 		this.graphics = new PlayerGraphics(status,"data/head.png");
 	}
@@ -61,13 +59,11 @@ public class Player extends Actor {
 		
 	}
 
-	public Gun getGun() {
-		return gun;
-	}
+	
 
 	public void update(){
 		super.update();
-		gun.update();
+		
 	}
 
 	public KeyboardInputListener getListener() {
