@@ -29,8 +29,6 @@ public class Player extends Actor {
 		listener.addProvider(keyboard);
 		
 		
-		// GETS starting position from map
-		// shifts initial y position by 1 pixel upwards otherwise dude gets stuck
 		setStatus( x,y, collisionHandler);
 
 		collisionHandler.addPlayerRect(status.getRect());
@@ -43,17 +41,17 @@ public class Player extends Actor {
 	public void render( Graphics g, int mapX, int mapY) {
 		((PlayerGraphics)graphics).render(g,(int) status.getX()-mapX, (int) status.getY() - mapY);
 		
-//		gun.render(g,(int) rect.getCenterX(),(int) rect.getCenterY(), mapX, mapY);
-//		sprite.draw((int)this.status.getX()-mapX,(int)this.status.getY()-mapY);    
 	}
 
 	
 	public void setStatus(int x, int y, CollisionHandler collisionHandler){
 				
-		int px = x;
-		int py = y;
+		
+		
+		// GETS starting position from map
+		// shifts initial y position by 1 pixel upwards otherwise dude gets stuck
 				
-		rect = new Rectangle((float) px, (float) py-1, 32, 32);
+		rect = new Rectangle((float) x, (float) y-1, 32, 32);
 		status = new Status(rect);
 		status.setCollisionHandler(collisionHandler);
 		
@@ -70,10 +68,10 @@ public class Player extends Actor {
 		return keyboard;
 	}
 	
-	public void resetPlayer(Level level){
+	public void resetPlayer(int startX, int startY){
 		status.setAlive();
-		status.setX(level.getProgressX());
-		status.setY(level.getProgressY());
+		status.setX(startX);
+		status.setY(startY);
 	}
 
 	

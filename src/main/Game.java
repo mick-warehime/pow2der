@@ -1,16 +1,7 @@
 package main;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.command.Command;
-import org.newdawn.slick.command.InputProvider;
-import org.newdawn.slick.command.KeyControl;
-import org.newdawn.slick.command.MouseButtonControl;
 import org.newdawn.slick.gui.TextField;
-
-import commands.ClimbCommand;
-import commands.InteractCommand;
-import commands.JumpCommand;
-import commands.MoveCommand;
 import controls.GameControls;
 import gameobjects.ProgressPoint;
 import actors.Player;
