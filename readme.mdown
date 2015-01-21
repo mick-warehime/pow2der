@@ -10,7 +10,6 @@ Represents items that may be picked up and used in the game. Required functional
 * Equip and unequip functionality, if relevant
 
 Inventory
-
 === 
 Stores and represents all items. Required functionality:
 
