@@ -1,0 +1,19 @@
+Item class
+===
+Represents items that may be picked up and used in the game. Required functionality:
+
+* Drawing methods on ground, in inventory, and when equipped (where to put on player)
+* An abstract in-game type (e.g., armor, heavy or light, container)
+* Associated ability/use function, if it has one. This should implement commands, sometimes.
+* Associated effects on the player, if it has one
+* Monetary value?
+* Equip and unequip functionality, if relevant
+
+Inventory
+=== 
+Stores and represents all items. Required functionality:
+
+* Drawing method for stored items
+* A command to toggle inventory; this should pause the game
+* Ability to drop, equip, unequip items
+* Ability to bind commands to items in inventory
