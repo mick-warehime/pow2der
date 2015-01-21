@@ -1,5 +1,8 @@
 package controls;
 
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.command.Command;
@@ -7,7 +10,6 @@ import org.newdawn.slick.command.ControllerButtonControl;
 import org.newdawn.slick.command.ControllerDirectionControl;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.KeyControl;
-
 
 import commands.ClimbCommand;
 import commands.InteractCommand;
@@ -41,6 +43,15 @@ public class GameControls {
 	}
 	
 	private void initializeKeyBindings(GameContainer gc){
+		Controller[] controllers=ControllerEnvironment.getDefaultEnvironment().getControllers();
+		
+		for (Controller c : controllers){			
+			if(c.getName().equals("Wiimote (18-2a-7b-44-b0-bc)")){
+				joystick jstick = new joystick(c.getType());
+				System.out.println(jstick.getX_LeftJoystick_Value());
+			}
+		}
+		
 		//This translates keyboard/mouse inputs into commands, for the appropriate listeners
 		keyboardInputProvider = new InputProvider(gc.getInput());
 		//The listener is linked to the provider		
