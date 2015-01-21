@@ -11,7 +11,6 @@ import actors.Actor;
 import actors.Player;
 import commands.CommandProvider;
 import gameobjects.Door;
-import gameobjects.Etherable;
 import gameobjects.GameObject;
 import gameobjects.Interactive;
 import gameobjects.InteractiveCollideable;
@@ -72,38 +71,7 @@ public class CollisionHandler implements CommandProvider {
 
 
 
-	public Etherable etherObjectAtPosition(int x, int y){
 
-		for(GameObject gObj: gameObjects){
-			if(gObj instanceof Etherable){
-				if(gObj.getShape().contains(x,y)){
-					return (Etherable) gObj;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public Etherable isAtEtherEnemy(int x, int y){
-
-		for(GameObject gObj: gameObjects){
-			if(gObj instanceof Etherable){
-				if(gObj.getShape().contains(x,y)){
-					return (Etherable) gObj;
-				}
-			}
-		}
-		for (Actor nme: actors){
-			if(nme instanceof Etherable){
-				if(nme.getShape().contains(x,y)){
-					return (Etherable) nme;
-				}
-			}
-		}
-
-		return null;
-	}
 
 
 

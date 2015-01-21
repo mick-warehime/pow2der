@@ -48,15 +48,10 @@
  </layer>
  <layer name="ether" width="50" height="30" opacity="0.3">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3PMQqAMAyF4Ugr6H10dvAIntMTeQ27S3GzySRoQ/8PHg/elIgAAFp2GMFtH/R4wx91aemPsfvnNvi2GQGAry29nbfWRwD4dAaRFMrWtty1mqLIHMvWttywXXSKOVJwFwAA
+   H4sIAAAAAAAAA+3PsQ2AMAxE0UNJAfvABIzAnEzEGtCjiI7YNTH5TzqddJUtAQB6djjBYx/tRMMfbenpj2n45jbEtjkBgD9ZXwEQ05mkK9VtbaVbNWdpyXVbW2n4boisFdpwFwAA
   </data>
  </layer>
  <objectgroup name="objects" opacity="0.58">
-  <object name="Timed Pl" type="timedPlatform" x="16" y="352" width="112" height="16">
-   <properties>
-    <property name="duration" value="2"/>
-   </properties>
-  </object>
   <object name="Lava" type="deadly" x="272" y="432" width="192" height="32"/>
   <object name="St" type="progressPoint" x="80" y="304" width="16" height="16">
    <properties>

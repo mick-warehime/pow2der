@@ -4,11 +4,9 @@ package main;
 //import etherable.Elevator;
 import gameobjects.DeadlyObject;
 import gameobjects.Door;
-import gameobjects.EtherElevator;
 import gameobjects.MovingPlatform;
 import gameobjects.MultiDoor;
 import gameobjects.MultiWeightedSwitch;
-import gameobjects.EtherObject;
 import gameobjects.GameObject;
 import gameobjects.Ladder;
 import gameobjects.ProgressPoint;
@@ -16,8 +14,6 @@ import gameobjects.SpawnLocation;
 import gameobjects.Switch;
 import gameobjects.SwitchObject;
 import gameobjects.Teleporter;
-import gameobjects.TimedEtherElevator;
-import gameobjects.TimedPlatform;
 import gameobjects.TimedSwitch;
 import gameobjects.Turret;
 import gameobjects.WeightedSwitch;
@@ -35,7 +31,6 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import actors.Actor;
 import actors.Enemy;
-import actors.EtherEnemy;
 
 
 public class TileData {
@@ -69,12 +64,9 @@ public class TileData {
 
 		parserDict = new HashMap<String,Class<?>>();
 
-		parserDict.put("platform", EtherObject.class);
 		parserDict.put("deadly", DeadlyObject.class);
-		parserDict.put("timedPlatform", TimedPlatform.class);
 		parserDict.put("door", Door.class);
 		parserDict.put("multiDoor", MultiDoor.class);
-		parserDict.put("timedEtherElevator", TimedEtherElevator.class);
 		parserDict.put("switch", Switch.class);
 		parserDict.put("timedSwitch", TimedSwitch.class);
 		parserDict.put("weightedSwitch", WeightedSwitch.class);
@@ -85,8 +77,6 @@ public class TileData {
 		parserDict.put("turret", Turret.class);
 		parserDict.put("movingPlatform", MovingPlatform.class);
 		parserDict.put("enemy", Enemy.class);
-		parserDict.put("etherEnemy", EtherEnemy.class);
-		parserDict.put("etherElevator", EtherElevator.class);
 		parserDict.put("spawnLocation", SpawnLocation.class);
 
 	}

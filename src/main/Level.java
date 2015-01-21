@@ -7,13 +7,9 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 import actors.Actor;
-import actors.Enemy;
-import actors.EtherEnemy;
-import gameobjects.Etherable;
 import gameobjects.GameObject;
 import gameobjects.InteractiveCollideable;
 import gameobjects.ObjectCreator;
-import gameobjects.ParticleBeam;
 import gameobjects.ProgressPoint;
 
 
@@ -189,9 +185,6 @@ public class Level {
 			collideables.add((InteractiveCollideable)obj);
 		}
 		
-		if(obj instanceof Etherable){
-			((Etherable) obj).setMousePosition(mousePos);
-		}
 	}
 
 	public void draw(Graphics g,int x, int y){		
@@ -309,18 +302,7 @@ public class Level {
 	public void setMousePosition(int[] mousePos) {
 		this.mousePos = mousePos;
 
-		//Give the mouse position to etherables
-		for (GameObject obj: gameObjects){
-			if(obj instanceof Etherable){
-				((Etherable)obj).setMousePosition(mousePos);
-			}
-		}
-		//Give the mouse position to etherables
-		for (Actor actor: actors){
-			if(actor instanceof Etherable){
-				((Etherable)actor).setMousePosition(mousePos);
-			}
-		}
+		
 
 
 	}
