@@ -72,5 +72,6 @@ public class GameControls {
 		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), descend);
 		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,1), jump);
 		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,2), interact);
+		//The left bumper is 5, the right is 6
 	}
 }

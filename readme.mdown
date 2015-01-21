@@ -1,0 +1,6 @@
+Item class
+===
+Represents items that may be picked up and used in the game. Required functionality:
+
+* Drawing in and out of inventory
+* 
