@@ -55,11 +55,15 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer gc, int t) throws SlickException {
 		if (gameState == LOAD_STATE){
-			if (gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-				gameState = LEVEL_STATE;
-				currentLevel = Integer.parseInt(inputText.getText());
-				initializeLevel(currentLevel);
-			}
+			////The following should be returned for a load screen
+//			if (gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+//				gameState = LEVEL_STATE;
+//				currentLevel = Integer.parseInt(inputText.getText());
+//				initializeLevel(currentLevel);
+//			}
+			gameState = LEVEL_STATE;
+			currentLevel = 0;
+			initializeLevel(currentLevel);
 
 		}
 
@@ -78,8 +82,6 @@ public class Game extends BasicGame {
 			if (terri.isDying()){
 				initializeLevel(currentLevel);
 			}
-
-
 
 		}
 		
@@ -124,12 +126,13 @@ public class Game extends BasicGame {
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 
-		if (gameState == LOAD_STATE){
-			g.drawString("Enter Level: " , height/2, height/2-20);
-			g.drawString("Press Enter to start", height/2, height*3/4);
-			
-			inputText.render(gc, g);
-		}
+		//To be added for load screen
+//		if (gameState == LOAD_STATE){
+//			g.drawString("Enter Level: " , height/2, height/2-20);
+//			g.drawString("Press Enter to start", height/2, height*3/4);
+//			
+//			inputText.render(gc, g);
+//		}
 		
 		if (gameState == LEVEL_STATE){
 			int mouseX = gc.getInput().getMouseX();
