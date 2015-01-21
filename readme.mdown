@@ -17,3 +17,13 @@ Stores and represents all items. Required functionality:
 * A command to toggle inventory; this should pause the game
 * Ability to drop, equip, unequip items
 * Ability to bind commands to items in inventory
+
+GameControls
+===
+Defines all key bindings for mouse, keyboard and controller. Required functionality:
+
+* Store command bindings
+* Set bindings within game, i.e. a menu.
+* Save key bindings for later game runs.
+* Needs to be able to represent all buttons in text form
+
