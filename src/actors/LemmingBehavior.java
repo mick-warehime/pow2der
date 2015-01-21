@@ -48,7 +48,7 @@ public class LemmingBehavior extends Behavior implements CommandProvider{
 			status.flipDirection();
 		}
 		
-		commandStack.add(new MoveCommand(status.getDirection()));
+		commandStack.add(new MoveCommand('x', status.getDirection()));
 		
 		return;
 	}

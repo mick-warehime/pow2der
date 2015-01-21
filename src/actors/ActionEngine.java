@@ -14,7 +14,6 @@ public class ActionEngine {
 
 	protected GlobalInputListener listener;
 	protected Status status;
-	private float gravity = 1;
 	protected float vx = 0;
 	protected float vy = 0;
 	protected float runAcc = 0; //Default values
@@ -36,14 +35,22 @@ public class ActionEngine {
 		updateTimers();	
 	}
 
-	public void attemptRunTo(int direction) {
-		//Only accelerate if not in air
-		//if (!status.isTouchingGround()){return;}
+	public void attemptRunTo(char direction, int value) {
+		
 
-		if (direction>0 ){
-			vx = Math.min(vx + runAcc, maxSpeed);
-		}else if(direction<0){
-			vx = Math.max(vx - runAcc, -maxSpeed);
+		if (direction == 'x'){
+			if (value>0 ){
+				vx = Math.min(vx + runAcc, maxSpeed);
+			}else if(value<0){
+				vx = Math.max(vx - runAcc, -maxSpeed);
+			} 
+		}
+		if (direction == 'y'){
+			if (value>0 ){
+				vy = Math.min(vy + runAcc, maxSpeed);
+			}else if(value<0){
+				vy = Math.max(vy - runAcc, -maxSpeed);
+			} 
 		}
 
 		return;
@@ -60,30 +67,19 @@ public class ActionEngine {
 	protected void movePhysics() {        
 
 
-		//Horizontal movement and collision checking
+		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
 		if (!displacedX){
 			status.gainEffect("x collision", 1);
 			vx = 0;
 		}
 
-		//Set vertical velocity to 0 if touching ground and 
-		//going down.
-		if (status.isTouchingGround() && vy>2){this.vy = 0;}
-
-		//Vertical displacement
+		//Y movement and collision checking
 		boolean displacedY = attemptDisplacement(vy,'y');
-		//Apply gravity if not touching the ground or
-		// if a positive displacement(down) was successful
-		boolean couldNotMoveDown = !displacedY && (vy>0); 
-		if (isFalling()&& !couldNotMoveDown ){//
-			this.vy += gravity;
+		if (!displacedY){
+			status.gainEffect("y collision", 1);
+			vy = 0;
 		}
-
-		if (!displacedY  ){this.vy = (float) 0;} //Only set vy to 0 on a vertical collision
-
-		//Account for climbing
-		if(status.hasEffect("climbing")){this.vx = 0; this.vy = 0;}
 
 
 
@@ -110,14 +106,6 @@ public class ActionEngine {
 
 	}
 
-	protected boolean isFalling(){
-		boolean answer = !(status.isTouchingGround());
-		answer = answer && !status.hasEffect("climbing");
-		return answer;
-	}
-	//Does the maximum possible displacement in a given direction
-	//Does this through a bisection type algorithm
-	//Returns true if any displacement was possible
 
 	public boolean attemptDisplacement(float disp, char XorY){
 

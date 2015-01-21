@@ -41,16 +41,7 @@ public class Status {
 
 
 
-	public boolean isTouchingGround() {
-		boolean answer = false;
-		displace(2,'Y');
-		answer = isCollided();
-		displace(-2,'Y');
-
-
-		return answer;
-	}
-
+	
 
 
 	public ArrayList<GameObject> nearbyInteractives(){

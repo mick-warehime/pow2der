@@ -14,20 +14,10 @@ public class PlayerActionEngine extends ActionEngine {
 
 	
 	
-//	private ArrayList <Action> actions;
 
-	private float ups = 20;
-//	private float wallUps = 15;
-	private int jumpTimer= 0;
-	private int jumpTimerIncrement = 20;
 	private int interactTimer = 0;
-	private int interactTimerIncrement = 20;
-	private int hoverFuel = 0;
-	private int maxHoverFuel = 40;
-	private float hoverAcc = (float) -1.1;
-	
-	
-	private float runDec = 1;
+	private int interactTimerIncrement = 20;	
+	private float runDec = 2.5f;
 
 	
 	
@@ -63,92 +53,22 @@ public class PlayerActionEngine extends ActionEngine {
 	
 	
 
-	public void attemptJump() {
-		//Check that player is on solid ground
-		if (canJump()){
-			this.vy -=ups;
-			jumpTimer += jumpTimerIncrement;
-			status.removeEffect("climbing");
-		}
-		
-		//If the player can hover, do that
-		if (canHover()){
-			hoverFuel -=1;
-			//Has to be at 2 as otherwise updateTimers won't see it
-			status.gainEffect("hovering",2); 
-			
-			this.vy+=hoverAcc;
-		}
-
-		
-		
-		return;
-	}
 	
-	private boolean canHover(){
-		boolean answer = this.isFalling();
-		answer = answer && jumpTimer == 0;
-		answer = answer && 
-				(hoverFuel == maxHoverFuel 
-				||
-				(status.hasEffect("hovering") && hoverFuel >0)
-						);
-				//hoverFuel >0;
-		return answer;
-	}
+	
+	
 	
 	
 	
 
-//	public void attemptWallJump(){
-//
-//		if (canWallJump()){
-//
-//			vy -= wallUps;
-//			jumpTimer += jumpTimerIncrement;
-//			vx = - vx;
-//		}
-//		return;
-//	}
 
-//
-//	private boolean canWallJump(){
-//		boolean answer = false;
-//
-//		//Check that I am touching a wall in the direction
-//		//that I'm moving	
-//		if (vx<0){
-//			status.displace(-1,'X');
-//			answer = status.isCollided();
-//			status.displace(1,'X');
-//		}else{
-//			status.displace(1,'X');
-//			answer = status.isCollided();
-//			status.displace(-1,'X');
-//		}
-//		//Check that jumpTimer is 0;
-//		answer = answer && (jumpTimer == 0); 
-//
-//
-//		return answer;
-//	}
 
-	private boolean canJump(){
-		boolean answer = status.isTouchingGround() || status.hasEffect("climbing");
-		answer = answer && (jumpTimer==0);
-		return answer ;
-	}
 
 	protected void updateTimers(){
-		if (jumpTimer>0){
-			jumpTimer -=1;
-		}
+		
 		if (interactTimer>0){
 			interactTimer -=1;
 		}
-		if (!status.hasEffect("hovering")){
-			hoverFuel = Math.min(hoverFuel+1,maxHoverFuel);
-		}
+		
 		
 		
 	}
@@ -162,28 +82,29 @@ public class PlayerActionEngine extends ActionEngine {
 		//Get all player commands
 		ArrayList<Command> currentActionCommands = listener.getCurrentActionCommands();
 
-//		System.out.println(currentActionCommands);
-		
-		boolean triedMove = false;
-//		boolean triedJump = false;
+//		
+		//See if the player should decelerate
+		boolean triedXMove = false;
+		boolean triedYMove = false;
+//		
 
 		//Check which actions are done (There is a better what to do this)
 		for (Command cmd : currentActionCommands){
-//			if (cmd instanceof JumpCommand){
-//				triedJump = true;
-//			}
 			if (cmd instanceof MoveCommand){
-				triedMove = true;
+				if (((MoveCommand) cmd).getDirection()=='x'){
+					triedXMove = true;
+				}else{
+					triedYMove = true;
+				}
+				
 			}
 		}
-//		//Attempt a wall jump (conditioned on having tried a jump and move)
-//		if (triedJump && triedMove){
-//			attemptWallJump();
-//		}
-		//Decelerate if no move command given
-		//		System.out.println(status.isTouchingGround());
-		if (!triedMove ){//&& (status.isTouchingGround()
-			decelerate();
+		
+		if (!triedXMove ){
+			decelerate('x');
+		}
+		if (!triedYMove ){
+			decelerate('y');
 		}
 		
 		
@@ -192,28 +113,22 @@ public class PlayerActionEngine extends ActionEngine {
 
 	//////////////////////////
 	
-	private void decelerate() {
+	private void decelerate(char direction) {
 		
-		if (vx>0){ vx = Math.max(vx-runDec,(float) 0);}
-		if (vx<0){ vx = Math.min(vx+runDec,(float) 0);}
-		
-	}
-
-	public void attemptClimb(int direction) {		
-	
-		if (canClimb()){
-			this.vy =direction*climbSpeed;	
-			status.gainEffect("climbing", 10000);
+		if (direction == 'x'){
+			if (vx>0){ vx = Math.max(vx-runDec,(float) 0);}
+			if (vx<0){ vx = Math.min(vx+runDec,(float) 0);}
 		}
-		return;
-	}
-	
-	private boolean canClimb(){
-		boolean answer = status.hasEffect("touching ladder") ;
-		answer = answer && jumpTimer==0;
-		return answer;
+		
+		if (direction == 'y'){
+			if (vy>0){ vy = Math.max(vy-runDec,(float) 0);}
+			if (vy<0){ vy = Math.min(vy+runDec,(float) 0);}
+		}
+		
 	}
 
+	
+	
 
 
 

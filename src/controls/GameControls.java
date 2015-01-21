@@ -11,9 +11,7 @@ import org.newdawn.slick.command.ControllerDirectionControl;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.KeyControl;
 
-import commands.ClimbCommand;
 import commands.InteractCommand;
-import commands.JumpCommand;
 import commands.KeyboardInputListener;
 import commands.MoveCommand;
 
@@ -57,31 +55,29 @@ public class GameControls {
 		//The listener is linked to the provider		
 
 		//Define action commands for provider
-		Command jump = new JumpCommand();
 		//Command moveDown = new MoveCommand("move down", 0 ,8);
-		Command moveLeft = new MoveCommand( -1);
-		Command moveRight = new MoveCommand( 1);
+		Command moveLeft = new MoveCommand('x', -1);
+		Command moveRight = new MoveCommand('x', 1);
+		Command moveUp = new MoveCommand('y', -1);
+		Command moveDown = new MoveCommand('y', 1);
 		Command interact = new InteractCommand();
-		Command ascend = new ClimbCommand(-1);
-		Command descend = new ClimbCommand(+1);
 		
 		
 
 		//Bind commands to keyboard keys
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_SPACE), jump);
 		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
 		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_W), ascend);
-		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_S), descend);
+		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_W), moveUp);
+		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
 		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_F), interact);
 
 		
 		//Bind commands to controller keys
 		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
 		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
-		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), ascend);
-		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), descend);
-		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,1), jump);
+		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), moveUp);
+		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);
+//		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,1),);
 		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,2), interact);
 		//The left bumper is 5, the right is 6
 	}
