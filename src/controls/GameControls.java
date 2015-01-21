@@ -3,8 +3,11 @@ package controls;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.command.Command;
+import org.newdawn.slick.command.ControllerButtonControl;
+import org.newdawn.slick.command.ControllerDirectionControl;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.KeyControl;
+
 
 import commands.ClimbCommand;
 import commands.InteractCommand;
@@ -53,7 +56,7 @@ public class GameControls {
 		
 		
 
-		//Bind commands to keys
+		//Bind commands to keyboard keys
 		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_SPACE), jump);
 		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
 		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
@@ -62,6 +65,12 @@ public class GameControls {
 		keyboardInputProvider.bindCommand(new KeyControl(Input.KEY_F), interact);
 
 		
-		
+		//Bind commands to controller keys
+		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
+		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
+		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), ascend);
+		keyboardInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), descend);
+		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,1), jump);
+		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,2), interact);
 	}
 }
