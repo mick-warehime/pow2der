@@ -14,7 +14,9 @@ public class Status {
 	private boolean isDying;
 	private ArrayList<Effect> effects;
 	private int direction = 1;
-
+	private int xDirection = 1;
+	private int yDirection = 1;
+	
 	private Rectangle rect;
 	private CollisionHandler collisionHandler;
 
@@ -55,26 +57,25 @@ public class Status {
 
 
 	public boolean isCollided(){
-		if(!hasEffect("ethered")){
-			return collisionHandler.isCollided(rect);
-		}
-		return false;
+		
+		return collisionHandler.isCollided(rect);
+
 	}
 
 	//Displaces the player 
 	public void displace(float disp, char XorY){
 
-		if(!hasEffect("ethered")){
-			if (XorY == 'x' || XorY == 'X'){
-				float newX = rect.getX() + disp;
-				rect.setX( newX);
-				return;
-			} else if (XorY == 'y' || XorY == 'Y'){
-				float newY = rect.getY() + disp;
-				rect.setY(newY);
-				return;
-			}
+
+		if (XorY == 'x' || XorY == 'X'){
+			float newX = rect.getX() + disp;
+			rect.setX( newX);
+			return;
+		} else if (XorY == 'y' || XorY == 'Y'){
+			float newY = rect.getY() + disp;
+			rect.setY(newY);
+			return;
 		}
+		
 //		throw new UnsupportedOperationException("Improper input arguments!");
 	}
 
@@ -103,12 +104,11 @@ public class Status {
 	public void updateEffects(){
 
 
-		boolean touchingLadder = false;
 
 		//count down on each effect, remove ones that have run down
 		for (Iterator<Effect> iterator = effects.iterator(); iterator.hasNext();) {
 			Effect eff = iterator.next();
-			if (eff.name.equals("touching ladder")){ touchingLadder = true;}	
+				
 
 			if (eff.countDown()){
 				// Remove the current element from the iterator and the list.
@@ -116,29 +116,28 @@ public class Status {
 			}
 		}
 
-		if (!touchingLadder){removeEffect("climbing");}
 
 
 		return;
 	}
 
 
-	void removeEffect(String name){
+	void removeEffect(int name){
 		//Iterate over all effect's elements and remove
 		for (Iterator<Effect> iterator = effects.iterator(); iterator.hasNext();) {
 			Effect eff = iterator.next();
-			if(eff.name.equals(name)){
+			if(eff.name == name){
 				// Remove the current element from the iterator and the list.
 				iterator.remove();
 			}
 		}
 	}
 
-	public void gainEffect(String name, int duration){
+	public void gainEffect(int name, int duration){
 		effects.add(new Effect(name,duration));
 	}
 
-	public boolean hasEffect(String name){
+	public boolean hasEffect(int name){
 
 		for (Effect eff: effects){
 			if (eff.name == name){
@@ -151,33 +150,23 @@ public class Status {
 
 		
 	
-	class Effect{
+	public int getDirection(char xOrY){
+		assert (xOrY == 'x' || xOrY == 'y') : "x or y inputs only";
+		if (xOrY == 'x'){ return xDirection;}
+		else {return yDirection;}
 
-		public String name;
-		public int duration;
-		public int timer;
-
-		public Effect(String name, int duration){
-			this.name = name;
-			this.duration = duration;
-			this.timer = duration;
-		}
-
-		//Count down to effect end
-		public boolean countDown(){
-			timer -=1;
-			return (timer <= 0);
-		}
+	}
 
 
+	
+	
+
+	
+	public void flipDirection(char xOrY) {
+		assert (xOrY == 'x' || xOrY == 'y') : "x or y inputs only";
+		if (xOrY == 'x'){ xDirection *=-1;}
+		else {yDirection *= -1;}
 	}
 	
-	public int getDirection(){
-		return direction;
-	}
-
-	public void flipDirection() {
-		direction = -1*direction;	
-	}
 
 }

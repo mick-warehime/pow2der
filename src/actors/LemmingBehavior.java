@@ -25,7 +25,7 @@ public class LemmingBehavior extends Behavior implements CommandProvider{
 		commandStack.clear();
 
 
-		if (status.hasEffect("Collided with player")){
+		if (status.hasEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER)){
 			resolvePlayerCollision();
 		}
 
@@ -44,11 +44,11 @@ public class LemmingBehavior extends Behavior implements CommandProvider{
 	
 	private void decideMovement(){
 		
-		if (status.hasEffect("x collision")){
-			status.flipDirection();
+		if (status.hasEffect(Effect.EFFECT_X_COLLISION)){
+			status.flipDirection('x');
 		}
 		
-		commandStack.add(new MoveCommand('x', status.getDirection()));
+		commandStack.add(new MoveCommand('x', status.getDirection('x')));
 		
 		return;
 	}

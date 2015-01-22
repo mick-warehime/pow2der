@@ -69,14 +69,14 @@ public class ActionEngine {
 		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
 		if (!displacedX){
-			status.gainEffect("x collision", 1);
+			status.gainEffect(Effect.EFFECT_X_COLLISION, 1);
 			vx = 0;
 		}
 
 		//Y movement and collision checking
 		boolean displacedY = attemptDisplacement(vy,'y');
 		if (!displacedY){
-			status.gainEffect("y collision", 1);
+			status.gainEffect(Effect.EFFECT_Y_COLLISION, 1);
 			vy = 0;
 		}
 
@@ -166,7 +166,7 @@ public class ActionEngine {
 		status.setY(destY);
 	}
 
-	public void applyEffect(String effectName, int duration) {
+	public void applyEffect(int effectName, int duration) {
 		status.gainEffect(effectName, duration);
 
 	}

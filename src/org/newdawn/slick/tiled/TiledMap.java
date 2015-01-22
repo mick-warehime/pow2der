@@ -757,7 +757,7 @@ public class TiledMap {
 	}
 
 	/**
-	 * Overrideable to allow other sprites to be rendered between lines of the
+	 * Overrideable to allow other spriteSheet to be rendered between lines of the
 	 * map
 	 * 
 	 * @param visualY

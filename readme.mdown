@@ -36,5 +36,5 @@ Basic drawing for actors.
 
 * Based on a spritesheet and actor's current status
 * There should be some precoded way of loading sprites correctly
-
+* Later: item drawing.
 

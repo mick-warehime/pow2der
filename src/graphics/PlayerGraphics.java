@@ -24,11 +24,6 @@ public class PlayerGraphics extends ActorGraphics {
 	
 	public void render( Graphics g, int renderX, int renderY){
 		super.render(renderX, renderY);
-		if (status.hasEffect("hovering")){
-			float dy = status.getRect().getHeight();			
-			flameImage.draw(renderX,renderY+dy);
-		}
-		
 		
 		
 	}
