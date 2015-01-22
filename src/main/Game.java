@@ -74,13 +74,7 @@ public class Game extends BasicGame {
 			int mouseY = gc.getInput().getMouseY()+level.getMapY();
 			controls.setMousePosition(mouseX,mouseY);
 
-			//			Input input = gc.getInput();
-			//			
-			//			for (int i = 0; i<32; i++){
-			//				if (input.isControlPressed(i)){
-			//					System.out.println("Button pressed: " + i);
-			//				}
-			//			}
+			
 
 
 			terri.update();
@@ -173,8 +167,6 @@ public class Game extends BasicGame {
 		app.start();
 
 	}
-
-
 
 
 }

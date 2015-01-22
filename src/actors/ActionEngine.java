@@ -18,7 +18,6 @@ public class ActionEngine {
 	protected float vy = 0;
 	protected float runAcc = 0; //Default values
 	protected float maxSpeed = 0;
-	protected float climbSpeed = 0;
 
 
 
