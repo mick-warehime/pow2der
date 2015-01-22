@@ -1,7 +1,5 @@
 package controls;
 
-import net.java.games.input.Controller;
-import net.java.games.input.ControllerEnvironment;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -41,14 +39,7 @@ public class GameControls {
 	}
 	
 	private void initializeKeyBindings(GameContainer gc){
-		Controller[] controllers=ControllerEnvironment.getDefaultEnvironment().getControllers();
 		
-		for (Controller c : controllers){			
-			if(c.getName().contains("Wiimote")){
-				joystick jstick = new joystick(c.getType());
-				System.out.println(jstick.getX_LeftJoystick_Value());
-			}
-		}
 		
 		//This translates keyboard/mouse inputs into commands, for the appropriate listeners
 		controlsInputProvider = new InputProvider(gc.getInput());
@@ -77,8 +68,8 @@ public class GameControls {
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), moveUp);
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);
-//		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,1),);
-		controlsInputProvider.bindCommand(new ControllerButtonControl(0,2), interact);
+//		
+		controlsInputProvider.bindCommand(new ControllerButtonControl(0,1), interact);
 		//The left bumper is 5, the right is 6
 	}
 }
