@@ -30,3 +30,11 @@ Defines all key bindings for mouse, keyboard and controller. Required functional
 * Save key bindings for later game runs.
 * Needs to be able to represent all buttons in text form
 
+Actor Graphics
+===
+Basic drawing for actors.
+
+* Based on a spritesheet and actor's current status
+* There should be some precoded way of loading sprites correctly
+
+
