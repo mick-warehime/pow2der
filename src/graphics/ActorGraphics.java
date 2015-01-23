@@ -20,7 +20,7 @@ public class ActorGraphics {
 
 	public void render(int renderX, int renderY) {		
 		
-		if (status.getDirection() == 1){
+		if (status.getDirection('x') == 1){
 			image.draw(renderX, renderY);
 		}else{
 			flippedImage.draw(renderX, renderY);

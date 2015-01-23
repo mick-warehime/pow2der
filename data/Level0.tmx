@@ -48,7 +48,7 @@
  </layer>
  <layer name="ether" width="50" height="30" opacity="0.3">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3PsQ2AMAxE0UNJAfvABIzAnEzEGtCjiI7YNTH5TzqddJUtAQB6djjBYx/tRMMfbenpj2n45jbEtjkBgD9ZXwEQ05mkK9VtbaVbNWdpyXVbW2n4boisFdpwFwAA
+   H4sIAAAAAAAAA+3OwQnAIBBE0Ql6ST+mAktI+bYR7+I1ujchav6D4cOeVgIA/FkyBgAjnMfXH2BFtzEA2El8DcCaHidl17Z3q51V8NLl2/ZutbAVqT0OG3AXAAA=
   </data>
  </layer>
  <objectgroup name="objects" opacity="0.58">
@@ -89,18 +89,6 @@
   <object name="Enemy" type="enemy" x="144" y="400" width="64" height="16">
    <properties>
     <property name="direction" value="1"/>
-   </properties>
-  </object>
-  <object name="Ladder" type="ladder" x="128" y="144" width="96" height="80">
-   <properties>
-    <property name="angle" value="10"/>
-    <property name="chargeTime" value="50"/>
-    <property name="maxAngle" value="170"/>
-    <property name="maxRangeX" value="30"/>
-    <property name="maxRangeY" value="29"/>
-    <property name="minAngle" value="10"/>
-    <property name="minRangeX" value="8"/>
-    <property name="minRangeY" value="14"/>
    </properties>
   </object>
   <object name="switch" type="switch" x="272" y="208" width="16" height="16">

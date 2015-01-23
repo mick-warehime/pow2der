@@ -1,7 +1,5 @@
 package controls;
 
-import net.java.games.input.Controller;
-import net.java.games.input.ControllerEnvironment;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -19,6 +17,21 @@ import commands.MoveCommand;
 //Handles keybindings and player inputs
 public class GameControls {
 
+	//Wiimote button to integer mappings
+	public static final int WIIMOTE_A = 16;
+	public static final int WIIMOTE_B = 17;
+	public static final int WIIMOTE_X = 18;
+	public static final int WIIMOTE_Y = 19;
+	public static final int WIIMOTE_DLEFT = 14;
+	public static final int WIIMOTE_DRIGHT = 15;
+	public static final int WIIMOTE_DUP = 12;
+	public static final int WIIMOTE_DDOWN = 13;
+	public static final int WIIMOTE_RBUMPER = 21;
+	public static final int WIIMOTE_LBUMPER = 20;
+	public static final int WIIMOTE_SELECT = 8;
+	public static final int WIIMOTE_START = 7;
+	public static final int WIIMOTE_HOME = 9;
+	
 	private int[] mousePos = new int[2];
 	private InputProvider controlsInputProvider;
 	
@@ -41,14 +54,7 @@ public class GameControls {
 	}
 	
 	private void initializeKeyBindings(GameContainer gc){
-		Controller[] controllers=ControllerEnvironment.getDefaultEnvironment().getControllers();
 		
-		for (Controller c : controllers){			
-			if(c.getName().contains("Wiimote")){
-				joystick jstick = new joystick(c.getType());
-				System.out.println(jstick.getX_LeftJoystick_Value());
-			}
-		}
 		
 		//This translates keyboard/mouse inputs into commands, for the appropriate listeners
 		controlsInputProvider = new InputProvider(gc.getInput());
@@ -76,9 +82,8 @@ public class GameControls {
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), moveUp);
-		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);
-//		keyboardInputProvider.bindCommand(new ControllerButtonControl(0,1),);
-		controlsInputProvider.bindCommand(new ControllerButtonControl(0,2), interact);
-		//The left bumper is 5, the right is 6
+		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);	
+		controlsInputProvider.bindCommand(new ControllerButtonControl(0,this.WIIMOTE_A), interact);
+		
 	}
 }

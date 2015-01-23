@@ -1,6 +1,7 @@
 package actors;
 
 
+import graphics.ActorGraphics2;
 import graphics.PlayerGraphics;
 import main.Level;
 import main.CollisionHandler;
@@ -16,6 +17,7 @@ public class Player extends Actor {
 
 	private KeyboardInputListener keyboard;
 	private Rectangle rect;
+	private ActorGraphics2 testGraphics;
 	
 
 	public Player(int x, int y, CollisionHandler collisionHandler, int[] mousePos) throws SlickException {
@@ -36,11 +38,13 @@ public class Player extends Actor {
 		engine = new PlayerActionEngine(listener,status);
 		
 		this.graphics = new PlayerGraphics(status,"data/head.png");
+		
+		testGraphics = new ActorGraphics2("data/dwarf3.png", status);
 	}
 
 	public void render( Graphics g, int mapX, int mapY) {
-		((PlayerGraphics)graphics).render(g,(int) status.getX()-mapX, (int) status.getY() - mapY);
-		
+//		((PlayerGraphics)graphics).render(g,(int) status.getX()-mapX, (int) status.getY() - mapY);
+		testGraphics.render(g,(int) status.getX()-mapX, (int) status.getY() - mapY );
 	}
 
 	

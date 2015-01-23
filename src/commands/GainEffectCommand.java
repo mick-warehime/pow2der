@@ -7,10 +7,10 @@ import actors.ActionEngine;
 public class GainEffectCommand extends BasicCommand implements GenericCommand{
 
 	
-	private String effectName;
+	private int effectName;
 	private int duration;
 
-	public GainEffectCommand(String effectName, int duration) {
+	public GainEffectCommand(int effectName, int duration) {
 		super("Gain effect " + effectName);
 		this.effectName = effectName;
 		this.duration = duration;

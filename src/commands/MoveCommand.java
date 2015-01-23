@@ -3,6 +3,7 @@ package commands;
 import org.newdawn.slick.command.BasicCommand;
 
 import actors.ActionEngine;
+import actors.Effect;
 
 
 public class MoveCommand extends BasicCommand implements GenericCommand{
@@ -24,6 +25,12 @@ public class MoveCommand extends BasicCommand implements GenericCommand{
 	@Override
 	public void execute(ActionEngine engine){
 		engine.attemptRunTo(direction, value);
+		if( direction == 'x'){
+			engine.applyEffect(Effect.EFFECT_WALKING_X, 1);
+		}else{
+			engine.applyEffect(Effect.EFFECT_WALKING_Y, 1);
+		}
+		
 
 	}
 	

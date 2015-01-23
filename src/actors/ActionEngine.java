@@ -18,7 +18,6 @@ public class ActionEngine {
 	protected float vy = 0;
 	protected float runAcc = 0; //Default values
 	protected float maxSpeed = 0;
-	protected float climbSpeed = 0;
 
 
 
@@ -35,23 +34,26 @@ public class ActionEngine {
 		updateTimers();	
 	}
 
-	public void attemptRunTo(char direction, int value) {
-		
+	public void attemptRunTo(char xOrY, int direction) {
 
-		if (direction == 'x'){
-			if (value>0 ){
+		
+		if (xOrY == 'x'){
+			if (direction>0 ){
 				vx = Math.min(vx + runAcc, maxSpeed);
-			}else if(value<0){
+				status.setDirection('x', 1);
+			}else if(direction<0){
 				vx = Math.max(vx - runAcc, -maxSpeed);
 			} 
 		}
-		if (direction == 'y'){
-			if (value>0 ){
+		if (xOrY == 'y'){
+			if (direction>0 ){
 				vy = Math.min(vy + runAcc, maxSpeed);
-			}else if(value<0){
+			}else if(direction<0){
 				vy = Math.max(vy - runAcc, -maxSpeed);
 			} 
 		}
+		
+		status.setDirection(xOrY, direction);
 
 		return;
 
@@ -70,14 +72,14 @@ public class ActionEngine {
 		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
 		if (!displacedX){
-			status.gainEffect("x collision", 1);
+			status.gainEffect(Effect.EFFECT_X_COLLISION, 1);
 			vx = 0;
 		}
 
 		//Y movement and collision checking
 		boolean displacedY = attemptDisplacement(vy,'y');
 		if (!displacedY){
-			status.gainEffect("y collision", 1);
+			status.gainEffect(Effect.EFFECT_Y_COLLISION, 1);
 			vy = 0;
 		}
 
@@ -167,7 +169,7 @@ public class ActionEngine {
 		status.setY(destY);
 	}
 
-	public void applyEffect(String effectName, int duration) {
+	public void applyEffect(int effectName, int duration) {
 		status.gainEffect(effectName, duration);
 
 	}

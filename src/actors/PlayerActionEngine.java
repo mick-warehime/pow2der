@@ -29,8 +29,7 @@ public class PlayerActionEngine extends ActionEngine {
 		super(listener,status);
 		
 		this.runAcc = 2;
-		this.maxSpeed = 5;
-		this.climbSpeed = (float) 1.5;
+		this.maxSpeed = 2;
 	}
 
 	

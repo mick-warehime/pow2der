@@ -8,7 +8,6 @@ import gameobjects.MovingPlatform;
 import gameobjects.MultiDoor;
 import gameobjects.MultiWeightedSwitch;
 import gameobjects.GameObject;
-import gameobjects.Ladder;
 import gameobjects.ProgressPoint;
 import gameobjects.SpawnLocation;
 import gameobjects.Switch;
@@ -73,7 +72,6 @@ public class TileData {
 		parserDict.put("multiWeightedSwitch", MultiWeightedSwitch.class);
 		parserDict.put("progressPoint", ProgressPoint.class);
 		parserDict.put("teleporter", Teleporter.class);
-		parserDict.put("ladder", Ladder.class);
 		parserDict.put("turret", Turret.class);
 		parserDict.put("movingPlatform", MovingPlatform.class);
 		parserDict.put("enemy", Enemy.class);

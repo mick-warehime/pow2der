@@ -39,8 +39,8 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		
 		if(args.containsKey("direction")){
 			int dir = Integer.parseInt((String) args.get("direction"));
-			if (dir*status.getDirection()<0){//directions don't agree
-				status.flipDirection();
+			if (dir*status.getDirection('x')<0){//directions don't agree
+				status.setDirection('x',dir);
 			}
 		}else{
 		}
@@ -83,7 +83,7 @@ public class Enemy extends Actor implements InteractiveCollideable{
 	public void onCollisionDo(Class collidingObjectClass, Shape collidingObjectShape) {
 		// TODO Auto-generated method stub
 		if (collidingObjectClass.equals(Player.class)){
-			status.gainEffect("Collided with player", 1);
+			status.gainEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER, 1);
 		}
 	}
 
