@@ -1,0 +1,7 @@
+ [
+        {
+            "cmd": ["python","${file}","command1"],
+            "env": {"PYTHONPATH":"/Users/mick/Documents/workspace/pow2r/excel2xml/"},
+            "name": "xmlconvertr"
+        }
+    ]
