@@ -27,11 +27,11 @@ import net.java.games.input.ControllerEnvironment;
  * JInput javadoc: http://www.newdawnsoftware.com/resources/jinput/apidocs
  * 
  * 
- * More on the blog: http://theuzo007.wordpress.com/2012/09/02/joystick-in-java-with-jinput
+ * More on the blog: http://theuzo007.wordpress.com/2012/09/02/Joystick-in-java-with-jinput
  * 
  */
 
-public class joystick {
+public class Joystick {
     
     private Controller controller;
         
@@ -46,7 +46,7 @@ public class joystick {
      * 
      * @param controllerType Desired controller type.
      */
-    public joystick(Controller.Type controllerType)
+    public Joystick(Controller.Type controllerType)
     {
         initialize();
         initController(controllerType, null);
@@ -59,7 +59,7 @@ public class joystick {
      * @param controllerType_1 Desired controller type.
      * @param controllerType_2 Desired controller type.
      */
-    public joystick(Controller.Type controllerType_1, Controller.Type controllerType_2)
+    public Joystick(Controller.Type controllerType_1, Controller.Type controllerType_2)
     {
         initialize();
         initController(controllerType_1, controllerType_2);
@@ -104,7 +104,7 @@ public class joystick {
      * of the buttons into buttons array list that is used by getButtonsValues() 
      * and getButtonValue(int index) methods.
      * 
-     * @see joystick.joystick#pollController()
+     * @see Joystick.joystick#pollController()
      * 
      * @return True if controller is connected, false otherwise.
      */
@@ -254,7 +254,7 @@ public class joystick {
     /**
      * Value of axis named X Axis in percentage.
      * Percentages increases from left to right.
-     * If idle (in center) returns 50, if joystick axis is pushed to the left 
+     * If idle (in center) returns 50, if Joystick axis is pushed to the left 
      * edge returns 0 and if it's pushed to the right returns 100.
      * 
      * @return X Axis value in percentage.
@@ -282,7 +282,7 @@ public class joystick {
     /**
      * Value of axis named Y Axis in percentage.
      * Percentages increases from top to bottom.
-     * If idle (in center) returns 50, if joystick axis is pushed to the top 
+     * If idle (in center) returns 50, if Joystick axis is pushed to the top 
      * edge returns 0 and if it is pushed to the bottom returns 100.
      * 
      * @return Y Axis value in percentage.
@@ -310,7 +310,7 @@ public class joystick {
     /**
      * Value of axis named Z Rotation in percentage.
      * Percentages increases from top to bottom.
-     * If idle (in center) returns 50, if joystick axis is pushed to the top 
+     * If idle (in center) returns 50, if Joystick axis is pushed to the top 
      * edge returns 0 and if it is pushed to the bottom returns 100.
      * 
      * @return Z Rotation value in percentage.
@@ -338,7 +338,7 @@ public class joystick {
     /**
      * Value of axis named Z Axis in percentage.
      * Percentages increases from left to right.
-     * If idle (in center) returns 50, if joystick axis is pushed to the left 
+     * If idle (in center) returns 50, if Joystick axis is pushed to the left 
      * edge returns 0 and if it's pushed to the right returns 100.
      * 
      * @return Z Axis value in percentage.
@@ -366,7 +366,7 @@ public class joystick {
     /**
      * Value of axis named X Rotation in percentage.
      * Percentages increases from left to right.
-     * If idle (in center) returns 50, if joystick axis is pushed to the left 
+     * If idle (in center) returns 50, if Joystick axis is pushed to the left 
      * edge returns 0 and if it's pushed to the right returns 100.
      * 
      * @return X Rotation value in percentage.
@@ -394,7 +394,7 @@ public class joystick {
     /**
      * Value of axis named Y Rotation in percentage.
      * Percentages increases from top to bottom.
-     * If idle (in center) returns 50, if joystick axis is pushed to the top 
+     * If idle (in center) returns 50, if Joystick axis is pushed to the top 
      * edge returns 0 and if it is pushed to the bottom returns 100.
      * 
      * @return Y Rotation value in percentage.
@@ -426,16 +426,16 @@ public class joystick {
     
     
     
-    /* Left joystick */
+    /* Left Joystick */
     
     /**
-     * X position of left controller joystick.
+     * X position of left controller Joystick.
      * 
      * The same as method getXAxisValue().
      * 
-     * @see joystick.joystick#getXAxisValue()
+     * @see Joystick.joystick#getXAxisValue()
      * 
-     * @return Float value (from -1.0f to 1.0f) corresponding to left controller joystick on x coordinate.
+     * @return Float value (from -1.0f to 1.0f) corresponding to left controller Joystick on x coordinate.
      */
     public float getX_LeftJoystick_Value()
     {
@@ -443,13 +443,13 @@ public class joystick {
     }
     
     /**
-     * X position, in percentages, of left controller joystick.
+     * X position, in percentages, of left controller Joystick.
      * 
      * The same as method getXAxisPercentage().
      * 
-     * @see joystick.joystick#getXAxisPercentage()
+     * @see Joystick.joystick#getXAxisPercentage()
      * 
-     * @return Int value (from 0 to 100) corresponding to left controller joystick on x coordinate.
+     * @return Int value (from 0 to 100) corresponding to left controller Joystick on x coordinate.
      */
     public int getX_LeftJoystick_Percentage()
     {
@@ -458,13 +458,13 @@ public class joystick {
     
     
     /**
-     * Y position of left controller joystick.
+     * Y position of left controller Joystick.
      * 
      * The same as method getYAxisValue().
      * 
-     * @see joystick.joystick#getYAxisValue()
+     * @see Joystick.joystick#getYAxisValue()
      * 
-     * @return Float value (from -1.0f to 1.0f) corresponding to left controller joystick on y coordinate.
+     * @return Float value (from -1.0f to 1.0f) corresponding to left controller Joystick on y coordinate.
      */
     public float getY_LeftJoystick_Value()
     {
@@ -472,13 +472,13 @@ public class joystick {
     }
     
     /**
-     * Y position, in percentages, of left controller joystick.
+     * Y position, in percentages, of left controller Joystick.
      * 
      * The same as method getYAxisPercentage().
      * 
-     * @see joystick.joystick#getYAxisPercentage()
+     * @see Joystick.joystick#getYAxisPercentage()
      * 
-     * @return Int value (from 0 to 100) corresponding to left controller joystick on y coordinate.
+     * @return Int value (from 0 to 100) corresponding to left controller Joystick on y coordinate.
      */
     public int getY_LeftJoystick_Percentage()
     {
@@ -486,18 +486,18 @@ public class joystick {
     }
     
     
-    /* Right joystick */
+    /* Right Joystick */
 
     /**
-     * X position of right controller joystick.
+     * X position of right controller Joystick.
      * 
      * The same as method getZAxisValue() if controller type is Controller.Type.STICK. 
      * The same as method getXRotationValue() if controller type is Controller.Type.GAMEPAD.
      * 
-     * @see joystick.joystick#getZAxisValue()
-     * @see joystick.joystick#getXRotationValue()
+     * @see Joystick.joystick#getZAxisValue()
+     * @see Joystick.joystick#getXRotationValue()
      * 
-     * @return Float value (from -1.0f to 1.0f) corresponding to right controller joystick on x coordinate.
+     * @return Float value (from -1.0f to 1.0f) corresponding to right controller Joystick on x coordinate.
      */
     public float getX_RightJoystick_Value()
     {
@@ -507,6 +507,7 @@ public class joystick {
         if(this.controller.getType() == Controller.Type.STICK)
         {
             xValueRightJoystick = this.getZAxisValue();
+            
         }
         // gamepad type controller
         else
@@ -518,15 +519,15 @@ public class joystick {
     }
     
     /**
-     * X position, in percentages, of right controller joystick.
+     * X position, in percentages, of right controller Joystick.
      * 
      * The same as method getZAxisPercentage() if controller type is Controller.Type.STICK. 
      * The same as method getXRotationPercentage() if controller type is Controller.Type.GAMEPAD.
      * 
-     * @see joystick.joystick#getZAxisPercentage()
-     * @see joystick.joystick#getXRotationPercentage()
+     * @see Joystick.joystick#getZAxisPercentage()
+     * @see Joystick.joystick#getXRotationPercentage()
      * 
-     * @return Int value (from 0 to 100) corresponding to right controller joystick on x coordinate.
+     * @return Int value (from 0 to 100) corresponding to right controller Joystick on x coordinate.
      */
     public int getX_RightJoystick_Percentage()
     {
@@ -548,15 +549,15 @@ public class joystick {
     
     
     /**
-     * Y position of right controller joystick.
+     * Y position of right controller Joystick.
      * 
      * The same as method getZRotationValue() if controller type is Controller.Type.STICK. 
      * The same as method getYRotationValue() if controller type is Controller.Type.GAMEPAD.
      * 
-     * @see joystick.joystick#getZRotationValue()
-     * @see joystick.joystick#getYRotationValue()
+     * @see Joystick.joystick#getZRotationValue()
+     * @see Joystick.joystick#getYRotationValue()
      * 
-     * @return Float value (from -1.0f to 1.0f) corresponding to right controller joystick on y coordinate.
+     * @return Float value (from -1.0f to 1.0f) corresponding to right controller Joystick on y coordinate.
      */
     public float getY_RightJoystick_Value()
     {
@@ -566,10 +567,12 @@ public class joystick {
         if(this.controller.getType() == Controller.Type.STICK)
         {
             yValueRightJoystick = this.getZRotationValue();
+            
         }
         // gamepad type controller
         else
         {
+        	
             yValueRightJoystick = this.getYRotationValue();
         }
         
@@ -577,15 +580,15 @@ public class joystick {
     }
     
     /**
-     * Y position, in percentages, of right controller joystick.
+     * Y position, in percentages, of right controller Joystick.
      * 
      * The same as method getZRotationPercentage() if controller type is Controller.Type.STICK. 
      * The same as method getYRotationPercentage() if controller type is Controller.Type.GAMEPAD.
      * 
-     * @see joystick.joystick#getZRotationPercentage()
-     * @see joystick.joystick#getYRotationPercentage()
+     * @see Joystick.joystick#getZRotationPercentage()
+     * @see Joystick.joystick#getYRotationPercentage()
      * 
-     * @return Int value (from 0 to 100) corresponding to right controller joystick on y coordinate.
+     * @return Int value (from 0 to 100) corresponding to right controller Joystick on y coordinate.
      */
     public int getY_RightJoystick_Percentage()
     {

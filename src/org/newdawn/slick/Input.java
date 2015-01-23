@@ -27,7 +27,7 @@ public class Input {
 	/** The maximum number of buttons on controllers */
 	private static final int MAX_BUTTONS = 100;
 	
-	/** Default joystick tolerance **/
+	/** Default Joystick tolerance **/
 	private static final float DEFAULT_JOYSTICK_TOLERANCE = 0.5f;
 	private static final float WIIMOTE_JOYSTICK_TOLERANCE = 0.2f;
 	
@@ -1084,6 +1084,7 @@ public class Input {
 				if ((controller.getButtonCount() >= 3) && (controller.getButtonCount() < MAX_BUTTONS)) {
 					controllers.add(controller);
 				}
+				
 			}
 			
 			Log.info("Found "+controllers.size()+" controllers");
