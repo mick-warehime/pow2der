@@ -15,24 +15,21 @@ import commands.DieCommand;
 import commands.GlobalInputListener;
 import gameobjects.InteractiveCollideable;
 import graphics.ActorGraphics;
-import graphics.EnemyGraphics;
 
 public class Enemy extends Actor implements InteractiveCollideable{
 
 	private LemmingBehavior behavior;
-	private int x;
-	private int y;
-	protected Rectangle rect;
+	
 
 	public Enemy(int x, int y, int w, int h, String name, TiledMap map, Properties args ) throws SlickException {
 		super();
 
-		this.x = x*map.getTileWidth();
-		this.y = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
+		int rectTopLeftX = x*map.getTileWidth();
+		int rectTopLeftY = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
 
 		listener = new GlobalInputListener();
 		
-		rect = new Rectangle(this.x,this.y,32, 48);
+		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 48);
 
 		status = new Status(rect);
 		
@@ -42,22 +39,22 @@ public class Enemy extends Actor implements InteractiveCollideable{
 			if (dir*status.getDirection('x')<0){//directions don't agree
 				status.setDirection('x',dir);
 			}
-		}else{
 		}
+		graphics = new ActorGraphics("data/dwarf3.png", status);
 
- 		graphics = new EnemyGraphics(status,"data/enemy1.png");
+		
  	}
 
 	public Enemy(int xPixels, int yPixels) throws SlickException {
 		super();
 		
-		rect = new Rectangle(xPixels,yPixels,32,48);
+		Rectangle rect = new Rectangle(xPixels,yPixels,32,48);
 		 
 		listener = new GlobalInputListener();
 				
 		status = new Status(rect);
 
- 		graphics = new EnemyGraphics(status,"data/enemy1.png");
+		graphics = new ActorGraphics("data/dwarf3.png", status);
  	}
 	
 	public void incorporateCollisionHandler(CollisionHandler collisionHandler){
@@ -80,15 +77,14 @@ public class Enemy extends Actor implements InteractiveCollideable{
 	}
 
 	@Override
-	public void onCollisionDo(Class collidingObjectClass, Shape collidingObjectShape) {
-		// TODO Auto-generated method stub
+	public void onCollisionDo(Class<?> collidingObjectClass, Shape collidingObjectShape) {
 		if (collidingObjectClass.equals(Player.class)){
 			status.gainEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER, 1);
 		}
 	}
 
 	@Override
-	public ArrayList<Command> onCollisionBroadcast(Class collidingObjectClass, Shape collidingObjectShape) {
+	public ArrayList<Command> onCollisionBroadcast(Class<?> collidingObjectClass, Shape collidingObjectShape) {
 		ArrayList<Command> list = new ArrayList<Command>();
 		if (collidingObjectClass.equals(Player.class)){
 			list.add( new DieCommand());
@@ -96,9 +92,6 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		return list;
 	}
 	
-	public void render( int mapX, int mapY) {
-		graphics.render((int) rect.getX() - mapX, (int) rect.getY() - mapY); 
-	}
 
 
 
