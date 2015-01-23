@@ -9,8 +9,18 @@ Represents items that may be picked up and used in the game. Required functional
 * Monetary value?
 * Equip and unequip functionality, if relevant
 
+### Parser
+
 ### Item bonuses
 + bonuses like 'dress like a wizard?'
+
+### Potion / Enchant System
++ potions can do things like create flaming or poisoned etc
++ weapons can have sockets for gems
+..* gems can have emergent properties like gem a + gem b grants lightening sword blah blah
+
+### randomized magical perks
++ make a distribution of the number of perks 
 
 Inventory
 === 
