@@ -43,7 +43,7 @@ public class Player extends Actor {
 	}
 
 	public void render( Graphics g, int mapX, int mapY) {
-		((PlayerGraphics)graphics).render(g,(int) status.getX()-mapX, (int) status.getY() - mapY);
+//		((PlayerGraphics)graphics).render(g,(int) status.getX()-mapX, (int) status.getY() - mapY);
 		testGraphics.render(g,(int) status.getX()-mapX, (int) status.getY() - mapY );
 	}
 

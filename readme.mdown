@@ -38,3 +38,28 @@ Basic drawing for actors.
 * There should be some precoded way of loading sprites correctly
 * Later: item drawing.
 
+Other classes/features
+===
+
+* Items--> Drops/ inventory system
+* Enemies -->
+* - Bosses
+* - Action Engine, 
+* - Status --> Attributes, Effects
+* - Input Listeners --> Commands
+* Graphics -->
+* - Loading from spritesheets, filenames set in data
+* Level Generation -->
+* - Layout, enemies, items, stores, terrain, doors, optional quests, secrets
+* Player -->
+* - Inventory, Money
+* - Skills/abilities --> books, leveling system , perktree
+* - races, advantages/disadvantages
+* Load/save system (key bindings, level + player data)
+* Game map --> Travel between poinnts
+* Combat engine
+* Lighting effects 
+
+
+
+

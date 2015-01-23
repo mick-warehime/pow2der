@@ -15,10 +15,15 @@ public class ActorGraphics2 {
 	/* Right now the appropriate sprite locations are hard-coded
 	 * but there should be a way to load them from data.
 	 */
+	//Actions
+	private static int ACTIONS = 4;
 	private static int STAND = 0;
 	private static int WALK1 = 1;
 	private static int WALK2 = 2;
+	private static int WALK3 = 0;
 	private static int INTERACT = 3;
+	//Directions
+	private static int DIRECTIONS = 8;
 	private static int RIGHT = 0;
 	private static int DOWNRIGHT = 1;
 	private static int DOWN = 2;
@@ -27,10 +32,11 @@ public class ActorGraphics2 {
 	private static int UPLEFT = 5;
 	private static int UP = 6;
 	private static int UPRIGHT = 7;
+	
 	private static int SPRITEWIDTHPIXELS = 32;
 	private static int SPRITEHEIGHTPIXELS = 32;
-	private static int DIRECTIONS = 8;
-	private static int ACTIONS = 4;
+	
+	
 	
 	
 	
@@ -38,6 +44,10 @@ public class ActorGraphics2 {
 	private Status status;
 	private int currentActorDirection = 0;
 	private int currentActorAction = 0;
+	
+	private int walkSpriteDuration = 5;
+	private int walkSpriteCounter = 0;
+	
 	
 	public ActorGraphics2(String spriteSheetFileName, Status status) throws SlickException{
 		
@@ -54,7 +64,7 @@ public class ActorGraphics2 {
 		
 		determineCurrentActorDirection();
 		determineCurrentActorAction();
-		System.out.println("Current action:" + currentActorAction);
+		
 		spriteSheet.getSubImage(currentActorAction,currentActorDirection ).draw(renderX, renderY);
 		
 	}
@@ -72,7 +82,20 @@ public class ActorGraphics2 {
 			return;
 		}
 		if (isWalkingX || isWalkingY){
-			currentActorAction = ActorGraphics2.WALK1;
+			
+			walkSpriteCounter =(1 + walkSpriteCounter)%walkSpriteDuration;
+			if (walkSpriteCounter == 0){
+				if (currentActorAction == WALK1){
+					currentActorAction = WALK2;
+				}else if (currentActorAction == WALK2){
+					currentActorAction = WALK3;
+				}else if (currentActorAction == WALK3){
+					currentActorAction = WALK1;
+				}else{ currentActorAction = WALK1;}
+					
+			}
+			
+			
 			return;
 		}
 		currentActorAction = ActorGraphics2.STAND;
