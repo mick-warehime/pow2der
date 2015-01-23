@@ -34,23 +34,26 @@ public class ActionEngine {
 		updateTimers();	
 	}
 
-	public void attemptRunTo(char direction, int value) {
-		
+	public void attemptRunTo(char xOrY, int direction) {
 
-		if (direction == 'x'){
-			if (value>0 ){
+		
+		if (xOrY == 'x'){
+			if (direction>0 ){
 				vx = Math.min(vx + runAcc, maxSpeed);
-			}else if(value<0){
+				status.setDirection('x', 1);
+			}else if(direction<0){
 				vx = Math.max(vx - runAcc, -maxSpeed);
 			} 
 		}
-		if (direction == 'y'){
-			if (value>0 ){
+		if (xOrY == 'y'){
+			if (direction>0 ){
 				vy = Math.min(vy + runAcc, maxSpeed);
-			}else if(value<0){
+			}else if(direction<0){
 				vy = Math.max(vy - runAcc, -maxSpeed);
 			} 
 		}
+		
+		status.setDirection(xOrY, direction);
 
 		return;
 

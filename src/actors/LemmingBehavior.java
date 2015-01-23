@@ -45,7 +45,8 @@ public class LemmingBehavior extends Behavior implements CommandProvider{
 	private void decideMovement(){
 		
 		if (status.hasEffect(Effect.EFFECT_X_COLLISION)){
-			status.flipDirection('x');
+			int oldXDir = status.getDirection('x');
+			status.setDirection('x',-oldXDir);
 		}
 		
 		commandStack.add(new MoveCommand('x', status.getDirection('x')));

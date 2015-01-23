@@ -162,10 +162,12 @@ public class Status {
 	
 
 	
-	public void flipDirection(char xOrY) {
+	public void setDirection(char xOrY, int direction) {
 		assert (xOrY == 'x' || xOrY == 'y') : "x or y inputs only";
-		if (xOrY == 'x'){ xDirection *=-1;}
-		else {yDirection *= -1;}
+		assert (direction*direction ==1): "+1 or -1 values only";
+		
+		if (xOrY == 'x'){ xDirection = direction;}
+		else {yDirection = direction;}
 	}
 	
 

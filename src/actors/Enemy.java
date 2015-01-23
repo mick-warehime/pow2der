@@ -40,7 +40,7 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		if(args.containsKey("direction")){
 			int dir = Integer.parseInt((String) args.get("direction"));
 			if (dir*status.getDirection('x')<0){//directions don't agree
-				status.flipDirection('x');
+				status.setDirection('x',dir);
 			}
 		}else{
 		}

@@ -39,7 +39,7 @@ public class Player extends Actor {
 		
 		this.graphics = new PlayerGraphics(status,"data/head.png");
 		
-		testGraphics = new ActorGraphics2("data/dwarf2.png", status);
+		testGraphics = new ActorGraphics2("data/dwarf3.png", status);
 	}
 
 	public void render( Graphics g, int mapX, int mapY) {
