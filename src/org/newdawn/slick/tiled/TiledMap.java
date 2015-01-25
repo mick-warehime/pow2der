@@ -574,7 +574,7 @@ public class TiledMap {
 	}
 
 	/**
-	 * Save parser for strings to ints
+	 * Save ItemParser for strings to ints
 	 * 
 	 * @param value
 	 *            The string to parse

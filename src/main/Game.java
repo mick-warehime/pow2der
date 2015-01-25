@@ -1,29 +1,20 @@
 package main;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
+import org.xml.sax.SAXException;
+
 import controls.GameControls;
 import gameobjects.ProgressPoint;
 import actors.Player;
-
-// Figure out how PlayerGraphics.render is putting the hover flame in the
-// right place... 
-
-//   platforms that have a limited number of times you can be on them?
-
-//  find a way to skip empty objects on .tmx
-
-//  weird bug when you jump ether objects tend to lag behind in drawing?? 
-//  maybe check the order things are drawn check int vs float
-
-//  what happens when a timed door needs to come back and there is an ether object that was put in the way?
-
-// refactor action engine a bit (w.r.t. jump timers, etc.)
-
-//mick to do
-//
-//  put enemy move direction in status. make lemming behavior get move direction from status
-//  add wait timer and multiple enemies to the spawnlocation
+import items.ItemParser;
 
 public class Game extends BasicGame {
 
@@ -46,11 +37,12 @@ public class Game extends BasicGame {
 	private TextField inputText;
 	private GameControls controls;
 
-
+	private ItemParser parser;
 
 
 	public Game() {
-		super("Mick is not a nice guy");
+		super("Israel, o Israel, oOOooOOo Israel");
+
 	}
 
 	@Override
@@ -74,7 +66,7 @@ public class Game extends BasicGame {
 			int mouseY = gc.getInput().getMouseY()+level.getMapY();
 			controls.setMousePosition(mouseX,mouseY);
 
-			
+
 
 
 			terri.update();
@@ -90,7 +82,7 @@ public class Game extends BasicGame {
 
 
 		if ( gc.getInput().isKeyPressed(Input.KEY_P)){
-			
+
 			if ( gameState == LEVEL_STATE){
 				gameState = PAUSE_STATE;
 			}
@@ -108,8 +100,6 @@ public class Game extends BasicGame {
 		controls = new GameControls(gc);
 
 		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
-
-
 
 	}
 
@@ -131,9 +121,34 @@ public class Game extends BasicGame {
 		//Keyboard stuff
 		controls.addPlayerListener(terri.getListener());
 
+
+
+		// load the times from file dunno why the try catchs are required
+		try {
+			loadItemsFromFile();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
-
+	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException{
+		parser = new ItemParser("items/items.xml");
+		List<Map<String,String>> items = parser.getItemMaps();
+		for (int i = 0; i < 60; i++){
+			System.out.println(items.get(i));
+		}
+	}
 
 
 
@@ -156,6 +171,7 @@ public class Game extends BasicGame {
 			terri.render(g, level.getMapX(),level.getMapY());
 		}
 	}
+
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new Game());
