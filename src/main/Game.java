@@ -1,5 +1,6 @@
 package main;
 
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +12,15 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 import org.xml.sax.SAXException;
 
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
+
+import org.newdawn.slick.*;
+import org.newdawn.slick.gui.TextField;
+
 import controls.GameControls;
+import controls.Joystick;
+import controls.WiimoteJoysticks;
 import gameobjects.ProgressPoint;
 import actors.Player;
 import items.ItemParser;
@@ -36,8 +45,10 @@ public class Game extends BasicGame {
 	private int gameState = LOAD_STATE;
 	private TextField inputText;
 	private GameControls controls;
-
 	private ItemParser parser;
+	private GameControls gameControls;
+	
+	private WiimoteJoysticks jsticks;
 
 
 	public Game() {
@@ -64,7 +75,7 @@ public class Game extends BasicGame {
 
 			int mouseX = gc.getInput().getMouseX()+level.getMapX();
 			int mouseY = gc.getInput().getMouseY()+level.getMapY();
-			controls.setMousePosition(mouseX,mouseY);
+			gameControls.setMousePosition(mouseX,mouseY);
 
 
 
@@ -97,9 +108,10 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 
-		controls = new GameControls(gc);
+		gameControls = new GameControls(gc);
 
 		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
+
 
 	}
 
@@ -111,15 +123,15 @@ public class Game extends BasicGame {
 		}
 
 		level.setProgressPoint(progress);
-		level.setMousePosition(controls.getMousePos());
+		level.setMousePosition(gameControls.getMousePos());
 		// i dont like this initialization
 		CollisionHandler collisionHandler = level.getCollisionHandler();
 
-		terri = new Player(level.getProgressX(),level.getProgressY(),collisionHandler, controls.getMousePos());
+		terri = new Player(level.getProgressX(),level.getProgressY(),collisionHandler, gameControls.getMousePos());
 
 
 		//Keyboard stuff
-		controls.addPlayerListener(terri.getListener());
+		gameControls.addPlayerListener(terri.getListener());
 
 
 
@@ -145,9 +157,7 @@ public class Game extends BasicGame {
 	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException{
 		parser = new ItemParser("items/items.xml");
 		List<Map<String,String>> items = parser.getItemMaps();
-		for (int i = 0; i < 60; i++){
-			System.out.println(items.get(i));
-		}
+		
 	}
 
 
@@ -155,6 +165,9 @@ public class Game extends BasicGame {
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 
+//		System.out.println("Left joystick: "+  jsticks.LeftXValue()+"," +jsticks.LeftYValue() );
+//		System.out.println("Right joystick: "+  jsticks.RightXValue()+"," +jsticks.RightYValue() );
+		
 		//To be added for load screen
 		//		if (gameState == LOAD_STATE){
 		//			g.drawString("Enter Level: " , height/2, height/2-20);

@@ -32,11 +32,16 @@ public class GameControls {
 	public static final int WIIMOTE_START = 7;
 	public static final int WIIMOTE_HOME = 9;
 	
+	public Joystick joystick;
 	private int[] mousePos = new int[2];
 	private InputProvider controlsInputProvider;
 	
 	public GameControls(GameContainer gc){
 		initializeKeyBindings(gc);
+
+		
+		
+		
 	}
 
 	public void setMousePosition(int mouseX, int mouseY) {

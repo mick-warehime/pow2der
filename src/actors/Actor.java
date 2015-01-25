@@ -3,6 +3,7 @@ package actors;
 import graphics.ActorGraphics;
 import main.CollisionHandler;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -28,7 +29,9 @@ public abstract class Actor {
 
  
 	
-	public  void render( int mapX, int mapY){};
+	public void render( Graphics g, int mapX, int mapY) {
+		graphics.render(g,(int) status.getX()-mapX, (int) status.getY() - mapY);
+	}
 	
 	
 	
