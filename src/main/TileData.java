@@ -4,13 +4,9 @@ package main;
 //import etherable.Elevator;
 import gameobjects.DeadlyObject;
 import gameobjects.Door;
-import gameobjects.MovingPlatform;
 import gameobjects.GameObject;
 import gameobjects.ProgressPoint;
-import gameobjects.SpawnLocation;
-import gameobjects.Switch;
 import gameobjects.Teleporter;
-import gameobjects.Turret;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -60,13 +56,9 @@ public class TileData {
 
 		parserDict.put("deadly", DeadlyObject.class);
 		parserDict.put("door", Door.class);
-		parserDict.put("switch", Switch.class);
 		parserDict.put("progressPoint", ProgressPoint.class);
 		parserDict.put("teleporter", Teleporter.class);
-		parserDict.put("turret", Turret.class);
-		parserDict.put("movingPlatform", MovingPlatform.class);
 		parserDict.put("enemy", Enemy.class);
-		parserDict.put("spawnLocation", SpawnLocation.class);
 
 	}
 
@@ -82,13 +74,7 @@ public class TileData {
 			constructFromData(map,grpID,oi);
 		}
 				
-		// Add swtich targets
-		for(GameObject gObj: gameObjects){
-			if(gObj instanceof Switch ){
-				
-				gObj.setTarget(gameObjects);
-			}
-		}
+		
 		
 
 	}

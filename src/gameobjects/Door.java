@@ -13,6 +13,7 @@ public class Door extends GameObject implements Interactive{
 	public Door(int x, int y, int w, int h, String name, TiledMap map,
 			Properties args) throws SlickException {
 		super(x, y, w, h, name, map, args);
+		this.proximity = 10;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -31,9 +32,13 @@ public class Door extends GameObject implements Interactive{
 
 	@Override
 	public void interact(int interactionType) {
-		if (interactionType == Interactive.INTERACTION_TOGGLE){
-			open = !open;
+		if (interactionType != Interactive.INTERACTION_TOGGLE){
+			return;
 		}
+		
+		if (this.collisionHandler.isCollidedWithActor(this.shape)){return;}
+		
+		open = !open;
 		
 	}
 }
