@@ -3,14 +3,12 @@ package main;
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
-import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
 import actors.Player;
 import commands.CommandProvider;
-import gameobjects.Door;
 import gameobjects.GameObject;
 import gameobjects.Interactive;
 import gameobjects.InteractiveCollideable;
@@ -29,8 +27,6 @@ public class CollisionHandler implements CommandProvider {
 
 	public CollisionHandler(ArrayList<Rectangle> blockedList){
 		this.blocks = blockedList;
-
-
 	}
 
 
@@ -38,42 +34,12 @@ public class CollisionHandler implements CommandProvider {
 
 		this.gameObjects = gameObjects;
 		this.actors = actors;
-		this.interactiveGameObjects = interactiveCollideables;
-
-		//		populateInteractiveCollideables();
-
+		this.interactiveGameObjects = interactiveCollideables;	
 	}
-
-	//	private void populateInteractiveCollideables() {
-	//		interactiveGameObjects = new ArrayList<InteractiveCollideable>();
-	//
-	//		for (GameObject gObj: gameObjects){
-	//			if (gObj instanceof InteractiveCollideable){
-	//				interactiveGameObjects.add((InteractiveCollideable) gObj);
-	//			}
-	//		}
-	//
-	//		for (Actor actor: actors){
-	//			if (actor instanceof InteractiveCollideable){
-	//				interactiveGameObjects.add((InteractiveCollideable) actor);
-	//			}
-	//		}
-	//
-	//
-	//	}
-
 
 	public void addPlayerRect(Rectangle playerRect){
 		this.playerRect = playerRect;		
 	}
-
-
-
-
-
-
-
-
 
 	//Returns a list of interactive game objects near the player
 	public ArrayList<GameObject> interactiveObjectsNearRect(Rectangle rect){
@@ -85,23 +51,10 @@ public class CollisionHandler implements CommandProvider {
 				if (gObj.isNear(rect)){
 					output.add(gObj);
 				}
-
 			}
 		}
-
 		return output;
 	}
-
-
-
-	public boolean canPlaceEtherAt(Shape shape){
-		boolean answer = !isCollided(shape);
-		answer = answer && !playerRect.intersects(shape);
-		answer = answer && !isCollidedWithActor(shape);
-		answer = answer && !isCollidedWithDoor(shape);
-		return answer;
-	}
-
 
 	//Checks for collisions with blocks and game Objects
 	public boolean isCollided(Shape shape){	
@@ -119,19 +72,6 @@ public class CollisionHandler implements CommandProvider {
 			if(shape.intersects(r)){
 				return true;
 			}	
-		}
-		return false;
-	}
-
-	public boolean isCollidedWithDoor(Shape shape){
-		for(GameObject gObj: gameObjects){
-			if(gObj instanceof Door){
-				if(shape.intersects(gObj.getShape())){
-					return true;
-				}
-
-			}
-
 		}
 		return false;
 	}
@@ -169,63 +109,6 @@ public class CollisionHandler implements CommandProvider {
 
 	public ArrayList<Command> getCommands(){
 		return resolveInteractiveCollisions(playerRect, Player.class);
-	}
-
-
-
-	//Checks if the straight line between two shapes intersects
-	// any other collideable shape
-	public boolean lineOfSightCollision(Shape shape, Shape shape2) {
-
-
-		//Make a line from centers of player and object
-		float x1 = shape.getCenterX();
-		float y1 = shape.getCenterY();
-		float x2 = shape2.getCenterX();
-		float y2 = shape2.getCenterY();
-
-		Line line = new Line(x1, y1, x2, y2);
-
-		//Check if collideable Game objects are intersecting 
-		// this line, other than the inputs
-		for(GameObject gObj: gameObjects){
-			if(gObj.getShape() != shape && gObj.getShape() != shape2 ){
-				if(line.intersects(gObj.getShape())){
-					return true;
-				}
-			}
-		}
-	
-
-		for (Actor actor: actors){
-			if(actor.canCollide()){
-				if(actor.getShape() != shape && actor.getShape() != shape2 ){
-					if(line.intersects(actor.getShape())){
-						return true;
-					}
-				}
-			}
-		} 
-
-		//Also check the basic game tiles
-		for(Rectangle block :blocks){
-			if(line.intersects(block)){
-				return true;
-			}
-		}
-
-		return false;
-
-
-	}
-
-
-
-
-	//Returns if the line of sight from the player to an EtherObject
-	// is collided with any game objects
-	public boolean lineOfSightCollisionToPlayer(Shape shape){
-		return lineOfSightCollision(shape,playerRect);
 	}
 
 
