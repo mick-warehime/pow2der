@@ -1,6 +1,8 @@
 package items;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 import org.newdawn.slick.Image;
 
 public class Armor extends Item{
@@ -10,15 +12,15 @@ public class Armor extends Item{
 	private String material;
 	private String worn;
 
-	public Armor(String name, Integer type, Image sprite, Integer weight, Integer value, 
-			boolean stackable, ArrayList<String> properties, Integer AC, String worn, String material) {
-		super(name, type, sprite, weight, value, stackable, properties);
-
-		this.AC = AC;
-		this.worn = worn;
-		this.material = material;
+	public Armor(Map<String, String> itm) {
 		
-
+		super(itm);
+		
+		
+		this.AC = (int) Float.parseFloat(itm.get("ac"));
+		this.worn = itm.get("worn");
+		this.material = itm.get("material");
+		
 	}
 
 

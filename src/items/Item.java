@@ -1,6 +1,7 @@
 package items;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.newdawn.slick.Image;
 
@@ -9,27 +10,30 @@ public class Item {
 	protected String name;
 	protected Image sprite;
 	protected Integer value;
-	protected Integer type;
+	protected String type;
 	protected boolean stackable;
 	protected Integer weight;
 	protected ArrayList<String> properties;
 	
-	public Item(String name, Integer type, Image sprite, Integer weight, Integer value, boolean stackable, ArrayList<String> properties2){		
-		this.type = type;
-		this.sprite = sprite; 
-		this.value = value;
-		this.stackable = stackable;	
+	public Item(Map<String, String> itm){		
 		
-		if(properties != null){
-			for (String p : properties){
-				addProperty(p);
-			}
-		}
+		this.type = itm.get("itemType");
+//		this.sprite = itm.get("sprite"); 
+//		this.value = Integer.parseInt(itm.get("value"));
+//		this.stackable = itm.get("stackable");	
+		
+//		if(properties != null){
+//			for (String p : properties){
+//				addProperty(p);
+//			}
+//		}
 		
 	}
 	
 	
-	public Integer getItemType() {
+
+
+	public String getItemType() {
 		return type;
 	}
 	

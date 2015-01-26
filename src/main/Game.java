@@ -23,6 +23,7 @@ import controls.Joystick;
 import controls.WiimoteJoysticks;
 import gameobjects.ProgressPoint;
 import actors.Player;
+import items.ItemBuilder;
 import items.ItemParser;
 
 public class Game extends BasicGame {
@@ -157,7 +158,7 @@ public class Game extends BasicGame {
 	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException{
 		parser = new ItemParser("items/items.xml");
 		List<Map<String,String>> items = parser.getItemMaps();
-		
+		ItemBuilder builder = new ItemBuilder(items);
 	}
 
 
