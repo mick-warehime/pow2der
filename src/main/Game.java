@@ -67,7 +67,7 @@ public class Game extends BasicGame {
 			//				initializeLevel(currentLevel);
 			//			}
 			gameState = LEVEL_STATE;
-			currentLevel = 0;
+			currentLevel = 10;
 			initializeLevel(currentLevel);
 
 		}
@@ -157,11 +157,13 @@ public class Game extends BasicGame {
 
 	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException{
 		parser = new ItemParser("items/items.xml");
-		List<Map<String,String>> items = parser.getItemMaps();
-		ItemBuilder builder = new ItemBuilder(items);
+		
+		List<Map<String,String>> itemMaps = parser.getItemMaps();
+		
+		ItemBuilder builder = new ItemBuilder(itemMaps);
+		
+		
 	}
-
-
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {

@@ -11,7 +11,10 @@ public class ItemBuilder {
 	private HashMap<String,ArrayList<Integer>> itemTypeMap = new HashMap<String, ArrayList<Integer>>();
 	private ArrayList<String> itemTypes = new ArrayList<String>();
 
-
+//	public static final int TYPEARMOR = 1;
+	
+	
+	
 	public ItemBuilder(List<Map<String,String>> itemMaps){
 
 		this.itemMaps = itemMaps;
@@ -20,7 +23,7 @@ public class ItemBuilder {
 		
 		
 		// item types [armor, weapons, books, misc]
-
+		
 		
 	}
 
