@@ -9,7 +9,6 @@ import org.newdawn.slick.tiled.TiledMap;
 import actors.Actor;
 import gameobjects.GameObject;
 import gameobjects.InteractiveCollideable;
-import gameobjects.ObjectCreator;
 import gameobjects.ProgressPoint;
 
 
@@ -38,7 +37,6 @@ public class Level {
 	//	private TileData tileData;
 	private ArrayList<GameObject> gameObjects;
 	private ArrayList<Actor> actors;
-	private ArrayList<ObjectCreator> creators;
 	private ArrayList<InteractiveCollideable> collideables;
 	private int[] mousePos;
 
@@ -66,18 +64,6 @@ public class Level {
 		this.actors = tileData.getActors();
 
 
-		//Add object creators 
-		this.creators = new ArrayList<ObjectCreator>();
-		for (GameObject gObj:gameObjects){
-			if(gObj instanceof ObjectCreator){
-				creators.add((ObjectCreator) gObj);
-			}
-		}
-		for (Actor actor:actors){
-			if(actor instanceof ObjectCreator){
-				creators.add((ObjectCreator) actor);
-			}
-		}
 
 		//Add interactive Collideables
 		this.collideables = new ArrayList<InteractiveCollideable>();
@@ -135,7 +121,6 @@ public class Level {
 
 			if (gObj.isDying()){
 				iterator.remove();
-				removeFromList(gObj,creators);
 				removeFromList(gObj,collideables);
 			}
 		}
@@ -150,22 +135,11 @@ public class Level {
 			if (nme.isDying()) {
 				// Remove the current element from the iterator and the list.
 				iterator.remove();
-				removeFromList(nme,creators);
 				removeFromList(nme,collideables);
 			}
 		}
 
-		//Cycle through object creators and add their outputs 
-		for (ObjectCreator creator : creators){
-			if(creator.hasObject()){
-				Object obj = creator.getObject();
-				
-				incorporateNewObject(obj);	
-				
-
-			}
-
-		}
+		
 		
 
 	}
