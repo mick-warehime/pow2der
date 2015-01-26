@@ -5,17 +5,12 @@ package main;
 import gameobjects.DeadlyObject;
 import gameobjects.Door;
 import gameobjects.MovingPlatform;
-import gameobjects.MultiDoor;
-import gameobjects.MultiWeightedSwitch;
 import gameobjects.GameObject;
 import gameobjects.ProgressPoint;
 import gameobjects.SpawnLocation;
 import gameobjects.Switch;
-import gameobjects.SwitchObject;
 import gameobjects.Teleporter;
-import gameobjects.TimedSwitch;
 import gameobjects.Turret;
-import gameobjects.WeightedSwitch;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -65,11 +60,7 @@ public class TileData {
 
 		parserDict.put("deadly", DeadlyObject.class);
 		parserDict.put("door", Door.class);
-		parserDict.put("multiDoor", MultiDoor.class);
 		parserDict.put("switch", Switch.class);
-		parserDict.put("timedSwitch", TimedSwitch.class);
-		parserDict.put("weightedSwitch", WeightedSwitch.class);
-		parserDict.put("multiWeightedSwitch", MultiWeightedSwitch.class);
 		parserDict.put("progressPoint", ProgressPoint.class);
 		parserDict.put("teleporter", Teleporter.class);
 		parserDict.put("turret", Turret.class);
@@ -93,7 +84,7 @@ public class TileData {
 				
 		// Add swtich targets
 		for(GameObject gObj: gameObjects){
-			if(gObj instanceof SwitchObject ){
+			if(gObj instanceof Switch ){
 				
 				gObj.setTarget(gameObjects);
 			}

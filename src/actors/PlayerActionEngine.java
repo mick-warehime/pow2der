@@ -7,6 +7,7 @@ import org.newdawn.slick.command.Command;
 import commands.GlobalInputListener;
 import commands.MoveCommand;
 import gameobjects.GameObject;
+import gameobjects.Interactive;
 
 
 //Takes in command inputs and implements corresponding actions
@@ -36,14 +37,14 @@ public class PlayerActionEngine extends ActionEngine {
 	
 	
 
-	public void attemptInteract(){
+	public void attemptInteract( int interactionType){
 		//Get nearby objects to interact with
 		ArrayList<GameObject> objects = status.nearbyInteractives();
 		
 		//Interact, if possible
 		if (interactTimer==0 && !objects.isEmpty()){
 			for (GameObject gObj: objects){
-				gObj.toggle();
+				((Interactive) gObj).interact(interactionType);
 			}
 			
 			interactTimer+= interactTimerIncrement;

@@ -6,7 +6,7 @@ import java.util.Properties;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
-public class Door extends GameObject{
+public class Door extends GameObject implements Interactive{
 	
 	protected boolean open = false;
 
@@ -23,11 +23,17 @@ public class Door extends GameObject{
 		}
 	}
 	
-	public void toggle(){
-		open = !open;
-	}
+	
 	
 	public boolean canCollide(){
 		return !open;
+	}
+
+	@Override
+	public void interact(int interactionType) {
+		if (interactionType == Interactive.INTERACTION_TOGGLE){
+			open = !open;
+		}
+		
 	}
 }

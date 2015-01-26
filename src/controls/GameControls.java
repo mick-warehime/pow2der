@@ -1,6 +1,8 @@
 package controls;
 
 
+import gameobjects.Interactive;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.command.Command;
@@ -71,7 +73,7 @@ public class GameControls {
 		Command moveRight = new MoveCommand('x', 1);
 		Command moveUp = new MoveCommand('y', -1);
 		Command moveDown = new MoveCommand('y', 1);
-		Command interact = new InteractCommand();
+		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		
 		
 
@@ -80,7 +82,7 @@ public class GameControls {
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_W), moveUp);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
-		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_E), interact);
+		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 
 		
 		//Bind commands to controller keys
@@ -88,7 +90,7 @@ public class GameControls {
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), moveUp);
 		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);	
-		controlsInputProvider.bindCommand(new ControllerButtonControl(0,this.WIIMOTE_A), interact);
+		controlsInputProvider.bindCommand(new ControllerButtonControl(0,this.WIIMOTE_A), toggle);
 		
 	}
 }

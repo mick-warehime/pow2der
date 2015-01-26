@@ -81,6 +81,8 @@ Menu representing the inventory
 * Submenu should give options to: inspect, identify, use, equip/unequip, drop
 
 
+
+
 Other classes/features
 ===
 
@@ -102,6 +104,14 @@ Other classes/features
 * Game map --> Travel between poinnts
 * Combat engine
 * Lighting effects 
+
+
+Door
+
+Graphics
+Something for collisions--> Shape
+CollisionDomain -> area in which you can toggle it.
+Toggling ability
 
 
 
