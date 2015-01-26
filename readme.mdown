@@ -9,6 +9,14 @@ Represents items that may be picked up and used in the game. Required functional
 * Monetary value?
 * Equip and unequip functionality, if relevant
 
+ItemLocation
+===
+Keeps track of an item's current location
+
+* Possible locations: on actor, on the floor, in a chest, in a store
+* Also if it's equipped or not
+* Should output this information, as well as context (i.e. coordinates or where in the invetory)
+
 ### Parser
 
 ### Item bonuses
@@ -27,7 +35,7 @@ Inventory
 Stores and represents all items. Required functionality:
 
 * Drawing method for stored items
-* A command to toggle inventory; this should pause the game
+* reference by InvetoryMenu
 * Ability to drop, equip, unequip items
 * Ability to bind commands to items in inventory
 
@@ -47,6 +55,31 @@ Basic drawing for actors.
 * Based on a spritesheet and actor's current status
 * There should be some precoded way of loading sprites correctly
 * Later: item drawing.
+
+Menu
+===
+
+* Toggle functionality
+* Take keyboard/mouse inputs to alter displayed selection
+* graphics for displaying the menu, and showing what the selected item is
+* Binds selected option to a command
+
+MenuHandler
+
+=== 
+Handles toggling of menus
+
+* Should have a keyboard listener, which then maps keystrokes to the given menu that is toggled
+* Keeps track of the current menu loaded
+
+InventoryMenu
+===
+Menu representing the inventory
+
+* Graphical representation of items
+* Sends commands to the inventory
+* Submenu should give options to: inspect, identify, use, equip/unequip, drop
+
 
 Other classes/features
 ===

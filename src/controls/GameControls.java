@@ -80,7 +80,7 @@ public class GameControls {
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_W), moveUp);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
-		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_F), interact);
+		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_E), interact);
 
 		
 		//Bind commands to controller keys
