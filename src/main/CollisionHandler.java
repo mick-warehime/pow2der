@@ -84,7 +84,8 @@ public class CollisionHandler implements CommandProvider {
 				}
 			}
 		}
-		return false;
+		
+		return playerRect.intersects(shape); 
 	}
 
 	public boolean isCollidedWithObjects(Shape shape){
