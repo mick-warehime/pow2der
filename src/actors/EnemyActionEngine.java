@@ -2,7 +2,7 @@ package actors;
 
 import commands.GlobalInputListener;
 
-public class EnemyActionEngine extends ActionEngine {
+public class EnemyActionEngine extends ActorActionEngine {
 
 	
 	

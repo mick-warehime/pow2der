@@ -8,6 +8,13 @@ Represents items that may be picked up and used in the game. Required functional
 * Associated effects on the player, if it has one
 * Monetary value?
 * Equip and unequip functionality, if relevant
+* Pick up and put down functionality
+
+Required components:
+* Location object (whether it's in inventory or on the ground)
+* Graphics
+* on pickup, change the location of the object to inventory. This means it's no longer drawn on the screen, but will be drawn in the inventory.
+
 
 ItemLocation
 ===
@@ -65,7 +72,6 @@ Menu
 * Binds selected option to a command
 
 MenuHandler
-
 === 
 Handles toggling of menus
 
@@ -110,8 +116,17 @@ Door
 
 Graphics
 Something for collisions--> Shape
-CollisionDomain -> area in which you can toggle it.
 Toggling ability
+Should implement Interactive?
+
+
+
+
+
+
+
+
+
 
 
 

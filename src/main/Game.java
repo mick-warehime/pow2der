@@ -3,6 +3,7 @@ package main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,9 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 import org.xml.sax.SAXException;
 
+import menus.MainMenu;
+import menus.Menu;
+import menus.MenuHandler;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
@@ -48,7 +52,7 @@ public class Game extends BasicGame {
 	private GameControls controls;
 	private ItemParser parser;
 	private GameControls gameControls;
-	
+	private MenuHandler menuHandler;
 	private WiimoteJoysticks jsticks;
 
 
@@ -59,6 +63,9 @@ public class Game extends BasicGame {
 
 	@Override
 	public void update(GameContainer gc, int t) throws SlickException {
+		
+		menuHandler.update();
+		
 		if (gameState == LOAD_STATE){
 			////The following should be returned for a load screen
 			//			if (gc.getInput().isKeyPressed(Input.KEY_ENTER)){
@@ -93,6 +100,15 @@ public class Game extends BasicGame {
 		}
 
 
+		if ( gameState == PAUSE_STATE){
+			
+//			for (Menu menu : menus){
+//				if (menu.isToggled()){
+//					System.out.println("Menu toggled!");
+//				}
+//			}	
+		}
+		
 		if ( gc.getInput().isKeyPressed(Input.KEY_P)){
 
 			if ( gameState == LEVEL_STATE){
@@ -113,6 +129,10 @@ public class Game extends BasicGame {
 
 		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
 
+		this.menuHandler = new MenuHandler();
+		gameControls.addMenuInputProviderListener(menuHandler.getListener());
+		
+		
 
 	}
 
@@ -131,10 +151,7 @@ public class Game extends BasicGame {
 		terri = new Player(level.getProgressX(),level.getProgressY(),collisionHandler, gameControls.getMousePos());
 
 
-		//Keyboard stuff
-		gameControls.addPlayerListener(terri.getListener());
-
-
+		gameControls.addAvatarInputProviderListener(terri.getListener());
 
 		// load the times from file dunno why the try catchs are required
 		try {
@@ -199,6 +216,8 @@ public class Game extends BasicGame {
 		app.start();
 
 	}
+	
+	
 
 
 }

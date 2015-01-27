@@ -11,7 +11,7 @@ import gameobjects.Interactive;
 
 
 //Takes in command inputs and implements corresponding actions
-public class PlayerActionEngine extends ActionEngine {
+public class PlayerActionEngine extends ActorActionEngine {
 
 	
 	

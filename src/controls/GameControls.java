@@ -2,6 +2,7 @@ package controls;
 
 
 import gameobjects.Interactive;
+import menus.Menu;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -9,11 +10,12 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.ControllerButtonControl;
 import org.newdawn.slick.command.ControllerDirectionControl;
 import org.newdawn.slick.command.InputProvider;
+import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.command.KeyControl;
 
 import commands.InteractCommand;
-import commands.KeyboardInputListener;
 import commands.MoveCommand;
+import commands.ToggleMenuCommand;
 
 
 //Handles keybindings and player inputs
@@ -33,17 +35,16 @@ public class GameControls {
 	public static final int WIIMOTE_SELECT = 8;
 	public static final int WIIMOTE_START = 7;
 	public static final int WIIMOTE_HOME = 9;
-	
+
 	public Joystick joystick;
 	private int[] mousePos = new int[2];
-	private InputProvider controlsInputProvider;
-	
-	public GameControls(GameContainer gc){
-		initializeKeyBindings(gc);
+	private InputProvider avatarInputProvider; //Controls pertaining to player's avatar
+	private InputProvider menuInputProvider;
 
-		
-		
-		
+	public GameControls(GameContainer gc){
+		initializeAvatarKeyBindings(gc);
+		initializeMenuKeyBindings(gc);
+
 	}
 
 	public void setMousePosition(int mouseX, int mouseY) {
@@ -55,17 +56,34 @@ public class GameControls {
 		return mousePos;
 	}
 
-	public void addPlayerListener(KeyboardInputListener listener) {
-		// TODO Auto-generated method stub
-		controlsInputProvider.addListener(listener);
+	public void addAvatarInputProviderListener(InputProviderListener listener) {
+	
+		avatarInputProvider.addListener(listener);
 	}
 	
-	private void initializeKeyBindings(GameContainer gc){
+	public void addMenuInputProviderListener(InputProviderListener listener) {
 		
-		
+		menuInputProvider.addListener(listener);
+	}
+
+	private void initializeMenuKeyBindings(GameContainer gc){
+
+
 		//This translates keyboard/mouse inputs into commands, for the appropriate listeners
-		controlsInputProvider = new InputProvider(gc.getInput());
-		//The listener is linked to the provider		
+
+		menuInputProvider = new InputProvider(gc.getInput());
+		
+		//Define commands
+		Command toggleMainMenu = new ToggleMenuCommand(Menu.MENU_MAIN);
+
+		//Bind them to keys
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_O), toggleMainMenu);
+		
+		 
+	}
+
+	private void initializeAvatarKeyBindings(GameContainer gc){
+		avatarInputProvider = new InputProvider(gc.getInput());
 
 		//Define action commands for provider
 		//Command moveDown = new MoveCommand("move down", 0 ,8);
@@ -74,23 +92,21 @@ public class GameControls {
 		Command moveUp = new MoveCommand('y', -1);
 		Command moveDown = new MoveCommand('y', 1);
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
-		
-		
+
+
 
 		//Bind commands to keyboard keys
-		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
-		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
-		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_W), moveUp);
-		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
-		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_W), moveUp);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 
-		
 		//Bind commands to controller keys
-		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
-		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
-		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), moveUp);
-		controlsInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);	
-		controlsInputProvider.bindCommand(new ControllerButtonControl(0,this.WIIMOTE_A), toggle);
-		
+		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
+		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
+		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.UP), moveUp);
+		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);	
+		avatarInputProvider.bindCommand(new ControllerButtonControl(0,GameControls.WIIMOTE_A), toggle);
 	}
 }

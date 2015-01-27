@@ -3,10 +3,11 @@ package commands;
 import org.newdawn.slick.command.BasicCommand;
 
 import actors.ActionEngine;
+import actors.ActorActionEngine;
 
 public class GainEffectCommand extends BasicCommand implements GenericCommand{
 
-	
+
 	private int effectName;
 	private int duration;
 
@@ -19,8 +20,9 @@ public class GainEffectCommand extends BasicCommand implements GenericCommand{
 
 	@Override
 	public void execute(ActionEngine actionEngine) {
-		actionEngine.applyEffect(effectName,duration);
-		
+		if (actionEngine instanceof ActorActionEngine){
+			((ActorActionEngine)actionEngine).applyEffect(effectName,duration);
+		}
 	}
 
 }

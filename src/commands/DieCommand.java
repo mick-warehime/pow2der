@@ -3,6 +3,7 @@ package commands;
 import org.newdawn.slick.command.BasicCommand;
 
 import actors.ActionEngine;
+import actors.ActorActionEngine;
 
 public class DieCommand extends BasicCommand implements GenericCommand {
 
@@ -12,7 +13,8 @@ public class DieCommand extends BasicCommand implements GenericCommand {
 
 	@Override
 	public void execute(ActionEngine actionEngine) {
-		actionEngine.die();
+		if (actionEngine instanceof ActorActionEngine){
+			((ActorActionEngine)actionEngine).die();}
 	}
 
 }
