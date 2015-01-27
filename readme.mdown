@@ -113,7 +113,7 @@ Other classes/features
 
 
 Door
-
+===
 Graphics
 Something for collisions--> Shape
 Toggling ability
@@ -127,6 +127,13 @@ Should implement Interactive?
 
 
 
+
+REFACTORS
+===
+###Break up Level 
++ Level.updater / updates objects 
++ Level.data  lists of items / objects / map info
++ Level.graphics render items/objects/map
 
 
 

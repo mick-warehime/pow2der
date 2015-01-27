@@ -15,11 +15,11 @@
  </layer>
  <objectgroup name="objects">
   <object type="door" x="208" y="880" width="16" height="64"/>
-  <object name="St" type="progressPoint" x="160" y="912" width="16" height="16">
+  <object name="St" type="progressPoint" x="96" y="800" width="16" height="16">
    <properties>
     <property name="index" value="0"/>
-    <property name="x" value="10"/>
-    <property name="y" value="57"/>
+    <property name="x" value="6"/>
+    <property name="y" value="50"/>
    </properties>
   </object>
   <object name="Enemy" type="enemy" x="256" y="768" width="64" height="16">

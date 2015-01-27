@@ -29,7 +29,7 @@ public class Enemy extends Actor implements InteractiveCollideable{
 
 		listener = new GlobalInputListener();
 		
-		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 48);
+		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 32);
 
 		status = new Status(rect);
 		
@@ -48,7 +48,7 @@ public class Enemy extends Actor implements InteractiveCollideable{
 	public Enemy(int xPixels, int yPixels) throws SlickException {
 		super();
 		
-		Rectangle rect = new Rectangle(xPixels,yPixels,32,48);
+		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		 
 		listener = new GlobalInputListener();
 				
