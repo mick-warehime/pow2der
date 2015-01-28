@@ -6,13 +6,13 @@ import org.newdawn.slick.command.Command;
 
 
 //Listens to command inputs from generic providers
-public class GlobalInputListener {
+public class InputListenerAggregator {
 
 
 	private ArrayList <CommandProvider> providers; 	
 	private ArrayList<Command> currentActionCommands ;
 
-	public GlobalInputListener() {
+	public InputListenerAggregator() {
 		providers = new ArrayList <CommandProvider>();
 		this.currentActionCommands = new ArrayList<Command>();
 
@@ -27,7 +27,7 @@ public class GlobalInputListener {
 	
 	//For external inputs such as elevator collisions
 	//or being hit by enemies
-	public void receiveExternalInputs(){
+	private void receiveExternalInputs(){
 		currentActionCommands.clear();
 
 		for (CommandProvider provider: providers){
@@ -35,9 +35,12 @@ public class GlobalInputListener {
 		}
 	}
 
-	public ArrayList<Command> getCurrentActionCommands(){
-
-		return currentActionCommands;
+	
+	public ArrayList<Command> popCurrentActionCommands(){
+		receiveExternalInputs();
+		ArrayList<Command> output = currentActionCommands;
+		currentActionCommands = new ArrayList<Command>();
+		return output;
 	}
 
 

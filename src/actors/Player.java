@@ -9,7 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import commands.GlobalInputListener;
+import commands.InputListenerAggregator;
 import commands.KeyboardInputListener;
 
 public class Player extends Actor {
@@ -25,16 +25,16 @@ public class Player extends Actor {
 //		sprite = new Image("data/head.png");		
 		
 		keyboard = new KeyboardInputListener();
-		listener = new GlobalInputListener();
-		listener.addProvider(collisionHandler);
-		listener.addProvider(keyboard);
+		listenerAggregator = new InputListenerAggregator();
+		listenerAggregator.addProvider(collisionHandler);
+		listenerAggregator.addProvider(keyboard);
 		
 		
 		setStatus( x,y, collisionHandler);
 
 		collisionHandler.addPlayerRect(status.getRect());
 
-		engine = new PlayerActionEngine(listener,status);
+		engine = new PlayerActionEngine(listenerAggregator,status);
 		
 		this.graphics = new ActorGraphics("data/dwarf3.png", status);
 	}

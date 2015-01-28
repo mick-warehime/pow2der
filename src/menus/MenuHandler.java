@@ -6,14 +6,14 @@ import org.newdawn.slick.InputListener;
 import org.newdawn.slick.command.InputProviderListener;
 
 import actors.ActionEngine;
-import commands.GlobalInputListener;
+import commands.InputListenerAggregator;
 import commands.KeyboardInputListener;
 
 public class MenuHandler {
 
 	private ArrayList<Menu> menus;
 	private KeyboardInputListener keyboardInputs;
-	private GlobalInputListener globalInputListener;
+	private InputListenerAggregator listenerAggregator;
 	private ActionEngine actionEngine;
 	
 
@@ -23,10 +23,10 @@ public class MenuHandler {
 		this.menus.add(new MainMenu());
 		
 		this.keyboardInputs = new KeyboardInputListener();
-		this.globalInputListener = new GlobalInputListener();
-		globalInputListener.addProvider(keyboardInputs);
+		this.listenerAggregator = new InputListenerAggregator();
+		listenerAggregator.addProvider(keyboardInputs);
 		
-		this.actionEngine = new ActionEngine(globalInputListener);
+		this.actionEngine = new ActionEngine(listenerAggregator);
 		
 		
 	}
@@ -39,7 +39,6 @@ public class MenuHandler {
 	}
 
 	public void update() {
-		globalInputListener.receiveExternalInputs();
 		actionEngine.update();		
 	}
 	

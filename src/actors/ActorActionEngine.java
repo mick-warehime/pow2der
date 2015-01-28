@@ -1,6 +1,6 @@
 package actors;
 
-import commands.GlobalInputListener;
+import commands.InputListenerAggregator;
 
 
 public class ActorActionEngine extends ActionEngine {
@@ -15,7 +15,7 @@ public class ActorActionEngine extends ActionEngine {
 
 
 
-	public ActorActionEngine(GlobalInputListener listener, Status status2) {
+	public ActorActionEngine(InputListenerAggregator listener, Status status2) {
 		super(listener);
 		this.status = status2;
 	}

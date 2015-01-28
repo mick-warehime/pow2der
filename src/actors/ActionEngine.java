@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import org.newdawn.slick.command.Command;
 
 import commands.GenericCommand;
-import commands.GlobalInputListener;
+import commands.InputListenerAggregator;
 
 public class ActionEngine {
 
-	protected GlobalInputListener listener;
+	protected InputListenerAggregator listener;
 
-	public ActionEngine(GlobalInputListener listener) {
+	public ActionEngine(InputListenerAggregator listener) {
 		this.listener = listener;
 	}
 
@@ -23,7 +23,7 @@ public class ActionEngine {
 	protected void doActions() {
 	
 		//Get all player commands
-		ArrayList<Command> currentActionCommands = listener.getCurrentActionCommands();
+		ArrayList<Command> currentActionCommands = listener.popCurrentActionCommands();
 	
 		//Do the associated actions
 		for (Command cmd : currentActionCommands){

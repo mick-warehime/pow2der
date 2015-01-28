@@ -1,12 +1,12 @@
 package actors;
 
-import commands.GlobalInputListener;
+import commands.InputListenerAggregator;
 
 public class EnemyActionEngine extends ActorActionEngine {
 
 	
 	
-	public EnemyActionEngine(GlobalInputListener listener, Status status) {
+	public EnemyActionEngine(InputListenerAggregator listener, Status status) {
 		super(listener, status);
 		this.runAcc = (float ) 0.5;
 		this.maxSpeed = (float) 1.5;

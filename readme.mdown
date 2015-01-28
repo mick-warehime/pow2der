@@ -65,11 +65,12 @@ Basic drawing for actors.
 
 Menu
 ===
+Stores menu components
 
-* Toggle functionality
-* Take keyboard/mouse inputs to alter displayed selection
-* graphics for displaying the menu, and showing what the selected item is
-* Binds selected option to a command
+* menuRenderer
+* menuData
+* isToggled
+
 
 MenuHandler
 === 

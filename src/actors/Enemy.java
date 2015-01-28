@@ -12,7 +12,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 import commands.DieCommand;
-import commands.GlobalInputListener;
+import commands.InputListenerAggregator;
 import gameobjects.InteractiveCollideable;
 import graphics.ActorGraphics;
 
@@ -27,7 +27,7 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		int rectTopLeftX = x*map.getTileWidth();
 		int rectTopLeftY = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
 
-		listener = new GlobalInputListener();
+		listenerAggregator = new InputListenerAggregator();
 		
 		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 32);
 
@@ -50,7 +50,7 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		 
-		listener = new GlobalInputListener();
+		listenerAggregator = new InputListenerAggregator();
 				
 		status = new Status(rect);
 
@@ -62,11 +62,11 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		// status = new Status((float) x, (float) y, collisionHandler,sprite.getWidth(),sprite.getHeight() );
 		status.setCollisionHandler(collisionHandler);
 
-		engine = new EnemyActionEngine(listener, status);
+		engine = new EnemyActionEngine(listenerAggregator, status);
 
 		behavior = new LemmingBehavior(status, collisionHandler);
 
-		listener.addProvider(behavior);
+		listenerAggregator.addProvider(behavior);
 		
 	}
 
