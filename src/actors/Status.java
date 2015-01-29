@@ -1,5 +1,8 @@
 package actors;
 
+import items.Inventory;
+import items.Item;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,6 +10,7 @@ import main.CollisionHandler;
 
 import org.newdawn.slick.geom.Rectangle;
 
+import gameobjects.BasicObject;
 import gameobjects.GameObject;
 
 public class Status {
@@ -16,6 +20,7 @@ public class Status {
 	private int direction = 1;
 	private int xDirection = 1;
 	private int yDirection = 1;
+	protected Inventory inventory = new Inventory();
 	
 	private Rectangle rect;
 	private CollisionHandler collisionHandler;
@@ -46,7 +51,7 @@ public class Status {
 	
 
 
-	public ArrayList<GameObject> nearbyInteractives(){
+	public ArrayList<BasicObject> nearbyInteractives(){
 
 		return collisionHandler.interactiveObjectsNearRect(this.rect);
 	}
@@ -79,6 +84,10 @@ public class Status {
 //		throw new UnsupportedOperationException("Improper input arguments!");
 	}
 
+	
+	public Inventory getInventory(){
+		return inventory;
+	}
 
 	public void setAlive(){
 		this.isDying = false;

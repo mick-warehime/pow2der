@@ -21,7 +21,7 @@ import org.newdawn.slick.gui.TextField;
 import controls.GameControls;
 import controls.Joystick;
 import controls.WiimoteJoysticks;
-import gameobjects.ProgressPoint;
+
 import actors.Player;
 import items.ItemBuilder;
 import items.ItemParser;
@@ -42,11 +42,11 @@ public class Game extends BasicGame {
 	private Player terri;
 	private Level level;
 	private int currentLevel = 0;
-	private ProgressPoint progress;
+
 	private int gameState = LOAD_STATE;
 	private TextField inputText;
 	private GameControls controls;
-	private ItemParser parser;
+	private ItemBuilder itemBuilder;
 	private GameControls gameControls;
 	
 	private WiimoteJoysticks jsticks;
@@ -84,7 +84,7 @@ public class Game extends BasicGame {
 			terri.update();
 			level.update();
 
-			progress = level.getProgressPoint();
+//			progress = level.getProgressPoint();
 
 			if (terri.isDying()){
 				initializeLevel(currentLevel);
@@ -113,29 +113,6 @@ public class Game extends BasicGame {
 
 		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
 
-
-	}
-
-	private void initializeLevel(int levelNumber) throws SlickException{
-		level = new Level(levelNumber);
-
-		if(progress==null){
-			progress = level.getProgressPoint();
-		}
-
-		level.setProgressPoint(progress);
-		level.setMousePosition(gameControls.getMousePos());
-		// i dont like this initialization
-		CollisionHandler collisionHandler = level.getCollisionHandler();
-
-		terri = new Player(level.getProgressX(),level.getProgressY(),collisionHandler, gameControls.getMousePos());
-
-
-		//Keyboard stuff
-		gameControls.addPlayerListener(terri.getListener());
-
-
-
 		// load the times from file dunno why the try catchs are required
 		try {
 			loadItemsFromFile();
@@ -155,14 +132,27 @@ public class Game extends BasicGame {
 
 	}
 
-	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException{
-		parser = new ItemParser("items/items.xml");
+	private void initializeLevel(int levelNumber) throws SlickException{
+		level = new Level(levelNumber,itemBuilder);
+
+		level.setMousePosition(gameControls.getMousePos());
+		// i dont like this initialization
+		CollisionHandler collisionHandler = level.getCollisionHandler();
+
+		terri = new Player(100,850,collisionHandler, gameControls.getMousePos());
+
+
+		//Keyboard stuff
+		gameControls.addPlayerListener(terri.getListener());
+
+	}
+
+	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
+
+		ItemParser parser = new ItemParser("items/items.xml");
 		
-		List<Map<String,String>> itemMaps = parser.getItemMaps();
-		
-		ItemBuilder builder = new ItemBuilder(itemMaps);
-		
-		
+		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
+
 	}
 
 	@Override

@@ -83,32 +83,12 @@ public class GameObject {
 		this.collisionHandler = collisionHandler;
 	}
 
-	public void update() throws SlickException{
-//		throw new UnsupportedOperationException(); 
-	}
-
-
 	
-	
-	
-
-	public void setTarget(ArrayList<GameObject> gameObjects) {
-		throw new UnsupportedOperationException(); 
-	}
-
-
 	//Checks if an input shape is near the object's shape
 	public boolean isNear(Rectangle rectTest) {
 
 		Rectangle slightlyBiggerRect = new Rectangle(shape.getX()-proximity,shape.getY()-proximity,shape.getWidth()+2*proximity,shape.getHeight()+2*proximity);
-
-
 		return slightlyBiggerRect.intersects(rectTest);
-	}
-
-
-	protected long getTime() {
-		return System.currentTimeMillis() ;
 	}
 
 	public String getName(){

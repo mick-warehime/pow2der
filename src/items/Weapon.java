@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class Weapon extends Item{
 
@@ -12,9 +13,9 @@ public class Weapon extends Item{
 	private String material;
 
 
-	public Weapon(Map<String, String> itm) {
+	public Weapon(Map<String, String> itm, Image sprite, ItemLocation location ) throws SlickException {
 		
-		super(itm);
+		super(itm,sprite,location);
 		
 		
 		this.mHitBonus = (int) Float.parseFloat(itm.get("mHitBonus"));

@@ -168,6 +168,11 @@ public class ActionEngine {
 		status.setX(destX);
 		status.setY(destY);
 	}
+	
+	public Status getStatus(){
+		return status;
+	}
+	
 
 	public void applyEffect(int effectName, int duration) {
 		status.gainEffect(effectName, duration);

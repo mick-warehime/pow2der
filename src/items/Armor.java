@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class Armor extends Item{
 
@@ -12,9 +13,9 @@ public class Armor extends Item{
 	private String material;
 	private String worn;
 
-	public Armor(Map<String, String> itm) {
+	public Armor(Map<String, String> itm, Image sprite, ItemLocation location ) throws SlickException {
 		
-		super(itm);
+		super(itm,sprite,location);
 		
 		
 		this.AC = (int) Float.parseFloat(itm.get("ac"));

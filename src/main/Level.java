@@ -1,5 +1,9 @@
 package main;
 
+import items.Item;
+import items.ItemBuilder;
+import items.ItemLocation;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,9 +11,11 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 import actors.Actor;
+import actors.Enemy;
+import gameobjects.BasicObject;
 import gameobjects.GameObject;
-import gameobjects.InteractiveCollideable;
-import gameobjects.ProgressPoint;
+import gameobjects.Broadcaster;
+import gameobjects.Interactive;
 
 
 // TODO
@@ -26,7 +32,7 @@ public class Level {
 	private int tol = 18; // number of tiles away from edge
 	private int tolX;
 	private int tolY;
-	private ProgressPoint progress;
+	
 	private int mapWidthInTiles;
 	private int mapHeightInTiles;
 	private TiledMap map;
@@ -35,76 +41,54 @@ public class Level {
 	private CollisionHandler collisionHandler;
 
 	//	private TileData tileData;
-	private ArrayList<GameObject> gameObjects;
-	private ArrayList<Actor> actors;
-	private ArrayList<InteractiveCollideable> collideables;
+	private ArrayList<Actor> actors = new ArrayList<Actor>();
+	private ArrayList<Broadcaster> collideables = new ArrayList<Broadcaster>();
 	private int[] mousePos;
+	private ItemBuilder itemBuilder;
+	private ArrayList<Item> items = new ArrayList<Item>();
+	private ArrayList<BasicObject> basicObjects = new ArrayList<BasicObject>();
 
-	public Level(int levelNumber) throws SlickException {
+
+	public Level(int levelNumber, ItemBuilder itemBuilder) throws SlickException {
 
 		// load map
-		String fileData = "data/Level" + levelNumber + ".tmx";
-		map = new TiledMap(fileData);
+		String fileName= "data/Level" + levelNumber + ".tmx";
+		map = new TiledMap(fileName);
 		TileData tileData = new TileData(map);
 
-		// used for drawing (allows the dude to be outside the center of the screen)
-		tileSize = map.getTileHeight();
-		tolX = tol*tileSize;
-		tolY = tol*tileSize;
-		mapWidthInTiles = map.getWidth();
-		mapHeightInTiles = map.getHeight();
-		//		width = mapWidthInTiles*map.getTileWidth();
-		//		height = mapHeightInTiles*map.getTileHeight;
-		tileLayerId = map.getLayerIndex("tiles");
-
+		// use in rendering
+		initializeMapProperties();
 
 		//Creates the collisionHandler with just game blocks
 		collisionHandler = new CollisionHandler(tileData.getBlocks());
-		this.gameObjects = tileData.getGameObjects();
-		this.actors = tileData.getActors();
+	
+//		this.actors = tileData.getActors();
+		
+		this.itemBuilder = itemBuilder;
 
-
-
+		// build a test door
+		basicObjects.add(itemBuilder.buildDoor(100,750, collisionHandler));
+		// test item
+		basicObjects.add(itemBuilder.newItem(new ItemLocation(400,800)));
+		basicObjects.add(itemBuilder.newItem(new ItemLocation(300,800)));
+		basicObjects.add(itemBuilder.newItem(new ItemLocation(200,800)));
+		basicObjects.add(itemBuilder.newItem(new ItemLocation(100,800)));
+		
+		actors.add(new Enemy(400,750,collisionHandler));
+		
+		
 		//Add interactive Collideables
-		this.collideables = new ArrayList<InteractiveCollideable>();
-		for (GameObject gObj:gameObjects){
-			if(gObj instanceof InteractiveCollideable){
-				collideables.add((InteractiveCollideable) gObj);
-			}
-		}
 		for (Actor actor:actors){
-			if(actor instanceof InteractiveCollideable){
-				collideables.add((InteractiveCollideable) actor);
+			if(actor instanceof Broadcaster){
+				collideables.add((Broadcaster) actor);
 			}
 		}
 
-		incorporateCollisionHandler(); 
-
-
-
-	}
-
-
-	private void incorporateCollisionHandler() throws SlickException{
-
+	
 		//Give the objects to the collisionHandler
-		collisionHandler.receiveObjects(gameObjects, actors, collideables);
-
-		//Give the CollisionHandler to actors and gameObjects
-
-		for(GameObject gObj: gameObjects){
-			gObj.setCollisionHandler(collisionHandler);
-		}
-
-		for (Actor nme: actors){
-			nme.incorporateCollisionHandler(collisionHandler);
-		}
-
+		collisionHandler.receiveObjects(actors, collideables, basicObjects);		
+		
 	};
-
-
-
-
 
 
 	private void removeFromList(Object obj, ArrayList<?> list){
@@ -114,18 +98,6 @@ public class Level {
 	}
 
 	public void update() throws SlickException{
-		//Update game Objects and remove 'dead' ones
-		for(Iterator<GameObject> iterator = gameObjects.iterator(); iterator.hasNext(); ){
-			GameObject gObj = iterator.next();
-			gObj.update();
-
-			if (gObj.isDying()){
-				iterator.remove();
-				removeFromList(gObj,collideables);
-			}
-		}
-
-
 
 		//Update actors and remove dead ones
 		for (Iterator<Actor> iterator = actors.iterator(); iterator.hasNext();) {
@@ -139,31 +111,27 @@ public class Level {
 			}
 		}
 
-		
-		
+
+
 
 	}
 
 	//Add a new object to lists and pass it necessary objects from level
 	private void incorporateNewObject(Object obj){
-		
-		if(obj instanceof GameObject){
-			gameObjects.add((GameObject)obj);
-			((GameObject) obj).setCollisionHandler(collisionHandler);
-		}
+
 		if(obj instanceof Actor){
 			actors.add((Actor)obj);
 			((Actor) obj).incorporateCollisionHandler(collisionHandler);
 		}
-		if(obj instanceof InteractiveCollideable){
-			collideables.add((InteractiveCollideable)obj);
+		if(obj instanceof Broadcaster){
+			collideables.add((Broadcaster)obj);
 		}
-		
+
 	}
 
 	public void draw(Graphics g,int x, int y){		
 
-		
+
 		// min/max sets the submatrix of tiles to draw		
 		int tXmin = (int) mapX/tileSize;
 		int tYmin = (int) mapY/tileSize;
@@ -179,24 +147,25 @@ public class Level {
 		if (mapY < (y+tolY-height)){mapY = y+tolY-height;}
 
 		// see if we are close to the edge of a map inwhich case dont let mapx<0 or mapx>size of map in pixels
-		mapXCheck();
-		mapYCheck();		
+		mapCheck();
+
 
 		// map.render(-mapX,-mapY);
 		map.render(-dX,-dY,tXmin,tYmin,mapWidthInTiles,mapHeightInTiles+1,tileLayerId,false);
-
-
-		for(GameObject gObj: gameObjects){
-			gObj.render(mapX, mapY);
-		}
 
 		for (Actor nme: actors){
 			nme.render(g, mapX,mapY);
 		}
 
+		for (BasicObject obj: basicObjects){
+
+			obj.render(g,mapX,mapY);
+
+		}
+
 	}
 
-	private void mapXCheck(){
+	private void mapCheck(){
 		if(mapX<0){
 			mapX = 0;
 			tolX = tileSize;			
@@ -206,9 +175,7 @@ public class Level {
 		}else{
 			tolX = tol*tileSize;
 		}
-	}
 
-	private void mapYCheck(){
 
 		if(mapY<0){
 			mapY = 0;
@@ -223,45 +190,13 @@ public class Level {
 		}
 	}
 
-	public ProgressPoint getProgressPoint(){
-
-		int curIndex = -1;
-		ProgressPoint pPoint = null;
-
-		// loop over all progress points in the game
-		for(GameObject gObj: gameObjects){
-			// see if any progress points are active
-			if(gObj instanceof ProgressPoint){
-				// make sure the progress point has been activated
-				if(((ProgressPoint) gObj).isActive()){
-					// make sure you only take the farthest progress point
-					if( ((ProgressPoint) gObj).getIndex() > curIndex){
-
-						curIndex = ((ProgressPoint) gObj).getIndex();
-						pPoint = (ProgressPoint) gObj;
-					}
-				}
-			}
-		}
-
-		return pPoint;
-	}
-
-	public int getProgressX(){
-		return progress.getPX();
-	}
-
-	public int getProgressY(){
-		return progress.getPY();
-	}
-
-	public void setProgressPoint(ProgressPoint progress){
-		this.progress = progress;
-	}
-
-
-	public TiledMap getMap(){
-		return map;
+	private void initializeMapProperties(){
+		// used for drawing (allows the dude to be outside the center of the screen)
+		tileSize = map.getTileHeight();
+		tolX = tol*tileSize;
+		tolY = tol*tileSize;
+		mapWidthInTiles = map.getWidth();
+		mapHeightInTiles = map.getHeight();
 	}
 
 	public int getMapX(){return mapX;}
@@ -276,7 +211,7 @@ public class Level {
 	public void setMousePosition(int[] mousePos) {
 		this.mousePos = mousePos;
 
-		
+
 
 
 	}

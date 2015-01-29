@@ -18,7 +18,7 @@ public class InteractCommand extends BasicCommand implements GenericCommand{
 
 	@Override
 	public void execute(ActionEngine engine) {
-		((PlayerActionEngine) engine).attemptInteract(interactionType);
+		((PlayerActionEngine) engine).attemptInteract(interactionType, engine.getStatus());
 		engine.applyEffect(Effect.EFFECT_INTERACTING, 1);
 	}
 

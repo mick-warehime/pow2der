@@ -1,10 +1,10 @@
 package actors;
 
+import items.Inventory;
 import graphics.ActorGraphics;
 import main.CollisionHandler;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -16,10 +16,10 @@ public abstract class Actor {
 	protected GlobalInputListener listener;
 	protected ActionEngine engine;
 	protected Status status;
-
+	
+	
 	public Actor() throws SlickException {
-		
-		
+				
 	}
 	
 

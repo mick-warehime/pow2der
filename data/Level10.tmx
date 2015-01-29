@@ -22,20 +22,5 @@
     <property name="y" value="50"/>
    </properties>
   </object>
-  <object name="Enemy" type="enemy" x="256" y="768" width="64" height="16">
-   <properties>
-    <property name="direction" value="1"/>
-   </properties>
-  </object>
-  <object name="Enemy" type="enemy" x="288" y="864" width="64" height="16">
-   <properties>
-    <property name="direction" value="1"/>
-   </properties>
-  </object>
-  <object name="Enemy" type="enemy" x="416" y="816" width="64" height="16">
-   <properties>
-    <property name="direction" value="1"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

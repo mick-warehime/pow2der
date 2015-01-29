@@ -11,7 +11,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import commands.TeleportCommand;
 
-public class Teleporter extends GameObject implements InteractiveCollideable{
+public class Teleporter extends GameObject implements Broadcaster{
 	private int destX;
 	private int destY;
 		 

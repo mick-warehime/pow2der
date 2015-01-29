@@ -10,7 +10,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import commands.DieCommand;
 
-public class DeadlyObject extends GameObject implements InteractiveCollideable{
+public class DeadlyObject extends GameObject implements Broadcaster{
 		
 		 
 	

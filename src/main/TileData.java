@@ -5,7 +5,6 @@ package main;
 import gameobjects.DeadlyObject;
 import gameobjects.Door;
 import gameobjects.GameObject;
-import gameobjects.ProgressPoint;
 import gameobjects.Teleporter;
 
 import java.lang.reflect.Constructor;
@@ -56,7 +55,7 @@ public class TileData {
 
 		parserDict.put("deadly", DeadlyObject.class);
 		parserDict.put("door", Door.class);
-		parserDict.put("progressPoint", ProgressPoint.class);
+	
 		parserDict.put("teleporter", Teleporter.class);
 		parserDict.put("enemy", Enemy.class);
 

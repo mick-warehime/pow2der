@@ -74,6 +74,7 @@ public class GameControls {
 		Command moveUp = new MoveCommand('y', -1);
 		Command moveDown = new MoveCommand('y', 1);
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
+		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
 		
 		
 
@@ -83,6 +84,7 @@ public class GameControls {
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_W), moveUp);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
+		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
 
 		
 		//Bind commands to controller keys
