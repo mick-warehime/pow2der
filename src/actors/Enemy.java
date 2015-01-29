@@ -58,10 +58,9 @@ public class Enemy extends Actor implements Broadcaster{
 		
 		graphics = new ActorGraphics("data/dwarf3.png", status);
 
-		listener = new GlobalInputListener();
 		
 		
-		engine = new EnemyActionEngine(listener, status);
+		engine = new EnemyActionEngine(listenerAggregator, status);
 
 		behavior = new LemmingBehavior(status, collisionHandler);
 
