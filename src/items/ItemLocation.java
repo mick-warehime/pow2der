@@ -31,10 +31,12 @@ public class ItemLocation {
 	}
 	
 	public void drop(int xPos, int yPos){
+		// inventory.removeItem(this);
 		this.inventory = null;
 		onGround = true;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		
 	}
 	
 	public int getX(){
