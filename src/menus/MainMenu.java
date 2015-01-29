@@ -6,11 +6,16 @@ public class MainMenu extends Menu {
 
 	
 	
-	private ArrayList<String> textLines;
-	
-	public MainMenu(){
+	public MainMenu() {
+		super(Menu.MENU_MAIN);
 		defineTextLines();
 	}
+
+
+
+	private ArrayList<String> textLines;
+	
+	
 	
 	private void defineTextLines(){
 		textLines = new ArrayList<String>();
@@ -18,9 +23,12 @@ public class MainMenu extends Menu {
 		textLines.add("Exit Game");
 	}
 	
+	
+
 	@Override
-	public void draw() {
-		System.out.println("Drawing Main Menu...");
+	public void render() {
+		
+		
 	}
 
 	

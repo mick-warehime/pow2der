@@ -2,7 +2,8 @@ package commands;
 
 import org.newdawn.slick.command.BasicCommand;
 
-import actors.ActionEngine;
+import actionEngines.ActionEngine;
+import actionEngines.MenuActionEngine;
 
 public class ToggleMenuCommand extends BasicCommand implements GenericCommand{
 
@@ -15,7 +16,8 @@ public class ToggleMenuCommand extends BasicCommand implements GenericCommand{
 
 	@Override
 	public void execute(ActionEngine actionEngine) {
-		System.out.println("Toggled menu!" + menuIndex);
+		((MenuActionEngine) actionEngine).toggleMenu(menuIndex);
+		
 		
 	}
 

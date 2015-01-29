@@ -2,8 +2,8 @@ package commands;
 
 import org.newdawn.slick.command.BasicCommand;
 
-import actors.ActionEngine;
-import actors.ActorActionEngine;
+import actionEngines.ActionEngine;
+import actionEngines.ActorActionEngine;
 
 public class DieCommand extends BasicCommand implements GenericCommand {
 

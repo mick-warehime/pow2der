@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
+import actionEngines.EnemyActionEngine;
 import commands.DieCommand;
 import commands.InputListenerAggregator;
 import gameobjects.InteractiveCollideable;
@@ -66,7 +67,7 @@ public class Enemy extends Actor implements InteractiveCollideable{
 
 		behavior = new LemmingBehavior(status, collisionHandler);
 
-		listenerAggregator.addProvider(behavior);
+		listenerAggregator.addListener(behavior);
 		
 	}
 

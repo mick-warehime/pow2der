@@ -2,10 +2,10 @@ package commands;
 
 import org.newdawn.slick.command.BasicCommand;
 
-import actors.ActionEngine;
-import actors.ActorActionEngine;
+import actionEngines.ActionEngine;
+import actionEngines.ActorActionEngine;
+import actionEngines.PlayerActionEngine;
 import actors.Effect;
-import actors.PlayerActionEngine;
 
 public class InteractCommand extends BasicCommand implements GenericCommand{
 

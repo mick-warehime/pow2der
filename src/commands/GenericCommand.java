@@ -1,7 +1,7 @@
 package commands;
 
-import actors.ActionEngine;
-import actors.ActorActionEngine;
+import actionEngines.ActionEngine;
+import actionEngines.ActorActionEngine;
 
 public interface GenericCommand {
 

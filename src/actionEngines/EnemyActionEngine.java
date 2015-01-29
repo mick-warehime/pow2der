@@ -1,5 +1,6 @@
-package actors;
+package actionEngines;
 
+import actors.Status;
 import commands.InputListenerAggregator;
 
 public class EnemyActionEngine extends ActorActionEngine {

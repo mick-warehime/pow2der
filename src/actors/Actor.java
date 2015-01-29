@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import actionEngines.ActionEngine;
 import commands.InputListenerAggregator;
 
 public abstract class Actor {

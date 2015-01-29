@@ -1,9 +1,10 @@
-package actors;
+package actionEngines;
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
 
+import actors.Status;
 import commands.InputListenerAggregator;
 import commands.MoveCommand;
 import gameobjects.GameObject;

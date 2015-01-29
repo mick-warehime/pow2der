@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import actionEngines.PlayerActionEngine;
 import commands.InputListenerAggregator;
 import commands.KeyboardInputListener;
 
@@ -26,8 +27,8 @@ public class Player extends Actor {
 		
 		keyboard = new KeyboardInputListener();
 		listenerAggregator = new InputListenerAggregator();
-		listenerAggregator.addProvider(collisionHandler);
-		listenerAggregator.addProvider(keyboard);
+		listenerAggregator.addListener(collisionHandler);
+		listenerAggregator.addListener(keyboard);
 		
 		
 		setStatus( x,y, collisionHandler);

@@ -20,7 +20,7 @@ public class InputListenerAggregator {
 
 	}
 
-	public void addProvider( CommandProvider provider){
+	public void addListener( CommandProvider provider){
 		providers.add(provider);
 	}
 

@@ -203,6 +203,8 @@ public class Game extends BasicGame {
 			level.draw(g,(int) terri.getX(),(int)terri.getY());
 			terri.render(g, level.getMapX(),level.getMapY());
 		}
+		
+		menuHandler.renderActiveMenus(gc);
 	}
 
 

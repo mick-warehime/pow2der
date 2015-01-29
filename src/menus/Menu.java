@@ -13,16 +13,25 @@ public abstract class Menu {
 	
 	/* Menu identifiers */
 	public static final int MENU_MAIN = 0;
+	
+	private boolean isOpen;
+	private int menuType;
 
-	protected boolean isToggled;
 	
-	public Menu(){
-		this.isToggled = false;
+	public Menu(int menuType){
+		this.menuType = menuType;
+		
 	}
 	
-	public boolean isToggled(){
-		return this.isToggled;
+	public boolean isOpen(){
+		return this.isOpen;
+	}
+	public void toggle(){
+		this.isOpen = !isOpen;
+	}
+	public int getType(){
+		return menuType;
 	}
 	
-	public abstract void draw();
+	public abstract void render();
 }
