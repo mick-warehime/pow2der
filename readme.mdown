@@ -129,7 +129,7 @@ Should implement Interactive?
 
 
 
-REFACTORS
+REFACTORS/TODO
 ===
 ###Break up Level 
 + Level.updater / updates objects 
@@ -137,6 +137,8 @@ REFACTORS
 + Level.graphics render items/objects/map
 
 ###MenuHandler shouldn't have to have a GlobalInputListener. The relationship between keyboardInputListener and GlobalInputListener are unclear.
+
+* Fix second joystick functionality
 
 
 
