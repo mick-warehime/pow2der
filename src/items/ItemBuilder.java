@@ -1,9 +1,17 @@
 package items;
 
+import gameobjects.BasicObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import main.CollisionHandler;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 public class ItemBuilder {
 
@@ -11,33 +19,41 @@ public class ItemBuilder {
 	private HashMap<String,ArrayList<Integer>> itemTypeMap = new HashMap<String, ArrayList<Integer>>();
 	private ArrayList<String> itemTypes = new ArrayList<String>();
 
-//	public static final int TYPEARMOR = 1;
-	
-	
-	
-	public ItemBuilder(List<Map<String,String>> itemMaps){
+	private int doorIndex;
+	private Image doorSprite;
+
+
+	private SpriteSheet spriteSheet;
+	private static int SPRITEWIDTHPIXELS = 48;
+	private static int SPRITEHEIGHTPIXELS = 48;
+
+
+
+	public ItemBuilder(List<Map<String,String>> itemMaps, String spriteSheetFileName) throws SlickException{
+
+		this.spriteSheet = new SpriteSheet(spriteSheetFileName, SPRITEWIDTHPIXELS,SPRITEHEIGHTPIXELS);
 
 		this.itemMaps = itemMaps;
 
 		initializeBuilder();
-		
-		
-		// item types [armor, weapons, books, misc]
-		
-		
+
+
+		// item types [armor, weapons, books, misc,door]
+
+
 	}
 
-	
 
-	public Item newItem(){
+
+	public Item newItem(ItemLocation location) throws SlickException{
 		// build a random item
 		int itemIndex =  (int)(Math.random()*itemMaps.size());
-		
-		return buildItem(itemIndex);
+
+		return buildItem(itemIndex, location);
 	}
 
 
-	public Item newItem(String typeOrName){
+	public Item newItem(String typeOrName, ItemLocation location) throws SlickException{
 
 		int itemIndex = -1;
 
@@ -62,75 +78,107 @@ public class ItemBuilder {
 			}
 
 		}		
-		
-		return buildItem(itemIndex);
-		
+
+		return buildItem(itemIndex,location);
+
 	}
 
-	private Item buildItem(int i){
-		
-		
+	private Item buildItem(int i,ItemLocation location) throws SlickException{
+
+
 		// builds the ith item in the vector list
 		Map<String,String> itm = itemMaps.get(i);
-		
+
+		// load sprite
+
+		Integer row = (int) Float.parseFloat(itm.get("spriteRow"));
+		Integer col = (int) Float.parseFloat(itm.get("spriteCol"));
+
+		Image sprite = spriteSheet.getSubImage(col-1,row-1);
+
 		if(itm.get("itemType").equalsIgnoreCase("armor")){
-			Item item = new Armor(itm);
+			Item item = new Armor(itm, sprite, location);
 			return item;
-		}else if(itm.get("itemType").equalsIgnoreCase("weapon")){
-			Item item = new Weapon(itm);
+		}else if(itm.get("itemType").equalsIgnoreCase("weapons")){
+			Item item = new Weapon(itm, sprite, location);			
+
 			return item;
 		}
 		else if(itm.get("itemType").equalsIgnoreCase("misc")){
-			Item item = new Misc(itm);
+			Item item = new Misc(itm, sprite, location);
 			return item;
 		}
-		else if (itm.get("itemType").equalsIgnoreCase("book")){
-			Item item = new Book(itm);
+		else if (itm.get("itemType").equalsIgnoreCase("books")){
+			Item item = new Book(itm, sprite, location);
 			return item;
 		}
-			
+
 		return null;
-		
+
+	}
+
+
+	public BasicObject buildDoor(int xPos, int yPos, CollisionHandler collisionHandler) throws SlickException{
+
+		return new ItemDoor(collisionHandler, doorSprite, xPos, yPos);
+
 	}
 
 	// this finds the indices of all the items of all the various types
-		// too allow for faster searching when a new item is needed
-		private void initializeBuilder(){
-			// loop over all items and pull out the item types
-			
-			ArrayList<Integer> defaultLookup = new ArrayList<Integer>();
+	// too allow for faster searching when a new item is needed
+	private void initializeBuilder(){
+		// loop over all items and pull out the item types
 
-			defaultLookup.add(0); 
-			defaultLookup.add(itemMaps.size());
+		ArrayList<Integer> defaultLookup = new ArrayList<Integer>();
 
-			// create a list of the itemTypes
-			for (Map<String,String> m : itemMaps ){
+		defaultLookup.add(0); 
+		defaultLookup.add(itemMaps.size());
 
-				String type = m.get("itemType");
+		// create a list of the itemTypes
+		for (Map<String,String> m : itemMaps ){
 
-				if(!itemTypes.contains(type)){
-					itemTypes.add(type);
-				}
+			String type = m.get("itemType");
+
+			if(!itemTypes.contains(type)){
+				itemTypes.add(type);
 			}
-
-			// create a look-up table for the item type
-			// create a list of the itemTypes
-			for (String type : itemTypes){
-				ArrayList<Integer> index = new ArrayList<Integer>();
-
-				for (int i = 0; i < itemMaps.size(); i++){
-
-					// get the indices of all items with type t
-					if(type.equalsIgnoreCase(itemMaps.get(i).get("itemType"))){
-						index.add(i);
-					}
-
-				}
-				itemTypeMap.put(type,index);
-			}
-
-
 		}
+
+		// create a look-up table for the item type
+		// create a list of the itemTypes
+		for (String type : itemTypes){
+			ArrayList<Integer> index = new ArrayList<Integer>();
+
+			for (int i = 0; i < itemMaps.size(); i++){
+
+				// get the indices of all items with type t
+				if(type.equalsIgnoreCase(itemMaps.get(i).get("itemType"))){
+					index.add(i);
+				}
+
+			}
+			itemTypeMap.put(type,index);
+		}
+
+
+		// get info about the door object
+		for(int i=0; i < itemMaps.size(); i++){
+			
+			Map<String,String> itm = itemMaps.get(i);
+			
+			if(itm.get("type").equalsIgnoreCase("door")){
+				doorIndex = i;
+				
+				Integer row = (int) Float.parseFloat(itm.get("spriteRow"));
+				Integer col = (int) Float.parseFloat(itm.get("spriteCol"));
+
+				doorSprite = spriteSheet.getSubImage(col-1,row-1);
+			}
+		}
+
+
+
+	}
 
 
 }

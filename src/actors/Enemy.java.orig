@@ -11,71 +11,107 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
+import actionEngines.EnemyActionEngine;
 import commands.DieCommand;
+<<<<<<< HEAD
 import commands.GlobalInputListener;
+import gameobjects.Broadcaster;
+=======
+import commands.InputListenerAggregator;
 import gameobjects.InteractiveCollideable;
+>>>>>>> 509c2872fff17070d75f7375b84a6b62bdd7c8a1
 import graphics.ActorGraphics;
-import graphics.EnemyGraphics;
 
-public class Enemy extends Actor implements InteractiveCollideable{
+public class Enemy extends Actor implements Broadcaster{
 
 	private LemmingBehavior behavior;
-	private int x;
-	private int y;
-	protected Rectangle rect;
+	
 
+<<<<<<< HEAD
+//	public Enemy(int x, int y, int w, int h, String name, TiledMap map, Properties args ) throws SlickException {
+//		super();
+//
+//		int rectTopLeftX = x*map.getTileWidth();
+//		int rectTopLeftY = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
+//
+//		listener = new GlobalInputListener();
+//		
+//		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 32);
+//
+//		status = new Status(rect);
+//		
+//		
+//		if(args.containsKey("direction")){
+//			int dir = Integer.parseInt((String) args.get("direction"));
+//			if (dir*status.getDirection('x')<0){//directions don't agree
+//				status.setDirection('x',dir);
+//			}
+//		}
+//		graphics = new ActorGraphics("data/dwarf3.png", status);
+//
+//		
+// 	}
+
+	public Enemy(int xPixels, int yPixels, CollisionHandler collisionHandler) throws SlickException {
+=======
 	public Enemy(int x, int y, int w, int h, String name, TiledMap map, Properties args ) throws SlickException {
 		super();
 
-		this.x = x*map.getTileWidth();
-		this.y = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
+		int rectTopLeftX = x*map.getTileWidth();
+		int rectTopLeftY = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
 
-		listener = new GlobalInputListener();
+		listenerAggregator = new InputListenerAggregator();
 		
-		rect = new Rectangle(this.x,this.y,32, 48);
+		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 32);
 
 		status = new Status(rect);
 		
-<<<<<<< HEAD
- 		graphics = new EnemyGraphics(rect);
-
-
-=======
 		
 		if(args.containsKey("direction")){
 			int dir = Integer.parseInt((String) args.get("direction"));
-			if (dir*status.getDirection()<0){//directions don't agree
-				status.flipDirection();
+			if (dir*status.getDirection('x')<0){//directions don't agree
+				status.setDirection('x',dir);
 			}
-		}else{
 		}
+		graphics = new ActorGraphics("data/dwarf3.png", status);
 
- 		graphics = new EnemyGraphics(status,"data/enemy1.png");
->>>>>>> a17a16d3ecc4ba948d450a507263b18522dd3bd5
+		
  	}
 
 	public Enemy(int xPixels, int yPixels) throws SlickException {
+>>>>>>> 509c2872fff17070d75f7375b84a6b62bdd7c8a1
 		super();
 		
-		rect = new Rectangle(xPixels,yPixels,32,48);
+		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		 
-		listener = new GlobalInputListener();
+<<<<<<< HEAD
+		
+=======
+		listenerAggregator = new InputListenerAggregator();
+>>>>>>> 509c2872fff17070d75f7375b84a6b62bdd7c8a1
 				
 		status = new Status(rect);
-
- 		graphics = new EnemyGraphics(status,"data/enemy1.png");
- 	}
-	
-	public void incorporateCollisionHandler(CollisionHandler collisionHandler){
-
-		// status = new Status((float) x, (float) y, collisionHandler,sprite.getWidth(),sprite.getHeight() );
 		status.setCollisionHandler(collisionHandler);
+		
+		graphics = new ActorGraphics("data/dwarf3.png", status);
 
+<<<<<<< HEAD
+		listener = new GlobalInputListener();
+		
+		
 		engine = new EnemyActionEngine(listener, status);
 
 		behavior = new LemmingBehavior(status, collisionHandler);
 
+		
 		listener.addProvider(behavior);
+=======
+		engine = new EnemyActionEngine(listenerAggregator, status);
+
+		behavior = new LemmingBehavior(status, collisionHandler);
+
+		listenerAggregator.addListener(behavior);
+>>>>>>> 509c2872fff17070d75f7375b84a6b62bdd7c8a1
 		
 	}
 
@@ -86,15 +122,14 @@ public class Enemy extends Actor implements InteractiveCollideable{
 	}
 
 	@Override
-	public void onCollisionDo(Class collidingObjectClass, Shape collidingObjectShape) {
-		// TODO Auto-generated method stub
+	public void onCollisionDo(Class<?> collidingObjectClass, Shape collidingObjectShape) {
 		if (collidingObjectClass.equals(Player.class)){
-			status.gainEffect("Collided with player", 1);
+			status.gainEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER, 1);
 		}
 	}
 
 	@Override
-	public ArrayList<Command> onCollisionBroadcast(Class collidingObjectClass, Shape collidingObjectShape) {
+	public ArrayList<Command> onCollisionBroadcast(Class<?> collidingObjectClass, Shape collidingObjectShape) {
 		ArrayList<Command> list = new ArrayList<Command>();
 		if (collidingObjectClass.equals(Player.class)){
 			list.add( new DieCommand());
@@ -102,9 +137,6 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		return list;
 	}
 	
-	public void render( int mapX, int mapY) {
-		graphics.render((int) rect.getX() - mapX, (int) rect.getY() - mapY); 
-	}
 
 
 

@@ -1,5 +1,7 @@
 package actionEngines;
 
+import items.Item;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
@@ -7,6 +9,7 @@ import org.newdawn.slick.command.Command;
 import actors.Status;
 import commands.InputListenerAggregator;
 import commands.MoveCommand;
+import gameobjects.BasicObject;
 import gameobjects.GameObject;
 import gameobjects.Interactive;
 
@@ -38,22 +41,34 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 	
 
-	public void attemptInteract( int interactionType){
+//	public void attemptInteract( int interactionType){
+//		//Get nearby objects to interact with
+//		ArrayList<GameObject> objects = status.nearbyInteractives();
+//		
+//		//Interact, if possible
+//		if (interactTimer==0 && !objects.isEmpty()){
+//			for (GameObject gObj: objects){
+//				((Interactive) gObj).interact(interactionType);
+//			}
+//			
+//			interactTimer+= interactTimerIncrement;
+//		}
+//	}
+	
+	
+	public void attemptInteract( int interactionType, Status status){
 		//Get nearby objects to interact with
-		ArrayList<GameObject> objects = status.nearbyInteractives();
+		ArrayList<BasicObject> objs = status.nearbyInteractives();
 		
 		//Interact, if possible
-		if (interactTimer==0 && !objects.isEmpty()){
-			for (GameObject gObj: objects){
-				((Interactive) gObj).interact(interactionType);
+		if (interactTimer==0 && !objs.isEmpty()){
+			for (BasicObject obj : objs){
+				((Interactive) obj).interact(interactionType, status);
 			}
 			
 			interactTimer+= interactTimerIncrement;
 		}
 	}
-	
-	
-
 	
 	
 	

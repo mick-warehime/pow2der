@@ -1,5 +1,7 @@
 package main;
 
+import items.Item;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
@@ -9,50 +11,61 @@ import org.newdawn.slick.geom.Shape;
 import actors.Actor;
 import actors.Player;
 import commands.CommandProvider;
+import gameobjects.BasicObject;
 import gameobjects.GameObject;
 import gameobjects.Interactive;
-import gameobjects.InteractiveCollideable;
+import gameobjects.Broadcaster;
 
 public class CollisionHandler implements CommandProvider {
 
 	private ArrayList<Rectangle> blocks;
-	private ArrayList<GameObject> gameObjects;
+//	private ArrayList<GameObject> gameObjects;
 	private ArrayList<Actor> actors;
 
 	//	private ArrayList<GameObject> gameObjects2;
 	private Rectangle playerRect;
 
 	// Objects that do something on collision
-	private ArrayList <InteractiveCollideable> interactiveGameObjects;
+	private ArrayList<Broadcaster> interactiveGameObjects;
+	private ArrayList<BasicObject> basicObjects;
+
 
 	public CollisionHandler(ArrayList<Rectangle> blockedList){
 		this.blocks = blockedList;
 	}
 
 
-	public void receiveObjects(ArrayList<GameObject> gameObjects, ArrayList<Actor> actors, ArrayList<InteractiveCollideable> interactiveCollideables){
+	public void receiveObjects(ArrayList<Actor> actors, ArrayList<Broadcaster> broadcasters, 
+			ArrayList<BasicObject> basicObjects){
 
-		this.gameObjects = gameObjects;
+		this.basicObjects = basicObjects;
 		this.actors = actors;
-		this.interactiveGameObjects = interactiveCollideables;	
+		this.interactiveGameObjects = broadcasters;	
+
 	}
 
 	public void addPlayerRect(Rectangle playerRect){
 		this.playerRect = playerRect;		
 	}
 
-	//Returns a list of interactive game objects near the player
-	public ArrayList<GameObject> interactiveObjectsNearRect(Rectangle rect){
 
-		ArrayList<GameObject> output = new ArrayList<GameObject>();
+//	Returns a list of interactive game objects near the player
+	public ArrayList<BasicObject> interactiveObjectsNearRect(Rectangle rect){
 
-		for(GameObject gObj: gameObjects){
-			if (gObj instanceof Interactive){
-				if (gObj.isNear(rect)){
-					output.add(gObj);
+
+
+		ArrayList<BasicObject> output = new ArrayList<BasicObject>();
+
+		for(BasicObject obj: basicObjects){
+			
+			if (obj instanceof Interactive){
+				
+				if (obj.isNear(playerRect)){
+					output.add(obj);
 				}
 			}
 		}
+
 		return output;
 	}
 
@@ -84,17 +97,17 @@ public class CollisionHandler implements CommandProvider {
 				}
 			}
 		}
-		
+
 		return playerRect.intersects(shape); 
 	}
-
+//
 	public boolean isCollidedWithObjects(Shape shape){
 		// check if collided with solid etherable Objects
-		for(GameObject gObj: gameObjects){
+		for(BasicObject obj: basicObjects){
 			// don't check with its own shape and dont check with objects that are currently being held
-			if(gObj.getShape() != shape){
-				if(gObj.canCollide()){
-					if(shape.intersects(gObj.getShape())){
+			if(obj.getShape() != shape){
+				if(obj.canCollide()){
+					if(shape.intersects(obj.getShape())){
 						return true;
 					}
 				}
@@ -103,8 +116,8 @@ public class CollisionHandler implements CommandProvider {
 		return false;
 	}
 
-	public boolean isCollidedWithPlayer(Shape etherRect){
-		return playerRect.intersects(etherRect);
+	public boolean isCollidedWithPlayer(Shape shape){
+		return playerRect.intersects(shape);
 	}
 
 
@@ -127,7 +140,7 @@ public class CollisionHandler implements CommandProvider {
 		Rectangle slightlyBiggerRect = new Rectangle(rect.getX()-proximity,rect.getY()-proximity,rect.getWidth()+2*proximity,rect.getHeight()+2*proximity);
 
 		//
-		for (InteractiveCollideable interObj : interactiveGameObjects){
+		for (Broadcaster interObj : interactiveGameObjects){
 
 			if (slightlyBiggerRect.intersects(interObj.getShape())){
 				interObj.onCollisionDo(collidingObjectClass, rect);
@@ -137,6 +150,7 @@ public class CollisionHandler implements CommandProvider {
 
 		return output;
 	}
+
 
 
 

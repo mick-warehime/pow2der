@@ -129,6 +129,8 @@ public class Game extends BasicGame {
 
 		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
 
+<<<<<<< HEAD
+=======
 		this.menuHandler = new MenuHandler();
 		gameControls.addMenuInputProviderListener(menuHandler.getListener());
 		
@@ -153,6 +155,7 @@ public class Game extends BasicGame {
 
 		gameControls.addAvatarInputProviderListener(terri.getListener());
 
+>>>>>>> 509c2872fff17070d75f7375b84a6b62bdd7c8a1
 		// load the times from file dunno why the try catchs are required
 		try {
 			loadItemsFromFile();

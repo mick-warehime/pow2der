@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class Book extends Item{
 
 
 
-	public Book(Map<String, String> itm) {
+	public Book(Map<String, String> itm, Image sprite, ItemLocation location ) throws SlickException {
 		
-		super(itm);
+		super(itm,sprite,location);
 		
 		
 	}

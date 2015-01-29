@@ -17,36 +17,36 @@ import commands.InputListenerAggregator;
 import gameobjects.InteractiveCollideable;
 import graphics.ActorGraphics;
 
-public class Enemy extends Actor implements InteractiveCollideable{
+public class Enemy extends Actor implements Broadcaster{
 
 	private LemmingBehavior behavior;
 	
 
-	public Enemy(int x, int y, int w, int h, String name, TiledMap map, Properties args ) throws SlickException {
-		super();
+//	public Enemy(int x, int y, int w, int h, String name, TiledMap map, Properties args ) throws SlickException {
+//		super();
+//
+//		int rectTopLeftX = x*map.getTileWidth();
+//		int rectTopLeftY = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
+//
+//		listener = new GlobalInputListener();
+//		
+//		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 32);
+//
+//		status = new Status(rect);
+//		
+//		
+//		if(args.containsKey("direction")){
+//			int dir = Integer.parseInt((String) args.get("direction"));
+//			if (dir*status.getDirection('x')<0){//directions don't agree
+//				status.setDirection('x',dir);
+//			}
+//		}
+//		graphics = new ActorGraphics("data/dwarf3.png", status);
+//
+//		
+// 	}
 
-		int rectTopLeftX = x*map.getTileWidth();
-		int rectTopLeftY = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
-
-		listenerAggregator = new InputListenerAggregator();
-		
-		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 32);
-
-		status = new Status(rect);
-		
-		
-		if(args.containsKey("direction")){
-			int dir = Integer.parseInt((String) args.get("direction"));
-			if (dir*status.getDirection('x')<0){//directions don't agree
-				status.setDirection('x',dir);
-			}
-		}
-		graphics = new ActorGraphics("data/dwarf3.png", status);
-
-		
- 	}
-
-	public Enemy(int xPixels, int yPixels) throws SlickException {
+	public Enemy(int xPixels, int yPixels, CollisionHandler collisionHandler) throws SlickException {
 		super();
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
@@ -54,16 +54,14 @@ public class Enemy extends Actor implements InteractiveCollideable{
 		listenerAggregator = new InputListenerAggregator();
 				
 		status = new Status(rect);
-
-		graphics = new ActorGraphics("data/dwarf3.png", status);
- 	}
-	
-	public void incorporateCollisionHandler(CollisionHandler collisionHandler){
-
-		// status = new Status((float) x, (float) y, collisionHandler,sprite.getWidth(),sprite.getHeight() );
 		status.setCollisionHandler(collisionHandler);
+		
+		graphics = new ActorGraphics("data/dwarf3.png", status);
 
-		engine = new EnemyActionEngine(listenerAggregator, status);
+		listener = new GlobalInputListener();
+		
+		
+		engine = new EnemyActionEngine(listener, status);
 
 		behavior = new LemmingBehavior(status, collisionHandler);
 
