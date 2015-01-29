@@ -183,7 +183,7 @@ public class Game extends BasicGame {
 	}
 
 	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException {
+	public void render(GameContainer gc, Graphics graphics) throws SlickException {
 
 //		System.out.println("Left joystick: "+  jsticks.LeftXValue()+"," +jsticks.LeftYValue() );
 //		System.out.println("Right joystick: "+  jsticks.RightXValue()+"," +jsticks.RightYValue() );
@@ -200,11 +200,11 @@ public class Game extends BasicGame {
 			int mouseX = gc.getInput().getMouseX();
 			int mouseY = gc.getInput().getMouseY();
 
-			level.draw(g,(int) terri.getX(),(int)terri.getY());
-			terri.render(g, level.getMapX(),level.getMapY());
+			level.draw(graphics,(int) terri.getX(),(int)terri.getY());
+			terri.render(graphics, level.getMapX(),level.getMapY());
 		}
 		
-		menuHandler.renderActiveMenus(gc);
+		menuHandler.renderActiveMenus(graphics);
 	}
 
 

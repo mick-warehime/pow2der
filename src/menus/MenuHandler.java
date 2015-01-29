@@ -53,10 +53,10 @@ public class MenuHandler {
 		actionEngine.update();		
 	}
 
-	public void renderActiveMenus(GameContainer gc){
+	public void renderActiveMenus(Graphics graphics){
 		for (Menu menu : menus){
 			if (menu.isOpen()){
-				menu.render();
+				menu.render(graphics);
 			}
 		}
 	}

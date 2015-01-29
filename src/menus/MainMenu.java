@@ -2,8 +2,14 @@ package menus;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
+
 public class MainMenu extends Menu {
 
+	
+	private int menuRenderX = 100;
+	private int menuRenderY = 240;
+	private int textLineHeight = 16;
 	
 	
 	public MainMenu() {
@@ -26,7 +32,12 @@ public class MainMenu extends Menu {
 	
 
 	@Override
-	public void render() {
+	public void render(Graphics graphics) {
+		int count = 0;
+		for (String line : textLines){
+			graphics.drawString(line, menuRenderX, menuRenderY + count*textLineHeight);
+			count+=1;
+		}
 		
 		
 	}

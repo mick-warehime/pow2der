@@ -1,5 +1,7 @@
 package menus;
 
+import org.newdawn.slick.Graphics;
+
 /*
  * 
 * Toggle functionality
@@ -33,5 +35,5 @@ public abstract class Menu {
 		return menuType;
 	}
 	
-	public abstract void render();
+	public abstract void render(Graphics graphics);
 }
