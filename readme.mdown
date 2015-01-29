@@ -143,6 +143,6 @@ REFACTORS/TODO
 + Level.graphics render items/objects/map
 
 * Fix second joystick functionality
-
+* Extract a textBasedMenu superclass from MainMenu
 
 
