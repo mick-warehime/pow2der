@@ -8,21 +8,20 @@ import commands.InputListenerAggregator;
 //Performs actions for a menu, based on inputs
 public class MenuActionEngine extends ActionEngine{
 
-	private int menuToggleTimer = 0;
-	private int menuToggleInterval = 20;
-	private boolean canToggleMenu = true;
+	private int menuBusyTimer = 0;
+	private int menuBusyTime = 10;
 	private MenuHandlerData menuHandlerData;
 
-	
+
 
 	public MenuActionEngine(InputListenerAggregator listener, MenuHandlerData menuHandlerData) {
 		super(listener);
 		this.menuHandlerData = menuHandlerData;
-		
+
 	}
-	
+
 	public void toggleMenu(int menuType){
-		if (canToggleMenu ){
+		if (!isBusy() ){
 			for (Menu menu : menuHandlerData.getMenus()){
 				if (menu.getType() == menuType){
 					menu.toggle();
@@ -31,28 +30,38 @@ public class MenuActionEngine extends ActionEngine{
 					}else{
 						menuHandlerData.deactivateActiveMenu();
 					}
-					canToggleMenu =false;
+					menuBusyTimer += menuBusyTime;
 				}
 			}
 		}	
 	}
-	
+
+
+
 	public void update(){
 		super.update();
-		
-		if (!canToggleMenu){
-			menuToggleTimer+=1;
+
+		updateBusyTimer();
+
+	}
+	
+	private void updateBusyTimer(){
+		if (menuBusyTimer >0){
+			menuBusyTimer-=1;
 		}
-		if (menuToggleTimer >= menuToggleInterval){
-			menuToggleTimer = 0;
-			canToggleMenu = true;
-		}
-		
-		
-		
-		
-		
+	}
+	private boolean isBusy(){
+		return (menuBusyTimer>0);
 	}
 
-	
+	public void changeActiveTextLine(char xOrY, int direction) {
+
+		Menu menu = menuHandlerData.getActiveMenu();
+		if (menu != null && !isBusy()){
+			menu.incrementActiveSelection(xOrY,direction);
+			menuBusyTimer += menuBusyTime;
+		}
+	}
+
+
 }

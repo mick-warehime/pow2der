@@ -52,7 +52,6 @@ public class MenuHandler {
 
 	public void renderActiveMenus(Graphics graphics){
 
-		System.out.println(menuHandlerData.getActiveMenu());
 		for (Menu menu : menuHandlerData.getMenus()){
 			if (menu.isOpen()){
 				menu.render(graphics);

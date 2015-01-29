@@ -36,4 +36,6 @@ public abstract class Menu {
 	}
 	
 	public abstract void render(Graphics graphics);
+	
+	public abstract void incrementActiveSelection(char xOrY, int direction);
 }

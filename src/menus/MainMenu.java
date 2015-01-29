@@ -7,13 +7,13 @@ import org.newdawn.slick.Graphics;
 
 public class MainMenu extends Menu {
 
-	
+
 	private int menuRenderX = 100;
 	private int menuRenderY = 240;
 	private int textLineHeight = 16;
 	private int activeTextLine = 0;
-	
-	
+
+
 	public MainMenu() {
 		super(Menu.MENU_MAIN);
 		defineTextLines();
@@ -22,16 +22,19 @@ public class MainMenu extends Menu {
 
 
 	private ArrayList<String> textLines;
-	
-	
-	
+
+
+
 	private void defineTextLines(){
 		textLines = new ArrayList<String>();
 		textLines.add("Continue");
+		textLines.add("Inventory");
+		textLines.add("Game Options");
+
 		textLines.add("Exit Game");
 	}
-	
-	
+
+
 
 	@Override
 	public void render(Graphics graphics) {
@@ -40,23 +43,37 @@ public class MainMenu extends Menu {
 			if (count == this.activeTextLine){
 				graphics.setColor(Color.red);
 			}else{ graphics.setColor(Color.white);}
-			
+
 			graphics.drawString(line, menuRenderX, menuRenderY + count*textLineHeight);
 			count+=1;
 		}
-		
-		
-	}
-	
-	public void incrementActiveTextLine(){
-		this.activeTextLine +=1;
-		activeTextLine = activeTextLine % (textLines.size());
-	}
-	public void decrementActiveTextLine(){
-		this.activeTextLine -=1;
-		activeTextLine = activeTextLine % (textLines.size());
+
+
 	}
 
-	
-	
+
+
+
+	@Override
+	public void incrementActiveSelection(char xOrY, int direction) {
+		if (xOrY == 'y'){
+			if (direction>0){
+				this.activeTextLine +=1;
+			}
+			else {
+				this.activeTextLine -=1;
+			}
+			activeTextLine = activeTextLine % (textLines.size());
+			if (activeTextLine <0){ 
+				activeTextLine = textLines.size()+activeTextLine;
+			}
+			
+			
+
+		}
+
+
+
+	}
+
 }
