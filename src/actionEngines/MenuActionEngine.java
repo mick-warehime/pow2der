@@ -1,9 +1,8 @@
 package actionEngines;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
 
 import menus.Menu;
+import menus.MenuHandlerData;
 import commands.InputListenerAggregator;
 
 //Performs actions for a menu, based on inputs
@@ -12,27 +11,30 @@ public class MenuActionEngine extends ActionEngine{
 	private int menuToggleTimer = 0;
 	private int menuToggleInterval = 20;
 	private boolean canToggleMenu = true;
+	private MenuHandlerData menuHandlerData;
 
-	private ArrayList<Menu> menus;
 	
 
-	public MenuActionEngine(InputListenerAggregator listener, ArrayList<Menu> menus) {
+	public MenuActionEngine(InputListenerAggregator listener, MenuHandlerData menuHandlerData) {
 		super(listener);
-		this.menus = menus;
+		this.menuHandlerData = menuHandlerData;
 		
 	}
 	
 	public void toggleMenu(int menuType){
 		if (canToggleMenu ){
-			for (Menu menu : menus){
+			for (Menu menu : menuHandlerData.getMenus()){
 				if (menu.getType() == menuType){
 					menu.toggle();
+					if (menu.isOpen()){
+						menuHandlerData.setActiveMenu(menu);
+					}else{
+						menuHandlerData.deactivateActiveMenu();
+					}
 					canToggleMenu =false;
-					
 				}
 			}
-		}
-		
+		}	
 	}
 	
 	public void update(){

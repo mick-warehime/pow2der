@@ -19,23 +19,20 @@ public class MenuHandler {
 
 
 
-
-	private ArrayList<Menu> menus;
 	private KeyboardInputListener keyboardInputs;
 	private InputListenerAggregator listenerAggregator;
 	private MenuActionEngine actionEngine;
+	private MenuHandlerData menuHandlerData;
 
 
 	public MenuHandler(){
-		this.menus= new ArrayList<Menu>();
-
-		this.menus.add(new MainMenu());
-
+		
+		this.menuHandlerData = new MenuHandlerData();
 		this.keyboardInputs = new KeyboardInputListener();
 		this.listenerAggregator = new InputListenerAggregator();
 		listenerAggregator.addListener(keyboardInputs);
 
-		this.actionEngine = new MenuActionEngine(listenerAggregator, menus);
+		this.actionEngine = new MenuActionEngine(listenerAggregator, menuHandlerData);
 
 
 	}
@@ -50,15 +47,28 @@ public class MenuHandler {
 	}
 
 	public void update() {
-		actionEngine.update();		
+		actionEngine.update();	
 	}
 
 	public void renderActiveMenus(Graphics graphics){
-		for (Menu menu : menus){
+
+		System.out.println(menuHandlerData.getActiveMenu());
+		for (Menu menu : menuHandlerData.getMenus()){
 			if (menu.isOpen()){
 				menu.render(graphics);
 			}
 		}
 	}
+	
+	public boolean isMenuActive(){
+		for (Menu menu : menuHandlerData.getMenus()){
+			if (menu.isOpen()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 
 }

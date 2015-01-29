@@ -66,6 +66,11 @@ public class Game extends BasicGame {
 		
 		menuHandler.update();
 		
+		if (menuHandler.isMenuActive()){
+			gameState = PAUSE_STATE;
+		}
+			
+		
 		if (gameState == LOAD_STATE){
 			////The following should be returned for a load screen
 			//			if (gc.getInput().isKeyPressed(Input.KEY_ENTER)){
@@ -101,12 +106,9 @@ public class Game extends BasicGame {
 
 
 		if ( gameState == PAUSE_STATE){
-			
-//			for (Menu menu : menus){
-//				if (menu.isToggled()){
-//					System.out.println("Menu toggled!");
-//				}
-//			}	
+			if (!menuHandler.isMenuActive()){
+				gameState = LEVEL_STATE;
+			}
 		}
 		
 		if ( gc.getInput().isKeyPressed(Input.KEY_P)){
@@ -205,6 +207,8 @@ public class Game extends BasicGame {
 		//			inputText.render(gc, g);
 		//		}
 
+		
+		
 		if (gameState == LEVEL_STATE){
 			int mouseX = gc.getInput().getMouseX();
 			int mouseY = gc.getInput().getMouseY();

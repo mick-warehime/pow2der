@@ -136,8 +136,6 @@ REFACTORS/TODO
 + Level.data  lists of items / objects / map info
 + Level.graphics render items/objects/map
 
-###MenuHandler shouldn't have to have a GlobalInputListener. The relationship between keyboardInputListener and GlobalInputListener are unclear.
-
 * Fix second joystick functionality
 
 
