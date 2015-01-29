@@ -3,14 +3,14 @@ package commands;
 import org.newdawn.slick.command.BasicCommand;
 
 import actionEngines.ActionEngine;
-import actionEngines.ActorActionEngine;
 import actionEngines.PlayerActionEngine;
 import actors.Effect;
+
 
 public class InteractCommand extends BasicCommand implements GenericCommand{
 
 	private int interactionType;
-
+	
 	public InteractCommand(int interactionType) {
 		super("Interact Command");
 		this.interactionType = interactionType;
@@ -19,11 +19,12 @@ public class InteractCommand extends BasicCommand implements GenericCommand{
 
 	@Override
 	public void execute(ActionEngine engine) {
-		if (engine instanceof PlayerActionEngine){
-			((PlayerActionEngine) engine).attemptInteract(interactionType);
-			((PlayerActionEngine) engine).applyEffect(Effect.EFFECT_INTERACTING, 1);}
-
+		PlayerActionEngine playerEngine = (PlayerActionEngine) engine; 
+		playerEngine.attemptInteract(interactionType, playerEngine.getStatus());
+		playerEngine.applyEffect(Effect.EFFECT_INTERACTING, 1);
+		
+		
 	}
 
-
+	
 }

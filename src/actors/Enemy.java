@@ -14,37 +14,13 @@ import org.newdawn.slick.tiled.TiledMap;
 import actionEngines.EnemyActionEngine;
 import commands.DieCommand;
 import commands.InputListenerAggregator;
-import gameobjects.InteractiveCollideable;
+import gameobjects.Broadcaster;
 import graphics.ActorGraphics;
 
 public class Enemy extends Actor implements Broadcaster{
 
 	private LemmingBehavior behavior;
 	
-
-//	public Enemy(int x, int y, int w, int h, String name, TiledMap map, Properties args ) throws SlickException {
-//		super();
-//
-//		int rectTopLeftX = x*map.getTileWidth();
-//		int rectTopLeftY = y*map.getTileHeight(); //These shouldn't be necessary. Fix later
-//
-//		listener = new GlobalInputListener();
-//		
-//		Rectangle rect = new Rectangle(rectTopLeftX,rectTopLeftY,32, 32);
-//
-//		status = new Status(rect);
-//		
-//		
-//		if(args.containsKey("direction")){
-//			int dir = Integer.parseInt((String) args.get("direction"));
-//			if (dir*status.getDirection('x')<0){//directions don't agree
-//				status.setDirection('x',dir);
-//			}
-//		}
-//		graphics = new ActorGraphics("data/dwarf3.png", status);
-//
-//		
-// 	}
 
 	public Enemy(int xPixels, int yPixels, CollisionHandler collisionHandler) throws SlickException {
 		super();
@@ -58,10 +34,7 @@ public class Enemy extends Actor implements Broadcaster{
 		
 		graphics = new ActorGraphics("data/dwarf3.png", status);
 
-		listener = new GlobalInputListener();
-		
-		
-		engine = new EnemyActionEngine(listener, status);
+		engine = new EnemyActionEngine(listenerAggregator, status);
 
 		behavior = new LemmingBehavior(status, collisionHandler);
 

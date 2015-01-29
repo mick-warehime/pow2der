@@ -132,27 +132,6 @@ public class Game extends BasicGame {
 		this.menuHandler = new MenuHandler();
 		gameControls.addMenuInputProviderListener(menuHandler.getListener());
 		
-		
-
-	}
-
-	private void initializeLevel(int levelNumber) throws SlickException{
-		level = new Level(levelNumber);
-
-		if(progress==null){
-			progress = level.getProgressPoint();
-		}
-
-		level.setProgressPoint(progress);
-		level.setMousePosition(gameControls.getMousePos());
-		// i dont like this initialization
-		CollisionHandler collisionHandler = level.getCollisionHandler();
-
-		terri = new Player(level.getProgressX(),level.getProgressY(),collisionHandler, gameControls.getMousePos());
-
-
-		gameControls.addAvatarInputProviderListener(terri.getListener());
-
 		// load the times from file dunno why the try catchs are required
 		try {
 			loadItemsFromFile();
@@ -169,23 +148,40 @@ public class Game extends BasicGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 
 	private void initializeLevel(int levelNumber) throws SlickException{
-		level = new Level(levelNumber,itemBuilder);
+		level = new Level(levelNumber, itemBuilder);
 
 		level.setMousePosition(gameControls.getMousePos());
 		// i dont like this initialization
 		CollisionHandler collisionHandler = level.getCollisionHandler();
 
-		terri = new Player(100,850,collisionHandler, gameControls.getMousePos());
+		terri = new Player(100,800,collisionHandler, gameControls.getMousePos());
 
 
-		//Keyboard stuff
-		gameControls.addPlayerListener(terri.getListener());
+		gameControls.addAvatarInputProviderListener(terri.getListener());
+
+	
 
 	}
+
+//	private void initializeLevel(int levelNumber) throws SlickException{
+//		level = new Level(levelNumber,itemBuilder);
+//
+//		level.setMousePosition(gameControls.getMousePos());
+//		// i dont like this initialization
+//		CollisionHandler collisionHandler = level.getCollisionHandler();
+//
+//		terri = new Player(100,850,collisionHandler, gameControls.getMousePos());
+//
+//
+//		//Keyboard stuff
+//		gameControls.addAvatarInputProviderListener(terri.getListener());
+//
+//	}
 
 	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
