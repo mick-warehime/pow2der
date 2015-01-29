@@ -123,6 +123,12 @@ Should implement Interactive?
 
 
 
+Map Class
+===
+1. create blocks that player can run into arraylist of rects
+2. be able to draw blocks (load from sprite sheet)
+3. draw relative to player
+4. make randomizable mini-maps
 
 
 

@@ -81,8 +81,6 @@ public class Item extends BasicObject implements Interactive{
 		return stackable;
 	}
 
-	
-
 
 	@Override
 	public void interact(int interactionType, Status status) {
