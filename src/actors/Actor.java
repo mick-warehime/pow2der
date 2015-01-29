@@ -8,12 +8,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import commands.GlobalInputListener;
+import actionEngines.ActionEngine;
+import commands.InputListenerAggregator;
 
 public abstract class Actor {
 
 	protected ActorGraphics graphics;
-	protected GlobalInputListener listener;
+	protected InputListenerAggregator listenerAggregator;
 	protected ActionEngine engine;
 	protected Status status;
 	
@@ -41,10 +42,8 @@ public abstract class Actor {
 		//Update status
 		status.updateEffects();
 		
-		//Receive all command inputs (some depend on status)
-		listener.receiveExternalInputs();
 		
-		//Do actions (depends on listener)
+		//Do actions (depends on listenerAggregator)
 		engine.update();
 		
 		

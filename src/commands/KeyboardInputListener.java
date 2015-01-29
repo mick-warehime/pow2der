@@ -10,13 +10,10 @@ import org.newdawn.slick.command.InputProviderListener;
 public class KeyboardInputListener implements InputProviderListener,CommandProvider{
 
 	
-//	private Player player;
 	private ArrayList<Command> currentActions = new ArrayList<Command>();
 	
 	
 	public KeyboardInputListener() {
-		// TODO Auto-generated constructor stub
-//		this.player = player;
 	}
 	
 	
@@ -36,20 +33,15 @@ public class KeyboardInputListener implements InputProviderListener,CommandProvi
 	public void controlPressed(Command cmd) {
 		
 		addCommand(cmd);
-//		((MoveCommand)cmd).execute(player);
-//		String message = "Pressed: "+cmd;
-//		System.out.println(message);
+		
 		
 	}
 
 	@Override
 	public void controlReleased(Command cmd) {
-		// TODO Auto-generated method stub
 		
 		removeCommand(cmd);
 		
-//		String message = "Released: "+cmd;
-//		System.out.println(message);
 	}
 
 }

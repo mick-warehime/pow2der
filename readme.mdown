@@ -8,6 +8,13 @@ Represents items that may be picked up and used in the game. Required functional
 * Associated effects on the player, if it has one
 * Monetary value?
 * Equip and unequip functionality, if relevant
+* Pick up and put down functionality
+
+Required components:
+* Location object (whether it's in inventory or on the ground)
+* Graphics
+* on pickup, change the location of the object to inventory. This means it's no longer drawn on the screen, but will be drawn in the inventory.
+
 
 ItemLocation
 ===
@@ -58,14 +65,14 @@ Basic drawing for actors.
 
 Menu
 ===
+Stores menu components
 
-* Toggle functionality
-* Take keyboard/mouse inputs to alter displayed selection
-* graphics for displaying the menu, and showing what the selected item is
-* Binds selected option to a command
+* menuRenderer
+* menuData
+* isToggled
+
 
 MenuHandler
-
 === 
 Handles toggling of menus
 
@@ -110,8 +117,17 @@ Door
 ===
 Graphics
 Something for collisions--> Shape
-CollisionDomain -> area in which you can toggle it.
 Toggling ability
+Should implement Interactive?
+
+
+
+
+
+
+
+
+
 
 REFACTORS
 ===
@@ -120,6 +136,7 @@ REFACTORS
 + Level.data  lists of items / objects / map info
 + Level.graphics render items/objects/map
 
+###MenuHandler shouldn't have to have a GlobalInputListener. The relationship between keyboardInputListener and GlobalInputListener are unclear.
 
 
 

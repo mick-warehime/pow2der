@@ -92,8 +92,10 @@ public class GameControls {
 		Command moveUp = new MoveCommand('y', -1);
 		Command moveDown = new MoveCommand('y', 1);
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
-
-
+<<<<<<< HEAD
+		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
+		
+		
 
 		//Bind commands to keyboard keys
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
@@ -102,6 +104,17 @@ public class GameControls {
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 		controlsInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
+=======
+
+
+
+		//Bind commands to keyboard keys
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_D), moveRight);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_W), moveUp);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
+>>>>>>> 509c2872fff17070d75f7375b84a6b62bdd7c8a1
 
 		//Bind commands to controller keys
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);

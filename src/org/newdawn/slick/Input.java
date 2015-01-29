@@ -350,13 +350,13 @@ public class Input {
 	protected HashSet allListeners = new HashSet();
 	/** The listeners to notify of key events */
 	protected ArrayList keyListeners = new ArrayList();
-	/** The listener to add */
+	/** The listenerAggregator to add */
 	protected ArrayList keyListenersToAdd = new ArrayList();
 	/** The listeners to notify of mouse events */
 	protected ArrayList mouseListeners = new ArrayList();
-	/** The listener to add */
+	/** The listenerAggregator to add */
 	protected ArrayList mouseListenersToAdd = new ArrayList();
-	/** The listener to nofiy of controller events */
+	/** The listenerAggregator to nofiy of controller events */
 	protected ArrayList controllerListeners = new ArrayList();
 	/** The current value of the wheel */
 	private int wheel;
@@ -474,9 +474,9 @@ public class Input {
 	}
 	
 	/**
-	 * Add a listener to be notified of input events
+	 * Add a listenerAggregator to be notified of input events
 	 * 
-	 * @param listener The listener to be notified
+	 * @param listenerAggregator The listenerAggregator to be notified
 	 */
 	public void addListener(InputListener listener) {
 		addKeyListener(listener);
@@ -485,18 +485,18 @@ public class Input {
 	}
 
 	/**
-	 * Add a key listener to be notified of key input events
+	 * Add a key listenerAggregator to be notified of key input events
 	 * 
-	 * @param listener The listener to be notified
+	 * @param listenerAggregator The listenerAggregator to be notified
 	 */
 	public void addKeyListener(KeyListener listener) {
 		keyListenersToAdd.add(listener);
 	}
 	
 	/**
-	 * Add a key listener to be notified of key input events
+	 * Add a key listenerAggregator to be notified of key input events
 	 * 
-	 * @param listener The listener to be notified
+	 * @param listenerAggregator The listenerAggregator to be notified
 	 */
 	private void addKeyListenerImpl(KeyListener listener) {
 		if (keyListeners.contains(listener)) {
@@ -507,18 +507,18 @@ public class Input {
 	}
 
 	/**
-	 * Add a mouse listener to be notified of mouse input events
+	 * Add a mouse listenerAggregator to be notified of mouse input events
 	 * 
-	 * @param listener The listener to be notified
+	 * @param listenerAggregator The listenerAggregator to be notified
 	 */
 	public void addMouseListener(MouseListener listener) {
 		mouseListenersToAdd.add(listener);
 	}
 	
 	/**
-	 * Add a mouse listener to be notified of mouse input events
+	 * Add a mouse listenerAggregator to be notified of mouse input events
 	 * 
-	 * @param listener The listener to be notified
+	 * @param listenerAggregator The listenerAggregator to be notified
 	 */
 	private void addMouseListenerImpl(MouseListener listener) {
 		if (mouseListeners.contains(listener)) {
@@ -529,9 +529,9 @@ public class Input {
 	}
 	
 	/**
-	 * Add a controller listener to be notified of controller input events
+	 * Add a controller listenerAggregator to be notified of controller input events
 	 * 
-	 * @param listener The listener to be notified
+	 * @param listenerAggregator The listenerAggregator to be notified
 	 */
 	public void addControllerListener(ControllerListener listener) {
 		if (controllerListeners.contains(listener)) {
@@ -575,10 +575,10 @@ public class Input {
 	}
 	
 	/**
-	 * Add a listener to be notified of input events. This listener
+	 * Add a listenerAggregator to be notified of input events. This listenerAggregator
 	 * will get events before others that are currently registered
 	 * 
-	 * @param listener The listener to be notified
+	 * @param listenerAggregator The listenerAggregator to be notified
 	 */
 	public void addPrimaryListener(InputListener listener) {
 		removeListener(listener);
@@ -591,9 +591,9 @@ public class Input {
 	}
 	
 	/**
-	 * Remove a listener that will no longer be notified
+	 * Remove a listenerAggregator that will no longer be notified
 	 * 
-	 * @param listener The listen to be removed
+	 * @param listenerAggregator The listen to be removed
 	 */
 	public void removeListener(InputListener listener) {
 		removeKeyListener(listener);
@@ -602,9 +602,9 @@ public class Input {
 	}
 
 	/**
-	 * Remove a key listener that will no longer be notified
+	 * Remove a key listenerAggregator that will no longer be notified
 	 * 
-	 * @param listener The listen to be removed
+	 * @param listenerAggregator The listen to be removed
 	 */
 	public void removeKeyListener(KeyListener listener) {
 		keyListeners.remove(listener);
@@ -615,9 +615,9 @@ public class Input {
 	}
 
 	/**
-	 * Remove a controller listener that will no longer be notified
+	 * Remove a controller listenerAggregator that will no longer be notified
 	 * 
-	 * @param listener The listen to be removed
+	 * @param listenerAggregator The listen to be removed
 	 */
 	public void removeControllerListener(ControllerListener listener) {
 		controllerListeners.remove(listener);
@@ -628,9 +628,9 @@ public class Input {
 	}
 
 	/**
-	 * Remove a mouse listener that will no longer be notified
+	 * Remove a mouse listenerAggregator that will no longer be notified
 	 * 
-	 * @param listener The listen to be removed
+	 * @param listenerAggregator The listen to be removed
 	 */
 	public void removeMouseListener(MouseListener listener) {
 		mouseListeners.remove(listener);

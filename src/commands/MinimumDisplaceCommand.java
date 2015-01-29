@@ -2,7 +2,8 @@ package commands;
 
 import org.newdawn.slick.command.BasicCommand;
 
-import actors.ActionEngine;
+import actionEngines.ActionEngine;
+import actionEngines.ActorActionEngine;
 
 //Displaces an actor in a direction, by the minimum required amount to 
 //undo a collision
@@ -23,38 +24,11 @@ public class MinimumDisplaceCommand extends BasicCommand implements GenericComma
 
 	@Override
 	public void execute(ActionEngine engine) {
+		if (engine instanceof ActorActionEngine){
+		((ActorActionEngine) engine).attemptDisplacement(disp, direction);
+		((ActorActionEngine) engine).attemptDisplacement(-disp, direction);
+		}
 		
-		engine.attemptDisplacement(disp, direction);
-		engine.attemptDisplacement(-disp, direction);
-		
-//		System.out.println("displacing...");
-//		//Do the displacement depending on assigned direction
-//		if (direction == "+x"){
-//			//this does the largest possible displacement
-//			engine.attemptDisplacement(maxRange,'x'); 
-//			//so reverse since want to do the minimum displacement
-//			engine.attemptDisplacement(-maxRange,'x'); 
-//		}
-//		if (direction == "-x"){
-//			//this does the largest possible displacement
-//			engine.attemptDisplacement(-maxRange,'x'); 
-//			//so reverse since want to do the minimum displacement
-//			engine.attemptDisplacement(maxRange,'x'); 
-//		}
-//		if (direction == "+y"){
-//			//this does the largest possible displacement
-//			engine.attemptDisplacement(maxRange,'y'); 
-//			//so reverse since want to do the minimum displacement
-//			engine.attemptDisplacement(-maxRange, 'y'); 
-//			
-//		}
-//		if (direction == "-y"){
-//			//this does the largest possible displacement
-//			engine.attemptDisplacement(-maxRange, 'y'); 
-//			//so reverse since want to do the minimum displacement
-//			engine.attemptDisplacement(maxRange,'y'); 
-//			
-//		}
 
 	}
 

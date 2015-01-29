@@ -1,18 +1,14 @@
-package actors;
+package actionEngines;
 
-import java.util.ArrayList;
-
-import org.newdawn.slick.command.Command;
-
-import commands.GenericCommand;
-import commands.GlobalInputListener;
+import actors.Effect;
+import actors.Status;
+import commands.InputListenerAggregator;
 
 
-public class ActionEngine {
+public class ActorActionEngine extends ActionEngine {
 
 
 
-	protected GlobalInputListener listener;
 	protected Status status;
 	protected float vx = 0;
 	protected float vy = 0;
@@ -21,17 +17,9 @@ public class ActionEngine {
 
 
 
-	public ActionEngine(GlobalInputListener listener, Status status2) {
-
-		this.listener = listener;
+	public ActorActionEngine(InputListenerAggregator listener, Status status2) {
+		super(listener);
 		this.status = status2;
-	}
-
-	public void update() {
-
-		doActions();
-		movePhysics();
-		updateTimers();	
 	}
 
 	public void attemptRunTo(char xOrY, int direction) {
@@ -64,6 +52,13 @@ public class ActionEngine {
 		return;
 	}
 
+	public void update() {
+		
+		doActions();
+		movePhysics();
+		updateTimers();
+	}
+	
 	//////////////////////////
 
 	protected void movePhysics() {        
@@ -92,22 +87,6 @@ public class ActionEngine {
 	protected void updateTimers(){
 		return;
 	}
-
-	protected void doActions() {
-
-		//Get all player commands
-		ArrayList<Command> currentActionCommands = listener.getCurrentActionCommands();
-
-		//Do the associated actions
-		for (Command cmd : currentActionCommands){
-			((GenericCommand)cmd).execute(this);
-		}
-
-
-
-
-	}
-
 
 	public boolean attemptDisplacement(float disp, char XorY){
 
