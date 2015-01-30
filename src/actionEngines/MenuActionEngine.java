@@ -20,6 +20,12 @@ public class MenuActionEngine extends ActionEngine{
 
 	}
 
+	public void activateActiveMenuSelection(){
+		if (!isBusy()){
+			Menu menu = menuHandlerData.getActiveMenu();
+			menu.activateActiveSelection();
+		}
+	}
 	public void toggleMenu(int menuType){
 		if (!isBusy() ){
 			for (Menu menu : menuHandlerData.getMenus()){
@@ -30,10 +36,25 @@ public class MenuActionEngine extends ActionEngine{
 					}else{
 						menuHandlerData.deactivateActiveMenu();
 					}
-					menuBusyTimer += menuBusyTime;
+					makeBusy();
 				}
 			}
 		}	
+	}
+	
+	private void makeBusy(){
+		menuBusyTimer += menuBusyTime;
+	}
+	
+	public void closeAllMenus(){
+		if (!isBusy()){
+			for (Menu menu : menuHandlerData.getMenus()){
+				if (menu.isOpen()){
+					menu.toggle();
+				}
+			}
+			makeBusy();
+		}
 	}
 
 
@@ -59,7 +80,7 @@ public class MenuActionEngine extends ActionEngine{
 		Menu menu = menuHandlerData.getActiveMenu();
 		if (menu != null && !isBusy()){
 			menu.incrementActiveSelection(xOrY,direction);
-			menuBusyTimer += menuBusyTime;
+			makeBusy();
 		}
 	}
 

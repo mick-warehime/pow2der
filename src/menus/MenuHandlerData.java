@@ -3,14 +3,16 @@ package menus;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import commands.InputListenerAggregator;
+
 public class MenuHandlerData {
 
 	private ArrayList<Menu> menus;
 	private Stack<Menu> activeMenuStack;
 
-	public MenuHandlerData(){
+	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		this.menus= new ArrayList<Menu>();
-		this.menus.add(new MainMenu());
+		this.menus.add(new MainMenu(listenerAggregator));
 		
 		this.activeMenuStack = new Stack<Menu>();
 	}

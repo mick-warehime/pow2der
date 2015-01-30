@@ -111,15 +111,7 @@ public class Game extends BasicGame {
 			}
 		}
 		
-		if ( gc.getInput().isKeyPressed(Input.KEY_P)){
-
-			if ( gameState == LEVEL_STATE){
-				gameState = PAUSE_STATE;
-			}
-			else if ( gameState == PAUSE_STATE){
-				gameState = LEVEL_STATE;
-			}
-		}
+		
 
 		if( gc.getInput().isKeyPressed(Input.KEY_ESCAPE)){gc.exit();}
 	}

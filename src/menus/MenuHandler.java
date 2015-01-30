@@ -19,12 +19,14 @@ public class MenuHandler {
 
 	public MenuHandler(){
 		
-		this.menuHandlerData = new MenuHandlerData();
+		
 		
 		this.keyboardInputs = new KeyboardInputListener();
 		this.listenerAggregator = new InputListenerAggregator();
 		listenerAggregator.addListener(keyboardInputs);
 
+		this.menuHandlerData = new MenuHandlerData(listenerAggregator);
+		
 		this.actionEngine = new MenuActionEngine(listenerAggregator, menuHandlerData);
 
 

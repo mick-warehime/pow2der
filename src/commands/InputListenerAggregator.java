@@ -25,10 +25,13 @@ public class InputListenerAggregator {
 	}
 
 	
+	public void receiveSingleCommand(Command command){
+		currentActionCommands.add(command);
+	}
+	
 	//For external inputs such as elevator collisions
 	//or being hit by enemies
 	private void receiveExternalInputs(){
-		currentActionCommands.clear();
 
 		for (CommandProvider provider: providers){
 			currentActionCommands.addAll(provider.getCommands());

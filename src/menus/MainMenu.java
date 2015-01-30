@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.command.Command;
+
+import commands.CloseAllMenusCommand;
+import commands.InputListenerAggregator;
 
 public class MainMenu extends Menu {
 
@@ -18,9 +22,9 @@ public class MainMenu extends Menu {
 	
 
 
-	public MainMenu() {
+	public MainMenu(InputListenerAggregator listenerAggregator) {
 		super(Menu.MENU_MAIN);
-		defineMenuSelections();
+		defineMenuSelections(listenerAggregator);
 	}
 
 
@@ -28,12 +32,16 @@ public class MainMenu extends Menu {
 
 
 
-	private void defineMenuSelections(){
+	private void defineMenuSelections(InputListenerAggregator listenerAggregator){
 		
 		
 		selections = new ArrayList<MenuSelection>();
-		MenuSelection cnt = new MenuSelection(null, 
+		
+		Command closeAll = new CloseAllMenusCommand();
+		
+		MenuSelection cnt = new MenuSelection(new MenuCommandAction(listenerAggregator, closeAll), 
 				new textSelectionGraphics("Continue", this.menuRenderX,this.menuRenderY));
+		
 		
 		MenuSelection options = new MenuSelection(null, 
 				new textSelectionGraphics("Options", this.menuRenderX,this.menuRenderY + this.textLineHeight));
@@ -88,6 +96,17 @@ public class MainMenu extends Menu {
 
 
 
+	}
+
+
+
+
+	@Override
+	public void activateActiveSelection() {
+		
+		MenuSelection selection = selections.get(activeSelection);
+		selection.activate();
+		
 	}
 
 }

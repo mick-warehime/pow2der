@@ -13,6 +13,7 @@ import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.command.KeyControl;
 
+import commands.ActivateMenuSelectionCommand;
 import commands.ChangeMenuSelectionCommand;
 import commands.InteractCommand;
 import commands.MoveCommand;
@@ -78,12 +79,13 @@ public class GameControls {
 		Command toggleMainMenu = new ToggleMenuCommand(Menu.MENU_MAIN);
 		Command menuDown = new ChangeMenuSelectionCommand('y',1);
 		Command menuUp = new ChangeMenuSelectionCommand('y',-1);
-
+		Command activate = new ActivateMenuSelectionCommand();
+		
 		//Bind them to keys
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_O), toggleMainMenu);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_W), menuUp);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_S), menuDown);
-		 
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ENTER), activate);
 	}
 
 	private void initializeAvatarKeyBindings(GameContainer gc){
