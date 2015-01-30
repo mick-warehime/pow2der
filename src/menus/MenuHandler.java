@@ -1,16 +1,8 @@
 package menus;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.InputListener;
 import org.newdawn.slick.command.InputProviderListener;
 
-import actionEngines.ActionEngine;
 import actionEngines.MenuActionEngine;
 import commands.InputListenerAggregator;
 import commands.KeyboardInputListener;
@@ -28,6 +20,7 @@ public class MenuHandler {
 	public MenuHandler(){
 		
 		this.menuHandlerData = new MenuHandlerData();
+		
 		this.keyboardInputs = new KeyboardInputListener();
 		this.listenerAggregator = new InputListenerAggregator();
 		listenerAggregator.addListener(keyboardInputs);

@@ -11,42 +11,56 @@ public class MainMenu extends Menu {
 	private int menuRenderX = 100;
 	private int menuRenderY = 240;
 	private int textLineHeight = 16;
-	private int activeTextLine = 0;
+	private int activeSelection = 0;
+
+
+	private ArrayList<MenuSelection> selections;
+	
 
 
 	public MainMenu() {
 		super(Menu.MENU_MAIN);
-		defineTextLines();
+		defineMenuSelections();
 	}
 
 
 
-	private ArrayList<String> textLines;
 
 
 
-	private void defineTextLines(){
-		textLines = new ArrayList<String>();
-		textLines.add("Continue");
-		textLines.add("Inventory");
-		textLines.add("Game Options");
-
-		textLines.add("Exit Game");
+	private void defineMenuSelections(){
+		
+		
+		selections = new ArrayList<MenuSelection>();
+		MenuSelection cnt = new MenuSelection(null, 
+				new textSelectionGraphics("Continue", this.menuRenderX,this.menuRenderY));
+		
+		MenuSelection options = new MenuSelection(null, 
+				new textSelectionGraphics("Options", this.menuRenderX,this.menuRenderY + this.textLineHeight));
+		
+		MenuSelection quit = new MenuSelection(null, 
+				new textSelectionGraphics("Quit", this.menuRenderX,this.menuRenderY + 2*this.textLineHeight));
+		
+		selections.add(cnt);
+		selections.add(options);
+		selections.add(quit);
+		
 	}
+	
+	
 
 
 
 	@Override
 	public void render(Graphics graphics) {
-		int count = 0;
-		for (String line : textLines){
-			if (count == this.activeTextLine){
+		
+		for (MenuSelection selection : selections){
+			if (selection == selections.get(activeSelection)){
 				graphics.setColor(Color.red);
 			}else{ graphics.setColor(Color.white);}
-
-			graphics.drawString(line, menuRenderX, menuRenderY + count*textLineHeight);
-			count+=1;
+			selection.render(graphics);
 		}
+		
 
 
 	}
@@ -58,14 +72,14 @@ public class MainMenu extends Menu {
 	public void incrementActiveSelection(char xOrY, int direction) {
 		if (xOrY == 'y'){
 			if (direction>0){
-				this.activeTextLine +=1;
+				this.activeSelection +=1;
 			}
 			else {
-				this.activeTextLine -=1;
+				this.activeSelection -=1;
 			}
-			activeTextLine = activeTextLine % (textLines.size());
-			if (activeTextLine <0){ 
-				activeTextLine = textLines.size()+activeTextLine;
+			activeSelection = activeSelection % (selections.size());
+			if (activeSelection <0){ 
+				activeSelection = selections.size()+activeSelection;
 			}
 			
 			

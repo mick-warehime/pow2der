@@ -87,6 +87,15 @@ Menu representing the inventory
 * Sends commands to the inventory
 * Submenu should give options to: inspect, identify, use, equip/unequip, drop
 
+MenuButton
+===
+Stores graphical representation and action of a given menu selection
+
+MenuSelectionAction
+===
+Performs an action for a menu selection
+
+* Has an activate functionality
 
 
 
