@@ -85,5 +85,10 @@ public class MenuActionEngine extends ActionEngine{
 		}
 	}
 
+	public void setQuitting() {
+		menuHandlerData.setQuitting(true);
+		
+	}
+
 
 }

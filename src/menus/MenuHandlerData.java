@@ -9,6 +9,7 @@ public class MenuHandlerData {
 
 	private ArrayList<Menu> menus;
 	private Stack<Menu> activeMenuStack;
+	private boolean isQuitting = false;
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		this.menus= new ArrayList<Menu>();
@@ -32,5 +33,13 @@ public class MenuHandlerData {
 	public Menu getActiveMenu(){
 		if (activeMenuStack.isEmpty()){return null;}
 		return activeMenuStack.peek();
+	}
+
+	public void setQuitting(boolean bool) {
+		this.isQuitting  = bool;
+		
+	}
+	public boolean isQuitting(){
+		return this.isQuitting;
 	}
 }

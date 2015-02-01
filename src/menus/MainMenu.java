@@ -8,6 +8,7 @@ import org.newdawn.slick.command.Command;
 
 import commands.CloseAllMenusCommand;
 import commands.InputListenerAggregator;
+import commands.MenuQuitCommand;
 
 public class MainMenu extends Menu {
 
@@ -38,16 +39,16 @@ public class MainMenu extends Menu {
 		
 		selections = new ArrayList<MenuSelection>();
 		
-		Command closeAll = new CloseAllMenusCommand();
 		//new MenuCommandAction(listenerAggregator,closeAll),
-		MenuSelection cnt = new MenuSelection(closeAll,
+		MenuSelection cnt = new MenuSelection(new CloseAllMenusCommand(),
 				new textSelectionGraphics("Continue", this.menuRenderX,this.menuRenderY));
 		
 		
 		MenuSelection options = new MenuSelection( null,
 				new textSelectionGraphics("Options", this.menuRenderX,this.menuRenderY + this.textLineHeight));
 		
-		MenuSelection quit = new MenuSelection( null, 
+		
+		MenuSelection quit = new MenuSelection( new MenuQuitCommand(), 
 				new textSelectionGraphics("Quit", this.menuRenderX,this.menuRenderY + 2*this.textLineHeight));
 		
 		selections.add(cnt);

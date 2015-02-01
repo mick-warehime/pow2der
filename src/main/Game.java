@@ -66,6 +66,7 @@ public class Game extends BasicGame {
 	public void update(GameContainer gc, int t) throws SlickException {
 		
 		menuHandler.update();
+		if(menuHandler.isQuitting()){gc.exit();}
 		
 		if (menuHandler.isMenuActive()){
 			gameState = PAUSE_STATE;
@@ -114,7 +115,6 @@ public class Game extends BasicGame {
 		
 		
 
-		if( gc.getInput().isKeyPressed(Input.KEY_ESCAPE)){gc.exit();}
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class Game extends BasicGame {
 		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
 
 		this.menuHandler = new MenuHandler();
-		gameControls.addMenuInputProviderListener(menuHandler.getListener());
+		gameControls.addMenuInputProviderListener(menuHandler.getKeyboardListener());
 		
 		// load the times from file dunno why the try catchs are required
 		try {

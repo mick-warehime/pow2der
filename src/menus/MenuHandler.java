@@ -41,7 +41,7 @@ public class MenuHandler {
 
 
 
-	public InputProviderListener getListener() {
+	public InputProviderListener getKeyboardListener() {
 		// TODO Auto-generated method stub
 		return this.keyboardInputs;
 	}
@@ -88,6 +88,12 @@ public class MenuHandler {
 		}
 
 		
+	}
+
+
+	public boolean isQuitting() {
+		// TODO Auto-generated method stub
+		return menuHandlerData.isQuitting();
 	}
 
 	

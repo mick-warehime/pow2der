@@ -82,7 +82,7 @@ public class GameControls {
 		Command activate = new ActivateMenuSelectionCommand();
 		
 		//Bind them to keys
-		menuInputProvider.bindCommand(new KeyControl(Input.KEY_O), toggleMainMenu);
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ESCAPE), toggleMainMenu);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_W), menuUp);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_S), menuDown);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ENTER), activate);
