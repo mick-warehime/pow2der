@@ -12,7 +12,7 @@ public class MenuHandlerData {
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		this.menus= new ArrayList<Menu>();
-		this.menus.add(new MainMenu(listenerAggregator));
+		this.menus.add(new MainMenu());
 		
 		this.activeMenuStack = new Stack<Menu>();
 	}
@@ -28,9 +28,9 @@ public class MenuHandlerData {
 		assert !activeMenuStack.isEmpty() : "Deactivated a null menu!";
 		activeMenuStack.pop();
 	}
+	
 	public Menu getActiveMenu(){
 		if (activeMenuStack.isEmpty()){return null;}
-		
 		return activeMenuStack.peek();
 	}
 }

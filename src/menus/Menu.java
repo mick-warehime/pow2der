@@ -1,6 +1,7 @@
 package menus;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.command.Command;
 
 /*
  * 
@@ -36,8 +37,11 @@ public abstract class Menu {
 	}
 	
 	public abstract void render(Graphics graphics);
-	
 	public abstract void incrementActiveSelection(char xOrY, int direction);
+	public abstract void activateSelection() ;
+	public abstract boolean isSelectionActivated();
+	public abstract Command getSelectionCommand();
+
 	
-	public abstract void activateActiveSelection();
+	
 }

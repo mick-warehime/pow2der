@@ -16,15 +16,16 @@ public class MainMenu extends Menu {
 	private int menuRenderY = 240;
 	private int textLineHeight = 16;
 	private int activeSelection = 0;
+	private boolean selectionActivated = false;
 
 
 	private ArrayList<MenuSelection> selections;
 	
 
 
-	public MainMenu(InputListenerAggregator listenerAggregator) {
+	public MainMenu() {
 		super(Menu.MENU_MAIN);
-		defineMenuSelections(listenerAggregator);
+		defineMenuSelections();
 	}
 
 
@@ -32,21 +33,21 @@ public class MainMenu extends Menu {
 
 
 
-	private void defineMenuSelections(InputListenerAggregator listenerAggregator){
+	private void defineMenuSelections(){
 		
 		
 		selections = new ArrayList<MenuSelection>();
 		
 		Command closeAll = new CloseAllMenusCommand();
-		
-		MenuSelection cnt = new MenuSelection(new MenuCommandAction(listenerAggregator, closeAll), 
+		//new MenuCommandAction(listenerAggregator,closeAll),
+		MenuSelection cnt = new MenuSelection(closeAll,
 				new textSelectionGraphics("Continue", this.menuRenderX,this.menuRenderY));
 		
 		
-		MenuSelection options = new MenuSelection(null, 
+		MenuSelection options = new MenuSelection( null,
 				new textSelectionGraphics("Options", this.menuRenderX,this.menuRenderY + this.textLineHeight));
 		
-		MenuSelection quit = new MenuSelection(null, 
+		MenuSelection quit = new MenuSelection( null, 
 				new textSelectionGraphics("Quit", this.menuRenderX,this.menuRenderY + 2*this.textLineHeight));
 		
 		selections.add(cnt);
@@ -98,15 +99,29 @@ public class MainMenu extends Menu {
 
 	}
 
+	public void activateSelection() {
+		this.selectionActivated = true;
+		
+	}
 
 
 
 	@Override
-	public void activateActiveSelection() {
-		
-		MenuSelection selection = selections.get(activeSelection);
-		selection.activate();
-		
+	public Command getSelectionCommand() {
+		this.selectionActivated = false;
+		return selections.get(activeSelection).getCommand();
 	}
+
+
+
+
+	@Override
+	public boolean isSelectionActivated() {
+		// TODO Auto-generated method stub
+		return selectionActivated;
+	}
+
+
+
 
 }

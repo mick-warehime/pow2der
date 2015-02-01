@@ -1,6 +1,7 @@
 package menus;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.command.Command;
 
 /*
  * MenuSelection
@@ -9,21 +10,20 @@ import org.newdawn.slick.Graphics;
  */
 
 public class MenuSelection {
-
-	private MenuSelectionAction action;
+	
+	private Command command;
 	private MenuSelectionGraphics menuSelectionGraphics;
 	
-	public MenuSelection(MenuSelectionAction action, 
+	public MenuSelection(Command command,
 			MenuSelectionGraphics menuSelectionGraphics ){
 		
-		this.action = action;
+		this.command = command;
 		this.menuSelectionGraphics = menuSelectionGraphics;
 		
 	}
 	
-	
-	public void activate(){
-		action.Activate();
+	public Command getCommand(){
+		return this.command;
 	}
 	
 	public void render(Graphics graphics){
