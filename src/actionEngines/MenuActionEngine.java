@@ -1,56 +1,88 @@
 package actionEngines;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
 
 import menus.Menu;
+import menus.MenuHandlerData;
 import commands.InputListenerAggregator;
 
 //Performs actions for a menu, based on inputs
 public class MenuActionEngine extends ActionEngine{
 
-	private int menuToggleTimer = 0;
-	private int menuToggleInterval = 20;
-	private boolean canToggleMenu = true;
+	private int menuBusyTimer = 0;
+	private int menuBusyTime = 10;
+	private MenuHandlerData menuHandlerData;
 
-	private ArrayList<Menu> menus;
-	
 
-	public MenuActionEngine(InputListenerAggregator listener, ArrayList<Menu> menus) {
+
+	public MenuActionEngine(InputListenerAggregator listener, MenuHandlerData menuHandlerData) {
 		super(listener);
-		this.menus = menus;
-		
+		this.menuHandlerData = menuHandlerData;
+
 	}
-	
+
+	public void activateActiveMenuSelection(){
+		if (!isBusy()){
+			Menu menu = menuHandlerData.getActiveMenu();
+			menu.activateActiveSelection();
+		}
+	}
 	public void toggleMenu(int menuType){
-		if (canToggleMenu ){
-			for (Menu menu : menus){
+		if (!isBusy() ){
+			for (Menu menu : menuHandlerData.getMenus()){
 				if (menu.getType() == menuType){
 					menu.toggle();
-					canToggleMenu =false;
-					
+					if (menu.isOpen()){
+						menuHandlerData.setActiveMenu(menu);
+					}else{
+						menuHandlerData.deactivateActiveMenu();
+					}
+					makeBusy();
 				}
 			}
-		}
-		
+		}	
 	}
 	
-	public void update(){
-		super.update();
-		
-		if (!canToggleMenu){
-			menuToggleTimer+=1;
+	private void makeBusy(){
+		menuBusyTimer += menuBusyTime;
+	}
+	
+	public void closeAllMenus(){
+		if (!isBusy()){
+			for (Menu menu : menuHandlerData.getMenus()){
+				if (menu.isOpen()){
+					menu.toggle();
+				}
+			}
+			makeBusy();
 		}
-		if (menuToggleTimer >= menuToggleInterval){
-			menuToggleTimer = 0;
-			canToggleMenu = true;
-		}
-		
-		
-		
-		
-		
 	}
 
+
+
+	public void update(){
+		super.update();
+
+		updateBusyTimer();
+
+	}
 	
+	private void updateBusyTimer(){
+		if (menuBusyTimer >0){
+			menuBusyTimer-=1;
+		}
+	}
+	private boolean isBusy(){
+		return (menuBusyTimer>0);
+	}
+
+	public void changeActiveTextLine(char xOrY, int direction) {
+
+		Menu menu = menuHandlerData.getActiveMenu();
+		if (menu != null && !isBusy()){
+			menu.incrementActiveSelection(xOrY,direction);
+			makeBusy();
+		}
+	}
+
+
 }

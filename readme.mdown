@@ -87,6 +87,15 @@ Menu representing the inventory
 * Sends commands to the inventory
 * Submenu should give options to: inspect, identify, use, equip/unequip, drop
 
+MenuButton
+===
+Stores graphical representation and action of a given menu selection
+
+MenuSelectionAction
+===
+Performs an action for a menu selection
+
+* Has an activate functionality
 
 
 
@@ -135,14 +144,14 @@ Map Class
 
 
 
-REFACTORS
+REFACTORS/TODO
 ===
 ###Break up Level 
 + Level.updater / updates objects 
 + Level.data  lists of items / objects / map info
 + Level.graphics render items/objects/map
 
-###MenuHandler shouldn't have to have a GlobalInputListener. The relationship between keyboardInputListener and GlobalInputListener are unclear.
-
+* Fix second joystick functionality
+* Extract a textBasedMenu superclass from MainMenu
 
 

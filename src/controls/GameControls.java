@@ -13,6 +13,8 @@ import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.command.KeyControl;
 
+import commands.ActivateMenuSelectionCommand;
+import commands.ChangeMenuSelectionCommand;
 import commands.InteractCommand;
 import commands.MoveCommand;
 import commands.ToggleMenuCommand;
@@ -75,11 +77,15 @@ public class GameControls {
 		
 		//Define commands
 		Command toggleMainMenu = new ToggleMenuCommand(Menu.MENU_MAIN);
-
+		Command menuDown = new ChangeMenuSelectionCommand('y',1);
+		Command menuUp = new ChangeMenuSelectionCommand('y',-1);
+		Command activate = new ActivateMenuSelectionCommand();
+		
 		//Bind them to keys
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_O), toggleMainMenu);
-		
-		 
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_W), menuUp);
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_S), menuDown);
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ENTER), activate);
 	}
 
 	private void initializeAvatarKeyBindings(GameContainer gc){
@@ -93,7 +99,7 @@ public class GameControls {
 		Command moveDown = new MoveCommand('y', 1);
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
-
+		
 
 		//Bind commands to keyboard keys
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
@@ -102,7 +108,8 @@ public class GameControls {
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
-
+		
+		
 		//Bind commands to controller keys
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.RIGHT), moveRight);
