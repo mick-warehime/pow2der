@@ -16,11 +16,9 @@ public class MainMenu extends Menu {
 	private int menuRenderX = 100;
 	private int menuRenderY = 240;
 	private int textLineHeight = 16;
-	private int activeSelection = 0;
-	private boolean selectionActivated = false;
+	
 
 
-	private ArrayList<MenuSelection> selections;
 	
 
 
@@ -30,19 +28,11 @@ public class MainMenu extends Menu {
 	}
 
 
-
-
-
-
-	private void defineMenuSelections(){
-		
-		
+	protected void defineMenuSelections(){
 		selections = new ArrayList<MenuSelection>();
 		
-		//new MenuCommandAction(listenerAggregator,closeAll),
 		MenuSelection cnt = new MenuSelection(new CloseAllMenusCommand(),
 				new textSelectionGraphics("Continue", this.menuRenderX,this.menuRenderY));
-		
 		
 		MenuSelection options = new MenuSelection( null,
 				new textSelectionGraphics("Options", this.menuRenderX,this.menuRenderY + this.textLineHeight));
@@ -68,10 +58,9 @@ public class MainMenu extends Menu {
 			if (selection == selections.get(activeSelection)){
 				graphics.setColor(Color.red);
 			}else{ graphics.setColor(Color.white);}
+			
 			selection.render(graphics);
 		}
-		
-
 
 	}
 
@@ -91,37 +80,11 @@ public class MainMenu extends Menu {
 			if (activeSelection <0){ 
 				activeSelection = selections.size()+activeSelection;
 			}
-			
-			
-
 		}
 
-
-
 	}
 
-	public void activateSelection() {
-		this.selectionActivated = true;
-		
-	}
-
-
-
-	@Override
-	public Command getSelectionCommand() {
-		this.selectionActivated = false;
-		return selections.get(activeSelection).getCommand();
-	}
-
-
-
-
-	@Override
-	public boolean isSelectionActivated() {
-		// TODO Auto-generated method stub
-		return selectionActivated;
-	}
-
+	
 
 
 

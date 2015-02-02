@@ -54,6 +54,7 @@ public class GameControls {
 		mousePos[0] = mouseX;
 		mousePos[1] = mouseY;
 	}
+	
 	public int[] getMousePos(){
 		return mousePos;
 	}

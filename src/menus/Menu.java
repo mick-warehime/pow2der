@@ -1,14 +1,13 @@
 package menus;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.command.Command;
 
-/*
+/* Generic menu class
  * 
-* Toggle functionality
-* Take keyboard/mouse inputs to alter displayed selection
-* graphics for displaying the menu, and showing what the selected item is
-* Binds selected option to a command
+ *
  * 
  */
 
@@ -20,12 +19,20 @@ public abstract class Menu {
 	private boolean isOpen;
 	private int menuType;
 
+
+	protected boolean selectionActivated = false;
+	protected int activeSelection = 0;
+	protected ArrayList<MenuSelection> selections;
+	
 	
 	public Menu(int menuType){
 		this.menuType = menuType;
 		
+		
 	}
 	
+//	protected abstract void defineMenuSelections();
+
 	public boolean isOpen(){
 		return this.isOpen;
 	}
@@ -38,10 +45,24 @@ public abstract class Menu {
 	
 	public abstract void render(Graphics graphics);
 	public abstract void incrementActiveSelection(char xOrY, int direction);
-	public abstract void activateSelection() ;
-	public abstract boolean isSelectionActivated();
-	public abstract Command getSelectionCommand();
-
 	
+
+	public void activateSelection() {
+		this.selectionActivated = true;
+	}
+
+
+	public Command getSelectionCommand() {
+		this.selectionActivated = false;
+		return selections.get(activeSelection).getCommand();
+	}
+
+
+
+	public boolean isSelectionActivated() {
+		// TODO Auto-generated method stub
+		return selectionActivated;
+	}
+
 	
 }
