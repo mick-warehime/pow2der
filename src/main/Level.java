@@ -7,6 +7,8 @@ import items.ItemLocation;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import level.Map;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -68,11 +70,12 @@ public class Level {
 
 		// build a test door
 		basicObjects.add(itemBuilder.buildDoor(100,750, collisionHandler));
+		
 		// test item
 		basicObjects.add(itemBuilder.newItem(new ItemLocation(400,800)));
-		basicObjects.add(itemBuilder.newItem(new ItemLocation(300,800)));
-		basicObjects.add(itemBuilder.newItem(new ItemLocation(200,800)));
-		basicObjects.add(itemBuilder.newItem(new ItemLocation(100,800)));
+		
+		Map blockMatrix = new Map();
+		
 		
 		actors.add(new Enemy(400,750,collisionHandler));
 		
