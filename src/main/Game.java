@@ -210,7 +210,7 @@ public class Game extends BasicGame {
 			terri.render(graphics, level.getMapX(),level.getMapY());
 		}
 		
-		menuHandler.renderActiveMenus(graphics);
+		menuHandler.renderOpenMenus(graphics);
 	}
 
 

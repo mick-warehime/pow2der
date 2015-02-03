@@ -33,7 +33,7 @@ public class MenuActionEngine extends ActionEngine{
 				if (menu.getType() == menuType){
 					menu.toggle();
 					if (menu.isOpen()){
-						menuHandlerData.setActiveMenu(menu);
+						menuHandlerData.setActiveMenu(menu.getType());
 					}else{
 						menuHandlerData.deactivateActiveMenu();
 					}
@@ -88,6 +88,10 @@ public class MenuActionEngine extends ActionEngine{
 	public void setQuitting() {
 		menuHandlerData.setQuitting(true);
 		
+	}
+
+	public void setActiveMenu(int menuIndex) {
+		menuHandlerData.setActiveMenu(menuIndex);
 	}
 
 

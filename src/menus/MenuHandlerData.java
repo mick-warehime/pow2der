@@ -13,7 +13,8 @@ public class MenuHandlerData {
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		this.menus= new ArrayList<Menu>();
-		this.menus.add(new MainMenu());
+		this.menus.add(new MainMenu(100,240));
+		this.menus.add(new OptionsMenu(200,240));
 		
 		this.activeMenuStack = new Stack<Menu>();
 	}
@@ -22,9 +23,17 @@ public class MenuHandlerData {
 		return menus;
 	}
 	
-	public void setActiveMenu(Menu menu){
-		activeMenuStack.push(menu);
+	public void setActiveMenu(int menuIndex){
+		for (Menu menu : menus){
+			if (menu.getType() == menuIndex)
+			{
+				activeMenuStack.push(menu);
+				return;
+			}
+		}
+		
 	}
+	
 	public void deactivateActiveMenu(){
 		assert !activeMenuStack.isEmpty() : "Deactivated a null menu!";
 		activeMenuStack.pop();

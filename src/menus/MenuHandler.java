@@ -48,15 +48,19 @@ public class MenuHandler {
 
 	public void update() {
 		actionEngine.update();	
+		
+//		System.out.println(menuHandlerData.getActiveMenu());
 	}
 
-	public void renderActiveMenus(Graphics graphics){
+	public void renderOpenMenus(Graphics graphics){
 
 		for (Menu menu : menuHandlerData.getMenus()){
 			if (menu.isOpen()){
+				System.out.print(menu + " ");
 				menu.render(graphics);
 			}
 		}
+		System.out.println();
 	}
 	
 	public boolean isMenuActive(){

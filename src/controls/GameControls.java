@@ -13,11 +13,11 @@ import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.command.KeyControl;
 
-import commands.ActivateMenuSelectionCommand;
-import commands.ChangeMenuSelectionCommand;
+import commands.MenuActivateSelectionCommand;
+import commands.MenuChangeSelectionCommand;
 import commands.InteractCommand;
 import commands.MoveCommand;
-import commands.ToggleMenuCommand;
+import commands.MenuToggleCommand;
 
 
 //Handles keybindings and player inputs
@@ -77,10 +77,10 @@ public class GameControls {
 		menuInputProvider = new InputProvider(gc.getInput());
 		
 		//Define commands
-		Command toggleMainMenu = new ToggleMenuCommand(Menu.MENU_MAIN);
-		Command menuDown = new ChangeMenuSelectionCommand('y',1);
-		Command menuUp = new ChangeMenuSelectionCommand('y',-1);
-		Command activate = new ActivateMenuSelectionCommand();
+		Command toggleMainMenu = new MenuToggleCommand(Menu.MENU_MAIN);
+		Command menuDown = new MenuChangeSelectionCommand('y',1);
+		Command menuUp = new MenuChangeSelectionCommand('y',-1);
+		Command activate = new MenuActivateSelectionCommand();
 		
 		//Bind them to keys
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ESCAPE), toggleMainMenu);
