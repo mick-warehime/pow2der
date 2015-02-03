@@ -5,11 +5,11 @@ import org.newdawn.slick.command.BasicCommand;
 import actionEngines.ActionEngine;
 import actionEngines.MenuActionEngine;
 
-public class ToggleMenuCommand extends BasicCommand implements GenericCommand{
+public class MenuToggleCommand extends BasicCommand implements GenericCommand{
 
 	int menuIndex;
 	
-	public ToggleMenuCommand(int menuIndex) {
+	public MenuToggleCommand(int menuIndex) {
 		super("Toggle menu" + menuIndex);
 		this.menuIndex = menuIndex;
 	}

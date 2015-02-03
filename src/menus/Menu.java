@@ -15,6 +15,7 @@ public abstract class Menu {
 	
 	/* Menu identifiers */
 	public static final int MENU_MAIN = 0;
+	public static final int MENU_OPTIONS = 1;
 	
 	private boolean isOpen;
 	private int menuType;
@@ -31,7 +32,6 @@ public abstract class Menu {
 		
 	}
 	
-//	protected abstract void defineMenuSelections();
 
 	public boolean isOpen(){
 		return this.isOpen;
@@ -43,6 +43,7 @@ public abstract class Menu {
 		return menuType;
 	}
 	
+
 	public abstract void render(Graphics graphics);
 	public abstract void incrementActiveSelection(char xOrY, int direction);
 	
@@ -53,6 +54,7 @@ public abstract class Menu {
 
 
 	public Command getSelectionCommand() {
+		assert this.selectionActivated == true : "Getting a command from no active selection!";
 		this.selectionActivated = false;
 		return selections.get(activeSelection).getCommand();
 	}
@@ -63,6 +65,7 @@ public abstract class Menu {
 		// TODO Auto-generated method stub
 		return selectionActivated;
 	}
+
 
 	
 }
