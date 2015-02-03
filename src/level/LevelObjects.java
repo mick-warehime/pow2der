@@ -4,20 +4,23 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Rectangle;
 
-public class Map {
+public class LevelObjects {
 
 	private ArrayList<Rectangle> blocks;
 	private ArrayList<ArrayList<Integer>> itemLocations;
 	private int tileHeight;
 	private int tileWidth;
 
-	public Map(){
+	public LevelObjects(){
 
 
 		tileHeight = 32;
 		tileWidth = 32;
 
-		blocks = getMapBlocks(5,6);
+		
+		int[][] objectMatrix = randomObjectsMatrix(5,6);
+		
+		getObjects(objectMatrix);
 
 
 
@@ -26,7 +29,8 @@ public class Map {
 
 
 
-	private int[][] randomBlocksMatrix(int m, int n){
+	private int[][] randomObjectsMatrix(int m, int n){
+		
 
 		int[][] blockMatrix = new int[m][n];
 
@@ -54,27 +58,34 @@ public class Map {
 
 		return blockMatrix;
 	}
+	
+	
 
-	private ArrayList<Rectangle> getMapBlocks(int m, int n){
-		blocks = new ArrayList<Rectangle>();
-		itemLocations =   new ArrayList<ArrayList<Integer>>();
-		
-		int[][] blockMatrix = randomBlocksMatrix(m,n);
+	private void getObjects(int[][] objectMatrix){
+		this.blocks = new ArrayList<Rectangle>();
+		this.itemLocations =   new ArrayList<ArrayList<Integer>>();
 
-		for (int row = 0; row < m; row++){
-			for (int col = 0; col < n; col++){
+		// get the number of rows and columns from the objectMatrix
+		int numRows = objectMatrix.length;
+		int numCols = objectMatrix[0].length;
+
+		for (int row = 0; row < numRows; row++){
+			for (int col = 0; col < numCols; col++){
 
 				// convert row/col position to x/y pixels
 				int x = row*tileWidth;
 				int y = row*tileHeight;
 
 				
-				if(blockMatrix[row][col]==1){
+				if(objectMatrix[row][col]==1){
 
+					// store solid collideable walls
 					blocks.add(new Rectangle(x,y,tileWidth,tileHeight));
 					
 				}else{
-					if (blockMatrix[row][col]==2){
+					
+					// store item locations
+					if (objectMatrix[row][col]==2){
 						ArrayList<Integer> itemCoords = new ArrayList<Integer>();
 						itemCoords.add(x);
 						itemCoords.add(y);
@@ -85,7 +96,7 @@ public class Map {
 			}
 		}
 
-		return blocks;
+		
 	}
 
 
