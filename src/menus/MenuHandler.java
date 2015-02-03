@@ -56,11 +56,11 @@ public class MenuHandler {
 
 		for (Menu menu : menuHandlerData.getMenus()){
 			if (menu.isOpen()){
-				System.out.print(menu + " ");
+//				System.out.print(menu + " ");
 				menu.render(graphics);
 			}
 		}
-		System.out.println();
+//		System.out.println();
 	}
 	
 	public boolean isMenuActive(){
