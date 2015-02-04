@@ -22,40 +22,39 @@ public class MenuActionEngine extends ActionEngine{
 
 	public void activateActiveMenuSelection(){
 		if (!isBusy()){
-			Menu menu = menuHandlerData.getActiveMenu();
+			Menu menu = menuHandlerData.getTopActiveMenu();
 			menu.activateSelection();
 		}
 	}
-	
-	public void toggleMenu(int menuType){
-		if (!isBusy() ){
-			for (Menu menu : menuHandlerData.getMenus()){
-				if (menu.getType() == menuType){
-					menu.toggle();
-					if (menu.isOpen()){
-						menuHandlerData.setActiveMenu(menu.getType());
-					}else{
-						menuHandlerData.deactivateActiveMenu();
-					}
-					makeBusy();
-				}
-			}
-		}	
-	}
-	
-	private void makeBusy(){
-		menuBusyTimer += menuBusyTime;
-	}
-	
-	public void closeAllMenus(){
+
+	public void toggleMenu(Menu menu){
 		if (!isBusy()){
-			for (Menu menu : menuHandlerData.getMenus()){
-				if (menu.isOpen()){
-					menu.toggle();
-				}
+			if (menu == menuHandlerData.getTopActiveMenu()){
+				menuHandlerData.deactivateActiveMenu();
+			}
+			else{
+				menuHandlerData.setTopActiveMenu(menu);
 			}
 			makeBusy();
 		}
+
+
+	}
+
+	private void makeBusy(){
+		menuBusyTimer += menuBusyTime;
+	}
+
+	public void closeAllMenus(){
+		menuHandlerData.deactivateAllMenus();
+		//		if (!isBusy()){
+		//			for (Menu menu : menuHandlerData.getAllOpenMenus()){
+		//				if (menu.isOpen()){
+		//					menu.toggle();
+		//				}
+		//			}
+		//			makeBusy();
+		//		}
 	}
 
 
@@ -66,7 +65,7 @@ public class MenuActionEngine extends ActionEngine{
 		updateBusyTimer();
 
 	}
-	
+
 	private void updateBusyTimer(){
 		if (menuBusyTimer >0){
 			menuBusyTimer-=1;
@@ -78,7 +77,7 @@ public class MenuActionEngine extends ActionEngine{
 
 	public void changeActiveTextLine(char xOrY, int direction) {
 
-		Menu menu = menuHandlerData.getActiveMenu();
+		Menu menu = menuHandlerData.getTopActiveMenu();
 		if (menu != null && !isBusy()){
 			menu.incrementActiveSelection(xOrY,direction);
 			makeBusy();
@@ -87,11 +86,11 @@ public class MenuActionEngine extends ActionEngine{
 
 	public void setQuitting() {
 		menuHandlerData.setQuitting(true);
-		
+
 	}
 
-	public void setActiveMenu(int menuIndex) {
-		menuHandlerData.setActiveMenu(menuIndex);
+	public void setActiveMenu(Menu menu) {
+		menuHandlerData.setTopActiveMenu(menu);
 	}
 
 

@@ -5,9 +5,9 @@ import org.newdawn.slick.command.BasicCommand;
 import actionEngines.ActionEngine;
 import actionEngines.MenuActionEngine;
 
-public class MenusCloseAllCommand extends BasicCommand implements GenericCommand {
+public class MenuCloseAllCommand extends BasicCommand implements GenericCommand {
 
-	public MenusCloseAllCommand() {
+	public MenuCloseAllCommand() {
 		super("Close All Menus");
 		// TODO Auto-generated constructor stub
 	}

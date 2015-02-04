@@ -3,7 +3,7 @@ package menus;
 import java.util.ArrayList;
 
 import commands.MenuQuitCommand;
-import commands.MenusCloseAllCommand;
+import commands.MenuCloseAllCommand;
 import commands.NullCommand;
 
 public class OptionsMenu extends TextMenu{
@@ -16,7 +16,7 @@ public class OptionsMenu extends TextMenu{
 	protected void defineMenuSelections() {
 		selections = new ArrayList<MenuSelection>();
 		
-		MenuSelection cnt = new MenuSelection(new NullCommand(),
+		MenuSelection cnt = new MenuSelection(new MenuCloseAllCommand(),
 				new textSelectionGraphics("Quit", this.menuRenderX,this.menuRenderY));
 		
 		selections.add(cnt);
