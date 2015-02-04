@@ -75,7 +75,7 @@ public class Level {
 		basicObjects.add(itemBuilder.newItem(new ItemLocation(400,800)));
 		
 		LevelObjects blockMatrix = new LevelObjects();
-		
+		itemBuilder.testItems();
 		
 		actors.add(new Enemy(400,750,collisionHandler));
 		

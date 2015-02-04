@@ -82,6 +82,8 @@ public class ItemBuilder {
 		return buildItem(itemIndex,location);
 
 	}
+	
+	
 
 	private Item buildItem(int i,ItemLocation location) throws SlickException{
 
@@ -180,5 +182,19 @@ public class ItemBuilder {
 
 	}
 
-
+	public void testItems() throws SlickException{
+		
+		// test all item builds
+		for (int i = 0; i<itemMaps.size(); i++){
+			Map<String,String> itm = itemMaps.get(i);
+			System.out.print(itm.get("type")+": "+itm.get("name"));
+			buildItem(i,new ItemLocation(400,800));
+			System.out.print(" --> Built Sucessfully");
+			System.out.println();
+			
+		}
+		
+		System.out.println("All Items Built Successfully!");
+		
+	}
 }

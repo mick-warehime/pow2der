@@ -22,7 +22,8 @@
     <item id="boots" type="armor" name="slippers" worn="feet" grants="healing, resistance, loud, jumping, furLined, waterWalking, speed" grantFreq="1.0" ac="1.0" weight="1.0" noise="quiet" material="cloth" baseSkill="boots" addSkill="cloth" spriteRow="11.0" spriteCol="6.0"/>
     <item id="boots" type="armor" name="mocasins" worn="feet" grants="healing, resistance, loud, jumping, furLined, waterWalking, speed" grantFreq="2.0" ac="3.0" weight="3.0" noise="average" material="leather" baseSkill="boots" addSkill="leather" spriteRow="11.0" spriteCol="1.0"/>
     <item id="boots" type="armor" name="mailBoots" worn="feet" grants="healing, resistance, loud, jumping, furLined, waterWalking, speed" grantFreq="3.0" ac="5.0" weight="5.0" noise="loud" material="iron" baseSkill="boots" addSkill="iron" spriteRow="11.0" spriteCol="3.0"/>
-    <item id="ring" type="armor" name="" worn="" grants="" grantFreq="" ac="" weight="" noise="" material="" baseSkill="" addSkill="" spriteRow="" spriteCol=""/>
+    <item id="boots" type="armor" name="powerBoots" worn="feet" grants="healing, resistance, loud, jumping, furLined, waterWalking, speed" grantFreq="4.0" ac="7.0" weight="7.0" noise="very loud" material="iron" baseSkill="boots" addSkill="iron" spriteRow="11.0" spriteCol="5.0"/>
+    <item id="ring" type="armor" name="silverRing" worn="finger" grants="regenerate, teleportation, teleportControl, missingFinger, searching, resistance, light, invisitibilty, seeInvisible, polymorph, polymorphControl" grantFreq="" ac="0.0" weight="1.0" noise="silent" material="various" baseSkill="none" addSkill="none" spriteRow="11.0" spriteCol="14.0"/>
   </armor>
   <weapons>
     <item id="weapon" type="weapons" name="dagger" grant="damage type, bleeding, attack speed, extra damage, socket" grantFreq="0.1" attackSpeed="2.0" weight="3.0" noise="quiet" material="iron" baseSkill="pointed weapon" addSkill="small weapon, ranged weapon" attackStyle="pointed" mDice="1d4" mHitBonus="1.0" tDice="1d4+2" tHitBonus="2.0" range="5.0" spriteRow="4.0" spriteCol="16.0"/>
@@ -74,7 +75,6 @@
     <item id="staff" type="misc" name="staffBolt" grants="magic missile, frost bolt, lightning bolt, poison bolt, force bolt" range="0.0" burst="0.0" spriteRow="6.0" spriteCol="4.0"/>
     <item id="staff" type="misc" name="staffUtility" grants="light, knock, preserve, direct wind, teleport, telport with control, petrify, stone to flesh, possess" range="0.0" burst="0.0" spriteRow="6.0" spriteCol="6.0"/>
     <item id="bottle" type="misc" name="bottle" grants="can be filled" range="0.0" burst="0.0" spriteRow="12.0" spriteCol="4.0"/>
-    <item id="door" type="misc" name="door" grants="none" range="0.0" burst="0.0" spriteRow="14.0" spriteCol="2.0"/>
   </misc>
   <door>
     <item id="door" type="door" name="door1" spriteRow="14.0" spriteCol="2.0"/>
