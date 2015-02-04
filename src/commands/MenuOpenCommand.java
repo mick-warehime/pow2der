@@ -18,7 +18,7 @@ public class MenuOpenCommand extends BasicCommand implements GenericCommand{
 
 	@Override
 	public void execute(ActionEngine actionEngine) {
-		((MenuActionEngine) actionEngine).toggleMenu(menu);
+		((MenuActionEngine) actionEngine).openMenu(menu);
 		
 		
 	}

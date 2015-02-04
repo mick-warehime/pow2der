@@ -19,6 +19,10 @@ public class MenuHandlerData {
 	}
 	
 	public void setTopActiveMenu(Menu menu){
+		if (activeMenuStack.contains(menu)){
+			while (menu!= activeMenuStack.pop()){
+			}
+		}
 		activeMenuStack.push(menu);
 		return;
 		
@@ -43,6 +47,7 @@ public class MenuHandlerData {
 	}
 
 	public void deactivateAllMenus() {
-		this.activeMenuStack = new Stack<Menu>();	
+		this.activeMenuStack = new Stack<Menu>();
+		
 	}
 }

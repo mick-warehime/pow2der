@@ -2,6 +2,7 @@ package menus;
 
 import java.util.ArrayList;
 
+import commands.MenuCloseCurrentCommand;
 import commands.MenuQuitCommand;
 import commands.MenuCloseAllCommand;
 import commands.NullCommand;
@@ -16,10 +17,19 @@ public class OptionsMenu extends TextMenu{
 	protected void defineMenuSelections() {
 		selections = new ArrayList<MenuSelection>();
 		
-		MenuSelection cnt = new MenuSelection(new MenuCloseAllCommand(),
-				new textSelectionGraphics("Quit", this.menuRenderX,this.menuRenderY));
+		MenuSelection audio = new MenuSelection(new NullCommand(),
+				new textSelectionGraphics("Audio", this.menuRenderX,this.menuRenderY));
+		MenuSelection video = new MenuSelection(new NullCommand(),
+				new textSelectionGraphics("Video", this.menuRenderX,this.menuRenderY + 1*this.textLineHeight));
+		MenuSelection disco = new MenuSelection(new NullCommand(),
+				new textSelectionGraphics("Disco", this.menuRenderX,this.menuRenderY + 2*this.textLineHeight));
+		MenuSelection exit = new MenuSelection(new MenuCloseCurrentCommand(),
+				new textSelectionGraphics("Exit", this.menuRenderX,this.menuRenderY + 3*this.textLineHeight));
 		
-		selections.add(cnt);
+		selections.add(audio);
+		selections.add(video);
+		selections.add(disco);
+		selections.add(exit);
 	}
 
 }

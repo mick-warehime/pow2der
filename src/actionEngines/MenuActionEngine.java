@@ -27,14 +27,9 @@ public class MenuActionEngine extends ActionEngine{
 		}
 	}
 
-	public void toggleMenu(Menu menu){
+	public void openMenu(Menu menu){
 		if (!isBusy()){
-			if (menu == menuHandlerData.getTopActiveMenu()){
-				menuHandlerData.deactivateActiveMenu();
-			}
-			else{
-				menuHandlerData.setTopActiveMenu(menu);
-			}
+			menuHandlerData.setTopActiveMenu(menu);
 			makeBusy();
 		}
 
@@ -46,15 +41,11 @@ public class MenuActionEngine extends ActionEngine{
 	}
 
 	public void closeAllMenus(){
-		menuHandlerData.deactivateAllMenus();
-		//		if (!isBusy()){
-		//			for (Menu menu : menuHandlerData.getAllOpenMenus()){
-		//				if (menu.isOpen()){
-		//					menu.toggle();
-		//				}
-		//			}
-		//			makeBusy();
-		//		}
+		if (!isBusy()){
+			menuHandlerData.deactivateAllMenus();
+			makeBusy();
+		}
+
 	}
 
 
@@ -89,8 +80,13 @@ public class MenuActionEngine extends ActionEngine{
 
 	}
 
-	public void setActiveMenu(Menu menu) {
-		menuHandlerData.setTopActiveMenu(menu);
+	
+
+	public void closeTopActiveMenu() {
+		if (!isBusy()){
+			menuHandlerData.deactivateActiveMenu();
+			makeBusy();
+		}
 	}
 
 
