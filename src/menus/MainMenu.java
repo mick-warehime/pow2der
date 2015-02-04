@@ -2,11 +2,8 @@ package menus;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.command.Command;
-
-import commands.MenuOpenMenuCommand;
-import commands.MenusCloseAllCommand;
-import commands.InputListenerAggregator;
+import commands.MenuOpenCommand;
+import commands.MenuCloseAllCommand;
 import commands.MenuQuitCommand;
 
 public class MainMenu extends TextMenu {
@@ -19,12 +16,12 @@ public class MainMenu extends TextMenu {
 	protected void defineMenuSelections(){
 		selections = new ArrayList<MenuSelection>();
 		
-		MenuSelection cnt = new MenuSelection(new MenusCloseAllCommand(),
+		MenuSelection cnt = new MenuSelection(new MenuCloseAllCommand(),
 				new textSelectionGraphics("Continue", this.menuRenderX,this.menuRenderY));
 		
+		OptionsMenu optionsMenu = new OptionsMenu(200,240);
 		
-		
-		MenuSelection options = new MenuSelection( new MenuOpenMenuCommand(Menu.MENU_OPTIONS),
+		MenuSelection options = new MenuSelection( new MenuOpenCommand(optionsMenu),
 				new textSelectionGraphics("Options", this.menuRenderX,this.menuRenderY + this.textLineHeight));
 		
 		MenuSelection quit = new MenuSelection( new MenuQuitCommand(), 

@@ -1,6 +1,7 @@
 package menus;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.command.Command;
@@ -42,7 +43,6 @@ public class MenuHandler {
 
 
 	public InputProviderListener getKeyboardListener() {
-		// TODO Auto-generated method stub
 		return this.keyboardInputs;
 	}
 
@@ -54,22 +54,15 @@ public class MenuHandler {
 
 	public void renderOpenMenus(Graphics graphics){
 
-		for (Menu menu : menuHandlerData.getMenus()){
-			if (menu.isOpen()){
-//				System.out.print(menu + " ");
+		for (Menu menu : menuHandlerData.getAllActiveMenus()){
 				menu.render(graphics);
-			}
 		}
-//		System.out.println();
 	}
 	
 	public boolean isMenuActive(){
-		for (Menu menu : menuHandlerData.getMenus()){
-			if (menu.isOpen()){
-				return true;
-			}
-		}
-		return false;
+		Stack <Menu> activeMenus = menuHandlerData.getAllActiveMenus();
+		return (!activeMenus.isEmpty());
+		
 	}
 	
 	
@@ -78,7 +71,7 @@ public class MenuHandler {
 	{
 		@Override
 		public ArrayList<Command> getCommands() {
-			Menu menu = menuHandlerData.getActiveMenu();
+			Menu menu = menuHandlerData.getTopActiveMenu();
 			ArrayList<Command> output = new ArrayList<Command>();
 			
 			if (menu != null){

@@ -1,36 +1,30 @@
 package menus;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 import commands.InputListenerAggregator;
 
 public class MenuHandlerData {
 
-	private ArrayList<Menu> menus;
 	private Stack<Menu> activeMenuStack;
 	private boolean isQuitting = false;
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
-		this.menus= new ArrayList<Menu>();
-		this.menus.add(new MainMenu(100,240));
-		this.menus.add(new OptionsMenu(200,240));
 		
 		this.activeMenuStack = new Stack<Menu>();
 	}
 	
-	public ArrayList<Menu> getMenus(){
-		return menus;
+	public Stack<Menu> getAllActiveMenus(){
+		return activeMenuStack;
 	}
 	
-	public void setActiveMenu(int menuIndex){
-		for (Menu menu : menus){
-			if (menu.getType() == menuIndex)
-			{
-				activeMenuStack.push(menu);
-				return;
+	public void setTopActiveMenu(Menu menu){
+		if (activeMenuStack.contains(menu)){
+			while (menu!= activeMenuStack.pop()){
 			}
 		}
+		activeMenuStack.push(menu);
+		return;
 		
 	}
 	
@@ -39,7 +33,7 @@ public class MenuHandlerData {
 		activeMenuStack.pop();
 	}
 	
-	public Menu getActiveMenu(){
+	public Menu getTopActiveMenu(){
 		if (activeMenuStack.isEmpty()){return null;}
 		return activeMenuStack.peek();
 	}
@@ -50,5 +44,10 @@ public class MenuHandlerData {
 	}
 	public boolean isQuitting(){
 		return this.isQuitting;
+	}
+
+	public void deactivateAllMenus() {
+		this.activeMenuStack = new Stack<Menu>();
+		
 	}
 }

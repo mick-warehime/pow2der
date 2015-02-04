@@ -2,6 +2,7 @@ package controls;
 
 
 import gameobjects.Interactive;
+import menus.MainMenu;
 import menus.Menu;
 
 import org.newdawn.slick.GameContainer;
@@ -17,7 +18,7 @@ import commands.MenuActivateSelectionCommand;
 import commands.MenuChangeSelectionCommand;
 import commands.InteractCommand;
 import commands.MoveCommand;
-import commands.MenuToggleCommand;
+import commands.MenuOpenCommand;
 
 
 //Handles keybindings and player inputs
@@ -77,7 +78,7 @@ public class GameControls {
 		menuInputProvider = new InputProvider(gc.getInput());
 		
 		//Define commands
-		Command toggleMainMenu = new MenuToggleCommand(Menu.MENU_MAIN);
+		Command toggleMainMenu = new MenuOpenCommand(new MainMenu(100,240));
 		Command menuDown = new MenuChangeSelectionCommand('y',1);
 		Command menuUp = new MenuChangeSelectionCommand('y',-1);
 		Command activate = new MenuActivateSelectionCommand();

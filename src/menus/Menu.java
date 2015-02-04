@@ -7,7 +7,7 @@ import org.newdawn.slick.command.Command;
 
 /* Generic menu class
  * 
- *
+ * Handles processing of its constituent `selection' elements.
  * 
  */
 
@@ -17,7 +17,7 @@ public abstract class Menu {
 	public static final int MENU_MAIN = 0;
 	public static final int MENU_OPTIONS = 1;
 	
-	private boolean isOpen;
+	
 	private int menuType;
 
 
@@ -33,12 +33,7 @@ public abstract class Menu {
 	}
 	
 
-	public boolean isOpen(){
-		return this.isOpen;
-	}
-	public void toggle(){
-		this.isOpen = !isOpen;
-	}
+	
 	public int getType(){
 		return menuType;
 	}

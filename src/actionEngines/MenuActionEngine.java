@@ -22,40 +22,30 @@ public class MenuActionEngine extends ActionEngine{
 
 	public void activateActiveMenuSelection(){
 		if (!isBusy()){
-			Menu menu = menuHandlerData.getActiveMenu();
+			Menu menu = menuHandlerData.getTopActiveMenu();
 			menu.activateSelection();
 		}
 	}
-	
-	public void toggleMenu(int menuType){
-		if (!isBusy() ){
-			for (Menu menu : menuHandlerData.getMenus()){
-				if (menu.getType() == menuType){
-					menu.toggle();
-					if (menu.isOpen()){
-						menuHandlerData.setActiveMenu(menu.getType());
-					}else{
-						menuHandlerData.deactivateActiveMenu();
-					}
-					makeBusy();
-				}
-			}
-		}	
+
+	public void openMenu(Menu menu){
+		if (!isBusy()){
+			menuHandlerData.setTopActiveMenu(menu);
+			makeBusy();
+		}
+
+
 	}
-	
+
 	private void makeBusy(){
 		menuBusyTimer += menuBusyTime;
 	}
-	
+
 	public void closeAllMenus(){
 		if (!isBusy()){
-			for (Menu menu : menuHandlerData.getMenus()){
-				if (menu.isOpen()){
-					menu.toggle();
-				}
-			}
+			menuHandlerData.deactivateAllMenus();
 			makeBusy();
 		}
+
 	}
 
 
@@ -66,7 +56,7 @@ public class MenuActionEngine extends ActionEngine{
 		updateBusyTimer();
 
 	}
-	
+
 	private void updateBusyTimer(){
 		if (menuBusyTimer >0){
 			menuBusyTimer-=1;
@@ -78,7 +68,7 @@ public class MenuActionEngine extends ActionEngine{
 
 	public void changeActiveTextLine(char xOrY, int direction) {
 
-		Menu menu = menuHandlerData.getActiveMenu();
+		Menu menu = menuHandlerData.getTopActiveMenu();
 		if (menu != null && !isBusy()){
 			menu.incrementActiveSelection(xOrY,direction);
 			makeBusy();
@@ -87,11 +77,16 @@ public class MenuActionEngine extends ActionEngine{
 
 	public void setQuitting() {
 		menuHandlerData.setQuitting(true);
-		
+
 	}
 
-	public void setActiveMenu(int menuIndex) {
-		menuHandlerData.setActiveMenu(menuIndex);
+	
+
+	public void closeTopActiveMenu() {
+		if (!isBusy()){
+			menuHandlerData.deactivateActiveMenu();
+			makeBusy();
+		}
 	}
 
 
