@@ -149,7 +149,7 @@ public class TileData {
 				if (args == null){
 					args= new Properties();
 				}
-					
+				System.out.println(name);
 				Object obj = (Object) constructor.newInstance(x, y, w, h, name, map,args);
 				
 				if (obj instanceof GameObject){

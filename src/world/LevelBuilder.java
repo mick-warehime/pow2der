@@ -9,7 +9,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class RandomLevelBuilder {
+public class LevelBuilder {
 
 	protected static final int OBJECT_BLOCK = 1;
 	protected static final int OBJECT_ITEM = 2;
@@ -22,7 +22,7 @@ public class RandomLevelBuilder {
 	private int tileWidth;
 	
 
-	public RandomLevelBuilder(int tileWidth, int tileHeight){
+	public LevelBuilder(int tileWidth, int tileHeight){
 
 
 		this.tileHeight = tileHeight;

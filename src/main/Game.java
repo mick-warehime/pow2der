@@ -23,6 +23,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 
 import world.Level;
+import world.World;
 import controls.GameControls;
 import controls.Joystick;
 import controls.WiimoteJoysticks;
@@ -43,18 +44,20 @@ public class Game extends BasicGame {
 	static String title = "Dvir is the woooorst.";
 	static int fpslimit = 59;
 
-	private Player terri;
-	private Level level;
-	private int currentLevel = 0;
+//	private Player terri;
+//	private Level level;
+//	private int currentLevel = 0;
 
 	private int gameState = LOAD_STATE;
 	private TextField inputText;
 	private GameControls controls;
-	private ItemBuilder itemBuilder;
+//	private ItemBuilder itemBuilder;
 	private GameControls gameControls;
 	private MenuHandler menuHandler;
 	private WiimoteJoysticks jsticks;
 
+	private World world;
+	
 
 	public Game() {
 		super("Israel, o Israel, oOOooOOo Israel");
@@ -81,28 +84,32 @@ public class Game extends BasicGame {
 			//				initializeLevel(currentLevel);
 			//			}
 			gameState = LEVEL_STATE;
-			currentLevel = 10;
-			initializeLevel(currentLevel);
+//			currentLevel = 10;
+//			initializeLevel(currentLevel);
 
 		}
 
 		if (gameState == LEVEL_STATE){
 
-			int mouseX = gc.getInput().getMouseX()+level.getMapX();
-			int mouseY = gc.getInput().getMouseY()+level.getMapY();
+			
+			world.update();
+			
+			int mouseX = gc.getInput().getMouseX()+world.getMapX();
+			int mouseY = gc.getInput().getMouseY()+world.getMapY();
+			
 			gameControls.setMousePosition(mouseX,mouseY);
 
 
+			
 
-
-			terri.update();
-			level.update();
+//			terri.update();
+//			level.update();
 
 //			progress = world.getProgressPoint();
 
-			if (terri.isDying()){
-				initializeLevel(currentLevel);
-			}
+//			if (terri.isDying()){
+//				initializeLevel(currentLevel);
+//			}
 
 		}
 
@@ -127,42 +134,50 @@ public class Game extends BasicGame {
 		this.menuHandler = new MenuHandler();
 		gameControls.addMenuInputProviderListener(menuHandler.getKeyboardListener());
 		
-		// load the times from file dunno why the try catchs are required
 		try {
-			loadItemsFromFile();
-		} catch (FileNotFoundException e) {
+			world = new World(gameControls, menuHandler);
+		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+		
+		
+//		// load the times from file dunno why the try catchs are required
+//		try {
+//			loadItemsFromFile();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ParserConfigurationException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (SAXException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 
 	}
 
-	private void initializeLevel(int levelNumber) throws SlickException{
-		level = new Level(levelNumber, itemBuilder);
-
-		level.setMousePosition(gameControls.getMousePos());
-		// i dont like this initialization
-		CollisionHandler collisionHandler = level.getCollisionHandler();
-
-		terri = new Player(100,800,collisionHandler, gameControls.getMousePos());
-
-
-		gameControls.addAvatarInputProviderListener(terri.getListener());
-		menuHandler.setPlayerInventory(terri.getInventory());
-
-	
-
-	}
+//	private void initializeLevel(int levelNumber) throws SlickException{
+//		level = new Level(levelNumber, itemBuilder);
+//
+//		level.setMousePosition(gameControls.getMousePos());
+//		// i dont like this initialization
+//		CollisionHandler collisionHandler = level.getCollisionHandler();
+//
+//		terri = new Player(100,800,collisionHandler, gameControls.getMousePos());
+//
+//
+//		gameControls.addAvatarInputProviderListener(terri.getListener());
+//		menuHandler.setPlayerInventory(terri.getInventory());
+//
+//	
+//
+//	}
 
 //	private void initializeLevel(int levelNumber) throws SlickException{
 //		world = new Level(levelNumber,itemBuilder);
@@ -179,13 +194,13 @@ public class Game extends BasicGame {
 //
 //	}
 
-	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
-
-		ItemParser parser = new ItemParser("items/items.xml");
-		
-		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
-
-	}
+//	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
+//
+//		ItemParser parser = new ItemParser("items/items.xml");
+//		
+//		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
+//
+//	}
 
 	@Override
 	public void render(GameContainer gc, Graphics graphics) throws SlickException {
@@ -207,8 +222,9 @@ public class Game extends BasicGame {
 			int mouseX = gc.getInput().getMouseX();
 			int mouseY = gc.getInput().getMouseY();
 
-			level.draw(graphics,(int) terri.getX(),(int)terri.getY());
-			terri.render(graphics, level.getMapX(),level.getMapY());
+//			level.render(graphics,(int) terri.getX(),(int)terri.getY());
+//			terri.render(graphics, level.getMapX(),level.getMapY());
+			world.render(graphics);
 		}
 		
 		menuHandler.renderOpenMenus(graphics);
