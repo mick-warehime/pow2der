@@ -12,6 +12,7 @@ import main.CollisionHandler;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Shape;
 
 public class ItemBuilder {
 
@@ -43,6 +44,11 @@ public class ItemBuilder {
 
 	}
 
+
+	public Item newItem(Shape shape) throws SlickException {
+		
+		return newItem((int) shape.getX(),(int) shape.getY());
+	}
 
 
 	public Item newItem(int xPos, int yPos) throws SlickException{
@@ -197,4 +203,7 @@ public class ItemBuilder {
 		System.out.println("All Items Built Successfully!");
 		
 	}
+
+
+
 }

@@ -99,18 +99,6 @@ public class Game extends BasicGame {
 			
 			gameControls.setMousePosition(mouseX,mouseY);
 
-
-			
-
-//			terri.update();
-//			level.update();
-
-//			progress = world.getProgressPoint();
-
-//			if (terri.isDying()){
-//				initializeLevel(currentLevel);
-//			}
-
 		}
 
 
@@ -140,90 +128,16 @@ public class Game extends BasicGame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-//		// load the times from file dunno why the try catchs are required
-//		try {
-//			loadItemsFromFile();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ParserConfigurationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SAXException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-
 	}
-
-//	private void initializeLevel(int levelNumber) throws SlickException{
-//		level = new Level(levelNumber, itemBuilder);
-//
-//		level.setMousePosition(gameControls.getMousePos());
-//		// i dont like this initialization
-//		CollisionHandler collisionHandler = level.getCollisionHandler();
-//
-//		terri = new Player(100,800,collisionHandler, gameControls.getMousePos());
-//
-//
-//		gameControls.addAvatarInputProviderListener(terri.getListener());
-//		menuHandler.setPlayerInventory(terri.getInventory());
-//
-//	
-//
-//	}
-
-//	private void initializeLevel(int levelNumber) throws SlickException{
-//		world = new Level(levelNumber,itemBuilder);
-//
-//		world.setMousePosition(gameControls.getMousePos());
-//		// i dont like this initialization
-//		CollisionHandler collisionHandler = world.getCollisionHandler();
-//
-//		terri = new Player(100,850,collisionHandler, gameControls.getMousePos());
-//
-//
-//		//Keyboard stuff
-//		gameControls.addAvatarInputProviderListener(terri.getListener());
-//
-//	}
-
-//	private void loadItemsFromFile() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
-//
-//		ItemParser parser = new ItemParser("items/items.xml");
-//		
-//		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
-//
-//	}
 
 	@Override
 	public void render(GameContainer gc, Graphics graphics) throws SlickException {
 
-//		System.out.println("Left joystick: "+  jsticks.LeftXValue()+"," +jsticks.LeftYValue() );
-//		System.out.println("Right joystick: "+  jsticks.RightXValue()+"," +jsticks.RightYValue() );
-		
-		//To be added for load screen
-		//		if (gameState == LOAD_STATE){
-		//			g.drawString("Enter Level: " , height/2, height/2-20);
-		//			g.drawString("Press Enter to start", height/2, height*3/4);
-		//			
-		//			inputText.render(gc, g);
-		//		}
 
 		
 		
 		if (gameState == LEVEL_STATE){
-			int mouseX = gc.getInput().getMouseX();
-			int mouseY = gc.getInput().getMouseY();
 
-//			level.render(graphics,(int) terri.getX(),(int)terri.getY());
-//			terri.render(graphics, level.getMapX(),level.getMapY());
 			world.render(graphics);
 		}
 		

@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
 import actors.Actor;
@@ -24,7 +25,7 @@ import actors.Enemy;
 
 public class TileData {
 
-	private ArrayList<Rectangle> blocks = new ArrayList<Rectangle>(); 	
+	private ArrayList<Shape> blocks = new ArrayList<Shape>(); 	
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	private ArrayList<Actor> actors = new ArrayList<Actor>();
 	
@@ -107,7 +108,7 @@ public class TileData {
 
 
 
-	public ArrayList<Rectangle> getBlocks(){
+	public ArrayList<Shape> getBlocks(){
 		return blocks;
 	}
 
