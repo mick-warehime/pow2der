@@ -72,6 +72,8 @@ public class Level {
 		
 		// test item
 		basicObjects.add(itemBuilder.newItem(400,800));
+		basicObjects.add(itemBuilder.newItem(300,800));
+		basicObjects.add(itemBuilder.newItem(350,800));
 		
 		// LevelObjects blockMatrix = new LevelObjects();
 		

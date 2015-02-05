@@ -53,7 +53,6 @@ public class GameControls {
 	}
 
 	public void setMousePosition(int mouseX, int mouseY) {
-		// TODO Auto-generated method stub
 		mousePos[0] = mouseX;
 		mousePos[1] = mouseY;
 	}
@@ -84,6 +83,8 @@ public class GameControls {
 		Command toggleInventoryMenu = new MenuOpenCommand(new InventoryMenu(300,240));
 		Command menuDown = new MenuChangeSelectionCommand('y',1);
 		Command menuUp = new MenuChangeSelectionCommand('y',-1);
+		Command menuRight = new MenuChangeSelectionCommand('x',1);
+		Command menuLeft = new MenuChangeSelectionCommand('x',-1);
 		Command activate = new MenuActivateSelectionCommand();
 		
 		//Bind them to keys
@@ -91,6 +92,8 @@ public class GameControls {
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_I), toggleInventoryMenu);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_W), menuUp);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_S), menuDown);
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_A), menuLeft);
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_D), menuRight);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ENTER), activate);
 	}
 

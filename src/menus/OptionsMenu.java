@@ -18,13 +18,13 @@ public class OptionsMenu extends TextMenu{
 		selections = new ArrayList<MenuSelection>();
 		
 		MenuSelection audio = new MenuSelection(new NullCommand(),
-				new textSelectionGraphics("Audio", this.menuRenderX,this.menuRenderY));
+				new TextSelectionGraphics("Audio", this.menuRenderX,this.menuRenderY));
 		MenuSelection video = new MenuSelection(new NullCommand(),
-				new textSelectionGraphics("Video", this.menuRenderX,this.menuRenderY + 1*this.textLineHeight));
+				new TextSelectionGraphics("Video", this.menuRenderX,this.menuRenderY + 1*this.textLineHeight));
 		MenuSelection disco = new MenuSelection(new NullCommand(),
-				new textSelectionGraphics("Disco", this.menuRenderX,this.menuRenderY + 2*this.textLineHeight));
+				new TextSelectionGraphics("Disco", this.menuRenderX,this.menuRenderY + 2*this.textLineHeight));
 		MenuSelection exit = new MenuSelection(new MenuCloseCurrentCommand(),
-				new textSelectionGraphics("Exit", this.menuRenderX,this.menuRenderY + 3*this.textLineHeight));
+				new TextSelectionGraphics("Exit", this.menuRenderX,this.menuRenderY + 3*this.textLineHeight));
 		
 		selections.add(audio);
 		selections.add(video);
