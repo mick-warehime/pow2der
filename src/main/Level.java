@@ -69,13 +69,12 @@ public class Level {
 		this.itemBuilder = itemBuilder;
 
 		// build a test door
-		basicObjects.add(itemBuilder.buildDoor(100,750, collisionHandler));
+		basicObjects.add(itemBuilder.buildDoor(100,750));
 		
 		// test item
 		basicObjects.add(itemBuilder.newItem(new ItemLocation(400,800)));
 		
-		LevelObjects blockMatrix = new LevelObjects();
-		itemBuilder.testItems();
+		// LevelObjects blockMatrix = new LevelObjects();
 		
 		actors.add(new Enemy(400,750,collisionHandler));
 		
@@ -88,7 +87,7 @@ public class Level {
 		}
 
 	
-		//Give the objects to the collisionHandler
+		// Give the objects to the collisionHandler
 		collisionHandler.receiveObjects(actors, collideables, basicObjects);		
 		
 	};
