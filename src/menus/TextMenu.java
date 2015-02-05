@@ -23,14 +23,14 @@ public abstract class TextMenu extends Menu {
 	public void incrementActiveSelection(char xOrY, int direction) {
 		if (xOrY == 'y'){
 			if (direction>0){
-				this.activeSelection +=1;
+				this.currentSelection +=1;
 			}
 			else {
-				this.activeSelection -=1;
+				this.currentSelection -=1;
 			}
-			activeSelection = activeSelection % (selections.size());
-			if (activeSelection <0){ 
-				activeSelection = selections.size()+activeSelection;
+			currentSelection = currentSelection % (selections.size());
+			if (currentSelection <0){ 
+				currentSelection = selections.size()+currentSelection;
 			}
 		}
 	

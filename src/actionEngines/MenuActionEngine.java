@@ -26,7 +26,7 @@ public class MenuActionEngine extends ActionEngine{
 	public void activateActiveMenuSelection(){
 		if (!isBusy()){
 			Menu menu = menuHandlerData.getTopActiveMenu();
-			menu.activateSelection();
+			menu.activateCurrentSelection();
 		}
 	}
 

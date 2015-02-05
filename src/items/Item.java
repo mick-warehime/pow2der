@@ -80,6 +80,7 @@ public class Item extends BasicObject implements Interactive{
 		if (interactionType != Interactive.INTERACTION_PICKUP){
 			return;
 		}
+		if (! onGround){ return;}
 		status.getInventory().addItem(this);
 		
 		onGround = false;

@@ -27,7 +27,7 @@ public abstract class Menu {
 
 
 	protected boolean selectionActivated = false;
-	protected int activeSelection = 0;
+	protected int currentSelection = 0;
 	protected ArrayList<MenuSelection> selections;
 	
 	
@@ -47,14 +47,14 @@ public abstract class Menu {
 
 	public void render(Graphics graphics){
 		for (MenuSelection selection : selections){
-			boolean isActive = (selection == selections.get(activeSelection));
+			boolean isActive = (selection == selections.get(currentSelection));
 			selection.render(graphics,isActive);
 		}
 	}
 	
 	
 
-	public void activateSelection() {
+	public void activateCurrentSelection() {
 		this.selectionActivated = true;
 	}
 
@@ -62,7 +62,7 @@ public abstract class Menu {
 	public Command getSelectionCommand() {
 		assert this.selectionActivated == true : "Getting a command from no active selection!";
 		this.selectionActivated = false;
-		return selections.get(activeSelection).getCommand();
+		return selections.get(currentSelection).getCommand();
 	}
 
 

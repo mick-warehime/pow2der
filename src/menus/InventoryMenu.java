@@ -17,7 +17,7 @@ public class InventoryMenu extends Menu{
 
 
 	private int menuWidthInItems = 5;
-	private int menuHeightInItems = 5;
+	private int menuHeightInItems = 7;
 	private int imageSizeInPixels = 48;
 
 	public InventoryMenu( int menuRenderX, int menuRenderY) {
@@ -29,8 +29,8 @@ public class InventoryMenu extends Menu{
 
 	@Override
 	public void incrementActiveSelection(char xOrY, int direction) {
-		int menuX = indexToMenuX(activeSelection);
-		int menuY = indexToMenuY(activeSelection);
+		int menuX = indexToMenuX(currentSelection);
+		int menuY = indexToMenuY(currentSelection);
 
 		if (xOrY == 'x'){
 			if (direction>0){
@@ -58,7 +58,7 @@ public class InventoryMenu extends Menu{
 		}
 
 
-		activeSelection = menuXYToIndex(menuX, menuY);
+		currentSelection = menuXYToIndex(menuX, menuY);
 
 	}
 
