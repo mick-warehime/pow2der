@@ -5,14 +5,12 @@ import org.newdawn.slick.Graphics;
 
 public abstract class TextMenu extends Menu {
 
-	protected int menuRenderX ;
-	protected int menuRenderY ;
+	
 	protected int textLineHeight = 16;
 
 	public TextMenu(int menuType, int menuRenderX, int menuRenderY) {
-		super(menuType);
-		this.menuRenderX = menuRenderX;
-		this.menuRenderY = menuRenderY;
+		super(menuType,menuRenderX, menuRenderY);
+		
 
 		defineMenuSelections();
 	}

@@ -1,5 +1,7 @@
 package menus;
 
+import items.Inventory;
+
 import java.util.Stack;
 
 import commands.InputListenerAggregator;
@@ -8,6 +10,7 @@ public class MenuHandlerData {
 
 	private Stack<Menu> activeMenuStack;
 	private boolean isQuitting = false;
+	private Inventory playerInventory;
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		
@@ -49,5 +52,15 @@ public class MenuHandlerData {
 	public void deactivateAllMenus() {
 		this.activeMenuStack = new Stack<Menu>();
 		
+	}
+
+	public void setPlayerInventory(Inventory inventory) {
+		this.playerInventory = inventory;
+		
+	}
+
+	public  Inventory getPlayerInventory() {
+		// TODO Auto-generated method stub
+		return playerInventory;
 	}
 }

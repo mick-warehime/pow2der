@@ -1,5 +1,7 @@
 package menus;
 
+import items.Inventory;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -91,6 +93,13 @@ public class MenuHandler {
 	public boolean isQuitting() {
 		// TODO Auto-generated method stub
 		return menuHandlerData.isQuitting();
+	}
+
+
+
+	public void setPlayerInventory(Inventory inventory) {
+		this.menuHandlerData.setPlayerInventory(inventory);
+		
 	}
 
 	

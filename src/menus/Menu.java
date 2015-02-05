@@ -16,7 +16,11 @@ public abstract class Menu {
 	/* Menu identifiers */
 	public static final int MENU_MAIN = 0;
 	public static final int MENU_OPTIONS = 1;
+	public static final int MENU_INVENTORY = 2;
 	
+	
+	protected int menuRenderX ;
+	protected int menuRenderY ;
 	
 	private int menuType;
 
@@ -26,9 +30,10 @@ public abstract class Menu {
 	protected ArrayList<MenuSelection> selections;
 	
 	
-	public Menu(int menuType){
+	public Menu(int menuType,int menuRenderX, int menuRenderY){
 		this.menuType = menuType;
-		
+		this.menuRenderX = menuRenderX;
+		this.menuRenderY = menuRenderY;
 		
 	}
 	
