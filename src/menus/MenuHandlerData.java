@@ -31,7 +31,7 @@ public class MenuHandlerData {
 		
 	}
 	
-	public void deactivateActiveMenu(){
+	public void deactivateTopActiveMenu(){
 		assert !activeMenuStack.isEmpty() : "Deactivated a null menu!";
 		activeMenuStack.pop();
 	}

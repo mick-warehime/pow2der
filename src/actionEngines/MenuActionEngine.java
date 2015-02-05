@@ -88,9 +88,23 @@ public class MenuActionEngine extends ActionEngine{
 
 	public void closeTopActiveMenu() {
 		if (!isBusy()){
-			menuHandlerData.deactivateActiveMenu();
+			menuHandlerData.deactivateTopActiveMenu();
 			makeBusy();
 		}
+	}
+
+	public void toggleMenu(Menu menu) {
+		if (!isBusy()){
+			if (menuHandlerData.getTopActiveMenu() == menu){
+				menuHandlerData.deactivateTopActiveMenu();
+			}else{
+				openMenu(menu);
+			}
+			
+			
+			makeBusy();
+		}
+		
 	}
 
 

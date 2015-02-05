@@ -13,7 +13,7 @@ import commands.NullCommand;
 public class InventoryMenu extends Menu{
 
 
-	private int menuWidthInItems = 2;
+	private int menuWidthInItems = 5;
 	private int menuHeightInItems = 8;
 
 	public InventoryMenu( int menuRenderX, int menuRenderY) {
@@ -37,7 +37,7 @@ public class InventoryMenu extends Menu{
 	public void incrementActiveSelection(char xOrY, int direction) {
 		int menuX = indexToMenuX(activeSelection);
 		int menuY = indexToMenuY(activeSelection);
-		
+
 		if (xOrY == 'x'){
 			if (direction>0){
 				menuX +=1;
@@ -62,8 +62,8 @@ public class InventoryMenu extends Menu{
 				menuY = menuHeightInItems+menuY;
 			}
 		}
-		
-		
+
+
 		activeSelection = menuXYToIndex(menuX, menuY);
 
 	}
@@ -83,6 +83,13 @@ public class InventoryMenu extends Menu{
 
 		}
 
+		for (int i = selections.size(); i<(menuWidthInItems*menuHeightInItems); i++){
+			addItemSelection(null);
+		}
+
+
+
+
 
 
 	}
@@ -95,11 +102,11 @@ public class InventoryMenu extends Menu{
 		return output;
 	}
 	private int menuXYToIndex(int menuX,int menuY){
-		
+
 		return menuWidthInItems*menuY + menuX;
 	}
-	
-	
+
+
 	private void addItemSelection(Item item) {
 
 		int length = selections.size();
@@ -112,14 +119,26 @@ public class InventoryMenu extends Menu{
 		int xPos = menuRenderX + 16*menuX;
 		int yPos = menuRenderY + 16*menuY;
 
-
-		MenuSelection selection = new MenuSelection(new NullCommand(), new TextSelectionGraphics(""+length,xPos,yPos));
-
+		MenuSelection selection;
+		if (item != null){
+			selection = new MenuSelection(
+					new NullCommand(), 
+					new TextSelectionGraphics(""+length,xPos,yPos));
+			
+//			System.out.println("Added item to menu: " + item + "at " + xPos + "," + yPos);
+		}else
+		{
+			selection = new MenuSelection(
+					new NullCommand(), 
+					new TextSelectionGraphics(""+length,xPos,yPos));
+		}
+		
 		selections.add(selection);
-		System.out.println("Added item to menu: " + item + "at " + xPos + "," + yPos);
+
+
 
 	}
 
-	
+
 
 }
