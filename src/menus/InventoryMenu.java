@@ -8,7 +8,9 @@ import items.Item;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.command.Command;
 
+import commands.MenuOpenCommand;
 import commands.NullCommand;
 
 public class InventoryMenu extends Menu{
@@ -113,8 +115,11 @@ public class InventoryMenu extends Menu{
 
 		MenuSelection selection;
 		if (item != null){
-			selection = new MenuSelection(
-					new NullCommand(), 
+			
+			
+			Command menuCmd = new MenuOpenCommand(new ItemMenu(menuRenderX - 100,menuRenderY));
+			
+			selection = new MenuSelection(	menuCmd, 
 					new InventorySelectionGraphics(item.getImage(),xPos,yPos));
 			
 		}else

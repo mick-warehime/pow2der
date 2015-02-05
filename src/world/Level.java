@@ -73,8 +73,9 @@ public class Level {
 		basicObjects.add(itemBuilder.buildDoor(100,750));
 		
 		// test item
-		basicObjects.add(itemBuilder.newItem(400,800));
-		
+		basicObjects.add(itemBuilder.newItem(80,800));
+		basicObjects.add(itemBuilder.newItem(120,800));
+		basicObjects.add(itemBuilder.newItem(160,800));
 		// LevelBuilder blockMatrix = new LevelBuilder();
 		
 		actors.add(new Enemy(400,750,collisionHandler));

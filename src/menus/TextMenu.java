@@ -1,6 +1,6 @@
 package menus;
 
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.command.Command;
 
 public abstract class TextMenu extends Menu {
 
@@ -34,6 +34,18 @@ public abstract class TextMenu extends Menu {
 			}
 		}
 	
+	}
+
+
+	protected void addMenuSelection(Command cmd, String string) {
+		
+		int yShift = selections.size()*this.textLineHeight;
+		MenuSelection selection = new MenuSelection( cmd,
+				new TextSelectionGraphics(string,this.menuRenderX,this.menuRenderY +yShift ));
+		
+		selections.add(selection);
+		return;
+		
 	}
 
 }

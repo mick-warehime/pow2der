@@ -17,6 +17,7 @@ public abstract class Menu {
 	public static final int MENU_MAIN = 0;
 	public static final int MENU_OPTIONS = 1;
 	public static final int MENU_INVENTORY = 2;
+	public static final int MENU_ITEM = 3;
 	
 	
 	protected int menuRenderX ;
