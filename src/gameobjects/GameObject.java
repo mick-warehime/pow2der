@@ -57,7 +57,7 @@ public class GameObject {
 		graphics = new TileGraphics(rect, map, tileX,tileY,widthInTiles,heightInTiles);
 	}
 
-	//For removal of objects by level
+	//For removal of objects by world
 	public boolean isDying(){
 		return false;
 	}
