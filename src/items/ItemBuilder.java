@@ -45,15 +45,15 @@ public class ItemBuilder {
 
 
 
-	public Item newItem(ItemLocation location) throws SlickException{
+	public Item newItem(int xPos, int yPos) throws SlickException{
 		// build a random item
 		int itemIndex =  (int)(Math.random()*itemMaps.size());
 
-		return buildItem(itemIndex, location);
+		return buildItem(itemIndex, xPos, yPos);
 	}
 
 
-	public Item newItem(String typeOrName, ItemLocation location) throws SlickException{
+	public Item newItem(String typeOrName, int xPos, int yPos) throws SlickException{
 
 		int itemIndex = -1;
 
@@ -79,13 +79,13 @@ public class ItemBuilder {
 
 		}		
 
-		return buildItem(itemIndex,location);
+		return buildItem(itemIndex,xPos,yPos);
 
 	}
 	
 	
 
-	private Item buildItem(int i,ItemLocation location) throws SlickException{
+	private Item buildItem(int i, int xPos, int yPos) throws SlickException{
 
 
 		// builds the ith item in the vector list
@@ -99,19 +99,19 @@ public class ItemBuilder {
 		Image sprite = spriteSheet.getSubImage(col-1,row-1);
 
 		if(itm.get("itemType").equalsIgnoreCase("armor")){
-			Item item = new Armor(itm, sprite, location);
+			Item item = new Armor(itm, sprite, xPos, yPos);
 			return item;
 		}else if(itm.get("itemType").equalsIgnoreCase("weapons")){
-			Item item = new Weapon(itm, sprite, location);			
+			Item item = new Weapon(itm, sprite, xPos, yPos);			
 
 			return item;
 		}
 		else if(itm.get("itemType").equalsIgnoreCase("misc")){
-			Item item = new Misc(itm, sprite, location);
+			Item item = new Misc(itm, sprite, xPos, yPos);
 			return item;
 		}
 		else if (itm.get("itemType").equalsIgnoreCase("books")){
-			Item item = new Book(itm, sprite, location);
+			Item item = new Book(itm, sprite, xPos, yPos);
 			return item;
 		}
 
@@ -188,7 +188,7 @@ public class ItemBuilder {
 		for (int i = 0; i<itemMaps.size(); i++){
 			Map<String,String> itm = itemMaps.get(i);
 			System.out.print(itm.get("type")+": "+itm.get("name"));
-			buildItem(i,new ItemLocation(400,800));
+			buildItem(i,400,800);
 			System.out.print(" --> Built Sucessfully");
 			System.out.println();
 			

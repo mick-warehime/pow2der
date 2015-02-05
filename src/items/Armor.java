@@ -13,9 +13,9 @@ public class Armor extends Item{
 	private String material;
 	private String worn;
 
-	public Armor(Map<String, String> itm, Image sprite, ItemLocation location ) throws SlickException {
+	public Armor(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException {
 		
-		super(itm,sprite,location);
+		super(itm,sprite,xPos,yPos);
 		
 		
 		this.AC = (int) Float.parseFloat(itm.get("ac"));

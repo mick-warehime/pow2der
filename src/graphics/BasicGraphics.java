@@ -1,6 +1,5 @@
 package graphics;
 
-import items.ItemLocation;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -13,7 +12,6 @@ import actors.Status;
 public class BasicGraphics {
 
 	protected Image sprite;
-	protected ItemLocation location;
 	private int xPos;
 	private int yPos;
 	

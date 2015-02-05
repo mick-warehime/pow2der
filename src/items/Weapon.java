@@ -13,9 +13,9 @@ public class Weapon extends Item{
 	private String material;
 
 
-	public Weapon(Map<String, String> itm, Image sprite, ItemLocation location ) throws SlickException {
+	public Weapon(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException {
 		
-		super(itm,sprite,location);
+		super(itm,sprite,xPos,yPos);
 		
 		
 		this.mHitBonus = (int) Float.parseFloat(itm.get("mHitBonus"));

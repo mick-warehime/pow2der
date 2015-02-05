@@ -24,16 +24,17 @@ public class Item extends BasicObject implements Interactive{
 	protected boolean stackable;
 	protected Integer weight;
 	protected ArrayList<String> properties;
-	private ItemLocation location;
+	protected Boolean onGround;
 
-	public Item(Map<String, String> itm, Image sprite, ItemLocation location) throws SlickException{		
+	public Item(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException{		
 
-		super(sprite,location.getX(),location.getY());
+		super(sprite,xPos,yPos);
 
 		this.type = itm.get("itemType");		
-
-		this.location = location;
+		
 		this.canCollide = false;
+		
+		onGround = true;
 		
 	}
 
@@ -43,19 +44,13 @@ public class Item extends BasicObject implements Interactive{
 	}
 
 	public void render(Graphics g, int renderX, int renderY){
-		if(location.onGround()){
+		if(onGround){
 			graphics.render(g, renderX, renderY, (float) 0.6);
 		}
 	}
 	
 
-	public void setLocation(ItemLocation location){
-		this.location = location;
-	}
 
-	public ItemLocation getLocation(){
-		return location;
-	}
 
 	public String getItemType() {
 		return type;
@@ -87,12 +82,15 @@ public class Item extends BasicObject implements Interactive{
 		if (interactionType != Interactive.INTERACTION_PICKUP){
 			return;
 		}
-		Inventory inventory = status.getInventory();
-		inventory.addItem(this);
-		location.pickedUp(inventory);
+		status.getInventory().addItem(this);
 		
-		
+		onGround = false;
 
+	}
+	
+	public void drop(Status status){
+		onGround = true;
+		shape.setLocation(status.getX(), status.getY());
 	}
 
 }

@@ -13,7 +13,7 @@ import actors.Status;
 public class ItemDoor extends BasicObject implements Interactive{
 	private boolean open = false;
 
-	public ItemDoor(Image doorSprite, int xPos, int yPos ) throws SlickException {
+	public ItemDoor(Image doorSprite, int xPos, int yPos) throws SlickException {
 
 		super(doorSprite,xPos,yPos);	
 

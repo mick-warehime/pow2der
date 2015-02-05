@@ -9,9 +9,9 @@ import org.newdawn.slick.SlickException;
 public class Misc extends Item{
 
 
-	public Misc(Map<String, String> itm, Image sprite, ItemLocation location ) throws SlickException {
+	public Misc(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException {
 		
-		super(itm,sprite,location);
+		super(itm,sprite,xPos,yPos);
 		
 		
 		
