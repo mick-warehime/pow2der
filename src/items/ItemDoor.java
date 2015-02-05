@@ -13,10 +13,9 @@ import actors.Status;
 public class ItemDoor extends BasicObject implements Interactive{
 	private boolean open = false;
 
-	public ItemDoor(CollisionHandler collisionHandler, Image doorSprite, int xPos, int yPos ) throws SlickException {
+	public ItemDoor(Image doorSprite, int xPos, int yPos ) throws SlickException {
 
-		super(doorSprite,xPos,yPos);		
-		setCollisionHandler(collisionHandler);
+		super(doorSprite,xPos,yPos);	
 
 	}
 
@@ -29,7 +28,8 @@ public class ItemDoor extends BasicObject implements Interactive{
 
 		if (interactionType != Interactive.INTERACTION_TOGGLE){return;}
 		
-		if (this.collisionHandler.isCollidedWithActor(shape)){return;}
+		
+		if (this.shape.intersects(status.getRect())){return;}
 		
 		open = !open;
 

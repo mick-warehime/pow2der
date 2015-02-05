@@ -21,7 +21,6 @@ public class BasicObject {
 	
 	protected BasicGraphics graphics;	
 	protected Shape shape;	 
-	protected CollisionHandler collisionHandler;
 	protected Image sprite;
 	protected boolean canCollide = true;
 	
@@ -61,9 +60,7 @@ public class BasicObject {
 		return canCollide;
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler){
-		this.collisionHandler = collisionHandler;
-	}
+
 
 	
 	//Checks if an input shape is near the object's shape
