@@ -10,9 +10,9 @@ public class Book extends Item{
 
 
 
-	public Book(Map<String, String> itm, Image sprite, ItemLocation location ) throws SlickException {
+	public Book(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException {
 		
-		super(itm,sprite,location);
+		super(itm,sprite,xPos,yPos);
 		
 		
 	}

@@ -2,7 +2,6 @@ package main;
 
 import items.Item;
 import items.ItemBuilder;
-import items.ItemLocation;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -72,7 +71,7 @@ public class Level {
 		basicObjects.add(itemBuilder.buildDoor(100,750));
 		
 		// test item
-		basicObjects.add(itemBuilder.newItem(new ItemLocation(400,800)));
+		basicObjects.add(itemBuilder.newItem(400,800));
 		
 		// LevelObjects blockMatrix = new LevelObjects();
 		
@@ -118,18 +117,18 @@ public class Level {
 
 	}
 
-	//Add a new object to lists and pass it necessary objects from level
-	private void incorporateNewObject(Object obj){
-
-		if(obj instanceof Actor){
-			actors.add((Actor)obj);
-			((Actor) obj).incorporateCollisionHandler(collisionHandler);
-		}
-		if(obj instanceof Broadcaster){
-			collideables.add((Broadcaster)obj);
-		}
-
-	}
+//	//Add a new object to lists and pass it necessary objects from level
+//	private void incorporateNewObject(Object obj){
+//
+//		if(obj instanceof Actor){
+//			actors.add((Actor)obj);
+//			((Actor) obj).incorporateCollisionHandler(collisionHandler);
+//		}
+//		if(obj instanceof Broadcaster){
+//			collideables.add((Broadcaster)obj);
+//		}
+//
+//	}
 
 	public void draw(Graphics g,int x, int y){		
 
@@ -160,7 +159,7 @@ public class Level {
 		}
 
 		for (BasicObject obj: basicObjects){
-
+			
 			obj.render(g,mapX,mapY);
 
 		}

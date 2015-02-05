@@ -2,7 +2,6 @@ package gameobjects;
 
 import graphics.BasicGraphics;
 import graphics.TileGraphics;
-import items.ItemLocation;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -53,7 +52,7 @@ public class BasicObject {
 
 
 	public void render(Graphics g, int renderX, int renderY){
-		graphics.render(g,renderX, renderY);		
+		graphics.render(g, renderX, renderY);		
 	}
 
 	public boolean canCollide(){
