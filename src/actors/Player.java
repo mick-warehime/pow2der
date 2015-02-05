@@ -1,6 +1,7 @@
 package actors;
 
 
+import items.Inventory;
 import graphics.ActorGraphics;
 import main.Level;
 import main.CollisionHandler;
@@ -71,6 +72,14 @@ public class Player extends Actor {
 		status.setAlive();
 		status.setX(startX);
 		status.setY(startY);
+	}
+
+
+
+
+	public Inventory getInventory() {
+		
+		return status.getInventory();
 	}
 
 	

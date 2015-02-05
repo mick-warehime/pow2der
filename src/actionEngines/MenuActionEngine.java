@@ -3,6 +3,7 @@ package actionEngines;
 
 import menus.Menu;
 import menus.MenuHandlerData;
+import menus.InventoryMenu;
 import commands.InputListenerAggregator;
 
 //Performs actions for a menu, based on inputs
@@ -30,6 +31,9 @@ public class MenuActionEngine extends ActionEngine{
 	public void openMenu(Menu menu){
 		if (!isBusy()){
 			menuHandlerData.setTopActiveMenu(menu);
+			if (menu.getType() == Menu.MENU_INVENTORY){
+				((InventoryMenu)menu).setInventory(menuHandlerData.getPlayerInventory());
+			}
 			makeBusy();
 		}
 

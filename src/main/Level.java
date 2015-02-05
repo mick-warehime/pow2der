@@ -69,7 +69,7 @@ public class Level {
 		this.itemBuilder = itemBuilder;
 
 		// build a test door
-		basicObjects.add(itemBuilder.buildDoor(100,750, collisionHandler));
+		basicObjects.add(itemBuilder.buildDoor(100,750));
 		
 		// test item
 		basicObjects.add(itemBuilder.newItem(new ItemLocation(400,800)));

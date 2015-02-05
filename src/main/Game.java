@@ -158,6 +158,7 @@ public class Game extends BasicGame {
 
 
 		gameControls.addAvatarInputProviderListener(terri.getListener());
+		menuHandler.setPlayerInventory(terri.getInventory());
 
 	
 

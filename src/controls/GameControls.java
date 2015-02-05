@@ -1,7 +1,9 @@
 package controls;
 
 
+import items.Inventory;
 import gameobjects.Interactive;
+import menus.InventoryMenu;
 import menus.MainMenu;
 import menus.Menu;
 
@@ -79,12 +81,14 @@ public class GameControls {
 		
 		//Define commands
 		Command toggleMainMenu = new MenuOpenCommand(new MainMenu(100,240));
+		Command toggleInventoryMenu = new MenuOpenCommand(new InventoryMenu(300,240));
 		Command menuDown = new MenuChangeSelectionCommand('y',1);
 		Command menuUp = new MenuChangeSelectionCommand('y',-1);
 		Command activate = new MenuActivateSelectionCommand();
 		
 		//Bind them to keys
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ESCAPE), toggleMainMenu);
+		menuInputProvider.bindCommand(new KeyControl(Input.KEY_I), toggleInventoryMenu);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_W), menuUp);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_S), menuDown);
 		menuInputProvider.bindCommand(new KeyControl(Input.KEY_ENTER), activate);
@@ -119,4 +123,6 @@ public class GameControls {
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.DOWN), moveDown);	
 		avatarInputProvider.bindCommand(new ControllerButtonControl(0,GameControls.WIIMOTE_A), toggle);
 	}
+
+	
 }

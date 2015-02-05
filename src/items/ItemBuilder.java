@@ -120,7 +120,7 @@ public class ItemBuilder {
 	}
 
 
-	public BasicObject buildDoor(int xPos, int yPos, CollisionHandler collisionHandler) throws SlickException{
+	public BasicObject buildDoor(int xPos, int yPos) throws SlickException{
 
 		return new ItemDoor(doorSprite, xPos, yPos);
 
