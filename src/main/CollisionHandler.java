@@ -8,6 +8,7 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import world.NewLevel;
 import actors.Actor;
 import actors.Player;
 import commands.CommandProvider;
@@ -18,7 +19,7 @@ import gameobjects.Broadcaster;
 
 public class CollisionHandler implements CommandProvider {
 
-	private ArrayList<Rectangle> blocks;
+	private ArrayList<Shape> blocks;
 //	private ArrayList<GameObject> gameObjects;
 	private ArrayList<Actor> actors;
 
@@ -30,10 +31,17 @@ public class CollisionHandler implements CommandProvider {
 	private ArrayList<BasicObject> basicObjects;
 
 
-	public CollisionHandler(ArrayList<Rectangle> blockedList){
+	public CollisionHandler(ArrayList<Shape> blockedList){
 		this.blocks = blockedList;
 	}
 
+	
+	public CollisionHandler(NewLevel level){
+		this.blocks = level.getBlocks();
+		this.basicObjects = level.getBasicObjects();
+		this.actors = level.getActors();
+		this.interactiveGameObjects = level.getBroadcasters();
+	}
 
 	public void receiveObjects(ArrayList<Actor> actors, ArrayList<Broadcaster> broadcasters, 
 			ArrayList<BasicObject> basicObjects){
@@ -41,7 +49,7 @@ public class CollisionHandler implements CommandProvider {
 		this.basicObjects = basicObjects;
 		this.actors = actors;
 		this.interactiveGameObjects = broadcasters;	
-
+		
 	}
 
 	public void addPlayerRect(Rectangle playerRect){
@@ -81,7 +89,7 @@ public class CollisionHandler implements CommandProvider {
 	}
 
 	public boolean isCollidedWithBlocks(Shape shape){
-		for(Rectangle r: blocks ){
+		for(Shape r: blocks ){
 			if(shape.intersects(r)){
 				return true;
 			}	

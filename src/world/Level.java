@@ -47,6 +47,7 @@ public class Level {
 	private ArrayList<Broadcaster> collideables = new ArrayList<Broadcaster>();
 	private int[] mousePos;
 	private ItemBuilder itemBuilder;
+	private LevelBuilder levelBuilder;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private ArrayList<BasicObject> basicObjects = new ArrayList<BasicObject>();
 
@@ -63,20 +64,16 @@ public class Level {
 
 		//Creates the collisionHandler with just game blocks
 		collisionHandler = new CollisionHandler(tileData.getBlocks());
-	
-//		this.actors = tileData.getActors();
+
 		
 		this.itemBuilder = itemBuilder;
-		
-		 
+
 
 		// build a test door
 		basicObjects.add(itemBuilder.buildDoor(100,750));
 		
 		// test item
 		basicObjects.add(itemBuilder.newItem(400,800));
-		basicObjects.add(itemBuilder.newItem(300,800));
-		basicObjects.add(itemBuilder.newItem(350,800));
 		
 		// LevelBuilder blockMatrix = new LevelBuilder();
 		
@@ -135,7 +132,7 @@ public class Level {
 //
 //	}
 
-	public void draw(Graphics g,int x, int y){		
+	public void render(Graphics g,int x, int y){		
 
 
 		// min/max sets the submatrix of tiles to draw		
@@ -215,12 +212,6 @@ public class Level {
 	}
 
 
-	public void setMousePosition(int[] mousePos) {
-		this.mousePos = mousePos;
 
-
-
-
-	}
 
 }

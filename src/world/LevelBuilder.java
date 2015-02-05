@@ -9,35 +9,37 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class RandomLevelBuilder {
+public class LevelBuilder {
 
 	protected static final int OBJECT_BLOCK = 1;
 	protected static final int OBJECT_ITEM = 2;
 	protected static final int OBJECT_DOOR = 3;
 	
 	private List<Map<Integer,Shape>> objectMaps;
-
-	private int[][] objectMatrix;
-	private int tileHeight;
-	private int tileWidth;
+	private List<Integer> objectTypes;
+	private List<Shape> objectShapes;
 	
+	private int[][] objectMatrix;
 
-	public RandomLevelBuilder(int tileWidth, int tileHeight){
-
-
-		this.tileHeight = tileHeight;
-		this.tileWidth = tileWidth;
-
+	public LevelBuilder(int m, int n){
+		
+		newLevel(m,n);
+		
 	}
 
 
 	public void newLevel(int m, int n){
+		
 		randomObjectsMatrix(m,n);
 		getObjects();
+		
 	}
 	
-	public List<Map<Integer,Shape>> getObjectMaps(){
-		return objectMaps;
+	public List<Integer> getObjectTypes(){
+		return objectTypes;
+	}
+	public List<Shape> getObjectShapes(){
+		return objectShapes;
 	}
 	
 
@@ -74,12 +76,12 @@ public class RandomLevelBuilder {
 
 
 	private void getObjects(){
+		int tileHeight = World.TILE_HEIGHT;
+		int tileWidth = World.TILE_WIDTH;
 
-
-		objectMaps = new ArrayList<Map<Integer,Shape>>();
-
-
-
+		
+		objectShapes = new ArrayList<Shape>();
+		objectTypes = new ArrayList<Integer>();
 		// get the number of rows and columns from the objectMatrix
 		int numRows = objectMatrix.length;
 		int numCols = objectMatrix[0].length;
@@ -94,11 +96,9 @@ public class RandomLevelBuilder {
 				int y = row*tileHeight;
 
 				// store solid collideable walls
-				//objectShapes.add(new Rectangle(x,y,tileWidth,tileHeight));
-				// objectType.add(objectMatrix[row][col]);
-				obj.put(objectMatrix[row][col], new Rectangle(x,y,tileWidth,tileHeight));
-				
-				objectMaps.add(obj);
+				objectShapes.add(new Rectangle(x,y,tileWidth,tileHeight));
+				objectTypes.add(objectMatrix[row][col]);
+
 			}
 		}
 

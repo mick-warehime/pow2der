@@ -21,7 +21,7 @@ public class Player extends Actor {
 	private ActorGraphics testGraphics;
 	
 
-	public Player(int x, int y, CollisionHandler collisionHandler, int[] mousePos) throws SlickException {
+	public Player(int x, int y, CollisionHandler collisionHandler) throws SlickException {
 
  		
 //		sprite = new Image("data/head.png");		
