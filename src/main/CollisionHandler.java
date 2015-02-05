@@ -113,6 +113,8 @@ public class CollisionHandler implements CommandProvider {
 		// check if collided with solid etherable Objects
 		for(BasicObject obj: basicObjects){
 			// don't check with its own shape and dont check with objects that are currently being held
+			assert (obj.getShape() != null) : "Error! Object" + obj + " has no shape!";
+			
 			if(obj.getShape() != shape){
 				if(obj.canCollide()){
 					if(shape.intersects(obj.getShape())){

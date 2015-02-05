@@ -19,6 +19,7 @@ import org.newdawn.slick.command.KeyControl;
 import commands.MenuActivateSelectionCommand;
 import commands.MenuChangeSelectionCommand;
 import commands.InteractCommand;
+import commands.MenuToggleCommand;
 import commands.MoveCommand;
 import commands.MenuOpenCommand;
 
@@ -80,7 +81,7 @@ public class GameControls {
 		
 		//Define commands
 		Command toggleMainMenu = new MenuOpenCommand(new MainMenu(100,240));
-		Command toggleInventoryMenu = new MenuOpenCommand(new InventoryMenu(300,240));
+		Command toggleInventoryMenu = new MenuToggleCommand(new InventoryMenu(300,240));
 		Command menuDown = new MenuChangeSelectionCommand('y',1);
 		Command menuUp = new MenuChangeSelectionCommand('y',-1);
 		Command menuRight = new MenuChangeSelectionCommand('x',1);
