@@ -122,12 +122,20 @@ public class Game extends BasicGame {
 		this.menuHandler = new MenuHandler();
 		gameControls.addMenuInputProviderListener(menuHandler.getKeyboardListener());
 		
+		// initiate world
 		try {
-			world = new World(gameControls, menuHandler);
+			world = new World();
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
+		// add the player to the game management systems
+		gameControls.addAvatarInputProviderListener(world.getPlayer().getListener());
+		menuHandler.setPlayerInventory(world.getPlayer().getInventory());
+
+		
 	}
 
 	@Override
