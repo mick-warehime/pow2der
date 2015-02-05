@@ -22,10 +22,10 @@ import net.java.games.input.ControllerEnvironment;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.TextField;
 
+import world.Level;
 import controls.GameControls;
 import controls.Joystick;
 import controls.WiimoteJoysticks;
-
 import actors.Player;
 import items.ItemBuilder;
 import items.ItemParser;
@@ -98,7 +98,7 @@ public class Game extends BasicGame {
 			terri.update();
 			level.update();
 
-//			progress = level.getProgressPoint();
+//			progress = world.getProgressPoint();
 
 			if (terri.isDying()){
 				initializeLevel(currentLevel);
@@ -164,11 +164,11 @@ public class Game extends BasicGame {
 	}
 
 //	private void initializeLevel(int levelNumber) throws SlickException{
-//		level = new Level(levelNumber,itemBuilder);
+//		world = new Level(levelNumber,itemBuilder);
 //
-//		level.setMousePosition(gameControls.getMousePos());
+//		world.setMousePosition(gameControls.getMousePos());
 //		// i dont like this initialization
-//		CollisionHandler collisionHandler = level.getCollisionHandler();
+//		CollisionHandler collisionHandler = world.getCollisionHandler();
 //
 //		terri = new Player(100,850,collisionHandler, gameControls.getMousePos());
 //

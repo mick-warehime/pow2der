@@ -1,4 +1,4 @@
-package main;
+package world;
 
 import items.Item;
 import items.ItemBuilder;
@@ -6,7 +6,8 @@ import items.ItemBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import level.LevelObjects;
+import main.CollisionHandler;
+import main.TileData;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
@@ -66,6 +67,8 @@ public class Level {
 //		this.actors = tileData.getActors();
 		
 		this.itemBuilder = itemBuilder;
+		
+		 
 
 		// build a test door
 		basicObjects.add(itemBuilder.buildDoor(100,750));
@@ -73,7 +76,7 @@ public class Level {
 		// test item
 		basicObjects.add(itemBuilder.newItem(400,800));
 		
-		// LevelObjects blockMatrix = new LevelObjects();
+		// LevelBuilder blockMatrix = new LevelBuilder();
 		
 		actors.add(new Enemy(400,750,collisionHandler));
 		
@@ -117,7 +120,7 @@ public class Level {
 
 	}
 
-//	//Add a new object to lists and pass it necessary objects from level
+//	//Add a new object to lists and pass it necessary objects from world
 //	private void incorporateNewObject(Object obj){
 //
 //		if(obj instanceof Actor){
@@ -196,6 +199,7 @@ public class Level {
 		tileSize = map.getTileHeight();
 		tolX = tol*tileSize;
 		tolY = tol*tileSize;
+		
 		mapWidthInTiles = map.getWidth();
 		mapHeightInTiles = map.getHeight();
 	}
