@@ -37,7 +37,7 @@ public class Player extends Actor {
 
 		engine = new PlayerActionEngine(listenerAggregator,status);
 		
-		this.graphics = new ActorGraphics("data/dwarf3.png", status);
+		this.graphics = new ActorGraphics("data/dwarf.png", status);
 	}
 
 	

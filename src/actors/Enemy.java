@@ -32,7 +32,7 @@ public class Enemy extends Actor implements Broadcaster{
 		status = new Status(rect);
 		status.setCollisionHandler(collisionHandler);
 		
-		graphics = new ActorGraphics("data/dwarf3.png", status);
+		graphics = new ActorGraphics("data/dwarf.png", status);
 
 		engine = new EnemyActionEngine(listenerAggregator, status);
 
