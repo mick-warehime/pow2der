@@ -24,7 +24,7 @@ public class Player extends Actor {
 	public Player(int x, int y, CollisionHandler collisionHandler) throws SlickException {
 
  		
-//		sprite = new Image("data/head.png");		
+//		image = new Image("data/head.png");		
 		
 		keyboard = new KeyboardInputListener();
 		listenerAggregator = new InputListenerAggregator();

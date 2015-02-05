@@ -40,9 +40,9 @@ public class TileSet {
 	/** The image containing the tiles */
 	public SpriteSheet tiles;
 
-	/** The number of tiles across the sprite sheet */
+	/** The number of tiles across the image sheet */
 	public int tilesAcross;
-	/** The number of tiles down the sprite sheet */
+	/** The number of tiles down the image sheet */
 	public int tilesDown;
 
 	/** The properties for each tile */
@@ -187,7 +187,7 @@ public class TileSet {
 	}
 
 	/**
-	 * Set the image to use for this sprite sheet image to use for this tileset
+	 * Set the image to use for this image sheet image to use for this tileset
 	 * 
 	 * @param image
 	 *            The image to use for this tileset

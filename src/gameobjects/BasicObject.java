@@ -20,16 +20,16 @@ public class BasicObject {
 	
 	protected BasicGraphics graphics;	
 	protected Shape shape;	 
-	protected Image sprite;
+	protected Image image;
 	protected boolean canCollide = true;
 	
 	private static final int PROXIMITY = 10;
 
-	public BasicObject(Image sprite, int xPos, int yPos) throws SlickException{
+	public BasicObject(Image image, int xPos, int yPos) throws SlickException{
 
 		
-		int h = sprite.getHeight();
-		int w = sprite.getWidth();
+		int h = image.getHeight();
+		int w = image.getWidth();
 		
 //		items are a bit smaller than their bounding boxes
 		
@@ -39,9 +39,9 @@ public class BasicObject {
 		// used for collision detection		
 		shape = new Rectangle(xPos+wCrop,yPos+hCrop,w-2*wCrop,h-2*hCrop);
 		
-		this.sprite = sprite;
+		this.image = image;
 		
-		this.graphics = new BasicGraphics(sprite,xPos,yPos);
+		this.graphics = new BasicGraphics(image,xPos,yPos);
 		
 	}
 	
@@ -70,6 +70,9 @@ public class BasicObject {
 	}
 
 
+	public Image getImage(){
+		return image;
+	}
 	
 
 }

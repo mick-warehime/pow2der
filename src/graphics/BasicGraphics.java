@@ -15,7 +15,7 @@ public class BasicGraphics {
 	private int xPos;
 	private int yPos;
 	
-	//	public ItemGraphics(Image sprite, ItemLocation location) throws SlickException{
+	//	public ItemGraphics(Image image, ItemLocation location) throws SlickException{
 	public BasicGraphics(Image sprite, int xPos, int yPos) throws SlickException{	
 		this.sprite = sprite;
 		this.xPos = xPos;

@@ -7,6 +7,7 @@ import items.Item;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import commands.NullCommand;
 
@@ -14,7 +15,8 @@ public class InventoryMenu extends Menu{
 
 
 	private int menuWidthInItems = 5;
-	private int menuHeightInItems = 8;
+	private int menuHeightInItems = 5;
+	private int imageSizeInPixels = 48;
 
 	public InventoryMenu( int menuRenderX, int menuRenderY) {
 		super(Menu.MENU_INVENTORY, menuRenderX, menuRenderY);
@@ -58,13 +60,13 @@ public class InventoryMenu extends Menu{
 
 	}
 
-	public void setInventory(Inventory playerInventory) {
+	public void setInventory(Inventory playerInventory) throws SlickException {
 
 		defineSelectionsFromInventory(playerInventory);
 
 	}
 
-	private void defineSelectionsFromInventory(Inventory playerInventory) {
+	private void defineSelectionsFromInventory(Inventory playerInventory) throws SlickException {
 		selections = new ArrayList<MenuSelection>();
 
 		for (Item item : playerInventory.getItems()){
@@ -97,7 +99,7 @@ public class InventoryMenu extends Menu{
 	}
 
 
-	private void addItemSelection(Item item) {
+	private void addItemSelection(Item item) throws SlickException {
 
 		int length = selections.size();
 
@@ -106,21 +108,20 @@ public class InventoryMenu extends Menu{
 		assert (menuY<menuHeightInItems) : "Player's inventory has too many elements for the menu!";
 
 
-		int xPos = menuRenderX + 16*menuX;
-		int yPos = menuRenderY + 16*menuY;
+		int xPos = menuRenderX + imageSizeInPixels*menuX;
+		int yPos = menuRenderY + imageSizeInPixels*menuY;
 
 		MenuSelection selection;
 		if (item != null){
 			selection = new MenuSelection(
 					new NullCommand(), 
-					new TextSelectionGraphics(""+length,xPos,yPos));
+					new InventorySelectionGraphics(item.getImage(),xPos,yPos));
 			
-//			System.out.println("Added item to menu: " + item + "at " + xPos + "," + yPos);
 		}else
 		{
 			selection = new MenuSelection(
 					new NullCommand(), 
-					new TextSelectionGraphics(""+length,xPos,yPos));
+					new InventorySelectionGraphics(null,xPos,yPos));
 		}
 		
 		selections.add(selection);

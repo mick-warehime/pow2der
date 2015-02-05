@@ -1,6 +1,8 @@
 package actionEngines;
 
 
+import org.newdawn.slick.SlickException;
+
 import menus.Menu;
 import menus.MenuHandlerData;
 import menus.InventoryMenu;
@@ -28,7 +30,7 @@ public class MenuActionEngine extends ActionEngine{
 		}
 	}
 
-	public void openMenu(Menu menu){
+	public void openMenu(Menu menu) throws SlickException{
 		if (!isBusy()){
 			menuHandlerData.setTopActiveMenu(menu);
 			if (menu.getType() == Menu.MENU_INVENTORY){
@@ -93,7 +95,7 @@ public class MenuActionEngine extends ActionEngine{
 		}
 	}
 
-	public void toggleMenu(Menu menu) {
+	public void toggleMenu(Menu menu) throws SlickException {
 		if (!isBusy()){
 			if (menuHandlerData.getTopActiveMenu() == menu){
 				menuHandlerData.deactivateTopActiveMenu();

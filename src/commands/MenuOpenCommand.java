@@ -2,6 +2,7 @@ package commands;
 
 import menus.Menu;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.BasicCommand;
 
 import actionEngines.ActionEngine;
@@ -18,7 +19,12 @@ public class MenuOpenCommand extends BasicCommand implements GenericCommand{
 
 	@Override
 	public void execute(ActionEngine actionEngine) {
-		((MenuActionEngine) actionEngine).openMenu(menu);
+		try {
+			((MenuActionEngine) actionEngine).openMenu(menu);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}

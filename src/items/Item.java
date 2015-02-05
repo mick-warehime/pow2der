@@ -18,7 +18,7 @@ import actors.Status;
 public class Item extends BasicObject implements Interactive{
 
 	protected String name;
-	protected Image sprite;
+	protected Image image;
 	protected Integer value;
 	protected String type;
 	protected boolean stackable;
@@ -26,9 +26,9 @@ public class Item extends BasicObject implements Interactive{
 	protected ArrayList<String> properties;
 	protected Boolean onGround;
 
-	public Item(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException{		
+	public Item(Map<String, String> itm, Image image, int xPos, int yPos) throws SlickException{		
 
-		super(sprite,xPos,yPos);
+		super(image,xPos,yPos);
 
 		this.type = itm.get("itemType");		
 		
@@ -60,9 +60,7 @@ public class Item extends BasicObject implements Interactive{
 		return value;
 	}
 
-	public Image getSprite(){
-		return sprite;
-	}
+	
 
 	public void addProperty(String prop){
 		properties.add(prop);
