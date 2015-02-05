@@ -21,17 +21,7 @@ public class InventoryMenu extends Menu{
 
 	}
 
-	@Override
-	public void render(Graphics graphics) {
-		for (MenuSelection selection : selections){
-			if (selection == selections.get(activeSelection)){
-				graphics.setColor(Color.red);
-			}else{ graphics.setColor(Color.white);}
-
-			selection.render(graphics);
-		}
-
-	}
+	
 
 	@Override
 	public void incrementActiveSelection(char xOrY, int direction) {

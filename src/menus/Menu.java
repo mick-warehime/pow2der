@@ -44,8 +44,13 @@ public abstract class Menu {
 	}
 	
 
-	public abstract void render(Graphics graphics);
-	public abstract void incrementActiveSelection(char xOrY, int direction);
+	public void render(Graphics graphics){
+		for (MenuSelection selection : selections){
+			boolean isActive = (selection == selections.get(activeSelection));
+			selection.render(graphics,isActive);
+		}
+	}
+	
 	
 
 	public void activateSelection() {
@@ -65,6 +70,8 @@ public abstract class Menu {
 		// TODO Auto-generated method stub
 		return selectionActivated;
 	}
+	
+	public abstract void incrementActiveSelection(char xOrY, int direction);
 
 
 	

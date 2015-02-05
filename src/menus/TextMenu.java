@@ -1,6 +1,5 @@
 package menus;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public abstract class TextMenu extends Menu {
@@ -18,18 +17,7 @@ public abstract class TextMenu extends Menu {
 
 	protected abstract void defineMenuSelections();
 	
-	@Override
-	public void render(Graphics graphics) {
-		
-		for (MenuSelection selection : selections){
-			if (selection == selections.get(activeSelection)){
-				graphics.setColor(Color.red);
-			}else{ graphics.setColor(Color.white);}
-			
-			selection.render(graphics);
-		}
 	
-	}
 
 	@Override
 	public void incrementActiveSelection(char xOrY, int direction) {
