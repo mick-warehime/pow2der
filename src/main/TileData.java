@@ -5,7 +5,6 @@ package main;
 import gameobjects.DeadlyObject;
 import gameobjects.Door;
 import gameobjects.GameObject;
-import gameobjects.Teleporter;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -57,7 +56,6 @@ public class TileData {
 		parserDict.put("deadly", DeadlyObject.class);
 		parserDict.put("door", Door.class);
 	
-		parserDict.put("teleporter", Teleporter.class);
 		parserDict.put("enemy", Enemy.class);
 
 	}
