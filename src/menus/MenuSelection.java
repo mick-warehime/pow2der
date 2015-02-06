@@ -14,6 +14,7 @@ public class MenuSelection {
 	private Command command;
 	private MenuSelectionGraphics menuSelectionGraphics;
 	
+	
 	public MenuSelection(Command command,
 			MenuSelectionGraphics menuSelectionGraphics ){
 		
@@ -26,8 +27,12 @@ public class MenuSelection {
 		return this.command;
 	}
 	
-	public void render(Graphics graphics){
-		menuSelectionGraphics.render(graphics);
+	public void render(Graphics graphics, boolean isActiveSelection){
+		menuSelectionGraphics.render(graphics, isActiveSelection);
 	}
+	
+	
+	
+	
 	
 }

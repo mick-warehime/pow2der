@@ -7,36 +7,30 @@ import items.Item;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.command.Command;
 
+import commands.MenuOpenCommand;
 import commands.NullCommand;
 
 public class InventoryMenu extends Menu{
 
 
 	private int menuWidthInItems = 5;
-	private int menuHeightInItems = 8;
+	private int menuHeightInItems = 7;
+	private int imageSizeInPixels = 48;
 
 	public InventoryMenu( int menuRenderX, int menuRenderY) {
 		super(Menu.MENU_INVENTORY, menuRenderX, menuRenderY);
 
 	}
 
-	@Override
-	public void render(Graphics graphics) {
-		for (MenuSelection selection : selections){
-			if (selection == selections.get(activeSelection)){
-				graphics.setColor(Color.red);
-			}else{ graphics.setColor(Color.white);}
-
-			selection.render(graphics);
-		}
-
-	}
+	
 
 	@Override
 	public void incrementActiveSelection(char xOrY, int direction) {
-		int menuX = indexToMenuX(activeSelection);
-		int menuY = indexToMenuY(activeSelection);
+		int menuX = indexToMenuX(currentSelection);
+		int menuY = indexToMenuY(currentSelection);
 
 		if (xOrY == 'x'){
 			if (direction>0){
@@ -64,17 +58,17 @@ public class InventoryMenu extends Menu{
 		}
 
 
-		activeSelection = menuXYToIndex(menuX, menuY);
+		currentSelection = menuXYToIndex(menuX, menuY);
 
 	}
 
-	public void setInventory(Inventory playerInventory) {
+	public void setInventory(Inventory playerInventory) throws SlickException {
 
 		defineSelectionsFromInventory(playerInventory);
 
 	}
 
-	private void defineSelectionsFromInventory(Inventory playerInventory) {
+	private void defineSelectionsFromInventory(Inventory playerInventory) throws SlickException {
 		selections = new ArrayList<MenuSelection>();
 
 		for (Item item : playerInventory.getItems()){
@@ -107,7 +101,7 @@ public class InventoryMenu extends Menu{
 	}
 
 
-	private void addItemSelection(Item item) {
+	private void addItemSelection(Item item) throws SlickException {
 
 		int length = selections.size();
 
@@ -116,21 +110,23 @@ public class InventoryMenu extends Menu{
 		assert (menuY<menuHeightInItems) : "Player's inventory has too many elements for the menu!";
 
 
-		int xPos = menuRenderX + 16*menuX;
-		int yPos = menuRenderY + 16*menuY;
+		int xPos = menuRenderX + imageSizeInPixels*menuX;
+		int yPos = menuRenderY + imageSizeInPixels*menuY;
 
 		MenuSelection selection;
 		if (item != null){
-			selection = new MenuSelection(
-					new NullCommand(), 
-					new TextSelectionGraphics(""+length,xPos,yPos));
 			
-//			System.out.println("Added item to menu: " + item + "at " + xPos + "," + yPos);
+			
+			Command menuCmd = new MenuOpenCommand(new ItemMenu(menuRenderX - 100,menuRenderY));
+			
+			selection = new MenuSelection(	menuCmd, 
+					new InventorySelectionGraphics(item.getImage(),xPos,yPos));
+			
 		}else
 		{
 			selection = new MenuSelection(
 					new NullCommand(), 
-					new TextSelectionGraphics(""+length,xPos,yPos));
+					new InventorySelectionGraphics(null,xPos,yPos));
 		}
 		
 		selections.add(selection);

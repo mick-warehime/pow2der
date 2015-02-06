@@ -97,7 +97,7 @@ public class ItemBuilder {
 		// builds the ith item in the vector list
 		Map<String,String> itm = itemMaps.get(i);
 
-		// load sprite
+		// load image
 
 		Integer row = (int) Float.parseFloat(itm.get("spriteRow"));
 		Integer col = (int) Float.parseFloat(itm.get("spriteCol"));

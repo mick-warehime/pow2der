@@ -1,7 +1,6 @@
 package menus;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.command.Command;
 
 public abstract class TextMenu extends Menu {
 
@@ -18,34 +17,35 @@ public abstract class TextMenu extends Menu {
 
 	protected abstract void defineMenuSelections();
 	
-	@Override
-	public void render(Graphics graphics) {
-		
-		for (MenuSelection selection : selections){
-			if (selection == selections.get(activeSelection)){
-				graphics.setColor(Color.red);
-			}else{ graphics.setColor(Color.white);}
-			
-			selection.render(graphics);
-		}
 	
-	}
 
 	@Override
 	public void incrementActiveSelection(char xOrY, int direction) {
 		if (xOrY == 'y'){
 			if (direction>0){
-				this.activeSelection +=1;
+				this.currentSelection +=1;
 			}
 			else {
-				this.activeSelection -=1;
+				this.currentSelection -=1;
 			}
-			activeSelection = activeSelection % (selections.size());
-			if (activeSelection <0){ 
-				activeSelection = selections.size()+activeSelection;
+			currentSelection = currentSelection % (selections.size());
+			if (currentSelection <0){ 
+				currentSelection = selections.size()+currentSelection;
 			}
 		}
 	
+	}
+
+
+	protected void addMenuSelection(Command cmd, String string) {
+		
+		int yShift = selections.size()*this.textLineHeight;
+		MenuSelection selection = new MenuSelection( cmd,
+				new TextSelectionGraphics(string,this.menuRenderX,this.menuRenderY +yShift ));
+		
+		selections.add(selection);
+		return;
+		
 	}
 
 }

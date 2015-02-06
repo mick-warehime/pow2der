@@ -16,21 +16,12 @@ public class MainMenu extends TextMenu {
 	protected void defineMenuSelections(){
 		selections = new ArrayList<MenuSelection>();
 		
-		MenuSelection cnt = new MenuSelection(new MenuCloseAllCommand(),
-				new TextSelectionGraphics("Continue", this.menuRenderX,this.menuRenderY));
 		
+		addMenuSelection(new MenuCloseAllCommand(), "Continue");
 		OptionsMenu optionsMenu = new OptionsMenu(200,240);
-		
-		MenuSelection options = new MenuSelection( new MenuOpenCommand(optionsMenu),
-				new TextSelectionGraphics("Options", this.menuRenderX,this.menuRenderY + this.textLineHeight));
-		
-		MenuSelection quit = new MenuSelection( new MenuQuitCommand(), 
-				new TextSelectionGraphics("Quit", this.menuRenderX,this.menuRenderY + 2*this.textLineHeight));
-		
-		selections.add(cnt);
-		selections.add(options);
-		selections.add(quit);
-		
+		addMenuSelection(new MenuOpenCommand(optionsMenu), "Options");
+		addMenuSelection(new MenuQuitCommand(), "Quit");
+
 	}
 
 	

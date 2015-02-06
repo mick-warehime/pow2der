@@ -1,5 +1,6 @@
 package menus;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class TextSelectionGraphics implements MenuSelectionGraphics {
@@ -14,7 +15,12 @@ public class TextSelectionGraphics implements MenuSelectionGraphics {
 		this.yPos = yPos;
 	}
 	@Override
-	public void render(Graphics graphics) {
+	public void render(Graphics graphics, boolean isActiveSelection) {
+		if (isActiveSelection){	
+			graphics.setColor(Color.red);
+		}else{ 
+			graphics.setColor(Color.white);}
+		
 		graphics.drawString(text, xPos, yPos);
 
 	}
