@@ -54,13 +54,8 @@ public class LevelBuilder {
 					objectMatrix[row][col] = OBJECT_BLOCK;	
 
 				}else{
-					// items on diagonal
-					if(row==col){
-						objectMatrix[row][col] = OBJECT_ITEM;
-					}else{
-
 						objectMatrix[row][col] = 0;
-					}
+
 				}
 				// System.out.print(objectMatrix[row][col] + " ");
 			}
@@ -69,7 +64,7 @@ public class LevelBuilder {
 		// System.out.println();
 
 		// add something to run into in the middle of the map
-		objectMatrix[10][10] = OBJECT_BLOCK;
+		objectMatrix[12][10] = OBJECT_BLOCK;
 
 		this.objectMatrix = objectMatrix;
 	}

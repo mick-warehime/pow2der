@@ -3,13 +3,11 @@ package actors;
 
 import items.Inventory;
 import graphics.ActorGraphics;
-import main.CollisionHandler;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import world.Level;
+import world.CollisionHandler;
 import actionEngines.PlayerActionEngine;
 import commands.InputListenerAggregator;
 import commands.KeyboardInputListener;

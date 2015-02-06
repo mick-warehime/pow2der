@@ -16,7 +16,6 @@ import org.newdawn.slick.SpriteSheet;
 import org.xml.sax.SAXException;
 
 import actors.Player;
-import main.CollisionHandler;
 import menus.MenuHandler;
 import controls.GameControls;
 
@@ -29,7 +28,7 @@ public class World {
 	private SpriteSheet spriteSheet;	
 	private ItemBuilder itemBuilder;
 	private LevelBuilder levelBuilder;
-	private NewLevel nLevel;
+	private Level nLevel;
 	
 	public final static int TILE_HEIGHT = 16;
 	public final static int TILE_WIDTH = 16;
@@ -45,18 +44,11 @@ public class World {
 		this.levelBuilder = new LevelBuilder(TILE_WIDTH,TILE_HEIGHT);
 		
 		currentLevel = 0;		
-
-		nLevel = newLevel(40,30);
-		CollisionHandler newCollisionHandler = new CollisionHandler(nLevel);
 		
-		// from here down needs to be in new level
-		levels.add(new Level(10, itemBuilder));		
+		newLevel(40,30);
 		
-		// i dont like this initialization
-		CollisionHandler collisionHandler = levels.get(currentLevel).getCollisionHandler();
-
-		terri = new Player(100,200,newCollisionHandler);
-
+		
+//		itemBuilder.testItems();
 
 	}
 	
@@ -67,9 +59,8 @@ public class World {
 		levels.get(currentLevel).render(graphics,(int) terri.getX(),(int)terri.getY());
 		
 		// draw player
-		terri.render(graphics,levels.get(currentLevel).getMapX(),levels.get(currentLevel).getMapY());
+		terri.render(graphics,0,0);
 
-		nLevel.render(graphics, (int) terri.getX(),(int)terri.getY());
 	}
 
 
@@ -85,20 +76,25 @@ public class World {
 		
 	}
 	
-	public NewLevel newLevel(int m, int n) throws SlickException{
-		NewLevel nLevel = new NewLevel(new LevelBuilder(m,n),itemBuilder);
+	public void newLevel(int m, int n) throws SlickException{
 		
-		CollisionHandler newCollisionHandler = new CollisionHandler(nLevel); 
-		return nLevel;
+		Level newLevel = new Level(new LevelBuilder(m,n),itemBuilder);
+		 
+		levels.add(newLevel);		
+		
+		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
+		
+		terri = new Player(100,200,collisionHandler);
+
 	}
 	
-	public int getMapX(){
-		return levels.get(currentLevel).getMapX();
-	}
-	
-	public int getMapY(){
-		return levels.get(currentLevel).getMapX();
-	}
+//	public int getMapX(){
+//		return levels.get(currentLevel).getMapX();
+//	}
+//	
+//	public int getMapY(){
+//		return levels.get(currentLevel).getMapX();
+//	}
 	
 	public Player getPlayer(){
 		return terri;

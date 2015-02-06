@@ -5,13 +5,13 @@ import graphics.TileGraphics;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import main.CollisionHandler;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
+
+import world.CollisionHandler;
 
 public class GameObject {
 	

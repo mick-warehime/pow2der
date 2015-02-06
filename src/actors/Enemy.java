@@ -3,14 +3,13 @@ package actors;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import main.CollisionHandler;
-
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
+import world.CollisionHandler;
 import actionEngines.EnemyActionEngine;
 import commands.DieCommand;
 import commands.InputListenerAggregator;

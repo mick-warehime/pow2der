@@ -6,10 +6,9 @@ import items.Item;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import main.CollisionHandler;
-
 import org.newdawn.slick.geom.Rectangle;
 
+import world.CollisionHandler;
 import gameobjects.BasicObject;
 import gameobjects.GameObject;
 

@@ -2,10 +2,9 @@ package actors;
 
 import java.util.ArrayList;
 
-import main.CollisionHandler;
-
 import org.newdawn.slick.command.Command;
 
+import world.CollisionHandler;
 import commands.CommandProvider;
 
 public class Behavior implements CommandProvider{

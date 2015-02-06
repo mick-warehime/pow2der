@@ -1,19 +1,16 @@
 package graphics;
 
-import gameobjects.BasicObject;
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.tiled.TiledMap;
 
-import actors.Actor;
-import world.NewLevel;
+import org.newdawn.slick.geom.Shape;
+
+import world.Level;
 
 public class LevelGraphics{
 
@@ -21,7 +18,7 @@ public class LevelGraphics{
 	private SpriteSheet spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
 	private ArrayList<Shape> blocks;
 	
-	public LevelGraphics(NewLevel level) throws SlickException {
+	public LevelGraphics(Level level) throws SlickException {
 		
 		blocks = level.getBlocks();
 				
