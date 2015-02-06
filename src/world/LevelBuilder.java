@@ -68,7 +68,8 @@ public class LevelBuilder {
 
 		// System.out.println();
 
-
+		// add something to run into in the middle of the map
+		objectMatrix[10][10] = OBJECT_BLOCK;
 
 		this.objectMatrix = objectMatrix;
 	}
@@ -93,7 +94,7 @@ public class LevelBuilder {
 
 				// convert row/col position to x/y pixels
 				int x = row*tileWidth;
-				int y = row*tileHeight;
+				int y = col*tileHeight;
 
 				// store solid collideable walls
 				objectShapes.add(new Rectangle(x,y,tileWidth,tileHeight));
