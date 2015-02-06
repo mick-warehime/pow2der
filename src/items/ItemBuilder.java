@@ -74,7 +74,7 @@ public class ItemBuilder {
 		}
 		// or get an item by name
 		else{
-			for (int i = 0; i < itemMaps.size(); i++){
+			for (int i = 0; i < itemMaps.size()-1; i++){
 
 				// get the indices of all items with type t
 				if(typeOrName.equalsIgnoreCase(itemMaps.get(i).get("name"))){
@@ -92,7 +92,6 @@ public class ItemBuilder {
 	
 
 	private Item buildItem(int i, int xPos, int yPos) throws SlickException{
-
 
 		// builds the ith item in the vector list
 		Map<String,String> itm = itemMaps.get(i);
@@ -120,6 +119,7 @@ public class ItemBuilder {
 			Item item = new Book(itm, sprite, xPos, yPos);
 			return item;
 		}
+		System.out.println("no item built!" +"  item index: "+i+" x: "+xPos+" y: "+yPos);
 
 		return null;
 

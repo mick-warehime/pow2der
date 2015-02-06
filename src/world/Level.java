@@ -75,8 +75,6 @@ public class Level {
 				blocks.add(shape);				
 			}else if(type == LevelBuilder.OBJECT_ITEM){
 				basicObjects.add(itemBuilder.newItem(shape));
-				
-				
 			}
 		}
 		
@@ -136,8 +134,8 @@ public class Level {
 		levelGraphics.render(g,x,y);
 		
 		for (BasicObject obj : basicObjects){
-			
-//			obj.render(g, x, y);
+//			System.out.println(obj);	
+			obj.render(g, x, y);
 			
 		}
 
