@@ -55,7 +55,7 @@ public class Level {
 	public Level(int levelNumber, ItemBuilder itemBuilder) throws SlickException {
 
 		// load map
-		String fileName= "data/Level" + levelNumber + ".tmx";
+		String fileName= "data/Level10.tmx";
 		map = new TiledMap(fileName);
 		TileData tileData = new TileData(map);
 
@@ -70,7 +70,7 @@ public class Level {
 
 
 		// build a test door
-		basicObjects.add(itemBuilder.buildDoor(100,750));
+//		basicObjects.add(itemBuilder.buildDoor(100,750));
 		
 		// test item
 		basicObjects.add(itemBuilder.newItem(80,800));
@@ -78,7 +78,7 @@ public class Level {
 		basicObjects.add(itemBuilder.newItem(160,800));
 		// LevelBuilder blockMatrix = new LevelBuilder();
 		
-		actors.add(new Enemy(400,750,collisionHandler));
+		actors.add(new Enemy(400,200,collisionHandler));
 		
 		
 		//Add interactive Collideables

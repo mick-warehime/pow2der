@@ -1,90 +1,106 @@
 package graphics;
 
+import gameobjects.BasicObject;
+
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
+import actors.Actor;
+import world.NewLevel;
+
 public class LevelGraphics{
 
-	public ArrayList<Image> tileImages;
-	protected Shape rect;
-	protected int tileHeightInPixels;
-	protected int tileWidthInPixels;
-	protected int tileX;
-	protected int tileY;
-	protected int numberOfXTiles;
-	protected int numberOfYTiles;
 	
-	public LevelGraphics(Shape rect2,TiledMap map, int tileX, int tileY, int numberOfXTiles, int numberOfYTiles) throws SlickException {
-		this.rect = rect2;
+	private SpriteSheet spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
+	private ArrayList<Shape> blocks;
+	
+	public LevelGraphics(NewLevel level) throws SlickException {
 		
-		this.tileX = tileX;
-		this.tileY = tileY;
-		
-		this.numberOfXTiles = numberOfXTiles;
-		this.numberOfYTiles = numberOfYTiles;
-		
-		this.tileHeightInPixels = map.getTileHeight();
-		this.tileWidthInPixels = map.getTileWidth();
-		
-		
-		loadTileImages(map);
+		blocks = level.getBlocks();
+				
 	}
 	
-	private void loadTileImages(TiledMap map) throws SlickException{
-		
-		tileImages = new ArrayList<Image>();
-		
-		int etherIndex = map.getLayerIndex("ether");
-		
-		for(int i = 0; i < numberOfXTiles; i++){
-			for(int j = 0; j < numberOfYTiles; j++){
-				tileImages.add(map.getTileImage(i + tileX,j + tileY,etherIndex));
-			}
-		}
-		
-		
-	}
 	
-	public void render(int mapX, int mapY, float opacity) {
-
-		assert (tileImages.get(0)!=null) : "\n ERROR: NO SPRITES DEFINED. CHECK ETHER LAYER FOR MISSING SPRITES. " +" "+ tileX+" "+tileY+"\n";
-					
-		int count = 0;
-		for(int i = 0; i < numberOfXTiles; i++){
-			for(int j = 0; j < numberOfYTiles; j++){
-				Image im = tileImages.get(count);
-				im.setAlpha(opacity);
-				//		
-				im.draw(rect.getX() + i*tileWidthInPixels - mapX,
-									       rect.getY() + j*tileHeightInPixels - mapY);
-				count ++;			
-			}
+	
+	public void render(Graphics g, int terriX, int terriY) {
+		
+		for (Shape block : blocks){
+//			System.out.println(block.getX()+" "+block.getY());
+			spriteSheet.getSubImage(2,2).draw(block.getX(),block.getY());
 		}
 		
 	}
 	
-	public void renderTile(int topLeftX, int topLeftY, int mapX, int mapY, float opacity) {
-		
-		assert (tileImages.get(0)!=null) : "\n ERROR: NO SPRITES DEFINED. CHECK ETHER LAYER FOR MISSING SPRITES. " +" "+ tileX+" "+tileY+"\n";
-					
-		int count = 0;
-		for(int i = 0; i < numberOfXTiles; i++){
-			for(int j = 0; j < numberOfYTiles; j++){
-				//		
-				Image im = tileImages.get(count);
-				im.setAlpha(opacity);
-				im.draw(topLeftX + i*tileWidthInPixels -mapX,
-						topLeftY + j*tileHeightInPixels-mapY);
-				count ++;			
-			}
-		}
-	}
-
- 
+	
+//	public void render(Graphics g,int x, int y){		
+//
+//
+//		// min/max sets the submatrix of tiles to draw		
+//		int tXmin = (int) mapX/tileSize;
+//		int tYmin = (int) mapY/tileSize;
+//
+//		// dX/dY are the offsets from the submatrix to the actual screen position
+//		int dX = mapX - tXmin*tileSize;
+//		int dY = mapY - tYmin*tileSize;
+//
+//		// allows the player to get within tolX/tolY of the top/side
+//		if (mapX > (x - tolX) ){mapX = x-tolX;}
+//		if (mapX < (x+tolX-width)){mapX = x+tolX-width;}
+//		if (mapY > (y - tolY) ){mapY = y-tolY;}
+//		if (mapY < (y+tolY-height)){mapY = y+tolY-height;}
+//
+//		// see if we are close to the edge of a map inwhich case dont let mapx<0 or mapx>size of map in pixels
+//		mapCheck();
+//
+//
+//		// map.render(-mapX,-mapY);
+//		map.render(-dX,-dY,tXmin,tYmin,mapWidthInTiles,mapHeightInTiles+1,tileLayerId,false);
+//
+//		for (Actor nme: actors){
+//			nme.render(g, mapX,mapY);
+//		}
+//
+//		for (BasicObject obj: basicObjects){
+//			
+//			obj.render(g,mapX,mapY);
+//
+//		}
+//
+//	}
+//
+//	private void mapCheck(){
+//		if(mapX<0){
+//			mapX = 0;
+//			tolX = tileSize;			
+//		}else if(mapX>map.getWidth()*tileSize-width){
+//			mapX = map.getWidth()*tileSize-width;
+//			tolX = tileSize;
+//		}else{
+//			tolX = tol*tileSize;
+//		}
+//
+//
+//		if(mapY<0){
+//			mapY = 0;
+//			tolY = tileSize;			
+//		}
+//		else if(mapY>map.getHeight()*tileSize-height){
+//			mapY = map.getHeight()*tileSize-height;
+//			tolY = tileSize;
+//		}
+//		else{
+//			tolY = tol*tileSize;
+//		}
+//	}
+//
+//	
+// 
 
 }

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="60" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="metroidtiles" tilewidth="16" tileheight="16">
   <image source="../../terri/data/metroidtiles.png" width="1024" height="800"/>
  </tileset>
- <layer name="tiles" width="40" height="60">
+ <layer name="tiles" width="40" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3PwQnAIAAEQfvvzo5SQsAFjWEG7r83BgAAAACwap4OeKGv0dfoa+YFW/m0g75GX6Ov0dfoa/Q1+pq/9u2ir7ml78t7AA3xftCAJQAA
+   H4sIAAAAAAAAA+3PyQkAMAzEQPffnTtKCYEIfAQN7F8bMVt2B1zYx9jH2Mfkgr18qmAfYx9jH2MfYx9jH2Mf82tfFfuYLX2TdwAqk9o+wBIAAA==
   </data>
  </layer>
- <layer name="ether" width="40" height="60">
+ <layer name="ether" width="40" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3OMREAIAwEsBpAGtKQhickdOndMyQKUgUAAAAAAAAAALNWOtDY6UDjpAONmw585AEr1/MLgCUAAA==
+   H4sIAAAAAAAAA+3OQQ0AIAwEsBlAGtKQhick7HkjaRW0CgAAAPjRSgcaOx1onHSgcdOBQR4MtVflwBIAAA==
   </data>
  </layer>
  <objectgroup name="objects">
-  <object type="door" x="208" y="880" width="16" height="64"/>
-  <object name="St" type="progressPoint" x="96" y="800" width="16" height="16">
+  <object type="door" x="208" y="400" width="16" height="64"/>
+  <object name="St" type="progressPoint" x="96" y="320" width="16" height="16">
    <properties>
     <property name="index" value="0"/>
     <property name="x" value="6"/>
-    <property name="y" value="50"/>
+    <property name="y" value="25"/>
    </properties>
   </object>
  </objectgroup>

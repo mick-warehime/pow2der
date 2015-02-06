@@ -46,12 +46,15 @@ public class NewLevel {
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Shape> blocks;
 
+	private LevelGraphics levelGraphics;
 
 	public NewLevel(LevelBuilder levelBuilder, ItemBuilder itemBuilder) throws SlickException {
 		
 		
+		
 		addObjects(levelBuilder, itemBuilder);
 
+		levelGraphics = new LevelGraphics(this);
 
 		// COLLISION HANDLER SHOULD TAKE LEVEL AS AN ARGUMENT AND SET THE VALUES FROM THERE!!!!
 			
@@ -131,7 +134,7 @@ public class NewLevel {
 	public void render(Graphics g,int x, int y){		
 
 
-//		LevelGraphics.render(g,x,y);
+		levelGraphics.render(g,x,y);
 
 	}
 

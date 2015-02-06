@@ -29,6 +29,7 @@ public class World {
 	private SpriteSheet spriteSheet;	
 	private ItemBuilder itemBuilder;
 	private LevelBuilder levelBuilder;
+	private NewLevel nLevel;
 	
 	public final static int TILE_HEIGHT = 16;
 	public final static int TILE_WIDTH = 16;
@@ -37,14 +38,16 @@ public class World {
 	
 		
 		// construct item builders
-		spriteSheet = new SpriteSheet("data/metroidtiles.png",TILE_WIDTH,TILE_HEIGHT);				
+						
 		ItemParser parser = new ItemParser("items/items.xml");
+		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 		this.levelBuilder = new LevelBuilder(TILE_WIDTH,TILE_HEIGHT);
 		
 		currentLevel = 0;		
 
-//		NewLevel nLevel = newLevel(20,30);
+		nLevel = newLevel(40,30);
+		CollisionHandler newCollisionHandler = new CollisionHandler(nLevel);
 		
 		// from here down needs to be in new level
 		levels.add(new Level(10, itemBuilder));		
@@ -52,7 +55,7 @@ public class World {
 		// i dont like this initialization
 		CollisionHandler collisionHandler = levels.get(currentLevel).getCollisionHandler();
 
-		terri = new Player(100,800,collisionHandler);
+		terri = new Player(100,200,newCollisionHandler);
 
 
 	}
@@ -65,7 +68,8 @@ public class World {
 		
 		// draw player
 		terri.render(graphics,levels.get(currentLevel).getMapX(),levels.get(currentLevel).getMapY());
-		
+
+		nLevel.render(graphics, (int) terri.getX(),(int)terri.getY());
 	}
 
 
@@ -73,6 +77,11 @@ public class World {
 		terri.update();
 		
 		levels.get(currentLevel).update();
+		
+		if (terri.isDying()){
+			System.out.println(terri.isDying());
+		}
+		
 		
 	}
 	

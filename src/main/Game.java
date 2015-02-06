@@ -92,12 +92,14 @@ public class Game extends BasicGame {
 		if (gameState == LEVEL_STATE){
 
 			
-			world.update();
+			
 			
 			int mouseX = gc.getInput().getMouseX()+world.getMapX();
 			int mouseY = gc.getInput().getMouseY()+world.getMapY();
 			
 			gameControls.setMousePosition(mouseX,mouseY);
+			
+			world.update();
 
 		}
 
