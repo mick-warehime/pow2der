@@ -1,4 +1,4 @@
-package main;
+package world;
 
 import items.Item;
 
@@ -8,7 +8,6 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-import world.NewLevel;
 import actors.Actor;
 import actors.Player;
 import commands.CommandProvider;
@@ -36,7 +35,7 @@ public class CollisionHandler implements CommandProvider {
 	}
 
 	
-	public CollisionHandler(NewLevel level){
+	public CollisionHandler(Level level){
 		this.blocks = level.getBlocks();
 		this.basicObjects = level.getBasicObjects();
 		this.actors = level.getActors();

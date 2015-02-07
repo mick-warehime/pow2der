@@ -1,35 +1,22 @@
 package main;
 
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.gui.TextField;
+//import org.newdawn.slick.gui.TextField;
 import org.xml.sax.SAXException;
 
-import menus.MainMenu;
-import menus.Menu;
 import menus.MenuHandler;
-import net.java.games.input.Controller;
-import net.java.games.input.ControllerEnvironment;
 
-import org.newdawn.slick.*;
-import org.newdawn.slick.gui.TextField;
 
-import world.Level;
 import world.World;
 import controls.GameControls;
-import controls.Joystick;
-import controls.WiimoteJoysticks;
-import actors.Player;
-import items.ItemBuilder;
-import items.ItemParser;
+//import controls.WiimoteJoysticks;
 
 public class Game extends BasicGame {
 
@@ -37,24 +24,20 @@ public class Game extends BasicGame {
 	static int LEVEL_STATE = 1;
 	static int PAUSE_STATE = 2;
 
-	static int width = 640;
-	static int height = 480;
+	public final static int WIDTH = 640;
+	public final static int HEIGHT = 480;
+	
 	static boolean fullscreen = false;
 	static boolean showFPS = true;
 	static String title = "Dvir is the woooorst.";
 	static int fpslimit = 59;
 
-//	private Player terri;
-//	private Level level;
-//	private int currentLevel = 0;
-
 	private int gameState = LOAD_STATE;
-	private TextField inputText;
-	private GameControls controls;
-//	private ItemBuilder itemBuilder;
+	
+
 	private GameControls gameControls;
 	private MenuHandler menuHandler;
-	private WiimoteJoysticks jsticks;
+//	private WiimoteJoysticks jsticks;
 
 	private World world;
 	
@@ -94,9 +77,11 @@ public class Game extends BasicGame {
 			
 			
 			
-			int mouseX = gc.getInput().getMouseX()+world.getMapX();
-			int mouseY = gc.getInput().getMouseY()+world.getMapY();
+//			int mouseX = gc.getInput().getMouseX()+world.getMapX();
+//			int mouseY = gc.getInput().getMouseY()+world.getMapY();
 			
+			int mouseX = gc.getInput().getMouseX();
+			int mouseY = gc.getInput().getMouseY();
 			gameControls.setMousePosition(mouseX,mouseY);
 			
 			world.update();
@@ -119,7 +104,7 @@ public class Game extends BasicGame {
 
 		gameControls = new GameControls(gc);
 
-		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
+//		inputText = new TextField(gc, gc.getDefaultFont(), height/2, height/2, 100, 20);
 
 		this.menuHandler = new MenuHandler();
 		gameControls.addMenuInputProviderListener(menuHandler.getKeyboardListener());
@@ -157,7 +142,7 @@ public class Game extends BasicGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new Game());
-		app.setDisplayMode(width, height, fullscreen);
+		app.setDisplayMode(WIDTH,HEIGHT, fullscreen);
 		app.setSmoothDeltas(true);
 		app.setTargetFrameRate(fpslimit);
 		app.setShowFPS(showFPS);

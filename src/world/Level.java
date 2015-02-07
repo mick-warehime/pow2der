@@ -5,11 +5,11 @@ import items.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import main.CollisionHandler;
-import main.TileData;
+import java.util.List;
+import java.util.Map;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
 import actors.Actor;
@@ -18,6 +18,7 @@ import gameobjects.BasicObject;
 import gameobjects.GameObject;
 import gameobjects.Broadcaster;
 import gameobjects.Interactive;
+import graphics.LevelGraphics;
 
 
 // TODO
@@ -26,73 +27,102 @@ import gameobjects.Interactive;
 public class Level {
 
 
-	private static int tileSize; // size of a single tile in tilemap
-	private int width = 640;
-	private int height = 480;
-	private int mapX = 0;
-	private int mapY = 0;
-	private int tol = 18; // number of tiles away from edge
-	private int tolX;
-	private int tolY;
-	
-	private int mapWidthInTiles;
-	private int mapHeightInTiles;
-	private TiledMap map;
 
-	private int tileLayerId;
-	private CollisionHandler collisionHandler;
-
-	//	private TileData tileData;
-	private ArrayList<Actor> actors = new ArrayList<Actor>();
-	private ArrayList<Broadcaster> collideables = new ArrayList<Broadcaster>();
-	private int[] mousePos;
-	private ItemBuilder itemBuilder;
-	private LevelBuilder levelBuilder;
-	private ArrayList<Item> items = new ArrayList<Item>();
-	private ArrayList<BasicObject> basicObjects = new ArrayList<BasicObject>();
-
-
-	public Level(int levelNumber, ItemBuilder itemBuilder) throws SlickException {
-
-		// load map
-		String fileName= "data/Level10.tmx";
-		map = new TiledMap(fileName);
-		TileData tileData = new TileData(map);
-
-		// use in rendering
-		initializeMapProperties();
-
-		//Creates the collisionHandler with just game blocks
-		collisionHandler = new CollisionHandler(tileData.getBlocks());
-
-		
-		this.itemBuilder = itemBuilder;
-
-
-		// build a test door
-//		basicObjects.add(itemBuilder.buildDoor(100,750));
-		
-		// test item
-		basicObjects.add(itemBuilder.newItem(80,800));
-		basicObjects.add(itemBuilder.newItem(120,800));
-		basicObjects.add(itemBuilder.newItem(160,800));
-		// LevelBuilder blockMatrix = new LevelBuilder();
-		
-		actors.add(new Enemy(400,200,collisionHandler));
-		
-		
-		//Add interactive Collideables
-		for (Actor actor:actors){
-			if(actor instanceof Broadcaster){
-				collideables.add((Broadcaster) actor);
-			}
-		}
 
 	
-		// Give the objects to the collisionHandler
-		collisionHandler.receiveObjects(actors, collideables, basicObjects);		
+	private int startX;
+	private int startY;
+	
+	private ArrayList<Actor> actors;
+	private ArrayList<Broadcaster> broadcasters;
+	private ArrayList<BasicObject> basicObjects;
+	private ArrayList<Shape> blocks;
+
+	private LevelGraphics levelGraphics;
+	private int levelHeight;
+	private int levelWidth;
+
+	private int renderOffsetX = 0;
+	private int renderOffsetY = 0;
+	
+	private int bufferDist = 15; // number of tiles away from edge
+	private int bufferDistX; // number of tiles away from edge
+	private int bufferDistY; // number of tiles away from edge
+	
+	private int tileSize;
+	private int screenWidth;
+	private int screenHeight;
+	
+	public Level(ItemBuilder itemBuilder, int levelWidth, int levelHeight) throws SlickException {
+		
+		this.screenWidth = main.Game.WIDTH;
+		this.screenHeight = main.Game.HEIGHT;
+		
+		this.levelWidth = levelWidth;
+		this.levelHeight = levelHeight;
+		
+		this.tileSize = World.TILE_HEIGHT;
+		
+		addObjects(new LevelBuilder(levelWidth,levelHeight), itemBuilder);
+
+		levelGraphics = new LevelGraphics(this);
+
+		// COLLISION HANDLER SHOULD TAKE LEVEL AS AN ARGUMENT AND SET THE VALUES FROM THERE!!!!
+			
 		
 	};
+
+
+	private void addObjects(LevelBuilder levelBuilder, ItemBuilder itemBuilder) throws SlickException {
+		List<Integer> objectTypes = levelBuilder.getObjectTypes();
+		List<Shape> objectShapes = levelBuilder.getObjectShapes();
+		
+		this.actors = new ArrayList<Actor>(); 
+		this.broadcasters = new ArrayList<Broadcaster>(); 
+		this.basicObjects = new ArrayList<BasicObject>();
+		this.blocks = new ArrayList<Shape>();
+		
+		for(int i=0; i<objectTypes.size(); i++){
+			Integer type = objectTypes.get(i);
+			Shape shape = objectShapes.get(i);
+			if(type == LevelBuilder.OBJECT_BLOCK){
+				blocks.add(shape);				
+			}else if(type == LevelBuilder.OBJECT_ITEM){
+				basicObjects.add(itemBuilder.newItem(shape));
+			}else if(type == LevelBuilder.START_PT){
+				startX = (int) shape.getX();
+				startY = (int) shape.getY();
+			}
+			
+		}
+		
+//		//Add broadcasters
+//		for (Actor actor:actors){
+//			if(actor instanceof Broadcaster){
+//				broadcaster.add((Broadcaster) actor);
+//			}
+//		}
+		
+	}
+	
+	public ArrayList<Shape> getBlocks(){
+		return blocks;
+	}
+	public ArrayList<Actor> getActors(){
+		return actors;
+	}
+	public ArrayList<Broadcaster> getBroadcasters(){
+		return broadcasters;	
+	}
+	public ArrayList<BasicObject> getBasicObjects(){
+		return basicObjects;
+	}
+	public int getStartX(){
+		return startX;
+	}
+	public int getStartY(){
+		return startY;
+	}
 
 
 	private void removeFromList(Object obj, ArrayList<?> list){
@@ -111,108 +141,104 @@ public class Level {
 			if (nme.isDying()) {
 				// Remove the current element from the iterator and the list.
 				iterator.remove();
-				removeFromList(nme,collideables);
+				removeFromList(nme,broadcasters);
 			}
 		}
 
-
-
-
 	}
 
-//	//Add a new object to lists and pass it necessary objects from world
-//	private void incorporateNewObject(Object obj){
-//
-//		if(obj instanceof Actor){
-//			actors.add((Actor)obj);
-//			((Actor) obj).incorporateCollisionHandler(collisionHandler);
-//		}
-//		if(obj instanceof Broadcaster){
-//			collideables.add((Broadcaster)obj);
-//		}
-//
-//	}
-
-	public void render(Graphics g,int x, int y){		
 
 
-		// min/max sets the submatrix of tiles to draw		
-		int tXmin = (int) mapX/tileSize;
-		int tYmin = (int) mapY/tileSize;
+	public void render(Graphics g,int playerX, int playerY){		
+		setLevelCoordinates(playerX,playerY);
 
-		// dX/dY are the offsets from the submatrix to the actual screen position
-		int dX = mapX - tXmin*tileSize;
-		int dY = mapY - tYmin*tileSize;
-
-		// allows the player to get within tolX/tolY of the top/side
-		if (mapX > (x - tolX) ){mapX = x-tolX;}
-		if (mapX < (x+tolX-width)){mapX = x+tolX-width;}
-		if (mapY > (y - tolY) ){mapY = y-tolY;}
-		if (mapY < (y+tolY-height)){mapY = y+tolY-height;}
-
-		// see if we are close to the edge of a map inwhich case dont let mapx<0 or mapx>size of map in pixels
-		mapCheck();
-
-
-		// map.render(-mapX,-mapY);
-		map.render(-dX,-dY,tXmin,tYmin,mapWidthInTiles,mapHeightInTiles+1,tileLayerId,false);
-
-		for (Actor nme: actors){
-			nme.render(g, mapX,mapY);
-		}
-
-		for (BasicObject obj: basicObjects){
-			
-			obj.render(g,mapX,mapY);
-
-		}
-
-	}
-
-	private void mapCheck(){
-		if(mapX<0){
-			mapX = 0;
-			tolX = tileSize;			
-		}else if(mapX>map.getWidth()*tileSize-width){
-			mapX = map.getWidth()*tileSize-width;
-			tolX = tileSize;
-		}else{
-			tolX = tol*tileSize;
-		}
-
-
-		if(mapY<0){
-			mapY = 0;
-			tolY = tileSize;			
-		}
-		else if(mapY>map.getHeight()*tileSize-height){
-			mapY = map.getHeight()*tileSize-height;
-			tolY = tileSize;
-		}
-		else{
-			tolY = tol*tileSize;
-		}
-	}
-
-	private void initializeMapProperties(){
-		// used for drawing (allows the dude to be outside the center of the screen)
-		tileSize = map.getTileHeight();
-		tolX = tol*tileSize;
-		tolY = tol*tileSize;
+		levelGraphics.render(g,renderOffsetX,renderOffsetY);
 		
-		mapWidthInTiles = map.getWidth();
-		mapHeightInTiles = map.getHeight();
-	}
-
-	public int getMapX(){return mapX;}
-	public int getMapY(){return mapY;}
-
-
-	public CollisionHandler getCollisionHandler(){
-		return collisionHandler;
+		for (BasicObject obj : basicObjects){
+//			System.out.println(obj);	
+			obj.render(g, renderOffsetX,renderOffsetY);
+			
+		}
 	}
 
 
 
+		private void setLevelCoordinates(int playerX, int playerY){
+			
+	
+			// allows the player to get within bufferDistX/bufferDistY of the top/side
+//			if (renderOffsetX > (playerX - bufferDistX) ){renderOffsetX = playerX-bufferDistX;}
+//			if (renderOffsetX < (playerX+bufferDistX-screenWidth)){renderOffsetX = playerX+bufferDistX-screenWidth;}
+//			if (renderOffsetY > (playerY - bufferDistY) ){renderOffsetY = playerY-bufferDistY;}
+//			if (renderOffsetY < (playerY+bufferDistY-screenHeight)){renderOffsetY = playerY+bufferDistY-screenHeight;}
+//			
+			renderOffsetX = boundCoordinate(renderOffsetX,playerX-bufferDistX,playerX+bufferDistX-screenWidth);
+			renderOffsetY = boundCoordinate(renderOffsetY,playerY-bufferDistY,playerY+bufferDistY-screenHeight);
+
+			if(renderOffsetX<0){
+				renderOffsetX = 0;
+				bufferDistX = 0;			
+			}else if(renderOffsetX>(levelWidth*tileSize-screenWidth)){
+				renderOffsetX = levelWidth*tileSize-screenWidth;
+				bufferDistX = 0;
+			}else{
+				bufferDistX = bufferDist*tileSize;
+			}
+	
+	
+			if(renderOffsetY<0){
+				renderOffsetY = 0;
+				bufferDistY = 0;			
+			}
+			else if(renderOffsetY>(levelHeight*tileSize-screenHeight)){
+				renderOffsetY = levelHeight*tileSize-screenHeight;
+				bufferDistY = 0;
+			}
+			else{
+				bufferDistY = bufferDist*tileSize;
+			}
+		}
+
+		
+		public int boundCoordinate(int coordinate, int max, int min){
+			if (coordinate<min){return min;}
+			if (coordinate>max){return max;}
+			return coordinate;
+			
+		}
+
+		public int getRenderOffsetX(){
+			return renderOffsetX;
+		}
+		public int getRenderOffsetY(){
+			return renderOffsetY;
+		}
 
 }
+		
+	//
+//		private void initializeMapProperties(){
+//			// used for drawing (allows the dude to be outside the center of the screen)
+//			tileSize = map.getTileHeight();
+//			bufferDistX = tol*tileSize;
+//			bufferDistY = tol*tileSize;
+//			
+//			mapWidthInTiles = levelWidth;
+//			mapHeightInTiles = levelHeight;
+//		}
+	//
+//		public int getrenderOffsetX(){return renderOffsetX;}
+//		public int getrenderOffsetY(){return renderOffsetY;}
+	//
+	//
+//		public CollisionHandler getCollisionHandler(){
+//			return collisionHandler;
+//		}
+	//
+//
+//		evel.draw(graphics,(int) terri.getX(),(int)terri.getY());
+//		terri.render(graphics, level.getrenderOffsetX(),level.getrenderOffsetY());}
+
+	
+
+

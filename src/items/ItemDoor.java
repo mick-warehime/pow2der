@@ -2,12 +2,12 @@ package items;
 
 import gameobjects.BasicObject;
 import gameobjects.Interactive;
-import main.CollisionHandler;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import world.CollisionHandler;
 import actors.Status;
 
 public class ItemDoor extends BasicObject implements Interactive{
