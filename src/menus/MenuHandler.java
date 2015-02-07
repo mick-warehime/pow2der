@@ -14,6 +14,11 @@ import commands.CommandProvider;
 import commands.InputListenerAggregator;
 import commands.KeyboardInputListener;
 
+
+/* Applies player input commands to menus, stores them, and plots them.
+ * 
+ * 
+ */
 public class MenuHandler {
 
 
@@ -51,7 +56,6 @@ public class MenuHandler {
 	public void update() {
 		actionEngine.update();	
 		
-//		System.out.println(menuHandlerData.getActiveMenu());
 	}
 
 	public void renderOpenMenus(Graphics graphics){
