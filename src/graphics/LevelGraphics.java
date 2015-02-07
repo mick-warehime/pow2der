@@ -26,11 +26,11 @@ public class LevelGraphics{
 	
 	
 	
-	public void render(Graphics g, int terriX, int terriY) {
+	public void render(Graphics g, int renderOffsetX, int renderOffsetY) {
 		
 		for (Shape block : blocks){
 //			System.out.println(block.getX()+" "+block.getY());
-			spriteSheet.getSubImage(2,2).draw(block.getX(),block.getY());
+			spriteSheet.getSubImage(2,2).draw(block.getX()-renderOffsetX,block.getY()-renderOffsetY);
 		}
 		
 	}

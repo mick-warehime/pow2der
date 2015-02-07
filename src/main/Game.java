@@ -24,8 +24,9 @@ public class Game extends BasicGame {
 	static int LEVEL_STATE = 1;
 	static int PAUSE_STATE = 2;
 
-	static int width = 640;
-	static int height = 480;
+	public final static int WIDTH = 640;
+	public final static int HEIGHT = 480;
+	
 	static boolean fullscreen = false;
 	static boolean showFPS = true;
 	static String title = "Dvir is the woooorst.";
@@ -141,7 +142,7 @@ public class Game extends BasicGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new Game());
-		app.setDisplayMode(width, height, fullscreen);
+		app.setDisplayMode(WIDTH,HEIGHT, fullscreen);
 		app.setSmoothDeltas(true);
 		app.setTargetFrameRate(fpslimit);
 		app.setShowFPS(showFPS);

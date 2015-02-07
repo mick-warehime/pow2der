@@ -45,7 +45,7 @@ public class World {
 		
 		currentLevel = 0;		
 		
-		newLevel(40,30);
+		newLevel(50,50);
 		
 		
 //		itemBuilder.testItems();
@@ -55,11 +55,12 @@ public class World {
 
 	public void render(Graphics graphics) {
 		
+		 
 		// draw current level
 		levels.get(currentLevel).render(graphics,(int) terri.getX(),(int)terri.getY());
 		
 		// draw player
-		terri.render(graphics,0,0);
+		terri.render(graphics,levels.get(currentLevel).getRenderOffsetX(),levels.get(currentLevel).getRenderOffsetY());
 
 	}
 
@@ -76,9 +77,9 @@ public class World {
 		
 	}
 	
-	public void newLevel(int m, int n) throws SlickException{
+	public void newLevel(int levelWidth, int levelHeight) throws SlickException{
 		
-		Level newLevel = new Level(new LevelBuilder(m,n),itemBuilder);
+		Level newLevel = new Level(itemBuilder,levelWidth,levelHeight);
 		 
 		levels.add(newLevel);		
 		
