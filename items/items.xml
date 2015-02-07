@@ -76,7 +76,4 @@
     <item id="staff" type="misc" name="staffUtility" grants="light, knock, preserve, direct wind, teleport, telport with control, petrify, stone to flesh, possess" range="0.0" burst="0.0" spriteRow="6.0" spriteCol="6.0"/>
     <item id="bottle" type="misc" name="bottle" grants="can be filled" range="0.0" burst="0.0" spriteRow="12.0" spriteCol="4.0"/>
   </misc>
-  <door>
-    <item id="door" type="door" name="door1" spriteRow="14.0" spriteCol="2.0"/>
-  </door>
 </items>

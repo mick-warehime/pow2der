@@ -1,6 +1,8 @@
 package actors;
 
 
+import java.util.logging.Level;
+
 import items.Inventory;
 import graphics.ActorGraphics;
 
@@ -16,10 +18,9 @@ public class Player extends Actor {
 
 	private KeyboardInputListener keyboard;
 	private Rectangle rect;
-	private ActorGraphics testGraphics;
 	
 
-	public Player(int x, int y, CollisionHandler collisionHandler) throws SlickException {
+	public Player(world.Level level, CollisionHandler collisionHandler) throws SlickException {
 
  		
 //		image = new Image("data/head.png");		
@@ -30,7 +31,7 @@ public class Player extends Actor {
 		listenerAggregator.addListener(keyboard);
 		
 		
-		setStatus( x,y, collisionHandler);
+		setStatus( level.getStartX(),level.getStartY(), collisionHandler);
 
 		collisionHandler.addPlayerRect(status.getRect());
 
@@ -68,6 +69,11 @@ public class Player extends Actor {
 	
 	public void resetPlayer(int startX, int startY){
 		status.setAlive();
+		status.setX(startX);
+		status.setY(startY);
+	}
+	
+	public void placePlayer(int startX, int startY){		
 		status.setX(startX);
 		status.setY(startY);
 	}

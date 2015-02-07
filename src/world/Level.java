@@ -27,17 +27,12 @@ import graphics.LevelGraphics;
 public class Level {
 
 
-	private static int tileSize; // size of a single tile in tilemap
-	private int width = 640;
-	private int height = 480;
-	private int mapX = 0;
-	private int mapY = 0;
-	private int tol = 18; // number of tiles away from edge
-	private int tolX;
-	private int tolY;
 
 
-	//	private TileData tileData;
+	
+	private int startX;
+	private int startY;
+	
 	private ArrayList<Actor> actors;
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
@@ -75,7 +70,11 @@ public class Level {
 				blocks.add(shape);				
 			}else if(type == LevelBuilder.OBJECT_ITEM){
 				basicObjects.add(itemBuilder.newItem(shape));
+			}else if(type == LevelBuilder.START_PT){
+				startX = (int) shape.getX();
+				startY = (int) shape.getY();
 			}
+			
 		}
 		
 //		//Add broadcasters
@@ -99,6 +98,12 @@ public class Level {
 	public ArrayList<BasicObject> getBasicObjects(){
 		return basicObjects;
 	}
+	public int getStartX(){
+		return startX;
+	}
+	public int getStartY(){
+		return startY;
+	}
 
 
 	private void removeFromList(Object obj, ArrayList<?> list){
@@ -120,9 +125,6 @@ public class Level {
 				removeFromList(nme,broadcasters);
 			}
 		}
-
-
-
 
 	}
 

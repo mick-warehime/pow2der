@@ -20,9 +20,6 @@ public class ItemBuilder {
 	private HashMap<String,ArrayList<Integer>> itemTypeMap = new HashMap<String, ArrayList<Integer>>();
 	private ArrayList<String> itemTypes = new ArrayList<String>();
 
-	private int doorIndex;
-	private Image doorSprite;
-
 
 	private SpriteSheet spriteSheet;
 	private static int SPRITEWIDTHPIXELS = 48;
@@ -38,8 +35,9 @@ public class ItemBuilder {
 
 		initializeBuilder();
 
-
-		// item types [armor, weapons, books, misc,door]
+		// no idea why this is -1 here
+		
+		// item types [armor, weapons, books, misc]
 
 
 	}
@@ -74,7 +72,7 @@ public class ItemBuilder {
 		}
 		// or get an item by name
 		else{
-			for (int i = 0; i < itemMaps.size()-1; i++){
+			for (int i = 0; i < itemMaps.size(); i++){
 
 				// get the indices of all items with type t
 				if(typeOrName.equalsIgnoreCase(itemMaps.get(i).get("name"))){
@@ -126,21 +124,10 @@ public class ItemBuilder {
 	}
 
 
-	public BasicObject buildDoor(int xPos, int yPos) throws SlickException{
-
-		return new ItemDoor(doorSprite, xPos, yPos);
-
-	}
-
 	// this finds the indices of all the items of all the various types
 	// too allow for faster searching when a new item is needed
 	private void initializeBuilder(){
 		// loop over all items and pull out the item types
-
-		ArrayList<Integer> defaultLookup = new ArrayList<Integer>();
-
-		defaultLookup.add(0); 
-		defaultLookup.add(itemMaps.size());
 
 		// create a list of the itemTypes
 		for (Map<String,String> m : itemMaps ){
@@ -169,21 +156,7 @@ public class ItemBuilder {
 		}
 
 
-		// get info about the door object
-		for(int i=0; i < itemMaps.size(); i++){
-			
-			Map<String,String> itm = itemMaps.get(i);
-			
-			if(itm.get("type").equalsIgnoreCase("door")){
-				doorIndex = i;
-				
-				Integer row = (int) Float.parseFloat(itm.get("spriteRow"));
-				Integer col = (int) Float.parseFloat(itm.get("spriteCol"));
-
-				doorSprite = spriteSheet.getSubImage(col-1,row-1);
-			}
-		}
-
+ 
 
 
 	}
@@ -197,6 +170,8 @@ public class ItemBuilder {
 			buildItem(i,400,800);
 			System.out.print(" --> Built Sucessfully");
 			System.out.println();
+			System.out.println("no item built!" +"  item index: "+i);
+
 			
 		}
 		

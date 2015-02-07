@@ -48,7 +48,6 @@ public class World {
 		newLevel(40,30);
 		
 		
-		
 //		itemBuilder.testItems();
 
 	}
@@ -85,17 +84,10 @@ public class World {
 		
 		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
 		
-		terri = new Player(100,200,collisionHandler);
-
+		terri = new Player(newLevel,collisionHandler);
+//		
 	}
 	
-//	public int getMapX(){
-//		return levels.get(currentLevel).getMapX();
-//	}
-//	
-//	public int getMapY(){
-//		return levels.get(currentLevel).getMapX();
-//	}
 	
 	public Player getPlayer(){
 		return terri;
