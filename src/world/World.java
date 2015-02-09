@@ -1,5 +1,6 @@
 package world;
 
+import graphics.LevelGraphics;
 import items.ItemBuilder;
 import items.ItemParser;
 
@@ -27,8 +28,8 @@ public class World {
 	private CollisionHandler collisionHandler;
 	private SpriteSheet spriteSheet;	
 	private ItemBuilder itemBuilder;
-	private LevelBuilder levelBuilder;
-	private Level nLevel;
+	
+	private LevelGraphics levelGraphics;
 	
 	public final static int TILE_HEIGHT = 16;
 	public final static int TILE_WIDTH = 16;
@@ -41,14 +42,13 @@ public class World {
 		ItemParser parser = new ItemParser("items/items.xml");
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
-		this.levelBuilder = new LevelBuilder(TILE_WIDTH,TILE_HEIGHT);
 		
 		currentLevel = 0;		
 		
 		newLevel(50,50);
 		
 		
-//		itemBuilder.testItems();
+		//		itemBuilder.testItems();
 
 	}
 	
@@ -57,10 +57,13 @@ public class World {
 		
 		 
 		// draw current level
-		levels.get(currentLevel).render(graphics,(int) terri.getX(),(int)terri.getY());
+		levelGraphics.render(graphics,(int) terri.getX(),(int)terri.getY());
+		
+		// draw level items/objects
+		levels.get(currentLevel).render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
 		
 		// draw player
-		terri.render(graphics,levels.get(currentLevel).getRenderOffsetX(),levels.get(currentLevel).getRenderOffsetY());
+		terri.render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
 
 	}
 
@@ -80,7 +83,9 @@ public class World {
 	public void newLevel(int levelWidth, int levelHeight) throws SlickException{
 		
 		Level newLevel = new Level(itemBuilder,levelWidth,levelHeight);
-		 
+		
+		levelGraphics = new LevelGraphics(newLevel,levelWidth,levelHeight);
+		
 		levels.add(newLevel);		
 		
 		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
