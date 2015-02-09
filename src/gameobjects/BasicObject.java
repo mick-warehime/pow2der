@@ -20,8 +20,7 @@ import world.CollisionHandler;
 public class BasicObject {
 	
 	protected BasicGraphics graphics;	
-	protected Shape shape;	 
-	protected Image image;
+	protected Shape shape;	
 	protected boolean canCollide = true;
 	
 	private static final int PROXIMITY = 10;
@@ -39,8 +38,6 @@ public class BasicObject {
 		
 		// used for collision detection		
 		shape = new Rectangle(xPos+wCrop,yPos+hCrop,w-2*wCrop,h-2*hCrop);
-		
-		this.image = image;
 		
 		this.graphics = new BasicGraphics(image,xPos,yPos);
 		
@@ -69,7 +66,7 @@ public class BasicObject {
 
 
 	public Image getImage(){
-		return image;
+		return this.graphics.getImage();
 	}
 	
 

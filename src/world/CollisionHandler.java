@@ -1,6 +1,5 @@
 package world;
 
-import items.Item;
 
 import java.util.ArrayList;
 
@@ -12,21 +11,17 @@ import actors.Actor;
 import actors.Player;
 import commands.CommandProvider;
 import gameobjects.BasicObject;
-import gameobjects.GameObject;
 import gameobjects.Interactive;
 import gameobjects.Broadcaster;
 
 public class CollisionHandler implements CommandProvider {
 
 	private ArrayList<Shape> blocks;
-//	private ArrayList<GameObject> gameObjects;
 	private ArrayList<Actor> actors;
-
-	//	private ArrayList<GameObject> gameObjects2;
 	private Rectangle playerRect;
 
 	// Objects that do something on collision
-	private ArrayList<Broadcaster> interactiveGameObjects;
+	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
 
 
@@ -39,26 +34,19 @@ public class CollisionHandler implements CommandProvider {
 		this.blocks = level.getBlocks();
 		this.basicObjects = level.getBasicObjects();
 		this.actors = level.getActors();
-		this.interactiveGameObjects = level.getBroadcasters();
+		this.broadcasters = level.getBroadcasters();
 	}
 
-	public void receiveObjects(ArrayList<Actor> actors, ArrayList<Broadcaster> broadcasters, 
-			ArrayList<BasicObject> basicObjects){
-
-		this.basicObjects = basicObjects;
-		this.actors = actors;
-		this.interactiveGameObjects = broadcasters;	
-		
-	}
+	
 
 	public void addPlayerRect(Rectangle playerRect){
-		this.playerRect = playerRect;		
+		this.playerRect = playerRect;	
+		
 	}
 
 
 //	Returns a list of interactive game objects near the player
 	public ArrayList<BasicObject> interactiveObjectsNearRect(Rectangle rect){
-
 
 
 		ArrayList<BasicObject> output = new ArrayList<BasicObject>();
@@ -107,9 +95,9 @@ public class CollisionHandler implements CommandProvider {
 
 		return playerRect.intersects(shape); 
 	}
-//
+	
 	public boolean isCollidedWithObjects(Shape shape){
-		// check if collided with solid etherable Objects
+		
 		for(BasicObject obj: basicObjects){
 			// don't check with its own shape and dont check with objects that are currently being held
 			assert (obj.getShape() != null) : "Error! Object" + obj + " has no shape!";
@@ -148,8 +136,8 @@ public class CollisionHandler implements CommandProvider {
 		int proximity = 1;
 		Rectangle slightlyBiggerRect = new Rectangle(rect.getX()-proximity,rect.getY()-proximity,rect.getWidth()+2*proximity,rect.getHeight()+2*proximity);
 
-		//
-		for (Broadcaster interObj : interactiveGameObjects){
+		
+		for (Broadcaster interObj : broadcasters){
 
 			if (slightlyBiggerRect.intersects(interObj.getShape())){
 				interObj.onCollisionDo(collidingObjectClass, rect);
