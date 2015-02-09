@@ -6,6 +6,12 @@ import java.util.Stack;
 
 import commands.InputListenerAggregator;
 
+/* Stores basic information used by the menu Handler class:
+ * stack of currently active Menus,
+ * whether the player is quitting,
+ * the player's inventory (needed to create the inventory menu).
+ */
+
 public class MenuHandlerData {
 
 	private Stack<Menu> activeMenuStack;
@@ -60,7 +66,6 @@ public class MenuHandlerData {
 	}
 
 	public  Inventory getPlayerInventory() {
-		// TODO Auto-generated method stub
 		return playerInventory;
 	}
 }

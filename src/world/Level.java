@@ -15,13 +15,10 @@ import gameobjects.BasicObject;
 import gameobjects.Broadcaster;
 
 
-// TODO
 
+/* Top level management of all game objects. */
 
 public class Level {
-
-
-
 
 
 	private int startX;
@@ -87,6 +84,20 @@ public class Level {
 				iterator.remove();
 				removeFromList(nme,broadcasters);
 			}
+		}
+		
+		//Remove items that are not on the ground
+		for (Iterator<BasicObject> iterator = basicObjects.iterator(); iterator.hasNext();){
+			BasicObject obj = iterator.next();
+			
+			if (obj instanceof Item){
+				if (!((Item)obj).isOnGround()){
+					iterator.remove();
+					removeFromList(obj,broadcasters);
+				}
+					
+			}
+			
 		}
 
 	}

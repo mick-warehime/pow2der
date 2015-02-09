@@ -15,6 +15,9 @@ import org.newdawn.slick.geom.Shape;
 
 import actors.Status;
 
+
+/* A basic object that can be picked up and put into inventory */
+
 public class Item extends BasicObject implements Interactive{
 
 	protected String name;
@@ -34,25 +37,26 @@ public class Item extends BasicObject implements Interactive{
 		
 		this.canCollide = false;
 		
-//		onGround = true;
-		
 		this.location = new ItemLocation(this);
 		
 	}
 
 
+	public boolean isOnGround(){
+		return location.onGround;
+	}
 	public Shape getShape(){
 		return shape;
 	}
 
+	@Override
 	public void render(Graphics g, int renderX, int renderY){
 		if(location.isOnGround()){
 			graphics.render(g, renderX, renderY, (float) 0.6);
 		}
 	}
 	
-
-
+	
 
 	public String getItemType() {
 		return type;
@@ -82,12 +86,12 @@ public class Item extends BasicObject implements Interactive{
 		if (interactionType != Interactive.INTERACTION_PICKUP){
 			return;
 		}
-		if (! location.isOnGround()){ return;}
+		assert location.isOnGround() : "Error! Item receiving an interact command when it's not on the ground!";
+		
 		status.getInventory().addItem(this);
 		location.applyPickup( status.getInventory());
 		
 		
-//		onGround = false;
 
 	}
 	

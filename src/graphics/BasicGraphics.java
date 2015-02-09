@@ -36,4 +36,10 @@ public class BasicGraphics {
 		
 	}
 
+
+	public Image getImage() {
+		// TODO Auto-generated method stub
+		return sprite;
+	}
+
 }
