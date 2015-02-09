@@ -15,8 +15,9 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import world.CollisionHandler;
 
+/* An ingame object with rendering and collision functionality */
+
 public class BasicObject {
-	
 	
 	protected BasicGraphics graphics;	
 	protected Shape shape;	 
@@ -26,7 +27,7 @@ public class BasicObject {
 	private static final int PROXIMITY = 10;
 
 	public BasicObject(Image image, int xPos, int yPos) throws SlickException{
-
+		
 		
 		int h = image.getHeight();
 		int w = image.getWidth();
@@ -59,9 +60,6 @@ public class BasicObject {
 		return canCollide;
 	}
 
-
-
-	
 	//Checks if an input shape is near the object's shape
 	public boolean isNear(Rectangle rectTest) {
 		

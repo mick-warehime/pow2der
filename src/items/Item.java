@@ -15,6 +15,8 @@ import org.newdawn.slick.geom.Shape;
 
 import actors.Status;
 
+
+
 public class Item extends BasicObject implements Interactive{
 
 	protected String name;
@@ -34,7 +36,6 @@ public class Item extends BasicObject implements Interactive{
 		
 		this.canCollide = false;
 		
-//		onGround = true;
 		
 		this.location = new ItemLocation(this);
 		
