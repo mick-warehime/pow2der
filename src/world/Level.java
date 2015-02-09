@@ -1,5 +1,6 @@
 package world;
 
+import items.Item;
 import items.ItemBuilder;
 
 import java.util.ArrayList;
