@@ -1,6 +1,8 @@
 package actionEngines;
 
 
+import java.util.Stack;
+
 import items.Item;
 
 import org.newdawn.slick.SlickException;
@@ -26,7 +28,9 @@ public class MenuActionEngine extends ActionEngine{
 	}
 
 	public void activateActiveMenuSelection(){
-		if (!isBusy()){
+		Stack <Menu> activeMenus = menuHandlerData.getAllActiveMenus();
+		
+		if (!isBusy() && !activeMenus.isEmpty()){
 			Menu menu = menuHandlerData.getTopActiveMenu();
 			menu.activateCurrentSelection();
 		}
