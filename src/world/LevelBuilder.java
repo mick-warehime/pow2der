@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -20,7 +19,6 @@ public class LevelBuilder {
 	protected static final int OBJECT_DOOR = 3;
 	
 	
-	private List<Map<Integer,Shape>> objectMaps;
 	private List<Integer> objectTypes;
 	private List<Shape> objectShapes;
 
