@@ -2,8 +2,10 @@ package main;
 
 
 
-import java.io.IOException;
+import items.Item;
 
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -12,8 +14,6 @@ import org.newdawn.slick.*;
 import org.xml.sax.SAXException;
 
 import menus.MenuHandler;
-
-
 import world.World;
 import controls.GameControls;
 //import controls.WiimoteJoysticks;
@@ -60,25 +60,11 @@ public class Game extends BasicGame {
 			
 		
 		if (gameState == LOAD_STATE){
-			////The following should be returned for a load screen
-			//			if (gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-			//				gameState = LEVEL_STATE;
-			//				currentLevel = Integer.parseInt(inputText.getText());
-			//				initializeLevel(currentLevel);
-			//			}
 			gameState = LEVEL_STATE;
-//			currentLevel = 10;
-//			initializeLevel(currentLevel);
 
 		}
 
 		if (gameState == LEVEL_STATE){
-
-			
-			
-			
-//			int mouseX = gc.getInput().getMouseX()+world.getMapX();
-//			int mouseY = gc.getInput().getMouseY()+world.getMapY();
 			
 			int mouseX = gc.getInput().getMouseX();
 			int mouseY = gc.getInput().getMouseY();
@@ -90,6 +76,13 @@ public class Game extends BasicGame {
 
 
 		if ( gameState == PAUSE_STATE){
+			ArrayList<Item> itemsToDrop = menuHandler.getItemsToDrop();
+			
+			if (!itemsToDrop.isEmpty()){
+				this.world.dropItemsFromPlayer(itemsToDrop);
+			}
+			
+			
 			if (!menuHandler.isMenuActive()){
 				gameState = LEVEL_STATE;
 			}

@@ -1,6 +1,7 @@
 package world;
 
 import graphics.LevelGraphics;
+import items.Item;
 import items.ItemBuilder;
 import items.ItemParser;
 
@@ -97,6 +98,15 @@ public class World {
 	
 	public Player getPlayer(){
 		return terri;
+	}
+
+
+	public void dropItemsFromPlayer(ArrayList<Item> itemsToDrop) {
+		for (Item item : itemsToDrop){
+			item.drop( terri.getX(),terri.getY());
+			levels.get(currentLevel).addObject(item);	
+		}
+		
 	}
 
 }

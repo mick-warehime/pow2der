@@ -21,13 +21,12 @@ import actors.Status;
 public class Item extends BasicObject implements Interactive{
 
 	protected String name;
-	protected Image image;
 	protected int value;
 	protected String type;
 	protected boolean stackable;
 	protected int weight;
 	protected ArrayList<String> properties;
-	private ItemLocation location;
+	private boolean onGround = true;
 
 	public Item(Map<String, String> itm, Image image, int xPos, int yPos) throws SlickException{		
 
@@ -37,21 +36,19 @@ public class Item extends BasicObject implements Interactive{
 		
 		this.canCollide = false;
 		
-		this.location = new ItemLocation(this);
+		
 		
 	}
 
 
 	public boolean isOnGround(){
-		return location.onGround;
+		return onGround;
 	}
-	public Shape getShape(){
-		return shape;
-	}
+	
 
 	@Override
 	public void render(Graphics g, int renderX, int renderY){
-		if(location.isOnGround()){
+		if(onGround){
 			graphics.render(g, renderX, renderY, (float) 0.6);
 		}
 	}
@@ -86,60 +83,24 @@ public class Item extends BasicObject implements Interactive{
 		if (interactionType != Interactive.INTERACTION_PICKUP){
 			return;
 		}
-		assert location.isOnGround() : "Error! Item receiving an interact command when it's not on the ground!";
+		assert onGround : "Error! Item receiving an interact command when it's not on the ground!";
 		
 		status.getInventory().addItem(this);
-		location.applyPickup( status.getInventory());
+		this.onGround = false;
 		
 		
 
 	}
 	
 	public void drop(float xPos, float yPos){
-		location.applyDrop((int) xPos, (int) yPos);
+		this.onGround = true;
 		shape.setLocation(xPos, yPos);
 	}
 	
-	/* Is aware of item's position (if it's on ground) or position of 
-	 * object holding it in inventory
-	 * 
-	 */
-	class ItemLocation{
-		
-		private Item owningItem;
-		private boolean onGround = true;
-		private int xPos;
-		private int yPos;
-		
-		
-		public ItemLocation( Item owningItem){
-			this.owningItem = owningItem;
-			
-			
-		}
-		
-		
-		public void applyDrop(int xPos, int yPos){
-			/* No longer track position of previously holding object */
-			this.xPos = xPos;
-			this.yPos = yPos;
-			this.onGround = true;
-			
-			
-			
-		}
-		public void applyPickup( Inventory storingInventory ){
-			this.onGround = false;
-			
-		}
-		
-		public boolean isOnGround(){
-			return onGround;
-		}
-		
-		
-		
-		
-	}
+	
+	
+	
+
+	
 
 }

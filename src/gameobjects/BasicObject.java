@@ -39,7 +39,7 @@ public class BasicObject {
 		// used for collision detection		
 		shape = new Rectangle(xPos+wCrop,yPos+hCrop,w-2*wCrop,h-2*hCrop);
 		
-		this.graphics = new BasicGraphics(image,xPos,yPos);
+		this.graphics = new BasicGraphics(image,shape);
 		
 	}
 	

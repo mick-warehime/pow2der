@@ -38,6 +38,7 @@ public class Level {
 
 	};
 
+	
 
 	private void addObjects(LevelBuilder levelBuilder, ItemBuilder itemBuilder) throws SlickException {
 		List<Integer> objectTypes = levelBuilder.getObjectTypes();
@@ -107,11 +108,16 @@ public class Level {
 
 	public void render(Graphics g, int offsetX, int offsetY){		
 
-		for (BasicObject obj : basicObjects){
-			//			System.out.println(obj);	
+		for (BasicObject obj : basicObjects){	
 			obj.render(g, offsetX,offsetY);
 
 		}
+		
+		for (Actor actor : actors){	
+			actor.render(g, offsetX,offsetY);
+
+		}
+		
 	}
 	
 	
@@ -132,6 +138,21 @@ public class Level {
 	}
 	public int getStartY(){
 		return startY;
+	}
+
+
+
+	public void addObject(Object obj) {
+		if (obj instanceof Actor){
+			actors.add((Actor) obj);
+		}
+		if (obj instanceof BasicObject){
+			basicObjects.add((BasicObject) obj);
+		}
+		if (obj instanceof Broadcaster){
+			broadcasters.add((Broadcaster) obj);
+		}
+		
 	}
 	
 }

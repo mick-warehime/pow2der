@@ -19,7 +19,7 @@ public class MenuHandlerData {
 	private Stack<Menu> activeMenuStack;
 	private boolean isQuitting = false;
 	private Inventory playerInventory;
-	private ArrayList<Item> droppedItems = new ArrayList<Item>();
+	private ArrayList<Item> itemsToDrop = new ArrayList<Item>();
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		
@@ -70,5 +70,15 @@ public class MenuHandlerData {
 
 	public  Inventory getPlayerInventory() {
 		return playerInventory;
+	}
+
+	public void addItemToDrop(Item item) {
+		this.itemsToDrop.add(item);
+		
+	}
+	public ArrayList<Item> popItemsToDrop(){
+		ArrayList<Item> output = this.itemsToDrop;
+		itemsToDrop = new ArrayList<Item>();
+		return output;
 	}
 }

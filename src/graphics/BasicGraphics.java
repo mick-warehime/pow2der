@@ -5,34 +5,35 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Shape;
 
 import actors.Effect;
 import actors.Status;
 
+/* Draws a single image at the location of a shape */
+
 public class BasicGraphics {
 
 	protected Image sprite;
-	private int xPos;
-	private int yPos;
+	private Shape shape;
 	
 	//	public ItemGraphics(Image image, ItemLocation location) throws SlickException{
-	public BasicGraphics(Image sprite, int xPos, int yPos) throws SlickException{	
+	public BasicGraphics(Image sprite, Shape shape) throws SlickException{	
 		this.sprite = sprite;
-		this.xPos = xPos;
-		this.yPos = yPos;		
+		this.shape = shape;		
 
 	}
 
 
 	public void render(Graphics g, int renderX, int renderY) {
 
-		sprite.draw(xPos-renderX,yPos-renderY);
+		render(g, renderX,renderY,1f);
 
 	}
 
 	public void render(Graphics g, int renderX, int renderY, float scale) {
 
-		sprite.draw(xPos-renderX,yPos-renderY, scale);
+		sprite.draw(shape.getX()-renderX,shape.getY()-renderY, scale);
 		
 	}
 

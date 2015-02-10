@@ -33,6 +33,7 @@ public class MenuActionEngine extends ActionEngine{
 		if (!isBusy() && !activeMenus.isEmpty()){
 			Menu menu = menuHandlerData.getTopActiveMenu();
 			menu.activateCurrentSelection();
+			
 		}
 	}
 
@@ -119,7 +120,7 @@ public class MenuActionEngine extends ActionEngine{
 		if (!isBusy()){
 			menuHandlerData.getPlayerInventory().removeItem(item);
 			closeAllMenus();
-			//		item.drop(xPos, yPos);
+			menuHandlerData.addItemToDrop(item);
 			makeBusy();
 		}
 		

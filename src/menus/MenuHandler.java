@@ -1,6 +1,7 @@
 package menus;
 
 import items.Inventory;
+import items.Item;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -104,6 +105,12 @@ public class MenuHandler {
 	public void setPlayerInventory(Inventory inventory) {
 		this.menuHandlerData.setPlayerInventory(inventory);
 		
+	}
+
+
+
+	public ArrayList<Item> getItemsToDrop() {
+		return menuHandlerData.popItemsToDrop();
 	}
 
 	
