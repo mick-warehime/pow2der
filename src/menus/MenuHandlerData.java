@@ -1,7 +1,9 @@
 package menus;
 
 import items.Inventory;
+import items.Item;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 import commands.InputListenerAggregator;
@@ -17,6 +19,7 @@ public class MenuHandlerData {
 	private Stack<Menu> activeMenuStack;
 	private boolean isQuitting = false;
 	private Inventory playerInventory;
+	private ArrayList<Item> droppedItems = new ArrayList<Item>();
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		

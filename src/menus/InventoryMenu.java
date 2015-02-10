@@ -117,7 +117,7 @@ public class InventoryMenu extends Menu{
 		if (item != null){
 			
 			
-			Command menuCmd = new MenuOpenCommand(new ItemMenu(menuRenderX - 100,menuRenderY));
+			Command menuCmd = new MenuOpenCommand(new ItemMenu(menuRenderX - 100,menuRenderY, item));
 			
 			selection = new MenuSelection(	menuCmd, 
 					new InventorySelectionGraphics(item.getImage(),xPos,yPos));

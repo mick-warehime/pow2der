@@ -11,9 +11,10 @@ public class OptionsMenu extends TextMenu{
 
 	public OptionsMenu(int menuRenderX, int menuRenderY) {
 		super(Menu.MENU_OPTIONS, menuRenderX, menuRenderY);
+		defineMenuSelections();
 	}
 
-	@Override
+	
 	protected void defineMenuSelections() {
 		selections = new ArrayList<MenuSelection>();
 		

@@ -1,6 +1,8 @@
 package actionEngines;
 
 
+import items.Item;
+
 import org.newdawn.slick.SlickException;
 
 import menus.Menu;
@@ -104,6 +106,16 @@ public class MenuActionEngine extends ActionEngine{
 			}
 			
 			
+			makeBusy();
+		}
+		
+	}
+
+	public void dropItem(Item item) {
+		if (!isBusy()){
+			menuHandlerData.getPlayerInventory().removeItem(item);
+			closeAllMenus();
+			//		item.drop(xPos, yPos);
 			makeBusy();
 		}
 		

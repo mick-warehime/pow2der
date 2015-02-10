@@ -110,7 +110,7 @@ public class Item extends BasicObject implements Interactive{
 		private boolean onGround = true;
 		private int xPos;
 		private int yPos;
-		private Inventory storingInventory;
+		
 		
 		public ItemLocation( Item owningItem){
 			this.owningItem = owningItem;
@@ -125,17 +125,12 @@ public class Item extends BasicObject implements Interactive{
 			this.yPos = yPos;
 			this.onGround = true;
 			
-			if (storingInventory !=null){
-				storingInventory.removeItem(owningItem);
-				storingInventory = null;
-			}
+			
 			
 		}
 		public void applyPickup( Inventory storingInventory ){
 			this.onGround = false;
 			
-			
-			this.storingInventory = storingInventory;
 		}
 		
 		public boolean isOnGround(){
