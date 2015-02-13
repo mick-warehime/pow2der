@@ -1,11 +1,16 @@
 package world;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.xml.sax.SAXException;
 
 import actors.Actor;
 import actors.Player;
@@ -40,7 +45,13 @@ public class CollisionHandler implements CommandProvider {
 	
 
 	public void addPlayerRect(Rectangle playerRect){
-		this.playerRect = playerRect;	
+		
+		assert playerRect!= null : "Error! Attempted to set a null Player rect!";
+		this.playerRect = playerRect;
+		
+
+
+		
 		
 	}
 

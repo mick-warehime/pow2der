@@ -45,7 +45,7 @@ public class World {
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 		
-
+		terri = new Player();
 		
 		newLevel(50,50);
 		
@@ -98,8 +98,9 @@ public class World {
 		
 		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
 		
-		terri = new Player(newLevel,collisionHandler);
 		
+		terri.placePlayer(newLevel.getStartX(),  newLevel.getStartY());
+		terri.setCollisionHandler(collisionHandler);
 		
 //		
 	}

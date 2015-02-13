@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.command.Command;
 
@@ -23,6 +24,19 @@ public class InputListenerAggregator {
 	public void addListener( CommandProvider provider){
 		providers.add(provider);
 	}
+	
+	
+	public void removeListenersOfClass(Class<?> providerClass){
+		for (Iterator<CommandProvider> iterator = providers.iterator(); iterator.hasNext();){
+			CommandProvider provider2 = iterator.next();
+			Class<? extends CommandProvider> className = provider2.getClass();
+			
+			if (className.equals(providerClass)){
+				iterator.remove();
+			}
+		}
+	}
+	
 
 	
 	//For external inputs such as elevator collisions
