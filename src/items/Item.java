@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import world.CurrentLevelData;
 import actors.Status;
 
 
@@ -26,7 +27,7 @@ public class Item extends BasicObject implements Interactive{
 	protected boolean stackable;
 	protected int weight;
 	protected ArrayList<String> properties;
-	private boolean onGround = true;
+	private ItemLocation location = new ItemLocation(this);
 
 	public Item(Map<String, String> itm, Image image, int xPos, int yPos) throws SlickException{		
 
@@ -38,17 +39,18 @@ public class Item extends BasicObject implements Interactive{
 		
 		
 		
+		
 	}
 
 
 	public boolean isOnGround(){
-		return onGround;
+		return location.onGround;
 	}
 	
 
 	@Override
 	public void render(Graphics g, int renderX, int renderY){
-		if(onGround){
+		if(location.onGround){
 			graphics.render(g, renderX, renderY, (float) 0.6);
 		}
 	}
@@ -83,21 +85,68 @@ public class Item extends BasicObject implements Interactive{
 		if (interactionType != Interactive.INTERACTION_PICKUP){
 			return;
 		}
-		assert onGround : "Error! Item receiving an interact command when it's not on the ground!";
+		assert location.onGround : "Error! Item receiving an interact command when it's not on the ground!";
 		
-		status.getInventory().addItem(this);
-		this.onGround = false;
+		Inventory inventory = status.getInventory();
+		Shape actorShape = status.getRect();
+		location.applyPickup(inventory, actorShape);
 		
+		this.location.onGround = false;
 		
 
 	}
 	
-	public void drop(float xPos, float yPos){
-		this.onGround = true;
-		shape.setLocation(xPos, yPos);
+	public void drop(){
+		location.applyDrop();
+	}
+
+	
+
+	public void setCurrentLevelData(CurrentLevelData currentLevelData) {
+		location.currentLevelData = currentLevelData;
+		
 	}
 	
+	/* Handles item's location */
 	
+	class ItemLocation{
+		
+		private Item owningItem;
+		private boolean onGround = true;
+		private Inventory storingInventory;
+		private CurrentLevelData currentLevelData;
+		private Shape ownerShape;
+		
+		public ItemLocation(Item owner){
+			this.owningItem = owner;
+		}
+		
+		
+		
+		public void applyDrop(){
+			this.onGround = true;
+			
+			float x = ownerShape.getX();
+			float y= ownerShape.getY();
+			ownerShape = null; // Prevents memory leak
+			
+			shape.setLocation(x, y);
+			currentLevelData.getCurrentLevel().addObject(owningItem);
+			storingInventory.removeItem(owningItem);
+			storingInventory = null; //Prevents memory leak
+		}
+		
+		public void applyPickup(Inventory inventory, Shape actorShape){
+			this.storingInventory = inventory;
+			this.ownerShape = actorShape;
+			storingInventory.addItem(owningItem);
+			
+			
+		}
+		
+		
+		
+	}
 	
 	
 

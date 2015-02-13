@@ -19,7 +19,6 @@ public class MenuHandlerData {
 	private Stack<Menu> activeMenuStack;
 	private boolean isQuitting = false;
 	private Inventory playerInventory;
-	private ArrayList<Item> itemsToDrop = new ArrayList<Item>();
 
 	public MenuHandlerData(InputListenerAggregator listenerAggregator){
 		
@@ -72,13 +71,6 @@ public class MenuHandlerData {
 		return playerInventory;
 	}
 
-	public void addItemToDrop(Item item) {
-		this.itemsToDrop.add(item);
-	}
 	
-	public ArrayList<Item> popItemsToDrop(){
-		ArrayList<Item> output = this.itemsToDrop;
-		itemsToDrop = new ArrayList<Item>();
-		return output;
-	}
+	
 }

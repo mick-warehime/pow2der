@@ -76,11 +76,7 @@ public class Game extends BasicGame {
 
 
 		if ( gameState == PAUSE_STATE){
-			ArrayList<Item> itemsToDrop = menuHandler.getItemsToDrop();
 			
-			if (!itemsToDrop.isEmpty()){
-				this.world.dropItemsFromPlayer(itemsToDrop);
-			}
 			
 			
 			if (!menuHandler.isMenuActive()){

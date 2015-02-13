@@ -74,7 +74,7 @@ public class Level {
 		}
 	}
 
-	public void update() throws SlickException{
+	protected void update() throws SlickException{
 
 		//Update actors and remove dead ones
 		for (Iterator<Actor> iterator = actors.iterator(); iterator.hasNext();) {
@@ -151,6 +151,17 @@ public class Level {
 		}
 		if (obj instanceof Broadcaster){
 			broadcasters.add((Broadcaster) obj);
+		}
+		
+	}
+
+
+
+	public void assignToItems(CurrentLevelData currentLevelData) {
+		for (BasicObject obj : basicObjects){
+			if (obj instanceof Item){
+				((Item)obj).setCurrentLevelData(currentLevelData);
+			}
 		}
 		
 	}

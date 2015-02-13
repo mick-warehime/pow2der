@@ -120,7 +120,7 @@ public class MenuActionEngine extends ActionEngine{
 		if (!isBusy()){
 			menuHandlerData.getPlayerInventory().removeItem(item);
 			closeAllMenus();
-			menuHandlerData.addItemToDrop(item);
+			item.drop();
 			makeBusy();
 		}
 		

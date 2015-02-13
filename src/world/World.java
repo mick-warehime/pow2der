@@ -50,6 +50,7 @@ public class World {
 		newLevel(50,50);
 		
 		currentLevelData.setCurrentLevel(levels.get(0));
+	
 		
 		
 
@@ -89,6 +90,8 @@ public class World {
 		
 		Level newLevel = new Level(itemBuilder,levelWidth,levelHeight);
 		
+		newLevel.assignToItems(currentLevelData);
+		
 		levelGraphics = new LevelGraphics(newLevel,levelWidth,levelHeight);
 		
 		levels.add(newLevel);		
@@ -96,6 +99,8 @@ public class World {
 		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
 		
 		terri = new Player(newLevel,collisionHandler);
+		
+		
 //		
 	}
 	
@@ -105,13 +110,7 @@ public class World {
 	}
 
 
-	public void dropItemsFromPlayer(ArrayList<Item> itemsToDrop) {
-		for (Item item : itemsToDrop){
-			item.drop( terri.getX(),terri.getY());
-			currentLevelData.getCurrentLevel().addObject(item);	
-		}
-		
-	}
+	
 	
 	
 

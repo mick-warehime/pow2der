@@ -1,5 +1,7 @@
 package world;
 
+import org.newdawn.slick.geom.Shape;
+
 
 /* Stores data about the currently loaded level */
 public class CurrentLevelData {
@@ -14,6 +16,8 @@ public class CurrentLevelData {
 	public Level getCurrentLevel(){
 		return this.currentLevel;
 	}
+	
+	
 	
 	
 	

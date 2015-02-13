@@ -109,9 +109,7 @@ public class MenuHandler {
 
 
 
-	public ArrayList<Item> getItemsToDrop() {
-		return menuHandlerData.popItemsToDrop();
-	}
+	
 
 	
 	

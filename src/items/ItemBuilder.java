@@ -35,9 +35,7 @@ public class ItemBuilder {
 
 		initializeBuilder();
 
-		// no idea why this is -1 here
 		
-		// item types [armor, weapons, books, misc]
 
 
 	}
