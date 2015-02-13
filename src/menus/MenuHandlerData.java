@@ -74,8 +74,8 @@ public class MenuHandlerData {
 
 	public void addItemToDrop(Item item) {
 		this.itemsToDrop.add(item);
-		
 	}
+	
 	public ArrayList<Item> popItemsToDrop(){
 		ArrayList<Item> output = this.itemsToDrop;
 		itemsToDrop = new ArrayList<Item>();
