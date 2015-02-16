@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
@@ -34,15 +35,15 @@ public class Level {
 
 		
 		//  load a random map and populate the items 
-		addObjects(new LevelBuilder(levelWidth,levelHeight), itemBuilder);
+		defineInitialObjects(new LevelBuilder(levelWidth,levelHeight), itemBuilder);
 
 	};
 
 	
 
-	private void addObjects(LevelBuilder levelBuilder, ItemBuilder itemBuilder) throws SlickException {
+	private void defineInitialObjects(LevelBuilder levelBuilder, ItemBuilder itemBuilder) throws SlickException {
 		List<Integer> objectTypes = levelBuilder.getObjectTypes();
-		List<Shape> objectShapes = levelBuilder.getObjectShapes();
+		List<Integer[]> objectPositions = levelBuilder.getObjectPositions();
 
 		this.actors = new ArrayList<Actor>(); 
 		this.broadcasters = new ArrayList<Broadcaster>(); 
@@ -51,14 +52,15 @@ public class Level {
 
 		for(int i=0; i<objectTypes.size(); i++){
 			Integer type = objectTypes.get(i);
-			Shape shape = objectShapes.get(i);
+//			Shape shape = objectShapes.get(i);
+			Integer[] pos = objectPositions.get(i);
 			if(type == LevelBuilder.OBJECT_BLOCK){
-				blocks.add(shape);				
+				blocks.add(new Rectangle(pos[0],pos[1], World.TILE_WIDTH, World.TILE_HEIGHT));				
 			}else if(type == LevelBuilder.OBJECT_ITEM){
-				basicObjects.add(itemBuilder.newItem(shape));
+				basicObjects.add(itemBuilder.newItem(pos[0],pos[1]));
 			}else if(type == LevelBuilder.START_PT){
-				startX = (int) shape.getX();
-				startY = (int) shape.getY();
+				startX = pos[0];
+				startY = pos[1];
 			}
 
 		}

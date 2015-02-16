@@ -29,11 +29,11 @@ public class Item extends BasicObject implements Interactive{
 	protected ArrayList<String> properties;
 	private ItemLocation location = new ItemLocation(this);
 
-	public Item(Map<String, String> itm, Image image, int xPos, int yPos) throws SlickException{		
+	public Item(Map<String, String> itmInfo, Image image, int xPos, int yPos) throws SlickException{		
 
 		super(image,xPos,yPos);
 
-		this.type = itm.get("itemType");		
+		this.type = itmInfo.get("itemType");		
 		
 		this.canCollide = false;
 		
@@ -51,7 +51,7 @@ public class Item extends BasicObject implements Interactive{
 	@Override
 	public void render(Graphics g, int renderX, int renderY){
 		if(location.onGround){
-			graphics.render(g, renderX, renderY, (float) 0.6);
+			graphics.render(g, renderX, renderY, (float) 1);
 		}
 	}
 	
@@ -101,7 +101,6 @@ public class Item extends BasicObject implements Interactive{
 	}
 
 	
-
 	public void setCurrentLevelData(CurrentLevelData currentLevelData) {
 		location.currentLevelData = currentLevelData;
 		
