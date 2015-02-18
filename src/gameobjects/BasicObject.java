@@ -30,19 +30,9 @@ public class BasicObject {
 		
 		int h = image.getHeight();
 		int w = image.getWidth();
-		
-////		items are a bit smaller than their bounding boxes
-//		
-//		int hCrop = (int) h/4;
-//		int wCrop = (int) w/4;
-//		
-//		// used for collision detection		
-//		shape = new Rectangle(xPos+wCrop,yPos+hCrop,w-2*wCrop,h-2*hCrop);
-		// used for collision detection		
+			
 		shape = new Rectangle(xPos,yPos,w,h);
-		
-		System.out.println(w + "," + h);
-		
+	
 		this.graphics = new BasicGraphics(image,shape);
 		
 	}

@@ -28,14 +28,14 @@ public class Player extends Actor {
 		listenerAggregator.addListener(keyboard);
 		
 		
-		rect = new Rectangle(0f, 0f, 32, 32);
+		rect = new Rectangle(0f, 0f, 28, 28);
 		status = new Status(rect);
 
 		
 
 		engine = new PlayerActionEngine(listenerAggregator,status);
 		
-		this.graphics = new ActorGraphics("data/dwarf.png", status);
+		this.graphics = new ActorGraphics("data/dwarf2.png", status);
 		
 		
 	}
@@ -47,10 +47,7 @@ public class Player extends Actor {
 
 	
 
-	public void update(){
-		super.update();
-		
-	}
+	
 
 	public KeyboardInputListener getListener() {
 		return keyboard;

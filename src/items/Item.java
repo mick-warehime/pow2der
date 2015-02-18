@@ -28,21 +28,33 @@ public class Item extends BasicObject implements Interactive{
 	protected int weight;
 	protected ArrayList<String> properties;
 	private ItemLocation location = new ItemLocation(this);
+//	private static int SPRITE_MARGIN = ;
+	private static float SPRITE_DRAW_SCALE = 0.6f;
+	private static int SPRITE_MARGIN = 5;
+	private static float RECT_SHRINK_MARGIN = 15f;
 
 	public Item(Map<String, String> itmInfo, Image image, int xPos, int yPos) throws SlickException{		
 
 		super(image,xPos,yPos);
-
+		
+		this.graphics.setSpriteMargin(SPRITE_MARGIN);
+		
+		//Shrink shape because it's based on image size
+		shrinkShapes();
+		
 		this.type = itmInfo.get("itemType");		
 		
 		this.canCollide = false;
 		
 		
-		
-		
 	}
 
-
+	private void shrinkShapes(){
+		
+		((Rectangle)this.shape).grow(-RECT_SHRINK_MARGIN, -RECT_SHRINK_MARGIN);
+		
+	}
+	
 	public boolean isOnGround(){
 		return location.onGround;
 	}
@@ -50,8 +62,9 @@ public class Item extends BasicObject implements Interactive{
 
 	@Override
 	public void render(Graphics g, int renderX, int renderY){
+		
 		if(location.onGround){
-			graphics.render(g, renderX, renderY, (float) 1);
+			graphics.render(g, renderX , renderY, SPRITE_DRAW_SCALE);
 		}
 	}
 	

@@ -14,6 +14,7 @@ import actors.Status;
 
 public class BasicGraphics {
 
+	private int sprite_margin = 0;
 	protected Image sprite;
 	private Shape shape;
 	
@@ -23,6 +24,10 @@ public class BasicGraphics {
 		this.shape = shape;		
 
 	}
+	
+	public void setSpriteMargin(int marg){
+		this.sprite_margin = marg;
+	}
 
 
 	public void render(Graphics g, int renderX, int renderY) {
@@ -31,9 +36,25 @@ public class BasicGraphics {
 
 	}
 
-	public void render(Graphics g, int renderX, int renderY, float scale) {
+	private void renderShape(Graphics g, int renderX, int renderY){
+		float x = shape.getX();
+		float y = shape.getY();
+		shape.setX(x - renderX);
+		shape.setY(y -renderY);
+		g.draw(shape);
+		shape.setX(x);
+		shape.setY(y);
 
-		sprite.draw(shape.getX()-renderX,shape.getY()-renderY, scale);
+	}
+	
+	public void render(Graphics g, int renderX, int renderY, float scale) {
+		
+		this.renderShape(g, renderX, renderY);
+		
+		float x = shape.getX();
+		float y = shape.getY();
+		
+		sprite.draw(x-renderX- sprite_margin,y-renderY- sprite_margin, scale);
 		
 	}
 

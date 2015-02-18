@@ -1,8 +1,10 @@
 package graphics;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Shape;
 
 import actors.Effect;
 import actors.Status;
@@ -25,6 +27,7 @@ public class ActorGraphics {
 	
 	private static int SPRITEWIDTHPIXELS = 32;
 	private static int SPRITEHEIGHTPIXELS = 32;
+	private static int SPRITESPACINGINPIXELS = 4;
 	
 	
 	
@@ -41,25 +44,50 @@ public class ActorGraphics {
 	
 	public ActorGraphics(String spriteSheetFileName, Status status) throws SlickException{
 		
-		spriteSheet = new SpriteSheet(spriteSheetFileName, SPRITEWIDTHPIXELS,SPRITEHEIGHTPIXELS);
+		Image img = new Image(spriteSheetFileName);
+		int w = SPRITEWIDTHPIXELS-SPRITESPACINGINPIXELS;
+		int h = SPRITEHEIGHTPIXELS - SPRITESPACINGINPIXELS;
+		
+		spriteSheet = new SpriteSheet(img, w, h,SPRITESPACINGINPIXELS);
 		this.status = status;
 		
 	}
 	
 	
-
+	
+	
 	public void render(Graphics g, int renderX, int renderY) {
 		
+		renderShape( g,  renderX,  renderY);
 		
 		
 		determineCurrentActorDirection();
 		determineCurrentActorAction();
 		
-		spriteSheet.getSubImage(currentActorAction,currentActorDirection ).draw(renderX, renderY);
+		Shape shape = status.getRect();
+		float x = shape.getX();
+		float y = shape.getY();
+		
+		spriteSheet.getSubImage(currentActorAction,currentActorDirection ).draw(x-renderX, y-renderY);
 		
 	}
 	
 	
+	private void renderShape(Graphics g, int renderX, int renderY) {
+		Shape shape = status.getRect();
+		float x = shape.getX();
+		float y = shape.getY();
+		shape.setX(x - renderX);
+		shape.setY(y -renderY);
+		g.draw(shape);
+		shape.setX(x);
+		shape.setY(y);
+		
+	}
+
+
+
+
 	private void determineCurrentActorAction(){
 		
 		boolean isWalkingX = status.hasEffect(Effect.EFFECT_WALKING_X);
