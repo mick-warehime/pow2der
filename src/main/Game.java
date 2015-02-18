@@ -113,7 +113,6 @@ public class Game extends BasicGame {
 		try {
 			world = new World();
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		

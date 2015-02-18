@@ -1,3 +1,9 @@
+% test get dir
+
+% make sure rooms are an odd distance away from all other rooms 
+% make sure rooms are an odd didstance aawy from walls
+% make sure rooms have an odd dimensions
+
 %% notes about maze algorithm (low river = many short dead ends, long right = fewer longer deadends)
 
 % currently taking most recent open cell done on line 39 of backtrack
@@ -23,16 +29,23 @@
 % recent cells, the Maze will have a low "river" factor but a 
 % long windy solution.
 
+void
 
-function [map,rooms,pts] = randomDungeon(width,height,roomMin,roomMax,numRoomPuts,turnBias)
+numRoomPuts = 250;
 
-[map,rooms] = randomRoom(width,height,roomMin,roomMax,numRoomPuts);
+roomMax = 9;
+roomMin = 3;
 
-group = size(rooms,1)+1;
+m = 31;
+n = 51;
+
+[map,groups] = randomRoom(m,n,roomMin,roomMax,numRoomPuts);
+
+group = length(groups)+1;
 
 % initialize first maze
 [x,y] = openPoint(map);
-oldD = getDir(map,x,y,[0 0],turnBias);
+oldD = getDir(map,x,y,[0 0]);
 map(x,y) = group;
 
 % assume first point is open
@@ -49,8 +62,9 @@ while pointsRemaining
         done = 0;
     end
     while ~done
-        
-        newD = getDir(map,x,y,oldD,turnBias);
+        spy(map)
+        drawnow
+        newD = getDir(map,x,y,oldD);
         if ~isempty(newD)
             % take step
             x = x+newD(1);
@@ -58,7 +72,7 @@ while pointsRemaining
             oldD = newD;
             
             % add new point to map and pts
-            map(y,x) = group;
+            map(x,y) = group;
             pts{mazeNo} = [pts{mazeNo}; x y 1];
             
         else
@@ -85,7 +99,7 @@ while pointsRemaining
     oldD = getDir(map,x,y,[0 0]);
     group = group+1;
     mazeNo = mazeNo+1;
-    map(y,x) = group;
+    map(x,y) = group;
     
     % assume first point is open
     pts{mazeNo} = [x y 1];
