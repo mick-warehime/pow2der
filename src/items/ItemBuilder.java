@@ -35,18 +35,13 @@ public class ItemBuilder {
 
 		initializeBuilder();
 
-		// no idea why this is -1 here
 		
-		// item types [armor, weapons, books, misc]
 
 
 	}
 
 
-	public Item newItem(Shape shape) throws SlickException {
-		
-		return newItem((int) shape.getX(),(int) shape.getY());
-	}
+	
 
 
 	public Item newItem(int xPos, int yPos) throws SlickException{
@@ -89,35 +84,35 @@ public class ItemBuilder {
 	
 	
 
-	private Item buildItem(int i, int xPos, int yPos) throws SlickException{
+	private Item buildItem(int itemIndex, int xPos, int yPos) throws SlickException{
 
 		// builds the ith item in the vector list
-		Map<String,String> itm = itemMaps.get(i);
+		Map<String,String> itmInfo = itemMaps.get(itemIndex);
 
 		// load image
 
-		Integer row = (int) Float.parseFloat(itm.get("spriteRow"));
-		Integer col = (int) Float.parseFloat(itm.get("spriteCol"));
+		Integer row = (int) Float.parseFloat(itmInfo.get("spriteRow"));
+		Integer col = (int) Float.parseFloat(itmInfo.get("spriteCol"));
 
 		Image sprite = spriteSheet.getSubImage(col-1,row-1);
 
-		if(itm.get("itemType").equalsIgnoreCase("armor")){
-			Item item = new Armor(itm, sprite, xPos, yPos);
+		if(itmInfo.get("itemType").equalsIgnoreCase("armor")){
+			Item item = new Armor(itmInfo, sprite, xPos, yPos);
 			return item;
-		}else if(itm.get("itemType").equalsIgnoreCase("weapons")){
-			Item item = new Weapon(itm, sprite, xPos, yPos);			
+		}else if(itmInfo.get("itemType").equalsIgnoreCase("weapons")){
+			Item item = new Weapon(itmInfo, sprite, xPos, yPos);			
 
 			return item;
 		}
-		else if(itm.get("itemType").equalsIgnoreCase("misc")){
-			Item item = new Misc(itm, sprite, xPos, yPos);
+		else if(itmInfo.get("itemType").equalsIgnoreCase("misc")){
+			Item item = new Misc(itmInfo, sprite, xPos, yPos);
 			return item;
 		}
-		else if (itm.get("itemType").equalsIgnoreCase("books")){
-			Item item = new Book(itm, sprite, xPos, yPos);
+		else if (itmInfo.get("itemType").equalsIgnoreCase("books")){
+			Item item = new Book(itmInfo, sprite, xPos, yPos);
 			return item;
 		}
-		System.out.println("no item built!" +"  item index: "+i+" x: "+xPos+" y: "+yPos);
+		System.out.println("no item built!" +"  item index: "+itemIndex+" x: "+xPos+" y: "+yPos);
 
 		return null;
 

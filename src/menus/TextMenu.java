@@ -11,11 +11,11 @@ public abstract class TextMenu extends Menu {
 		super(menuType,menuRenderX, menuRenderY);
 		
 
-		defineMenuSelections();
+		
 	}
 
 
-	protected abstract void defineMenuSelections();
+	
 	
 	
 

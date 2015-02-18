@@ -1,6 +1,5 @@
 package actors;
 
-import items.Inventory;
 import graphics.ActorGraphics;
 
 import org.newdawn.slick.Graphics;
@@ -31,7 +30,7 @@ public abstract class Actor {
  
 	
 	public void render( Graphics g, int mapX, int mapY) {
-		graphics.render(g,(int) status.getX()-mapX, (int) status.getY() - mapY);
+		graphics.render(g,mapX, (int) mapY);
 	}
 	
 	

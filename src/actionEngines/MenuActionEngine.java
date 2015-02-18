@@ -1,6 +1,10 @@
 package actionEngines;
 
 
+import java.util.Stack;
+
+import items.Item;
+
 import org.newdawn.slick.SlickException;
 
 import menus.Menu;
@@ -24,9 +28,12 @@ public class MenuActionEngine extends ActionEngine{
 	}
 
 	public void activateActiveMenuSelection(){
-		if (!isBusy()){
+		Stack <Menu> activeMenus = menuHandlerData.getAllActiveMenus();
+		
+		if (!isBusy() && !activeMenus.isEmpty()){
 			Menu menu = menuHandlerData.getTopActiveMenu();
 			menu.activateCurrentSelection();
+			
 		}
 	}
 
@@ -104,6 +111,16 @@ public class MenuActionEngine extends ActionEngine{
 			}
 			
 			
+			makeBusy();
+		}
+		
+	}
+
+	public void dropItem(Item item) {
+		if (!isBusy()){
+			menuHandlerData.getPlayerInventory().removeItem(item);
+			closeAllMenus();
+			item.drop();
 			makeBusy();
 		}
 		

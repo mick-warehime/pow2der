@@ -11,6 +11,7 @@ public class MainMenu extends TextMenu {
 
 	public MainMenu(int menuRenderX, int menuRenderY) {
 		super(Menu.MENU_MAIN, menuRenderX, menuRenderY);
+		defineMenuSelections();
 	}
 
 	protected void defineMenuSelections(){

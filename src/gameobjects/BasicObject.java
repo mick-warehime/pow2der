@@ -23,23 +23,17 @@ public class BasicObject {
 	protected Shape shape;	
 	protected boolean canCollide = true;
 	
-	private static final int PROXIMITY = 10;
+	private static final int PROXIMITY = 1;
 
 	public BasicObject(Image image, int xPos, int yPos) throws SlickException{
 		
 		
 		int h = image.getHeight();
 		int w = image.getWidth();
-		
-//		items are a bit smaller than their bounding boxes
-		
-		int hCrop = (int) h/4;
-		int wCrop = (int) w/4;
-		
-		// used for collision detection		
-		shape = new Rectangle(xPos+wCrop,yPos+hCrop,w-2*wCrop,h-2*hCrop);
-		
-		this.graphics = new BasicGraphics(image,xPos,yPos);
+			
+		shape = new Rectangle(xPos,yPos,w,h);
+	
+		this.graphics = new BasicGraphics(image,shape);
 		
 	}
 	
@@ -60,7 +54,11 @@ public class BasicObject {
 	//Checks if an input shape is near the object's shape
 	public boolean isNear(Rectangle rectTest) {
 		
-		Rectangle slightlyBiggerRect = new Rectangle(shape.getX()-PROXIMITY,shape.getY()-PROXIMITY,shape.getWidth()+2*PROXIMITY,shape.getHeight()+2*PROXIMITY);
+		Rectangle slightlyBiggerRect = 
+				new Rectangle(shape.getX()-PROXIMITY,
+							shape.getY()-PROXIMITY,
+							shape.getWidth()+2*PROXIMITY,
+							shape.getHeight()+2*PROXIMITY);
 		return slightlyBiggerRect.intersects(rectTest);
 	}
 

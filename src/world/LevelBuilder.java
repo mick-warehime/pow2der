@@ -20,7 +20,7 @@ public class LevelBuilder {
 	
 	
 	private List<Integer> objectTypes;
-	private List<Shape> objectShapes;
+	private List<Integer[]> objectPositions;
 
 	private int[][] objectMatrix;
 
@@ -34,16 +34,14 @@ public class LevelBuilder {
 	public void newLevel(int m, int n){
 
 		randomObjectsMatrix(m,n);
-		getObjects();
+		defineObjectsFromMatrix();
 
 	}
 
 	public List<Integer> getObjectTypes(){
 		return objectTypes;
 	}
-	public List<Shape> getObjectShapes(){
-		return objectShapes;
-	}
+	
 
 
 	private void randomObjectsMatrix(int m, int n){
@@ -81,13 +79,13 @@ public class LevelBuilder {
 
 
 
-	private void getObjects(){
+	private void defineObjectsFromMatrix(){
 
 
 
 
-		objectShapes = new ArrayList<Shape>();
 		objectTypes = new ArrayList<Integer>();
+		objectPositions = new ArrayList<Integer[]>();
 		// get the number of rows and columns from the objectMatrix
 		int numRows = objectMatrix.length;
 		int numCols = objectMatrix[0].length;
@@ -97,16 +95,13 @@ public class LevelBuilder {
 				
 				if (objectMatrix[row][col]!=BLANK_TILE){
 
-
-					Map<Integer,Shape> obj = new HashMap<Integer,Shape>();
-
 					// convert row/col position to x/y pixels
 					int x = row*World.TILE_WIDTH;
 					int y = col*World.TILE_HEIGHT;
 
 					// store solid collideable walls
-					objectShapes.add(new Rectangle(x,y,World.TILE_WIDTH,World.TILE_HEIGHT));
 					objectTypes.add(objectMatrix[row][col]);
+					objectPositions.add(new Integer[] {x,y});
 				
 				}
 
@@ -114,6 +109,11 @@ public class LevelBuilder {
 		}
 
 
+	}
+
+
+	public List<Integer[]> getObjectPositions() {
+		return this.objectPositions;
 	}
 
 

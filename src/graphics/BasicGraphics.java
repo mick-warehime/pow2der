@@ -5,34 +5,56 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Shape;
 
 import actors.Effect;
 import actors.Status;
 
+/* Draws a single image at the location of a shape */
+
 public class BasicGraphics {
 
+	private int sprite_margin = 0;
 	protected Image sprite;
-	private int xPos;
-	private int yPos;
+	private Shape shape;
 	
 	//	public ItemGraphics(Image image, ItemLocation location) throws SlickException{
-	public BasicGraphics(Image sprite, int xPos, int yPos) throws SlickException{	
+	public BasicGraphics(Image sprite, Shape shape) throws SlickException{	
 		this.sprite = sprite;
-		this.xPos = xPos;
-		this.yPos = yPos;		
+		this.shape = shape;		
 
+	}
+	
+	public void setSpriteMargin(int marg){
+		this.sprite_margin = marg;
 	}
 
 
 	public void render(Graphics g, int renderX, int renderY) {
 
-		sprite.draw(xPos-renderX,yPos-renderY);
+		render(g, renderX,renderY,1f);
 
 	}
 
-	public void render(Graphics g, int renderX, int renderY, float scale) {
+	private void renderShape(Graphics g, int renderX, int renderY){
+		float x = shape.getX();
+		float y = shape.getY();
+		shape.setX(x - renderX);
+		shape.setY(y -renderY);
+		g.draw(shape);
+		shape.setX(x);
+		shape.setY(y);
 
-		sprite.draw(xPos-renderX,yPos-renderY, scale);
+	}
+	
+	public void render(Graphics g, int renderX, int renderY, float scale) {
+		
+		this.renderShape(g, renderX, renderY);
+		
+		float x = shape.getX();
+		float y = shape.getY();
+		
+		sprite.draw(x-renderX- sprite_margin,y-renderY- sprite_margin, scale);
 		
 	}
 

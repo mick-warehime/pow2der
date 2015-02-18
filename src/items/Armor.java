@@ -13,14 +13,14 @@ public class Armor extends Item{
 	private String material;
 	private String worn;
 
-	public Armor(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException {
+	public Armor(Map<String, String> itmInfo, Image sprite, int xPos, int yPos) throws SlickException {
 		
-		super(itm,sprite,xPos,yPos);
+		super(itmInfo,sprite,xPos,yPos);
 		
 		
-		this.AC = (int) Float.parseFloat(itm.get("ac"));
-		this.worn = itm.get("worn");
-		this.material = itm.get("material");
+		this.AC = (int) Float.parseFloat(itmInfo.get("ac"));
+		this.worn = itmInfo.get("worn");
+		this.material = itmInfo.get("material");
 		
 	}
 

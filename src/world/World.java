@@ -1,6 +1,7 @@
 package world;
 
 import graphics.LevelGraphics;
+import items.Item;
 import items.ItemBuilder;
 import items.ItemParser;
 
@@ -23,11 +24,12 @@ import controls.GameControls;
 public class World {
 	
 	private List<Level> levels = new ArrayList<Level>();
-	private int currentLevel;
 	private Player terri;
 	private CollisionHandler collisionHandler;
 	private SpriteSheet spriteSheet;	
 	private ItemBuilder itemBuilder;
+	
+	private CurrentLevelData currentLevelData = new CurrentLevelData();
 	
 	private LevelGraphics levelGraphics;
 	
@@ -43,12 +45,14 @@ public class World {
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 		
-		currentLevel = 0;		
+		terri = new Player();
 		
 		newLevel(50,50);
 		
+		currentLevelData.setCurrentLevel(levels.get(0));
+	
 		
-		//		itemBuilder.testItems();
+		
 
 	}
 	
@@ -60,7 +64,8 @@ public class World {
 		levelGraphics.render(graphics,(int) terri.getX(),(int)terri.getY());
 		
 		// draw level items/objects
-		levels.get(currentLevel).render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
+		Level currentLevel = currentLevelData.getCurrentLevel();
+		currentLevel.render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
 		
 		// draw player
 		terri.render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
@@ -71,7 +76,8 @@ public class World {
 	public void update() throws SlickException {
 		terri.update();
 		
-		levels.get(currentLevel).update();
+		
+		currentLevelData.getCurrentLevel().update();
 		
 		if (terri.isDying()){
 			System.out.println(terri.isDying());
@@ -84,13 +90,18 @@ public class World {
 		
 		Level newLevel = new Level(itemBuilder,levelWidth,levelHeight);
 		
+		newLevel.assignToItems(currentLevelData);
+		
 		levelGraphics = new LevelGraphics(newLevel,levelWidth,levelHeight);
 		
 		levels.add(newLevel);		
 		
 		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
 		
-		terri = new Player(newLevel,collisionHandler);
+		
+		terri.placePlayer(newLevel.getStartX(),  newLevel.getStartY());
+		terri.setCollisionHandler(collisionHandler);
+		
 //		
 	}
 	
@@ -98,5 +109,10 @@ public class World {
 	public Player getPlayer(){
 		return terri;
 	}
+
+
+	
+	
+	
 
 }

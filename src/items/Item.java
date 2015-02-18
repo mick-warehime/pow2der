@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import world.CurrentLevelData;
 import actors.Status;
 
 
@@ -21,38 +22,49 @@ import actors.Status;
 public class Item extends BasicObject implements Interactive{
 
 	protected String name;
-	protected Image image;
 	protected int value;
 	protected String type;
 	protected boolean stackable;
 	protected int weight;
 	protected ArrayList<String> properties;
-	private ItemLocation location;
+	private ItemLocation location = new ItemLocation(this);
+//	private static int SPRITE_MARGIN = ;
+	private static float SPRITE_DRAW_SCALE = 0.6f;
+	private static int SPRITE_MARGIN = 5;
+	private static float RECT_SHRINK_MARGIN = 15f;
 
-	public Item(Map<String, String> itm, Image image, int xPos, int yPos) throws SlickException{		
+	public Item(Map<String, String> itmInfo, Image image, int xPos, int yPos) throws SlickException{		
 
 		super(image,xPos,yPos);
-
-		this.type = itm.get("itemType");		
+		
+		this.graphics.setSpriteMargin(SPRITE_MARGIN);
+		
+		//Shrink shape because it's based on image size
+		shrinkShapes();
+		
+		this.type = itmInfo.get("itemType");		
 		
 		this.canCollide = false;
 		
-		this.location = new ItemLocation(this);
 		
 	}
 
-
+	private void shrinkShapes(){
+		
+		((Rectangle)this.shape).grow(-RECT_SHRINK_MARGIN, -RECT_SHRINK_MARGIN);
+		
+	}
+	
 	public boolean isOnGround(){
 		return location.onGround;
 	}
-	public Shape getShape(){
-		return shape;
-	}
+	
 
 	@Override
 	public void render(Graphics g, int renderX, int renderY){
-		if(location.isOnGround()){
-			graphics.render(g, renderX, renderY, (float) 0.6);
+		
+		if(location.onGround){
+			graphics.render(g, renderX , renderY, SPRITE_DRAW_SCALE);
 		}
 	}
 	
@@ -86,65 +98,70 @@ public class Item extends BasicObject implements Interactive{
 		if (interactionType != Interactive.INTERACTION_PICKUP){
 			return;
 		}
-		assert location.isOnGround() : "Error! Item receiving an interact command when it's not on the ground!";
+		assert location.onGround : "Error! Item receiving an interact command when it's not on the ground!";
 		
-		status.getInventory().addItem(this);
-		location.applyPickup( status.getInventory());
+		Inventory inventory = status.getInventory();
+		Shape actorShape = status.getRect();
+		location.applyPickup(inventory, actorShape);
 		
+		this.location.onGround = false;
 		
 
 	}
 	
-	public void drop(float xPos, float yPos){
-		location.applyDrop((int) xPos, (int) yPos);
-		shape.setLocation(xPos, yPos);
+	public void drop(){
+		location.applyDrop();
+	}
+
+	
+	public void setCurrentLevelData(CurrentLevelData currentLevelData) {
+		location.currentLevelData = currentLevelData;
+		
 	}
 	
-	/* Is aware of item's position (if it's on ground) or position of 
-	 * object holding it in inventory
-	 * 
-	 */
+	/* Handles item's location */
+	
 	class ItemLocation{
 		
 		private Item owningItem;
 		private boolean onGround = true;
-		private int xPos;
-		private int yPos;
 		private Inventory storingInventory;
+		private CurrentLevelData currentLevelData;
+		private Shape ownerShape;
 		
-		public ItemLocation( Item owningItem){
-			this.owningItem = owningItem;
-			
-			
+		public ItemLocation(Item owner){
+			this.owningItem = owner;
 		}
 		
 		
-		public void applyDrop(int xPos, int yPos){
-			/* No longer track position of previously holding object */
-			this.xPos = xPos;
-			this.yPos = yPos;
+		
+		public void applyDrop(){
 			this.onGround = true;
 			
-			if (storingInventory !=null){
-				storingInventory.removeItem(owningItem);
-				storingInventory = null;
-			}
+			float x = ownerShape.getX();
+			float y= ownerShape.getY();
+			ownerShape = null; // Prevents memory leak
 			
-		}
-		public void applyPickup( Inventory storingInventory ){
-			this.onGround = false;
-			
-			
-			this.storingInventory = storingInventory;
+			shape.setLocation(x, y);
+			currentLevelData.getCurrentLevel().addObject(owningItem);
+			storingInventory.removeItem(owningItem);
+			storingInventory = null; //Prevents memory leak
 		}
 		
-		public boolean isOnGround(){
-			return onGround;
+		public void applyPickup(Inventory inventory, Shape actorShape){
+			this.storingInventory = inventory;
+			this.ownerShape = actorShape;
+			storingInventory.addItem(owningItem);
+			
+			
 		}
-		
 		
 		
 		
 	}
+	
+	
+
+	
 
 }
