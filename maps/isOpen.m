@@ -7,20 +7,20 @@ dirs = [1 0; 0 1; -1 0; 0 -1];
 in = ismember(dirs,-do,'rows');
 dirs = dirs(~in,:);
 
-m = size(map,1);
-n = size(map,2);
+width = size(map,2);
+height = size(map,1);
 
 open = 1;
 for j = 1:size(dirs,1)
-    do
-    if xn+k>1 && xn+k<=m
+   
+    if xn+k>1 && xn+k<=width
         for l = -1:1
             
             % make sure y is in the board
-            if yn+l>1 && yn+l<=n
+            if yn+l>1 && yn+l<=height
                 
                 if (xn+k) ~= x || (yn+l) ~= y
-                    if map(xn+k,yn+l)~=0
+                    if map(yn+l,xn+k)~=0
                         open = 0;
                     end
                     
