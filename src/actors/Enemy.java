@@ -21,7 +21,7 @@ public class Enemy extends Actor implements Broadcaster{
 	private LemmingBehavior behavior;
 	
 
-	public Enemy(int xPixels, int yPixels, CollisionHandler collisionHandler) throws SlickException {
+	public Enemy(int xPixels, int yPixels) throws SlickException {
 		super();
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
@@ -29,13 +29,13 @@ public class Enemy extends Actor implements Broadcaster{
 		listenerAggregator = new InputListenerAggregator();
 				
 		status = new Status(rect);
-		status.setCollisionHandler(collisionHandler);
+		
 		
 		graphics = new ActorGraphics("data/dwarf.png", status);
 
 		engine = new EnemyActionEngine(listenerAggregator, status);
 
-		behavior = new LemmingBehavior(status, collisionHandler);
+		behavior = new LemmingBehavior(status);
 
 		listenerAggregator.addListener(behavior);
 		
@@ -61,6 +61,15 @@ public class Enemy extends Actor implements Broadcaster{
 			list.add( new DieCommand());
 		}
 		return list;
+	}
+
+	
+
+	@Override
+	public void setCollisionHandler(CollisionHandler collisionHandler){
+		super.setCollisionHandler(collisionHandler);
+		behavior.setCollisionHandler(collisionHandler);
+	
 	}
 	
 

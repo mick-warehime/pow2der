@@ -14,8 +14,8 @@ public class LemmingBehavior extends Behavior implements CommandProvider{
 	
 	
 	
-	public LemmingBehavior(Status status, CollisionHandler collisionHandler) {
-		super(status, collisionHandler);
+	public LemmingBehavior(Status status) {
+		super(status);
 
 	}
 

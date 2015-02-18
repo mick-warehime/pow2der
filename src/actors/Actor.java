@@ -68,6 +68,16 @@ public abstract class Actor {
 		
 	}
 
+	public void setCollisionHandler(CollisionHandler collisionHandler) {
+
+		listenerAggregator.removeListenersOfClass(collisionHandler.getClass());
+		listenerAggregator.addListener(collisionHandler);
+		
+		status.setCollisionHandler(collisionHandler);
+		
+
+	}
+	
 
 
 }

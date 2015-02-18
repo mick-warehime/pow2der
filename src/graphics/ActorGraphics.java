@@ -58,7 +58,7 @@ public class ActorGraphics {
 	
 	public void render(Graphics g, int renderX, int renderY) {
 		
-		renderShape( g,  renderX,  renderY);
+//		renderShape( g,  renderX,  renderY);
 		
 		
 		determineCurrentActorDirection();

@@ -68,17 +68,16 @@ public class Player extends Actor {
 		return status.getInventory();
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler) {
-		
-		listenerAggregator.removeListenersOfClass(collisionHandler.getClass());
-		listenerAggregator.addListener(collisionHandler);
-		
-		
-		collisionHandler.addPlayerRect(status.getRect());
-		status.setCollisionHandler(collisionHandler);
-		
-	}
 	
+
+
+
+	@Override
+	public void setCollisionHandler(CollisionHandler collisionHandler){
+		super.setCollisionHandler(collisionHandler);
+		collisionHandler.addPlayerRect(status.getRect());
+	
+	}
 
 	
 

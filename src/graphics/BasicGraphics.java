@@ -49,7 +49,7 @@ public class BasicGraphics {
 	
 	public void render(Graphics g, int renderX, int renderY, float scale) {
 		
-		this.renderShape(g, renderX, renderY);
+//		this.renderShape(g, renderX, renderY);
 		
 		float x = shape.getX();
 		float y = shape.getY();

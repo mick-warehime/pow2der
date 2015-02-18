@@ -13,10 +13,14 @@ public class Behavior implements CommandProvider{
 	protected CollisionHandler collisionHandler;
 	protected ArrayList<Command> commandStack;
 
-	public Behavior(Status status2, CollisionHandler collisionHandler) {
+	public Behavior(Status status2) {
 		this.status = status2;
-		this.collisionHandler = collisionHandler;
+		
 		this.commandStack = new ArrayList<Command>();
+	}
+	
+	public void setCollisionHandler(CollisionHandler collisionHandler){
+		this.collisionHandler = collisionHandler;
 	}
 
 	@SuppressWarnings("unchecked")
