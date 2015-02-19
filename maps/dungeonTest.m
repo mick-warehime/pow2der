@@ -9,34 +9,34 @@ roomMax = 7;
 roomMin = 3;
 
 width = 21;
-height = 81;
+height = 31;
 
-[map,rooms] = randomRoom(width,height,roomMin,roomMax,numRoomPuts);
+[map0,rooms] = randomRoom(width,height,roomMin,roomMax,numRoomPuts);
 
-[map,rooms,mazes] = randomDungeon(width,height,roomMin,roomMax,numRoomPuts,turnBias);
+[map1,rooms,mazes] = randomDungeon(map0,rooms,turnBias);
 
-[map,passages,door] = addPassages(map,rooms,probBonusConnection,numBonusAttempts);
+[map2,passages,door] = addPassages(map1,rooms,probBonusConnection,numBonusAttempts);
 
-map = removeDeadEnds(map,mazes,passages);
+map3 = removeDeadEnds(map2,mazes,passages);
 
 % map = addWalls(map,rooms,door);
 
 % convert to rooms, doors, and mazes
 nRooms = size(rooms,1);
-map(map<=nRooms & map>0) = 1; % room
-map(map==door) = 3; % door
-map(map>nRooms & map<door) = 2; % hall
+map3(map3<=nRooms & map3>0) = 1; % room
+map3(map3==door) = 3; % door
+map3(map3>nRooms & map3<door) = 2; % hall
 
-map = expandHallways(map);
+map4 = expandHallways(map3);
 
 
 
 hold all
 c = [{'ro'},{'bo'},{'ko'}];
 for j=1:3
-    [I,J] = find(map==j);
+    [I,J] = find(map4==j);
     
-    plot(I,J,c{j})
+    plot(J,I,c{j})
     
 end
 

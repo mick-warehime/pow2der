@@ -20,7 +20,6 @@ yVals = 2:2:height;
 roomVals = roomMin:2:roomMax;
 
 map = zeros(height,width);
-groups = cell(numRoomPuts,1);
 group = 1;
 rooms = [];
 for j=1:numRoomPuts
@@ -71,4 +70,3 @@ for j=1:numRoomPuts
     
 end
 
-groups(group:end)=[];
