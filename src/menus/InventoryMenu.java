@@ -70,15 +70,21 @@ public class InventoryMenu extends Menu{
 
 	private void defineSelectionsFromInventory(Inventory playerInventory) throws SlickException {
 		selections = new ArrayList<MenuSelection>();
+		
+		ArrayList<Item> equippedItems = playerInventory.getEquipped();
 
 		for (Item item : playerInventory.getItems()){
+			if (equippedItems.contains(item)){
 
-			addItemSelection(item);
+			}else{
+				addUnequippedItemSelection(item);
+			}
 
 		}
 
+		
 		for (int i = selections.size(); i<(menuWidthInItems*menuHeightInItems); i++){
-			addItemSelection(null);
+			addNullSelection();
 		}
 
 
@@ -101,7 +107,7 @@ public class InventoryMenu extends Menu{
 	}
 
 
-	private void addItemSelection(Item item) throws SlickException {
+	private void addUnequippedItemSelection(Item item) throws SlickException {
 
 		int length = selections.size();
 
@@ -113,26 +119,46 @@ public class InventoryMenu extends Menu{
 		int xPos = menuRenderX + imageSizeInPixels*menuX;
 		int yPos = menuRenderY + imageSizeInPixels*menuY;
 
-		MenuSelection selection;
 		if (item != null){
 			
 			
 			Command menuCmd = new MenuOpenCommand(new ItemMenu(menuRenderX - 100,menuRenderY, item));
+			InventorySelectionGraphics graphics = new InventorySelectionGraphics(item.getImage(),xPos,yPos);
+			addMenuSelection(menuCmd,graphics);
 			
-			selection = new MenuSelection(	menuCmd, 
-					new InventorySelectionGraphics(item.getImage(),xPos,yPos));
-			
-		}else
-		{
-			selection = new MenuSelection(
-					new NullCommand(), 
-					new InventorySelectionGraphics(null,xPos,yPos));
 		}
 		
+		
+		
+		
+
+
+
+	}
+	
+	private void addMenuSelection(Command cmd, InventorySelectionGraphics graphics){		
+		MenuSelection selection = new MenuSelection(cmd, graphics);
 		selections.add(selection);
+		
+	}
+	
+	
+	
+	private void addNullSelection() throws SlickException{
+		
+		int length = selections.size();
+
+		int menuX = indexToMenuX(length);
+		int menuY = indexToMenuY(length);
+		assert (menuY<menuHeightInItems) : "Player's inventory has too many elements for the menu!";
 
 
-
+		int xPos = menuRenderX + imageSizeInPixels*menuX;
+		int yPos = menuRenderY + imageSizeInPixels*menuY;
+		
+		
+		addMenuSelection(new NullCommand(), 
+				new InventorySelectionGraphics(null,xPos,yPos));
 	}
 
 
