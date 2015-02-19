@@ -62,8 +62,9 @@ public class Level {
 				startX = pos[0];
 				startY = pos[1];
 			}else if (type == LevelBuilder.OBJECT_ENEMY){
-				System.out.println("HHGH");
-//				actors.add(new Enemy(pos[0],pos[1]));
+				Enemy nme = new Enemy(pos[0],pos[1]);
+				addObject(nme);
+				
 			}
 			
 

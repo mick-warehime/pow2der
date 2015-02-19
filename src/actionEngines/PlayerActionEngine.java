@@ -41,19 +41,6 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 	
 
-//	public void attemptInteract( int interactionType){
-//		//Get nearby objects to interact with
-//		ArrayList<GameObject> objects = status.nearbyInteractives();
-//		
-//		//Interact, if possible
-//		if (interactTimer==0 && !objects.isEmpty()){
-//			for (GameObject gObj: objects){
-//				((Interactive) gObj).interact(interactionType);
-//			}
-//			
-//			interactTimer+= interactTimerIncrement;
-//		}
-//	}
 	
 	
 	public void attemptInteract( int interactionType, Status status){

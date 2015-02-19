@@ -10,13 +10,13 @@ import org.newdawn.slick.geom.Rectangle;
 import world.CollisionHandler;
 import world.Level;
 import actionEngines.PlayerActionEngine;
+import commands.CollisionCommandProvider;
 import commands.InputListenerAggregator;
 import commands.KeyboardInputListener;
 
 public class Player extends Actor {
 
 	private KeyboardInputListener keyboard;
-	private Rectangle rect;
 	
 
 	public Player() throws SlickException {
@@ -28,7 +28,7 @@ public class Player extends Actor {
 		listenerAggregator.addListener(keyboard);
 		
 		
-		rect = new Rectangle(0f, 0f, 28, 28);
+		Rectangle rect = new Rectangle(0f, 0f, 28, 28);
 		status = new Status(rect);
 
 		
@@ -76,7 +76,8 @@ public class Player extends Actor {
 	public void setCollisionHandler(CollisionHandler collisionHandler){
 		super.setCollisionHandler(collisionHandler);
 		collisionHandler.addPlayerRect(status.getRect());
-	
+		
+		
 	}
 
 	

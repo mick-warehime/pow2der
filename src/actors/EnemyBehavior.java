@@ -1,20 +1,16 @@
 package actors;
 
-import java.util.ArrayList;
-
-import org.newdawn.slick.command.Command;
-
-import world.CollisionHandler;
 import commands.CommandProvider;
+import commands.DieCommand;
 import commands.MoveCommand;
 
 //Gives commands to an actor based on world conditions
-public class LemmingBehavior extends Behavior implements CommandProvider{
+public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 	
 	
 	
-	public LemmingBehavior(Status status) {
+	public EnemyBehavior(Status status) {
 		super(status);
 
 	}
@@ -28,17 +24,16 @@ public class LemmingBehavior extends Behavior implements CommandProvider{
 			resolvePlayerCollision();
 		}
 
-		//Resolve collision with interactives
-		resolveInteractiveCollisions();
+		
 
 		decideMovement();
 	}
 	
 	
-	//Apply these reactions on Player Collision
+	
 	private void resolvePlayerCollision(){
-//		commandStack.add(new DieCommand());
-
+		commandStack.add(new DieCommand());
+		
 	}
 	
 	private void decideMovement(){
@@ -50,13 +45,15 @@ public class LemmingBehavior extends Behavior implements CommandProvider{
 		
 		commandStack.add(new MoveCommand('x', status.getDirection('x')));
 		
+		if (status.hasEffect(Effect.EFFECT_Y_COLLISION)){
+			int oldYDir = status.getDirection('y');
+			status.setDirection('y',-oldYDir);
+		}
+		
+		commandStack.add(new MoveCommand('y', status.getDirection('y')));
+		
 		return;
 	}
 	
-	private void resolveInteractiveCollisions(){
-		ArrayList<Command> newCommands = collisionHandler.resolveInteractiveCollisions(status.getRect(), Enemy.class);
-		commandStack.addAll(newCommands);
-		return;
-	}
-
+	
 }

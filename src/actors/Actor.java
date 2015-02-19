@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
 import actionEngines.ActionEngine;
+import commands.CollisionCommandProvider;
 import commands.InputListenerAggregator;
 
 public abstract class Actor {
@@ -49,9 +50,6 @@ public abstract class Actor {
 	}
 
 	
-	public boolean canCollide(){
-		return true;
-	}
 
 	public Rectangle getShape() {
 		return status.getRect();
@@ -70,12 +68,13 @@ public abstract class Actor {
 
 	public void setCollisionHandler(CollisionHandler collisionHandler) {
 
-		listenerAggregator.removeListenersOfClass(collisionHandler.getClass());
-		listenerAggregator.addListener(collisionHandler);
+		
 		
 		status.setCollisionHandler(collisionHandler);
 		
-
+		CollisionCommandProvider ccp = new CollisionCommandProvider(collisionHandler,this.getClass(), this.getShape());
+		listenerAggregator.removeListenersOfClass(ccp.getClass());
+		listenerAggregator.addListener(ccp);
 	}
 	
 

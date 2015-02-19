@@ -1,25 +1,17 @@
 package world;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-import org.xml.sax.SAXException;
-
 import actors.Actor;
-import actors.Player;
-import commands.CommandProvider;
 import gameobjects.BasicObject;
 import gameobjects.Interactive;
 import gameobjects.Broadcaster;
-
-public class CollisionHandler implements CommandProvider {
+//
+public class CollisionHandler  {
 
 	private ArrayList<Shape> blocks;
 	private ArrayList<Actor> actors;
@@ -97,11 +89,11 @@ public class CollisionHandler implements CommandProvider {
 
 	public boolean isCollidedWithActor(Shape shape){
 		for (Actor nme: actors){
-			if(nme.canCollide()){
-				if(nme.getShape().intersects(shape)){
-					return true;
-				}
+
+			if(nme.getShape().intersects(shape)){
+				return true;
 			}
+
 		}
 
 		return playerRect.intersects(shape); 
@@ -129,9 +121,9 @@ public class CollisionHandler implements CommandProvider {
 	}
 
 
-	public ArrayList<Command> getCommands(){
-		return resolveInteractiveCollisions(playerRect, Player.class);
-	}
+//	public ArrayList<Command> getCommands(){
+//		return resolveBroadcasterCollisions(playerRect, Player.class);
+//	}
 
 
 	//Checks a shape for collisions with interactive collideables
@@ -139,24 +131,28 @@ public class CollisionHandler implements CommandProvider {
 	// and does the interactive's inherent collision command
 	// For collisions to be class specific, we pass in a 
 	// collidingObjectClass.
-	public ArrayList <Command> resolveInteractiveCollisions(Rectangle rect, Class collidingObjectClass ){
-		ArrayList<Command> output = new  ArrayList <Command>();
+	public ArrayList <Command> resolveBroadcasterCollisions(Shape collidingShape, Class<?> collidingObjectClass ){
+		ArrayList<Command> outputCommands = new  ArrayList <Command>();
 
 		//Make a slightly bigger rectangle because physics don't 
 		// allow you to actually move into another object
 		int proximity = 1;
-		Rectangle slightlyBiggerRect = new Rectangle(rect.getX()-proximity,rect.getY()-proximity,rect.getWidth()+2*proximity,rect.getHeight()+2*proximity);
+		Rectangle slightlyBiggerRect = new Rectangle(collidingShape.getX()-proximity,collidingShape.getY()-proximity,collidingShape.getWidth()+2*proximity,collidingShape.getHeight()+2*proximity);
 
 		
-		for (Broadcaster interObj : broadcasters){
+		for (Broadcaster bcaster : broadcasters){
 
-			if (slightlyBiggerRect.intersects(interObj.getShape())){
-				interObj.onCollisionDo(collidingObjectClass, rect);
-				output.addAll(interObj.onCollisionBroadcast(collidingObjectClass, rect));
+			if (slightlyBiggerRect.intersects(bcaster.getShape())){
+				bcaster.onCollisionDo(collidingObjectClass, collidingShape);
+				ArrayList<Command> newCommands = bcaster.onCollisionBroadcast(collidingObjectClass, collidingShape);
+				outputCommands.addAll(newCommands);	
+//				System.out.println("Class type" + collidingObjectClass + " collided with" + bcaster);
+//				System.out.println("received commands: " + newCommands);
 			}
 		}
-
-		return output;
+		
+		
+		return outputCommands;
 	}
 
 

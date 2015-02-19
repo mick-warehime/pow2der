@@ -16,8 +16,7 @@ public class Status {
 
 	private boolean isDying;
 	private ArrayList<Effect> effects;
-	private int direction = 1;
-	private int xDirection = 1;
+	private int xDirection = -1;
 	private int yDirection = 1;
 	protected Inventory inventory = new Inventory();
 	
@@ -25,15 +24,9 @@ public class Status {
 	private CollisionHandler collisionHandler;
 
 	public Status(Rectangle rect) {
-		//		this.player = player;
 		this.isDying = false;
-
 		this.rect = rect;
-
-
 		effects = new ArrayList<Effect>();
-//		attributes = new ArrayList<Attribute>();
-//		attributes.add(new Attribute("Alive", true));
 
 	}
 
@@ -88,17 +81,13 @@ public class Status {
 		return inventory;
 	}
 
-	public void setAlive(){
-		this.isDying = false;
-	}
-
+	
 	public void setX(float x){
 		this.rect.setX(x);
 	}
 
 	public void setY(float y){
-		// the -1 makes sure he doesnt start stuck in anything
-		this.rect.setY(y-1);
+		this.rect.setY(y);
 	}
 
 	public void setDying(boolean b) {
@@ -110,7 +99,6 @@ public class Status {
 	}
 
 	public void updateEffects(){
-
 
 
 		//count down on each effect, remove ones that have run down
