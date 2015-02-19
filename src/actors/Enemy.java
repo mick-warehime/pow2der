@@ -11,33 +11,34 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import world.CollisionHandler;
 import actionEngines.EnemyActionEngine;
+import commands.CollisionCommandProvider;
 import commands.DieCommand;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 import gameobjects.Broadcaster;
 import graphics.ActorGraphics;
 
 public class Enemy extends Actor implements Broadcaster{
 
-	private LemmingBehavior behavior;
+	private EnemyBehavior behavior;
 	
 
-	public Enemy(int xPixels, int yPixels, CollisionHandler collisionHandler) throws SlickException {
+	public Enemy(int xPixels, int yPixels) throws SlickException {
 		super();
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		 
-		listenerAggregator = new InputListenerAggregator();
+		commandProviderAggregator = new CommandProviderAggregator();
 				
 		status = new Status(rect);
-		status.setCollisionHandler(collisionHandler);
+		
 		
 		graphics = new ActorGraphics("data/dwarf.png", status);
 
-		engine = new EnemyActionEngine(listenerAggregator, status);
+		engine = new EnemyActionEngine(commandProviderAggregator, status);
 
-		behavior = new LemmingBehavior(status, collisionHandler);
+		behavior = new EnemyBehavior(status);
 
-		listenerAggregator.addListener(behavior);
+		commandProviderAggregator.addProvider(behavior);
 		
 	}
 
@@ -56,12 +57,16 @@ public class Enemy extends Actor implements Broadcaster{
 
 	@Override
 	public ArrayList<Command> onCollisionBroadcast(Class<?> collidingObjectClass, Shape collidingObjectShape) {
-		ArrayList<Command> list = new ArrayList<Command>();
-		if (collidingObjectClass.equals(Player.class)){
-			list.add( new DieCommand());
-		}
-		return list;
+		ArrayList<Command> outputCommands = new ArrayList<Command>();
+//		if (collidingObjectClass.equals(Player.class)){
+//			outputCommands.add( new DieCommand());
+//		}
+		return outputCommands;
 	}
+
+	
+
+	
 	
 
 

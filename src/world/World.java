@@ -17,6 +17,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.xml.sax.SAXException;
 
+import actors.Actor;
 import actors.Player;
 import menus.MenuHandler;
 import controls.GameControls;
@@ -80,7 +81,7 @@ public class World {
 		currentLevelData.getCurrentLevel().update();
 		
 		if (terri.isDying()){
-			System.out.println(terri.isDying());
+			System.out.println("Terri is dead!");
 		}
 		
 		
@@ -97,7 +98,9 @@ public class World {
 		levels.add(newLevel);		
 		
 		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
-		
+		for (Actor dude : newLevel.getActors()){
+			dude.setCollisionHandler(collisionHandler);
+		}
 		
 		terri.placePlayer(newLevel.getStartX(),  newLevel.getStartY());
 		terri.setCollisionHandler(collisionHandler);

@@ -18,8 +18,9 @@ public class LevelBuilder {
 	protected static final int OBJECT_BLOCK = 1;
 	protected static final int OBJECT_ITEM = 2;
 	protected static final int OBJECT_DOOR = 3;
-
-
+	protected static final int OBJECT_ENEMY = 4;
+	
+	
 	private List<Integer> objectTypes;
 	private List<Integer[]> objectPositions;
 
@@ -109,6 +110,7 @@ public class LevelBuilder {
 		// add something to run into in the middle of the map
 		objectMatrix[12][10] = OBJECT_BLOCK;
 		objectMatrix[2][2] = START_PT;
+		objectMatrix[5][5] = OBJECT_ENEMY;
 
 		this.objectMatrix = objectMatrix;
 

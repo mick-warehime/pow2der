@@ -10,7 +10,7 @@ import org.newdawn.slick.SlickException;
 import menus.Menu;
 import menus.MenuHandlerData;
 import menus.InventoryMenu;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 
 //Performs actions for a menu, based on inputs
 public class MenuActionEngine extends ActionEngine{
@@ -21,7 +21,7 @@ public class MenuActionEngine extends ActionEngine{
 
 
 
-	public MenuActionEngine(InputListenerAggregator listener, MenuHandlerData menuHandlerData) {
+	public MenuActionEngine(CommandProviderAggregator listener, MenuHandlerData menuHandlerData) {
 		super(listener);
 		this.menuHandlerData = menuHandlerData;
 

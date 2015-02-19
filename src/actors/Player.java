@@ -10,13 +10,13 @@ import org.newdawn.slick.geom.Rectangle;
 import world.CollisionHandler;
 import world.Level;
 import actionEngines.PlayerActionEngine;
-import commands.InputListenerAggregator;
+import commands.CollisionCommandProvider;
+import commands.CommandProviderAggregator;
 import commands.KeyboardInputListener;
 
 public class Player extends Actor {
 
 	private KeyboardInputListener keyboard;
-	private Rectangle rect;
 	
 
 	public Player() throws SlickException {
@@ -24,16 +24,16 @@ public class Player extends Actor {
  			
 		
 		keyboard = new KeyboardInputListener();
-		listenerAggregator = new InputListenerAggregator();
-		listenerAggregator.addListener(keyboard);
+		commandProviderAggregator = new CommandProviderAggregator();
+		commandProviderAggregator.addProvider(keyboard);
 		
 		
-		rect = new Rectangle(0f, 0f, 28, 28);
+		Rectangle rect = new Rectangle(0f, 0f, 28, 28);
 		status = new Status(rect);
 
 		
 
-		engine = new PlayerActionEngine(listenerAggregator,status);
+		engine = new PlayerActionEngine(commandProviderAggregator,status);
 		
 		this.graphics = new ActorGraphics("data/dwarf2.png", status);
 		
@@ -68,17 +68,17 @@ public class Player extends Actor {
 		return status.getInventory();
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler) {
-		
-		listenerAggregator.removeListenersOfClass(collisionHandler.getClass());
-		listenerAggregator.addListener(collisionHandler);
-		
-		
+	
+
+
+
+	@Override
+	public void setCollisionHandler(CollisionHandler collisionHandler){
+		super.setCollisionHandler(collisionHandler);
 		collisionHandler.addPlayerRect(status.getRect());
-		status.setCollisionHandler(collisionHandler);
+		
 		
 	}
-	
 
 	
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.command.Command;
 
 import actors.Status;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 import commands.MoveCommand;
 import gameobjects.BasicObject;
 import gameobjects.GameObject;
@@ -30,7 +30,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 
 
-	public PlayerActionEngine(InputListenerAggregator listener, Status status){
+	public PlayerActionEngine(CommandProviderAggregator listener, Status status){
 		super(listener,status);
 		
 		this.runAcc = 2;
@@ -41,19 +41,6 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 	
 
-//	public void attemptInteract( int interactionType){
-//		//Get nearby objects to interact with
-//		ArrayList<GameObject> objects = status.nearbyInteractives();
-//		
-//		//Interact, if possible
-//		if (interactTimer==0 && !objects.isEmpty()){
-//			for (GameObject gObj: objects){
-//				((Interactive) gObj).interact(interactionType);
-//			}
-//			
-//			interactTimer+= interactTimerIncrement;
-//		}
-//	}
 	
 	
 	public void attemptInteract( int interactionType, Status status){
@@ -96,7 +83,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 		//Do actions from commands
 		super.doActions();
 		//Get all player commands
-		ArrayList<Command> currentActionCommands = listener.popCurrentActionCommands();
+		ArrayList<Command> currentActionCommands = listenerAggregator.popCurrentActionCommands();
 
 //		
 		//See if the player should decelerate
