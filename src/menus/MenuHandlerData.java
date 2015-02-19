@@ -6,7 +6,7 @@ import items.Item;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 
 /* Stores basic information used by the menu Handler class:
  * stack of currently active Menus,
@@ -20,7 +20,7 @@ public class MenuHandlerData {
 	private boolean isQuitting = false;
 	private Inventory playerInventory;
 
-	public MenuHandlerData(InputListenerAggregator listenerAggregator){
+	public MenuHandlerData(){
 		
 		this.activeMenuStack = new Stack<Menu>();
 	}

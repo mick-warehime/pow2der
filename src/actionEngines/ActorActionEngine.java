@@ -2,7 +2,7 @@ package actionEngines;
 
 import actors.Effect;
 import actors.Status;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 
 
 public class ActorActionEngine extends ActionEngine {
@@ -17,7 +17,7 @@ public class ActorActionEngine extends ActionEngine {
 
 
 
-	public ActorActionEngine(InputListenerAggregator listener, Status status2) {
+	public ActorActionEngine(CommandProviderAggregator listener, Status status2) {
 		super(listener);
 		this.status = status2;
 	}

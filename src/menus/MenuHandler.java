@@ -12,7 +12,7 @@ import org.newdawn.slick.command.InputProviderListener;
 
 import actionEngines.MenuActionEngine;
 import commands.CommandProvider;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 import commands.KeyboardInputListener;
 
 
@@ -26,7 +26,7 @@ public class MenuHandler {
 
 	private KeyboardInputListener keyboardInputs;
 	private MenuInputListener menuInputs;
-	private InputListenerAggregator listenerAggregator;
+	private CommandProviderAggregator commandProviderAggregator;
 	private MenuActionEngine actionEngine;
 	private MenuHandlerData menuHandlerData;
 
@@ -37,13 +37,13 @@ public class MenuHandler {
 		
 		this.keyboardInputs = new KeyboardInputListener();
 		this.menuInputs = new MenuInputListener();
-		this.listenerAggregator = new InputListenerAggregator();
-		listenerAggregator.addListener(keyboardInputs);
-		listenerAggregator.addListener(menuInputs);
+		this.commandProviderAggregator = new CommandProviderAggregator();
+		commandProviderAggregator.addProvider(keyboardInputs);
+		commandProviderAggregator.addProvider(menuInputs);
 
-		this.menuHandlerData = new MenuHandlerData(listenerAggregator);
+		this.menuHandlerData = new MenuHandlerData();
 		
-		this.actionEngine = new MenuActionEngine(listenerAggregator, menuHandlerData);
+		this.actionEngine = new MenuActionEngine(commandProviderAggregator, menuHandlerData);
 
 
 	}

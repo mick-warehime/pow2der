@@ -7,13 +7,13 @@ import org.newdawn.slick.command.Command;
 
 
 //Listens to command inputs from generic providers
-public class InputListenerAggregator {
+public class CommandProviderAggregator {
 
 
 	private ArrayList <CommandProvider> providers; 	
 	private ArrayList<Command> currentActionCommands ;
 
-	public InputListenerAggregator() {
+	public CommandProviderAggregator() {
 		providers = new ArrayList <CommandProvider>();
 		this.currentActionCommands = new ArrayList<Command>();
 
@@ -21,7 +21,7 @@ public class InputListenerAggregator {
 
 	}
 
-	public void addListener( CommandProvider provider){
+	public void addProvider( CommandProvider provider){
 		providers.add(provider);
 	}
 	

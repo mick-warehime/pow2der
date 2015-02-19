@@ -9,12 +9,12 @@ import org.newdawn.slick.geom.Rectangle;
 import world.CollisionHandler;
 import actionEngines.ActionEngine;
 import commands.CollisionCommandProvider;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 
 public abstract class Actor {
 
 	protected ActorGraphics graphics;
-	protected InputListenerAggregator listenerAggregator;
+	protected CommandProviderAggregator commandProviderAggregator;
 	protected ActionEngine engine;
 	protected Status status;
 	
@@ -43,7 +43,7 @@ public abstract class Actor {
 		status.updateEffects();
 		
 		
-		//Do actions (depends on listenerAggregator)
+		//Do actions (depends on commandProviderAggregator)
 		engine.update();
 		
 		
@@ -73,8 +73,8 @@ public abstract class Actor {
 		status.setCollisionHandler(collisionHandler);
 		
 		CollisionCommandProvider ccp = new CollisionCommandProvider(collisionHandler,this.getClass(), this.getShape());
-		listenerAggregator.removeListenersOfClass(ccp.getClass());
-		listenerAggregator.addListener(ccp);
+		commandProviderAggregator.removeListenersOfClass(ccp.getClass());
+		commandProviderAggregator.addProvider(ccp);
 	}
 	
 

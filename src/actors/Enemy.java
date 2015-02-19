@@ -13,7 +13,7 @@ import world.CollisionHandler;
 import actionEngines.EnemyActionEngine;
 import commands.CollisionCommandProvider;
 import commands.DieCommand;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 import gameobjects.Broadcaster;
 import graphics.ActorGraphics;
 
@@ -27,18 +27,18 @@ public class Enemy extends Actor implements Broadcaster{
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		 
-		listenerAggregator = new InputListenerAggregator();
+		commandProviderAggregator = new CommandProviderAggregator();
 				
 		status = new Status(rect);
 		
 		
 		graphics = new ActorGraphics("data/dwarf.png", status);
 
-		engine = new EnemyActionEngine(listenerAggregator, status);
+		engine = new EnemyActionEngine(commandProviderAggregator, status);
 
 		behavior = new EnemyBehavior(status);
 
-		listenerAggregator.addListener(behavior);
+		commandProviderAggregator.addProvider(behavior);
 		
 	}
 

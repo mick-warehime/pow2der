@@ -11,7 +11,7 @@ import world.CollisionHandler;
 import world.Level;
 import actionEngines.PlayerActionEngine;
 import commands.CollisionCommandProvider;
-import commands.InputListenerAggregator;
+import commands.CommandProviderAggregator;
 import commands.KeyboardInputListener;
 
 public class Player extends Actor {
@@ -24,8 +24,8 @@ public class Player extends Actor {
  			
 		
 		keyboard = new KeyboardInputListener();
-		listenerAggregator = new InputListenerAggregator();
-		listenerAggregator.addListener(keyboard);
+		commandProviderAggregator = new CommandProviderAggregator();
+		commandProviderAggregator.addProvider(keyboard);
 		
 		
 		Rectangle rect = new Rectangle(0f, 0f, 28, 28);
@@ -33,7 +33,7 @@ public class Player extends Actor {
 
 		
 
-		engine = new PlayerActionEngine(listenerAggregator,status);
+		engine = new PlayerActionEngine(commandProviderAggregator,status);
 		
 		this.graphics = new ActorGraphics("data/dwarf2.png", status);
 		
