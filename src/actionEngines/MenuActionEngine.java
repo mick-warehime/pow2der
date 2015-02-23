@@ -3,6 +3,7 @@ package actionEngines;
 
 import java.util.Stack;
 
+import items.Inventory;
 import items.Item;
 
 import org.newdawn.slick.SlickException;
@@ -125,6 +126,21 @@ public class MenuActionEngine extends ActionEngine{
 		}
 		
 	}
+
+	public void equipItemInPlayerInventory(Item item) {
+		Inventory playerInventory = menuHandlerData.getPlayerInventory();
+		playerInventory.equipItem(item);
+		closeAllMenus();
+		
+	}
+
+	public void unequipItemInPlayerInventory(Item item) {
+		Inventory playerInventory = menuHandlerData.getPlayerInventory();
+		playerInventory.unequipItem(item);
+		
+	}
+	
+	
 
 
 }

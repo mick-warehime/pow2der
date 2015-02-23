@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import commands.MenuCloseCurrentCommand;
 import commands.MenuDropItemCommand;
+import commands.MenuEquipItemCommand;
 import commands.NullCommand;
 
 public class ItemMenu extends TextMenu {
@@ -26,7 +27,7 @@ public class ItemMenu extends TextMenu {
 
 		
 		addMenuSelection( new MenuDropItemCommand(item), "Drop Item");
-		addMenuSelection( new NullCommand(), "Equip Item");
+		addMenuSelection( new MenuEquipItemCommand(item), "Equip Item");
 		addMenuSelection( new MenuCloseCurrentCommand(), "Cancel");
 
 
