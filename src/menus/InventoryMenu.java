@@ -75,14 +75,12 @@ public class InventoryMenu extends Menu{
 
 		for (Item item : playerInventory.getItems()){
 			if (equippedItems.contains(item)){
-
+				addEquippedItemSelection(item);
 			}else{
 				addUnequippedItemSelection(item);
 			}
 
-		}
-
-		
+		}		
 		for (int i = selections.size(); i<(menuWidthInItems*menuHeightInItems); i++){
 			addNullSelection();
 		}
@@ -93,6 +91,23 @@ public class InventoryMenu extends Menu{
 
 
 	}
+
+	private void addEquippedItemSelection(Item item) {
+		
+//		boolean success = false;
+//		try{
+//			System.out.println(item + ": " + item.getProperty(Item.PROPERTY_WORN));
+//			success = true;
+//		} finally{
+//			if (!success){
+//				System.out.println("Item" +item+ " has no worn property?");
+//			}
+//		}
+		
+		
+	}
+
+
 
 	private int indexToMenuX(int index){
 		return index % (this.menuWidthInItems);
