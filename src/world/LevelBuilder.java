@@ -1,13 +1,10 @@
 package world;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
+
 
 public class LevelBuilder {
 
@@ -19,8 +16,8 @@ public class LevelBuilder {
 	protected static final int OBJECT_ITEM = 2;
 	protected static final int OBJECT_DOOR = 3;
 	protected static final int OBJECT_ENEMY = 4;
-	
-	
+
+
 	private List<Integer> objectTypes;
 	private List<Integer[]> objectPositions;
 
@@ -39,20 +36,29 @@ public class LevelBuilder {
 
 	private int[][] map;
 	private int[][] rooms;
+	private int numRooms;
+	private int groups; 					// each grp # is a unique room/hallway/door
 
+	private final static int LEFT = 0;
+	private final static int UP = 1;
+	private final static int RIGHT = 2;
+	private final static int DOWN = 3;
+	
+	
+	
 	public LevelBuilder(int width, int height){
 
-		this.width = 25;
-		this.height = 21;
+		this.width = 5;
+		this.height = 11;
 
 		probBonusConnection = 0.5f;
 		numBonusConnection = 2;
 
 		turnBias = 0.6f;
 		roomMin = 3;
-		roomMax = 5;
+		roomMax = 7;
 
-		numRoomPuts = 20;		
+		numRoomPuts = 9;		
 
 		newLevel(50,50);
 
@@ -62,14 +68,23 @@ public class LevelBuilder {
 
 
 	public void newLevel2(int m, int n){
-		generateRandomRooms();		
+//		generateRandomRooms();		
+		//		addHallways();
 
+//		printMap();
+
+
+		//		testTestOpen();
+				testGetDir();
 	}
 
 
 
 
 	public void newLevel(int m, int n){
+
+
+
 
 		randomObjectsMatrix(m,n);
 		defineObjectsFromMatrix();
@@ -159,11 +174,6 @@ public class LevelBuilder {
 		Random rand = new Random();
 
 		// preallocate the map matrix
-		//		for (int j=0; j<width;j++){
-		//			for (int k=0; j<height;k++){
-		//				map[k][j]=0;
-		//			}
-		//		}
 		map = new int[height][width];
 		rooms = new int[numRoomPuts][4];
 
@@ -171,7 +181,7 @@ public class LevelBuilder {
 		int numRoomSizes = 1+(roomMax-roomMin)/2;
 
 		// each room is in a different "group" these are used to ensure connectivity later
-		int group = 1;		
+		groups = 1;		
 		for (int i = 0; i<numRoomPuts; i++){
 
 			// nextInt is normally exclusive of the top value,
@@ -194,7 +204,7 @@ public class LevelBuilder {
 			boolean safe = true;
 			for (int j=0; j<roomWidth;j++){
 				for (int k=0; k<roomHeight;k++){
-					System.out.println(topLeftX+" "+topLeftY+" "+j+" "+k);
+					//					System.out.println(topLeftX+" "+topLeftY+" "+j+" "+k);
 					if(map[topLeftY+k][topLeftX+j]!=0){
 						safe = false;
 						break;
@@ -212,32 +222,285 @@ public class LevelBuilder {
 			// if it is safe fill in the room
 			for (int j=0; j<roomWidth;j++){
 				for (int k=0; k<roomHeight;k++){
-					map[topLeftY+k][topLeftX+j]=group;					
+					map[topLeftY+k][topLeftX+j]=groups;					
 				}
 			}
 
 
 			// store the details of the room for later
-			rooms[group][0] = topLeftX;
-			rooms[group][1] = topLeftY;
-			rooms[group][2] = roomWidth;
-			rooms[group][3] = roomHeight;
+			rooms[groups][0] = topLeftX;
+			rooms[groups][1] = topLeftY;
+			rooms[groups][2] = roomWidth;
+			rooms[groups][3] = roomHeight;
 
-			group++;
+			groups++;
 
 
 
 
 		}
 
-		for (int j=0; j<width;j++){
-			for (int k=0; k<height;k++){
+		numRooms = groups-1;
+	}
+
+
+	public void addHallways(){
+
+
+
+	}
+
+	public int[] openPoint(){
+
+		// given the current map status look for a point on an with odd row and odd column that has no neighbors 
+
+
+		int[] newPoint = new int[2];
+
+		// loop over all odd points (only want to start mazes on odd tiles)
+		for (int xj = 1; xj < width; xj+=2){
+			for (int yk = 1; yk < height; yk+=2){
+
+				if(map[yk][xj]==0){
+
+					if(testOpen(xj,yk,-1)){
+						newPoint[0] = xj;
+						newPoint[1] = yk;
+						return newPoint;
+					}
+				}
+			}
+		}
+		// no new point found
+		return newPoint;
+	}
+
+	private boolean testOpen(int x,int y, int group){
+		boolean open = false;
+
+
+		// point is open if nothing is adjacent or only 1 other point of the same group is nearby
+		int groupCount = 0;
+		for(int i = 0; i < 4; i++){
+			int xi = x+getXDir(i);
+			int yi = y+getYDir(i);
+
+
+			if(xi>(width-1) || xi<0 || yi>(height-1) || yi<0){
+				continue;
+			}
+
+
+			if(map[yi][xi] == 0){
+				continue;
+			}
+
+			if(map[yi][xi] != group){
+				return open;
+			}else{
+				groupCount++;
+			}
+
+		}
+
+		if(groupCount < 2){
+			open = true;
+		}
+
+		return open;
+
+	}
+
+
+
+	private int getNewDir(int x,int y,int oldDir){
+
+
+		int oldDirX = getXDir(oldDir);
+		int oldDirY = getYDir(oldDir);
+
+		ArrayList<Integer> possibleDirs = new ArrayList<Integer>(); 
+		for(int newDir = 0; newDir<4; newDir++){
+
+			int newDirX = getXDir(newDir);
+			int newDirY = getYDir(newDir);
+
+			// when getting a new direction we dont want to look backwards				
+			if(oldDirX == -newDirX & oldDirY == -newDirY){				
+				continue;
+			}
+
+
+			// if turning, check if the turn is allowed 
+			if(newDir!=oldDir){
+				if(!canTurn(x,y,newDir)){
+					continue;
+				}
+			}
+
+			// if continuing in the same direction make sure it is in the map and open
+
+			// take step
+			int xNew = x+newDirX;
+			int yNew = y+newDirY;
+
+			// make sure it is at lowest in row 1 and at most in height/width-2
+			if(xNew<1 | yNew<1 | xNew>(width-1) | yNew<(height-1) ){
+				System.out.println(xNew+" "+yNew);
+				continue;
+			}
+
+			
+			
+			// if the new spot has no neighbors add it to the possible new directions list
+			if( testOpen(xNew,yNew,map[y][x])){
+				possibleDirs.add(newDir);				
+			}
+
+		}
+
+
+		int numPossibleDirs = possibleDirs.size();
+
+		if(numPossibleDirs == 0){
+			return -1;
+		}else if(numPossibleDirs == 1 ){
+			return possibleDirs.get(0);
+		}
+
+		
+		Random rand = new Random();
+		if(possibleDirs.contains(oldDir)){
+
+			
+
+			// if the old direction is still open return old direction with frequency according to turnBias
+
+			// higher turn bias more chance to turn
+			if(turnBias < Math.random()){
+				return oldDir;
+			}else{
+				possibleDirs.remove(oldDir);
+			}
+
+		}
+		 
+		// return a random element of the remaining directions
+		return possibleDirs.get(rand.nextInt(numPossibleDirs+1));
+	}
+
+	private boolean canTurn(int x,int y,int newDir){
+
+		boolean canTurn = false;
+
+		// only turn left or right if x is odd 
+		if(newDir == 0 | newDir == 2){
+			if(y % 2 != 0){
+				canTurn = true;
+			}
+		}
+		// only turn up or down if y is odd 
+		if(newDir == 1 | newDir == 3){
+			if(x % 2 != 0){
+				canTurn = true;
+			}
+		}
+
+		return canTurn;
+
+	}
+
+
+
+
+	private int getXDir(int dirId){
+
+			// left, up , right down
+		int[] xdir = new int[] {-1,0,1,0};
+
+		return xdir[dirId];
+
+
+	}
+
+	private int getYDir(int dirId){
+
+
+		int[] ydir = new int[] {0,-1,0,1};
+
+		return ydir[dirId];
+
+	}
+
+
+
+	private void printMap(){
+		for (int k=0; k<height;k++){
+			for (int j=0; j<width;j++){
+
 				System.out.print(map[k][j]);
 			}
 			System.out.println();
 		}
+	}
 
 
+
+	private void testTestOpen(){
+		width =3;
+		height=4;
+		map = new int[height][width];
+
+		for(int i=0;i<width;i++){
+			for(int j=0;j<height;j++){
+				map[j][i]=0;
+			}			
+		}
+
+		map[2][2]=1;
+		map[1][1]=1;
+		map[0][1]=2;
+		printMap();
+
+		for(int i=0;i<width;i++){
+			for(int j=0;j<height;j++){
+				System.out.print(testOpen(i,j,-1));
+			}			
+			System.out.println();
+		}
+
+	}
+
+
+	private void testGetDir(){
+		width  = 9;
+		height = 7;
+		map = new int[height][width];
+
+		for(int i=0;i<width;i++){
+			for(int j=0;j<height;j++){
+				map[j][i]=0;
+			}			
+		}
+
+
+		map[2][4]=2;
+		map[2][3]=2;
+
+		map[1][7]=4;
+		map[2][7]=4;
+		map[3][7]=4;
+		map[4][7]=4;
+		map[5][7]=4;
+
+
+		
+		System.out.println(getNewDir(4,2,RIGHT));
+		
+
+
+
+		printMap();
 	}
 
 

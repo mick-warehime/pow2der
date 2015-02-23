@@ -39,8 +39,7 @@ pts{1} = [x y 1];
 
 mazeNo = 1;
 pointsRemaining = 1;
-while pointsRemaining
-    group,x,y
+while pointsRemaining    
     
     % check if we can move in current direction
     if isempty(oldD)
@@ -56,10 +55,6 @@ while pointsRemaining
             x = x+newD(1);
             y = y+newD(2);
             oldD = newD;
-            
-            if y==2 && x==12
-                10
-            end
             
             % add new point to map and pts
             map(y,x) = group;
