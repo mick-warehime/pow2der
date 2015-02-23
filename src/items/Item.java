@@ -21,7 +21,7 @@ import actors.Status;
 
 public class Item extends BasicObject implements Interactive{
 
-	public static final int PROPERTY_WORN = 2;
+	public static final int PROPERTY_EQUIP_LOCATION = 2;
 	public static final int PROPERTY_TYPE = 1;
 	public static final int PROPERTY_WEIGHT = 0;
 	
@@ -177,8 +177,8 @@ public class Item extends BasicObject implements Interactive{
 		}
 		
 		
-		if (itmInfo.containsKey("worn")){
-			properties.put(PROPERTY_WORN,itmInfo.get("worn") );
+		if (itmInfo.containsKey("equip")){
+			properties.put(PROPERTY_EQUIP_LOCATION,itmInfo.get("equip") );
 		}
 		
 		

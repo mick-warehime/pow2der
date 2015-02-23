@@ -96,7 +96,7 @@ public class InventoryMenu extends Menu{
 		
 //		boolean success = false;
 //		try{
-//			System.out.println(item + ": " + item.getProperty(Item.PROPERTY_WORN));
+//			System.out.println(item + ": " + item.getProperty(Item.PROPERTY_EQUIP_LOCATION));
 //			success = true;
 //		} finally{
 //			if (!success){
