@@ -75,7 +75,7 @@ public class LevelBuilder {
 
 
 		//		testTestOpen();
-				testGetDir();
+//				testGetDir();
 	}
 
 
