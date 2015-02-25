@@ -15,17 +15,25 @@ public class InventorySelectionGraphics implements MenuSelectionGraphics{
 	private int xPos;
 	private int yPos;
 
-	public InventorySelectionGraphics(Image image,  int xPos, int yPos) throws SlickException{
+	public InventorySelectionGraphics(Image image) throws SlickException{
 		//Loading of background image should only be called once
 		if (BACKGROUND_IMAGE == null){
 			InventorySelectionGraphics.BACKGROUND_IMAGE=new Image("data/InventoryBackground.jpg");
 		}
 
 		this.image = image;
-		this.xPos = xPos;
-		this.yPos = yPos;
 	}
-
+	
+	public void setDrawPosition(int[] posVec){
+		this.xPos = posVec[0];
+		this.yPos = posVec[1];
+	}
+	
+	public int[] getDrawPosition(){
+		return new int[] {xPos,yPos};
+	}
+	
+	
 	@Override
 	public void render(Graphics graphics, boolean isActiveSelection) {
 

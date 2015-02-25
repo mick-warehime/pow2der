@@ -121,7 +121,17 @@ public class Item extends BasicObject implements Interactive{
 	
 	/* Handles item's location */
 	
-	class ItemLocation{
+	public class ItemLocation{
+		
+		public static final int EQUIP_LOCATION_MAINHAND = 0;
+		public static final int EQUIP_LOCATION_NECK = 1;
+		public static final int EQUIP_LOCATION_CHEST = 2;
+		public static final int EQUIP_LOCATION_OFFHAND = 3;
+		public static final int EQUIP_LOCATION_HEAD = 4;
+		public static final int EQUIP_LOCATION_HANDS = 5;
+		public static final int EQUIP_LOCATION_FEET = 6;
+		public static final int EQUIP_LOCATION_BACK = 7;
+		public static final int EQUIP_LOCATION_FINGER = 8;
 		
 		private Item owningItem;
 		private boolean onGround = true;
@@ -175,7 +185,6 @@ public class Item extends BasicObject implements Interactive{
 		else{
 			properties.put(PROPERTY_WEIGHT,0f);
 		}
-		
 		
 		if (itmInfo.containsKey("equip")){
 			properties.put(PROPERTY_EQUIP_LOCATION,itmInfo.get("equip") );
