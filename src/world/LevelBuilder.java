@@ -34,8 +34,11 @@ public class LevelBuilder {
 	private int roomMax;    				// max size of a room
 	private int roomMin;    				// min size of a room
 
+	private long randomSeed;
+
 	private int[][] map;
 	private int[][] rooms;
+	private ArrayList<Maze> mazes;
 	private int numRooms;
 	private int groups; 					// each grp # is a unique room/hallway/door
 
@@ -43,13 +46,25 @@ public class LevelBuilder {
 	private final static int UP = 1;
 	private final static int RIGHT = 2;
 	private final static int DOWN = 3;
-	
-	
-	
-	public LevelBuilder(int width, int height){
 
-		this.width = 5;
-		this.height = 11;
+
+	// POSSIBLE IMPROVEMENTS / BUGS
+	
+	// Backtrack does grabs closest open point instead of a random open point.
+	//  can you just get a random open index and try from there???
+	
+	
+
+	public LevelBuilder(int width, int height){
+		// premade level by hand
+		newLevel(50,50);
+
+
+
+
+		// new stuff
+		this.width = 21;
+		this.height = 17;
 
 		probBonusConnection = 0.5f;
 		numBonusConnection = 2;
@@ -58,24 +73,33 @@ public class LevelBuilder {
 		roomMin = 3;
 		roomMax = 7;
 
-		numRoomPuts = 9;		
+		numRoomPuts = 29;		
 
-		newLevel(50,50);
+		// use 1000 for debugging and systemtime for normal use
+		randomSeed = 1000;   
+		//		randomSeed = System.currentTimeMillis();
 
-		newLevel2(width,height);
+
+
+
+
+
+		newLevel2();
 
 	}
 
 
-	public void newLevel2(int m, int n){
-//		generateRandomRooms();		
-		//		addHallways();
-
+	public void newLevel2(){
+		generateRandomRooms();		
+		addHallways();
 //		printMap();
 
 
+		//		printMap();
+		//		testOpenBacktrack();
+		//		testOpenPoint();
 		//		testTestOpen();
-				testGetDir();
+		//      testGetDir();
 	}
 
 
@@ -169,9 +193,10 @@ public class LevelBuilder {
 	}
 
 
-	public void generateRandomRooms(){
+	private void generateRandomRooms(){
 
-		Random rand = new Random();
+
+		Random rand = new Random(randomSeed);
 
 		// preallocate the map matrix
 		map = new int[height][width];
@@ -244,29 +269,239 @@ public class LevelBuilder {
 	}
 
 
-	public void addHallways(){
+	private void addHallways(){
 
+		mazes = new ArrayList<Maze>();
+
+		int[] xy = openPoint();
+		int x = xy[0];
+		int y = xy[1];
+
+		Maze maze = new Maze(x,y,true);
+
+		int oldDir = getNewDir(x,y,-1);
+		map[y][x] = groups;
+
+		boolean done = false;
+				while(!done){
+//		for(int i=0;i<35;i++){
+			int newDir = getNewDir(x,y,oldDir);
+
+			if(newDir!=-1){
+				x = x+getXDir(newDir);
+				y = y+getYDir(newDir);
+				oldDir = newDir;
+				map[y][x]=groups;
+
+				// add a new point
+				maze.addPoint(x,y,true);
+			}else{
+
+				int backtrackIndex = attemptBacktrack(maze);
+				//				System.out.println(backtrackIndex);
+//				maze.print();
+				if(backtrackIndex>1){
+					x = maze.getX(backtrackIndex);
+					y = maze.getY(backtrackIndex);
+
+					oldDir = getNewDir(x,y,-1);
+					//					System.out.println("x: "+xx+" "+ "y: "+yy+", d: "+oldDir);
+					//					maze.print();
+					continue;
+				}
+
+				xy = openPoint();
+				x = xy[0];
+				y = xy[1];
+
+
+				if(x==-1 && y==-1){
+
+					done = true;
+				}else{
+
+					// store current maze 
+					mazes.add(maze);
+
+
+					// start new maze
+					maze = new Maze(x,y,true);
+
+					groups++;
+
+					oldDir = getNewDir(x,y,-1);
+					map[y][x]=groups;
+
+
+				}
+			}
+
+
+
+		}
+
+		//		System.out.println(oldDir);
+
+	}
+
+
+	private int attemptBacktrack(Maze maze){
+		//		closes points that cant be accesed (have no free moves)
+		// returns an index of an open point
+		// returns -1 if no points are open
+
+		boolean backtracked = false;
+
+		int counter = maze.size()-1;
+
+		// close last point
+		maze.setOpen(counter, false);
+
+		while(counter>0){
+			//			
+			counter--;
+
+			// check if current point is already closed
+			if(maze.getOpen(counter)){
+
+				int oldDir = backtrackDir(maze,counter); 
+
+				// check if there is an open direction
+				int newDir = getNewDir(maze.getX(counter),maze.getY(counter),oldDir);
+				//				System.out.println(newDir);
+				if(newDir!=-1){					
+						// if its an there is 
+						return counter;					
+					
+				}else{
+					// close the point
+					maze.setOpen(counter, false);
+				}
+
+			}
+
+		}
+
+
+
+		return -1;
+	}
+
+
+	private int backtrackDir(Maze maze, int counter){
+
+		// for a backtrack step we need to know which direction he stepped in
+
+		int xf = maze.getX(counter);
+		int xi = maze.getX(counter+1);
+		int yf = maze.getY(counter);
+		int yi = maze.getY(counter+1);
+
+		if(xf>xi){
+			return RIGHT; 
+		}
+		if(xf<xi){
+			return LEFT;		
+		}
+		if(yf>yi){
+			return DOWN; 
+		}
+		if(yf<yi){
+			return UP;		
+		}
+
+		return -1;
 
 
 	}
 
-	public int[] openPoint(){
+
+	private class Maze{
+		private ArrayList<Integer> xList;
+		private ArrayList<Integer> yList;
+		private ArrayList<Boolean> openList;
+
+		private Maze(int x, int y, boolean open){
+
+			xList = new ArrayList<Integer>();
+			yList = new ArrayList<Integer>();
+			openList = new ArrayList<Boolean>();
+
+			addPoint(x,y,open); 
+
+		}
+
+		private void addPoint(int x, int y, boolean open){
+			xList.add(x);
+			yList.add(y);
+			openList.add(open);
+		}
+
+
+
+		private int getX(int index){
+			return xList.get(index);
+		}
+		private int getY(int index){
+			return yList.get(index);
+		}
+		private boolean getOpen(int index){
+			return openList.get(index);
+		}
+
+		private boolean setOpen(int index, boolean open){
+			return openList.set(index, open);
+		}
+
+		private int size(){
+			return xList.size();
+		}
+
+		private int numOpenPoints(){
+			int n = xList.size();
+			int count = 0;
+			for(int i = 0; i<n; i++){
+				if(openList.get(i)){
+					count++;
+				}
+			}
+
+			return count;
+		}
+
+		private void print(){
+
+			int n = xList.size();
+			for(int i = 0; i<n; i++){
+				System.out.println("ind: "+i+", x: "+xList.get(i)+", y: "+yList.get(i)+", op: "+openList.get(i));
+			}
+
+
+		}
+
+	}
+
+
+
+	private int[] openPoint(){
 
 		// given the current map status look for a point on an with odd row and odd column that has no neighbors 
 
 
-		int[] newPoint = new int[2];
+		int[] newPoint = new int[] {-1,-1};
 
 		// loop over all odd points (only want to start mazes on odd tiles)
 		for (int xj = 1; xj < width; xj+=2){
 			for (int yk = 1; yk < height; yk+=2){
 
 				if(map[yk][xj]==0){
+					if(xj<(width-1) && xj>0 && yk<(height-1) && yk>0){
 
-					if(testOpen(xj,yk,-1)){
-						newPoint[0] = xj;
-						newPoint[1] = yk;
-						return newPoint;
+						if(testOpen(xj,yk,-1)){
+							newPoint[0] = xj;
+							newPoint[1] = yk;
+							return newPoint;
+						}
 					}
 				}
 			}
@@ -286,7 +521,7 @@ public class LevelBuilder {
 			int yi = y+getYDir(i);
 
 
-			if(xi>(width-1) || xi<0 || yi>(height-1) || yi<0){
+			if(xi>(width-1) || xi<1 || yi>(height-1) || yi<1){
 				continue;
 			}
 
@@ -311,10 +546,12 @@ public class LevelBuilder {
 
 	}
 
-
-
 	private int getNewDir(int x,int y,int oldDir){
+		// given some point (x,y) in the map and  
 
+
+		//		Keeps track of whether or not you can keep going straight ahead 
+		boolean oldDirOpen = false;
 
 		int oldDirX = getXDir(oldDir);
 		int oldDirY = getYDir(oldDir);
@@ -345,48 +582,42 @@ public class LevelBuilder {
 			int yNew = y+newDirY;
 
 			// make sure it is at lowest in row 1 and at most in height/width-2
-			if(xNew<1 | yNew<1 | xNew>(width-1) | yNew<(height-1) ){
-				System.out.println(xNew+" "+yNew);
+			if(xNew<1 | yNew<1 | xNew>(width-2) | yNew>(height-2) ){
+				//				System.out.println("out of bouds");
 				continue;
 			}
 
-			
-			
 			// if the new spot has no neighbors add it to the possible new directions list
 			if( testOpen(xNew,yNew,map[y][x])){
-				possibleDirs.add(newDir);				
+				if(newDir == oldDir){
+					oldDirOpen = true;
+				}else{
+					possibleDirs.add(newDir);
+				}
 			}
 
 		}
-
-
+		//		System.out.println(possibleDirs);
 		int numPossibleDirs = possibleDirs.size();
 
 		if(numPossibleDirs == 0){
+			if(oldDirOpen){
+				return oldDir;
+			}
+			//			System.out.println("no available turns");
 			return -1;
 		}else if(numPossibleDirs == 1 ){
 			return possibleDirs.get(0);
 		}
 
-		
-		Random rand = new Random();
-		if(possibleDirs.contains(oldDir)){
-
-			
-
-			// if the old direction is still open return old direction with frequency according to turnBias
-
-			// higher turn bias more chance to turn
-			if(turnBias < Math.random()){
-				return oldDir;
-			}else{
-				possibleDirs.remove(oldDir);
-			}
-
+		// if the old direction is still open return old direction with frequency according to turnBias  
+		Random rand = new Random(randomSeed);		
+		if(oldDirOpen & (turnBias > Math.random())){
+			return oldDir;			
 		}
-		 
-		// return a random element of the remaining directions
-		return possibleDirs.get(rand.nextInt(numPossibleDirs+1));
+
+		// return a random new direction
+		return possibleDirs.get(rand.nextInt(numPossibleDirs));
 	}
 
 	private boolean canTurn(int x,int y,int newDir){
@@ -410,12 +641,11 @@ public class LevelBuilder {
 
 	}
 
-
-
-
 	private int getXDir(int dirId){
-
-			// left, up , right down
+		if(dirId==-1){
+			return -1;			
+		}
+		// left, up , right down
 		int[] xdir = new int[] {-1,0,1,0};
 
 		return xdir[dirId];
@@ -424,7 +654,9 @@ public class LevelBuilder {
 	}
 
 	private int getYDir(int dirId){
-
+		if(dirId==-1){
+			return -1;			
+		}
 
 		int[] ydir = new int[] {0,-1,0,1};
 
@@ -434,21 +666,28 @@ public class LevelBuilder {
 
 
 
+
+
+	//////////////////////////////////////////////////////	//////
+	//	
+	//	  DIAGNOSTIC / TESTING / PRINTING
+	//	
+	//	//////////////////////////////////////////////////////
+
+
+
 	private void printMap(){
 		for (int k=0; k<height;k++){
 			for (int j=0; j<width;j++){
 
-				System.out.print(map[k][j]);
+				System.out.format(" %2d ",map[k][j]);
 			}
 			System.out.println();
 		}
 	}
 
 
-
-	private void testTestOpen(){
-		width =3;
-		height=4;
+	private void createMap(int height, int width){
 		map = new int[height][width];
 
 		for(int i=0;i<width;i++){
@@ -457,51 +696,95 @@ public class LevelBuilder {
 			}			
 		}
 
-		map[2][2]=1;
-		map[1][1]=1;
+
+	}
+
+	private void testOpenBacktrack(){
+		height = 4;
+		width = 3;
+		createMap(height,width);
+
+		map[2][1]=2;
+		map[1][1]=2;
 		map[0][1]=2;
 		printMap();
+		System.out.println(testOpen(1,1,1));
 
-		for(int i=0;i<width;i++){
-			for(int j=0;j<height;j++){
-				System.out.print(testOpen(i,j,-1));
-			}			
-			System.out.println();
-		}
+
 
 	}
 
+	//	private void testOpenPoint(){
+	//		height = 4;
+	// width = 3;
+	// 	int[][] map = createMap(height,width);
 
-	private void testGetDir(){
-		width  = 9;
-		height = 7;
-		map = new int[height][width];
+	//
+	//		map[2][2]=1;
+	//		map[1][1]=1;
+	//		map[0][1]=2;
+	//		printMap();
+	//
+	//		int[] op = openPoint();
+	//		System.out.println("x: "+" " +op[0]+" "+"y: "+" " +op[1]);
+	//	}
 
-		for(int i=0;i<width;i++){
-			for(int j=0;j<height;j++){
-				map[j][i]=0;
-			}			
-		}
+	//	private void testTestOpen(){
+	//		width =3;
+	//		height=4;
+	//		map = new int[height][width];
+	//
+	//		for(int i=0;i<width;i++){
+	//			for(int j=0;j<height;j++){
+	//				map[j][i]=0;
+	//			}			
+	//		}
+	//
+	//		map[2][2]=1;
+	//		map[1][1]=1;
+	//		map[0][1]=2;
+	//		printMap();
+	//
+	//		for(int i=0;i<width;i++){
+	//			for(int j=0;j<height;j++){
+	//				System.out.print(testOpen(i,j,-1));
+	//			}			
+	//			System.out.println();
+	//		}
+	//
+	//	}
 
-
-		map[2][4]=2;
-		map[2][3]=2;
-
-		map[1][7]=4;
-		map[2][7]=4;
-		map[3][7]=4;
-		map[4][7]=4;
-		map[5][7]=4;
-
-
-		
-		System.out.println(getNewDir(4,2,RIGHT));
-		
-
-
-
-		printMap();
-	}
+	//
+	//	private void testGetDir(){
+	//		width  = 9;
+	//		height = 7;
+	//		map = new int[height][width];
+	//
+	//		for(int i=0;i<width;i++){
+	//			for(int j=0;j<height;j++){
+	//				map[j][i]=0;
+	//			}			
+	//		}
+	//
+	//
+	//		map[2][2]=2;
+	//		map[2][3]=2;
+	//
+	//		map[1][7]=4;
+	//		map[2][7]=4;
+	//		map[3][7]=4;
+	//		map[4][7]=4;
+	//		map[5][7]=4;
+	//
+	//
+	//
+	//		System.out.println(getNewDir(3,2,RIGHT));
+	//
+	//
+	//
+	//
+	//		printMap();
+	//	}
 
 
 }
