@@ -88,6 +88,7 @@ public class InventoryMenu extends Menu{
 		ArrayList<Item> equippedItems = playerInventory.getEquipped();
 		
 		for (Item item : playerInventory.getItems()){
+			
 			if (equippedItems.contains(item)){
 //				addEquippedItemSelection(item);
 			}else{

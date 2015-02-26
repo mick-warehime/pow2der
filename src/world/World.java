@@ -46,6 +46,7 @@ public class World {
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 		
+		
 		terri = new Player();
 		
 		newLevel(50,50);
