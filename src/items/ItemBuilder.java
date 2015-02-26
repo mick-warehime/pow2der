@@ -168,8 +168,6 @@ public class ItemBuilder {
 			System.out.print(" --> Built Sucessfully");
 			System.out.println();
 			System.out.println("no item built!" +"  item index: "+i);
-
-			
 		}
 		
 		System.out.println("All Items Built Successfully!");
