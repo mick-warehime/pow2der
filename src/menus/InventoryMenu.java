@@ -85,16 +85,15 @@ public class InventoryMenu extends Menu{
 		
 		this.selectionGraph = new SelectionGraph();
 
-		ArrayList<Item> equippedItems = playerInventory.getEquipped();
+		ArrayList<Item> equippedItems = playerInventory.getEquippedItems();
 		
-		for (Item item : playerInventory.getItems()){
+		for (Item item : playerInventory.getInventoryItems()){
 			
 			if (equippedItems.contains(item)){
 //				addEquippedItemSelection(item);
 			}else{
 				
 				MenuSelection newSelection =generateMenuSelection(item);
-				
 				selectionGraph.replaceFirstEmptyInventorySelection(newSelection);
 				
 
@@ -309,8 +308,6 @@ public class InventoryMenu extends Menu{
 	}
 
 	class SelectionNode{
-
-
 
 		public boolean isEmpty;
 		public int selectionsIndex;

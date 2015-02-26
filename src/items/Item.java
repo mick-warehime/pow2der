@@ -171,9 +171,7 @@ public class Item extends BasicObject implements Interactive{
 		
 		properties.parseEquipLocationString(equipLoc);
 		
-		System.out.println("item: " + this + "type: " + properties.type + "location: " + properties.equipLocation);
-
-
+	
 
 
 
@@ -187,10 +185,10 @@ public class Item extends BasicObject implements Interactive{
 	 * Permanent properties of an item
 	 * 
 	 */
-	class ItemProperties{
+	public class ItemProperties{
 
 
-		private static final int EQUIP_LOCATION_UNDEFINED = -1;
+		public static final int EQUIP_LOCATION_UNDEFINED = -1;
 		public static final int EQUIP_LOCATION_MAINHAND = 0;
 		public static final int EQUIP_LOCATION_NECK = 1;
 		public static final int EQUIP_LOCATION_CHEST = 2;

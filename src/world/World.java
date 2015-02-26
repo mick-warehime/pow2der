@@ -53,7 +53,7 @@ public class World {
 		
 		currentLevelData.setCurrentLevel(levels.get(0));
 	
-		itemBuilder.testItems();
+//		itemBuilder.testItems();
 		
 
 	}
