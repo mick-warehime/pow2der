@@ -21,6 +21,7 @@ public class Armor extends Item{
 		this.AC = (int) Float.parseFloat(itmInfo.get("ac"));
 		this.worn = itmInfo.get("worn");
 		this.material = itmInfo.get("material");
+		this.type = itmInfo.get("type");
 		
 	}
 

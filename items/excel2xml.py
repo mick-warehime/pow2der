@@ -58,8 +58,8 @@ while curr_sheet<num_sheets:
 
 					# create a new item node
 					item_tree = etree.Element('item')
-					item_tree.attrib['id'] = cell_value
-					item_tree.attrib['type'] = sname
+					item_tree.attrib['type'] = cell_value
+					# item_tree.attrib['id'] = sname
 				else:
 					# add properties to the item nodes
 					# prop_value = etree.Element(props[curr_cell])
