@@ -137,8 +137,11 @@ public class MenuActionEngine extends ActionEngine{
 	public void unequipItemInPlayerInventory(Item item) {
 		Inventory playerInventory = menuHandlerData.getPlayerInventory();
 		playerInventory.unequipItem(item);
+		closeAllMenus();
 		
 	}
+	
+	
 	
 	
 

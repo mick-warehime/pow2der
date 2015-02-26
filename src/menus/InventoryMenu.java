@@ -22,7 +22,9 @@ public class InventoryMenu extends Menu{
 	private int equipableSelections = 10;
 	private int imageSizeInPixels = 48;
 	private SelectionGraph selectionGraph;
-
+	
+	private int equipmentMenuOffsetX = -200;
+	private int equipmentMenuOffsetY = -100;
 
 
 	public InventoryMenu( int menuRenderX, int menuRenderY) throws SlickException {
@@ -89,15 +91,15 @@ public class InventoryMenu extends Menu{
 		
 		for (Item item : playerInventory.getInventoryItems()){
 			
-			if (equippedItems.contains(item)){
-//				addEquippedItemSelection(item);
-			}else{
+			MenuSelection newSelection =generateInventoryMenuSelection(item);
+			selectionGraph.replaceFirstEmptyInventorySelection(newSelection);
 				
-				MenuSelection newSelection =generateMenuSelection(item);
-				selectionGraph.replaceFirstEmptyInventorySelection(newSelection);
-				
-
-			}
+		}
+		
+		for (Item item : equippedItems){
+			int locationIndex = item.getProperties().equipLocation;
+			MenuSelection newSelection =generateEquippedMenuSelection(item);
+			selectionGraph.setEquippedSelection(newSelection,locationIndex);
 		}
 		
 		
@@ -110,8 +112,21 @@ public class InventoryMenu extends Menu{
 
 	}
 
-	private MenuSelection generateMenuSelection(Item item) throws SlickException{
-		Command menuCmd = new MenuOpenCommand(new ItemMenu(menuRenderX - 100,menuRenderY, item));
+	
+
+
+
+
+
+	private MenuSelection generateInventoryMenuSelection(Item item) throws SlickException{
+		Command menuCmd = new MenuOpenCommand(new ItemInventoryMenu(menuRenderX - 100,menuRenderY, item));
+		InventorySelectionGraphics graphics = new InventorySelectionGraphics(item.getImage());
+		
+		return new MenuSelection(menuCmd,graphics);
+		
+	}
+	private MenuSelection generateEquippedMenuSelection(Item item) throws SlickException{
+		Command menuCmd = new MenuOpenCommand(new ItemEquippedMenu(menuRenderX - 100,menuRenderY, item));
 		InventorySelectionGraphics graphics = new InventorySelectionGraphics(item.getImage());
 		
 		return new MenuSelection(menuCmd,graphics);
@@ -126,6 +141,8 @@ public class InventoryMenu extends Menu{
 
 	class SelectionGraph {
 
+		private static final int EQUIP_SLOTS = 10; //Make sure this matches in inventory class
+		
 		private static final int INDEX_UNASSIGNED = -1;
 
 		private static final int DIR_LEFT = 0;
@@ -148,6 +165,15 @@ public class InventoryMenu extends Menu{
 
 		}
 
+		public void setEquippedSelection(MenuSelection newSelection,
+				int locationIndex) {
+			
+			assignSelectionToNode(newSelection, equippedNodes.get(locationIndex));
+			
+		}
+
+		
+
 		public void moveCurrentSelection(char xOrY, int direction) {
 
 			int neighborDirection = -1;
@@ -165,8 +191,10 @@ public class InventoryMenu extends Menu{
 				}
 			}
 
-			currentSelectionNode = currentSelectionNode.getNeighbor(neighborDirection);
-			currentSelection = currentSelectionNode.selectionsIndex;
+			if(currentSelectionNode.getNeighbor(neighborDirection)!= null){
+				currentSelectionNode = currentSelectionNode.getNeighbor(neighborDirection);
+				currentSelection = currentSelectionNode.selectionsIndex;
+			}
 
 
 		}
@@ -189,7 +217,68 @@ public class InventoryMenu extends Menu{
 
 		
 		
-		private void initializeEquipmentNodes() {
+		private void initializeEquipmentNodes() throws SlickException {
+			
+			int xPos = menuRenderX + equipmentMenuOffsetX;
+			
+			//Refactor: this repeats code from initializeInventoryNodes
+			for (int i = 0; i<EQUIP_SLOTS; i++){
+				SelectionNode node = new SelectionNode(INDEX_UNASSIGNED);
+				equippedNodes.add(node);
+
+				
+				int yPos = menuRenderY + equipmentMenuOffsetY+ imageSizeInPixels*i;
+				
+				node.drawPosition = new int[] {xPos,yPos};
+				
+				
+				InventorySelectionGraphics graphics = new InventorySelectionGraphics(null);
+				graphics.setDrawPosition(node.drawPosition);
+				
+				MenuSelection selection = 
+						new MenuSelection(new NullCommand(),
+								graphics);
+				
+				
+				selections.add(selection);
+				
+				node.selectionsIndex = selections.indexOf(selection);
+				node.isEmpty = true;
+				
+				
+				
+			}
+			
+			setEquipmentNodeNeighbors();
+			
+			
+			
+		}
+
+		private void setEquipmentNodeNeighbors() {
+			assert inventoryNodeArray.length == inventoryHeightInItems : "Trying to assign equipment slot neighbors without inventory nodes assigned first!";
+			assert equippedNodes.size() == EQUIP_SLOTS : "Trying to assign equipment slot neighbors without initializing nodes first!";
+			
+			
+			SelectionNode mainHandNode = equippedNodes.get(0);
+			SelectionNode topLeftInventory = inventoryNodeArray[0][0];
+			
+			topLeftInventory.setNeighbor(DIR_LEFT, mainHandNode );
+			
+			for (int i = 0; i<EQUIP_SLOTS;i++){
+				
+				SelectionNode node = equippedNodes.get(i);
+				SelectionNode nodeBelow = equippedNodes.get(posMod(i+1,EQUIP_SLOTS));
+				
+				node.setNeighbor(DIR_DOWN, nodeBelow);
+				node.setNeighbor(DIR_RIGHT, topLeftInventory );
+				nodeBelow.setNeighbor(DIR_UP, node);
+						
+			}
+			
+			
+			
+			
 			
 			
 			
@@ -253,11 +342,10 @@ public class InventoryMenu extends Menu{
 									graphics);
 					
 					
-					
 					selections.add(selection);
 					
-					inventoryNodeArray[i][j].selectionsIndex = selections.indexOf(selection);
-					inventoryNodeArray[i][j].isEmpty = true;
+					nodeIJ.selectionsIndex = selections.indexOf(selection);
+					nodeIJ.isEmpty = true;
 					
 					
 
@@ -269,7 +357,7 @@ public class InventoryMenu extends Menu{
 
 
 
-			assignNeighbors(inventoryNodeArray);
+			assignInventoryGraphNeighbors(inventoryNodeArray);
 		}
 
 
@@ -277,7 +365,7 @@ public class InventoryMenu extends Menu{
 			return (((num % modNum ) + modNum) % modNum);
 		}
 
-		private void assignNeighbors(SelectionNode[][] nodeArray) {
+		private void assignInventoryGraphNeighbors(SelectionNode[][] nodeArray) {
 
 			int dim1 = nodeArray.length;
 			int dim2 = nodeArray[0].length;

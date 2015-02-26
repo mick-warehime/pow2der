@@ -19,7 +19,7 @@ public class Inventory {
 	}
 	
 	public ArrayList<Item>  getEquippedItems(){
-		return (ArrayList<Item>) equippedItems.equipSlots.clone();
+		return equippedItems.nonNullItems();
 	}
 	
 	public void addItem(Item item){
@@ -56,9 +56,28 @@ public class Inventory {
 			}
 		}
 		
+		public ArrayList<Item> nonNullItems(){
+			ArrayList<Item> output  = new ArrayList<Item>() ;
+			
+			for (Item item : equipSlots){
+				if (item != null){
+					output.add(item);
+				}
+			}
+			
+			
+			return output;
+		}
+		
 		public void equipItem(Item item){
 			
+			
 			int index = item.getProperties().equipLocation;
+			
+			Item oldItem = equipSlots.get(index);
+			if (oldItem!=null){
+				inventoryItems.add(oldItem);
+			}
 			
 			equipSlots.set(index, item);
 			
@@ -72,7 +91,10 @@ public class Inventory {
 			
 			if (equipSlots.contains(item)){
 				equipSlots.remove(item);
+				inventoryItems.add(item);
 			}
+			
+			
 			
 		}
 		
