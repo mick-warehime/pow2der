@@ -4,7 +4,7 @@ package items;
 import gameobjects.BasicObject;
 import gameobjects.Interactive;
 
-import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Map;
 
 import org.newdawn.slick.Graphics;
@@ -21,14 +21,23 @@ import actors.Status;
 
 public class Item extends BasicObject implements Interactive{
 
+	public static final int PROPERTY_EQUIP_LOCATION = 2;
+	public static final int PROPERTY_TYPE = 1;
+	public static final int PROPERTY_WEIGHT = 0;
+	
+	public static final int TYPE_ARMOR = 0;
+	public static final int TYPE_WEAPON = 1;
+	public static final int TYPE_BOOK = 2;
+	public static final int TYPE_POTION = 3;
+	
+	
 	protected String name;
 	protected int value;
-	protected String type;
+	
 	protected boolean stackable;
 	protected int weight;
-	protected ArrayList<String> properties;
+	protected Hashtable<Integer, Object> properties;
 	private ItemLocation location = new ItemLocation(this);
-//	private static int SPRITE_MARGIN = ;
 	private static float SPRITE_DRAW_SCALE = 0.6f;
 	private static int SPRITE_MARGIN = 5;
 	private static float RECT_SHRINK_MARGIN = 15f;
@@ -37,12 +46,14 @@ public class Item extends BasicObject implements Interactive{
 
 		super(image,xPos,yPos);
 		
+		this.definePropertiesFromMap(itmInfo);
+		
 		this.graphics.setSpriteMargin(SPRITE_MARGIN);
 		
 		//Shrink shape because it's based on image size
 		shrinkShapes();
 		
-		this.type = itmInfo.get("itemType");		
+			
 		
 		this.canCollide = false;
 		
@@ -70,28 +81,17 @@ public class Item extends BasicObject implements Interactive{
 	
 	
 
-	public String getItemType() {
-		return type;
-	}
-
-	public Integer getValue() {
-		return value;
-	}
-
 	
 
-	public void addProperty(String prop){
-		properties.add(prop);
+	
+	public Object getProperty(Integer propertyIndex){
+		
+		return properties.get(propertyIndex);
+		
 	}
+	
 
-	public ArrayList<String> getProperties(){
-		return properties;
-	}
-
-	public boolean stackable() {
-		return stackable;
-	}
-
+	
 
 	@Override
 	public void interact(int interactionType, Status status) {
@@ -121,7 +121,17 @@ public class Item extends BasicObject implements Interactive{
 	
 	/* Handles item's location */
 	
-	class ItemLocation{
+	public class ItemLocation{
+		
+		public static final int EQUIP_LOCATION_MAINHAND = 0;
+		public static final int EQUIP_LOCATION_NECK = 1;
+		public static final int EQUIP_LOCATION_CHEST = 2;
+		public static final int EQUIP_LOCATION_OFFHAND = 3;
+		public static final int EQUIP_LOCATION_HEAD = 4;
+		public static final int EQUIP_LOCATION_HANDS = 5;
+		public static final int EQUIP_LOCATION_FEET = 6;
+		public static final int EQUIP_LOCATION_BACK = 7;
+		public static final int EQUIP_LOCATION_FINGER = 8;
 		
 		private Item owningItem;
 		private boolean onGround = true;
@@ -161,6 +171,33 @@ public class Item extends BasicObject implements Interactive{
 	}
 	
 	
+	protected void definePropertiesFromMap(Map<String, String> itmInfo){
+		properties = new Hashtable<Integer, Object>();
+		
+		String type = itmInfo.get("itemType");
+		
+		properties.put(PROPERTY_TYPE, type);
+		
+		if (itmInfo.containsKey("weight")){
+			float weight = Float.parseFloat(itmInfo.get("weight"));
+			properties.put(PROPERTY_WEIGHT, weight);
+		}
+		else{
+			properties.put(PROPERTY_WEIGHT,0f);
+		}
+		
+		if (itmInfo.containsKey("equip")){
+			properties.put(PROPERTY_EQUIP_LOCATION,itmInfo.get("equip") );
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 
 	
 

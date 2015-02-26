@@ -13,27 +13,23 @@ public class Weapon extends Item{
 	private String material;
 
 
-	public Weapon(Map<String, String> itm, Image sprite, int xPos, int yPos) throws SlickException {
+	public Weapon(Map<String, String> itmInfo, Image sprite, int xPos, int yPos) throws SlickException {
 		
-		super(itm,sprite,xPos,yPos);
+		super(itmInfo,sprite,xPos,yPos);
 		
+		definePropertiesFromMap(itmInfo);
 		
-		this.mHitBonus = (int) Float.parseFloat(itm.get("mHitBonus"));
-		this.material = itm.get("material");
+		this.mHitBonus = (int) Float.parseFloat(itmInfo.get("mHitBonus"));
+		this.material = itmInfo.get("material");
 		
 	}
 
-
 	
-	public void equip(){
-		// add AC remove item from person
+	
+	protected void definePropertiesFromMap(Map<String, String> itmInfo){
+		
 	}
 	
-	public void unequip(){
-	}
-	
-	public void use(){
-	}
 
 	
 

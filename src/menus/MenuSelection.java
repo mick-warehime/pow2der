@@ -31,7 +31,9 @@ public class MenuSelection {
 		menuSelectionGraphics.render(graphics, isActiveSelection);
 	}
 	
-	
+	public MenuSelectionGraphics getGraphics(){
+		return this.menuSelectionGraphics;
+	}
 	
 	
 	

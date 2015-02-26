@@ -9,6 +9,7 @@ import menus.Menu;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.ControllerButtonControl;
 import org.newdawn.slick.command.ControllerDirectionControl;
@@ -47,7 +48,7 @@ public class GameControls {
 	private InputProvider avatarInputProvider; //Controls pertaining to player's avatar
 	private InputProvider menuInputProvider;
 
-	public GameControls(GameContainer gc){
+	public GameControls(GameContainer gc) throws SlickException{
 		initializeAvatarKeyBindings(gc);
 		initializeMenuKeyBindings(gc);
 
@@ -72,7 +73,7 @@ public class GameControls {
 		menuInputProvider.addListener(listener);
 	}
 
-	private void initializeMenuKeyBindings(GameContainer gc){
+	private void initializeMenuKeyBindings(GameContainer gc) throws SlickException{
 
 
 		//This translates keyboard/mouse inputs into commands, for the appropriate listeners

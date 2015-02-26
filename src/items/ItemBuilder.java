@@ -132,6 +132,8 @@ public class ItemBuilder {
 			if(!itemTypes.contains(type)){
 				itemTypes.add(type);
 			}
+			
+			
 		}
 
 		// create a look-up table for the item type
