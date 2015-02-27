@@ -34,13 +34,26 @@ public class Level {
 
 	public Level(ItemBuilder itemBuilder, int levelWidth, int levelHeight) throws SlickException {
 
-		
 		//  load a random map and populate the items 
 		initializeObjects(new LevelBuilder(levelWidth,levelHeight), itemBuilder);
 
 	};
-
 	
+	public Level(ItemBuilder itemBuilder, int[][] map) throws SlickException {
+
+		//   
+		addWallsAndDoors(map);
+
+	};
+
+	private void addWallsAndDoors(int[][] map) throws SlickException {
+
+		this.blocks = new ArrayList<Shape>();
+
+//		int height = map[]
+
+
+	}
 
 	private void initializeObjects(LevelBuilder levelBuilder, ItemBuilder itemBuilder) throws SlickException {
 		List<Integer> objectTypes = levelBuilder.getObjectTypes();
@@ -59,7 +72,7 @@ public class Level {
 				blocks.add(new Rectangle(pos[0],pos[1], World.TILE_WIDTH, World.TILE_HEIGHT));				
 			}else if(type == LevelBuilder.OBJECT_ITEM){
 				basicObjects.add(itemBuilder.newItem(pos[0],pos[1]));
-			}else if(type == LevelBuilder.START_PT){
+			}else if(type == LevelBuilder.OBJECT_START){
 				startX = pos[0];
 				startY = pos[1];
 			}else if (type == LevelBuilder.OBJECT_ENEMY){

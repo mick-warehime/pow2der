@@ -27,6 +27,7 @@ public class World {
 	private List<Level> levels = new ArrayList<Level>();
 	private Player terri;
 	private ItemBuilder itemBuilder;
+	private LevelBuilder levelBuilder;
 	
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
 	
@@ -44,6 +45,8 @@ public class World {
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 		
+		this.levelBuilder = new LevelBuilder();
+		levelBuilder.newLevel2(31,21);
 		
 		terri = new Player();
 		

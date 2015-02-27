@@ -10,15 +10,25 @@ import java.util.Random;
 
 public class LevelBuilder {
 
-	protected static final int START_PT=-1;
+	protected static final int OBJECT_START=-1;
 
-	protected static final int BLANK_TILE = 0;
+	protected static final int OBJECT_BLANK = 0;
 
 	protected static final int OBJECT_BLOCK = 1;
 	protected static final int OBJECT_ITEM = 2;
 	protected static final int OBJECT_DOOR = 3;
 	protected static final int OBJECT_ENEMY = 4;
+	protected static final int OBJECT_ROOM_TILE = 1;
+	protected static final int OBJECT_HALLWAY_TILE = 3;
+	protected static final int OBJECT_DOOR_TILE = 2;
+	protected static final int OBJECT_WALL_TILE = 0;
+	// used for building map
 	protected static final int DOOR = -2;
+	private final static int LEFT = 0;
+	private final static int UP = 1;
+	private final static int RIGHT = 2;
+	private final static int DOWN = 3;
+
 
 	private List<Integer> objectTypes;
 	private List<Integer[]> objectPositions;
@@ -46,40 +56,21 @@ public class LevelBuilder {
 
 	private Random rand; 
 
-	private Connection connections;
-
-	private final static int LEFT = 0;
-	private final static int UP = 1;
-	private final static int RIGHT = 2;
-	private final static int DOWN = 3;
-
-
 	// POSSIBLE IMPROVEMENTS / BUGS
 
 	// Backtrack does grabs closest open point instead of a random open point.
 	//  can you just get a random open index and try from there???
 
-
-
-	public LevelBuilder(int width, int height){
-
-		// premade level by hand
-		newLevel(50,50);
-
-
-
-		// new stuff
-		this.width = 13;
-		this.height = 19;
+	public LevelBuilder(){
 
 		probBonusConnections = 0.2f;
 		numBonusConnections = 2;
 
 		turnBias = 0.7f;
 		roomMin = 3;
-		roomMax = 3;
+		roomMax = 7;
 
-		numRoomPuts = 10;		
+		numRoomPuts = 100;		
 
 		// use 1000 for debugging and systemtime for normal use
 		randomSeed = 1000;   
@@ -89,19 +80,41 @@ public class LevelBuilder {
 
 		rand = new Random(randomSeed);
 
+	}
 
-//		newLevel2();
+	public LevelBuilder(int width, int height){
+
+		// premade level by hand
+		newLevel(50,50);
 
 	}
 
 
-	public void newLevel2(){
+	public int[][] newLevel2(int height, int width){
+
+		// new stuff
+		this.width = width;
+		this.height = height;
+
+
 		generateRandomRooms();		
-		addHallways();
-		getConnectivty();
+		addHallways();		
 		addPassages();
 
-		printMap();
+		for(int i=0; i<2;i++){
+			removeDeadEnds();
+			removeBogusDoors();
+		}
+
+		fillInHallways();
+
+		reduceMapGroups();
+
+		printMap(map);
+
+		return map;
+
+
 
 		//      connections.print();
 		//		printMap();
@@ -141,18 +154,19 @@ public class LevelBuilder {
 						objectMatrix[row][col] = OBJECT_ITEM;
 					}else{
 
-						objectMatrix[row][col] = BLANK_TILE;
+						objectMatrix[row][col] = OBJECT_BLANK;
 					}
 				}
-				// System.out.print(objectMatrix[row][col] + " ");
+				//				 System.out.print(objectMatrix[row][col] + " ");
 			}
+			//			System.out.println();
 		}
 
-		// System.out.println();
+
 
 		// add something to run into in the middle of the map
 		objectMatrix[12][10] = OBJECT_BLOCK;
-		objectMatrix[2][2] = START_PT;
+		objectMatrix[2][2] = OBJECT_START;
 		objectMatrix[5][5] = OBJECT_ENEMY;
 
 		this.objectMatrix = objectMatrix;
@@ -171,7 +185,7 @@ public class LevelBuilder {
 		for (int row = 0; row < numRows; row++){
 			for (int col = 0; col < numCols; col++){
 
-				if (objectMatrix[row][col]!=BLANK_TILE){
+				if (objectMatrix[row][col]!=OBJECT_BLANK){
 
 					// convert row/col position to x/y pixels
 					int x = row*World.TILE_WIDTH;
@@ -248,7 +262,6 @@ public class LevelBuilder {
 				}
 			}
 
-
 			// store the details of the room for later
 			rooms[groups][0] = topLeftX;
 			rooms[groups][1] = topLeftY;
@@ -264,408 +277,6 @@ public class LevelBuilder {
 
 		numRooms = groups-1;
 	}
-
-	private void addHallways(){
-
-		mazes = new ArrayList<Maze>();
-
-		int[] xy = openPoint();
-		int x = xy[0];
-		int y = xy[1];
-
-		Maze maze = new Maze(x,y,true);
-
-		int oldDir = getNewDir(x,y,-1);
-		map[y][x] = groups;
-
-		boolean done = false;
-		while(!done){
-			//		for(int i=0;i<35;i++){
-			int newDir = getNewDir(x,y,oldDir);
-
-			if(newDir!=-1){
-				x = x+getXDir(newDir);
-				y = y+getYDir(newDir);
-				oldDir = newDir;
-				map[y][x]=groups;
-
-				// add a new point
-				maze.addPoint(x,y,true);
-			}else{
-
-				int backtrackIndex = attemptBacktrack(maze);
-				//				System.out.println(backtrackIndex);
-				//				maze.print();
-				if(backtrackIndex>1){
-					x = maze.getX(backtrackIndex);
-					y = maze.getY(backtrackIndex);
-
-					oldDir = getNewDir(x,y,-1);
-					//					System.out.println("x: "+xx+" "+ "y: "+yy+", d: "+oldDir);
-					//					maze.print();
-					continue;
-				}
-
-				xy = openPoint();
-				x = xy[0];
-				y = xy[1];
-
-
-				if(x==-1 && y==-1){
-
-					done = true;
-				}else{
-
-					// store current maze 
-					mazes.add(maze);
-
-
-					// start new maze
-					maze = new Maze(x,y,true);
-
-					groups++;
-
-					oldDir = getNewDir(x,y,-1);
-					map[y][x]=groups;
-
-
-				}
-			}
-
-
-
-		}
-
-		//		System.out.println(oldDir);
-
-	}
-
-	private int attemptBacktrack(Maze maze){
-		//		closes points that cant be accesed (have no free moves)
-		// returns an index of an open point
-		// returns -1 if no points are open
-
-		//		boolean backtracked = false;
-
-		int numPoints = maze.size()-1;
-
-		// close last point
-		maze.setOpen(numPoints, false);
-		while(maze.numOpenPoints()>0){
-			//		for(int i=0; i<20; i++){
-			//						
-			//			System.out.println(maze.numOpenPoints());
-
-			// check if current point is already closed
-			int randomOpen = maze.randomOpen();
-			//			System.out.println(randomOpen);
-			//			maze.print();
-			int oldDir = backtrackDir(maze,randomOpen); 
-
-			// check if there is an open direction
-			int newDir = getNewDir(maze.getX(randomOpen),maze.getY(randomOpen),oldDir);
-			//			System.out.println(newDir);
-			if(newDir!=-1){					
-				// if its an there is 
-				return randomOpen;					
-
-			}else{
-				// close the point
-				maze.setOpen(randomOpen, false);
-			}
-
-
-
-		}
-
-		//		while(counter>0){
-		//			//			
-		//			counter--;
-		//
-		//			// check if current point is already closed
-		//			if(maze.getOpen(counter)){
-		//
-		//				int oldDir = backtrackDir(maze,counter); 
-		//
-		//				// check if there is an open direction
-		//				int newDir = getNewDir(maze.getX(counter),maze.getY(counter),oldDir);
-		//				//				System.out.println(newDir);
-		//				if(newDir!=-1){					
-		//					// if its an there is 
-		//					return counter;					
-		//
-		//				}else{
-		//					// close the point
-		//					maze.setOpen(counter, false);
-		//				}
-		//
-		//			}
-		//
-		//		}
-
-
-		return -1;
-	}
-
-	private int backtrackDir(Maze maze, int counter){
-
-		// for a backtrack step we need to know which direction he stepped in
-
-		int xf = maze.getX(counter);
-		int xi = maze.getX(counter+1);
-		int yf = maze.getY(counter);
-		int yi = maze.getY(counter+1);
-
-		if(xf>xi){
-			return RIGHT; 
-		}
-		if(xf<xi){
-			return LEFT;		
-		}
-		if(yf>yi){
-			return DOWN; 
-		}
-		if(yf<yi){
-			return UP;		
-		}
-
-		return -1;
-
-
-	}
-
-	private void getConnectivty(){
-		connections = new Connection();
-
-		// loop over the entire map  and look for the following points
-		// where the a's and b's are 0's in the map
-
-
-		//      1  a  1 
-		//      b  0  0		
-		//      2  0  0
-
-		for(int x = 1; x<(width-1); x++){
-			for(int y = 1; y<(height-1); y++){
-
-				if(map[y][x]!=0){
-					continue;
-				}
-
-				// find connections of type b
-				if(map[y+1][x]!=0 && map[y-1][x]!=0){
-					if(map[y+1][x] != map[y-1][x]){
-						connections.addConnection(x,y,map[y-1][x],map[y+1][x]);
-						continue;
-					}
-				}
-
-				// find connections of type a
-				if(map[y][x+1]!=0 && map[y][x-1]!=0){
-					if(map[y][x+1]!=map[y][x-1]){
-						connections.addConnection(x,y,map[y][x-1],map[y][x+1]);
-					}
-				}
-
-
-			}
-		}
-
-
-	}
-
-	private class Connection{
-
-		private ArrayList<Integer> xList = new ArrayList<Integer>();
-		private ArrayList<Integer> yList = new ArrayList<Integer>();
-		private ArrayList<Integer> group1List = new ArrayList<Integer>();
-		private ArrayList<Integer> group2List = new ArrayList<Integer>();
-
-		private Connection(){}
-
-		private void addConnection(int x, int y, int group1, int group2) {			
-			xList.add(x);
-			yList.add(y);
-			group1List.add(group1);
-			group2List.add(group2);
-		}
-
-		private void removeConnection(int index) {			
-			xList.remove(index);
-			yList.remove(index);
-			group1List.remove(index);
-			group2List.remove(index);
-		}
-
-		private int getX(int index){
-			return xList.get(index);
-		}
-		private int getY(int index){
-			return yList.get(index);
-		}
-
-		private void removeConnectionsBetweenGroups(int group1, int group2){
-			ArrayList<Integer> connectedList = new ArrayList<Integer>();
-
-			int numConnections = xList.size();
-
-			// find all points connected to the given group
-			for (int j=0; j<numConnections;j++){
-				if(group1List.get(j)==group1 && group2List.get(j)==group2){					
-					connectedList.add(j);	
-					continue;
-				}
-				if(group1List.get(j)==group2 && group2List.get(j)==group1){					
-					connectedList.add(j);					
-				}
-			}
-
-			// delete the reverse sorted list to ensure list to ensure proper deletion 
-			Collections.reverse(connectedList);
-			for (int j = 0; j<connectedList.size(); j++){
-				removeConnection(connectedList.get(j));
-			}
-		}
-
-		private int getOtherGroup(int index, int group){
-			int g1 = group1List.get(index);
-			int g2 = group2List.get(index);
-
-			if(g1==group){
-				return g2;
-			}
-			if(g2==group){
-				return g1;
-			}
-			return -1;
-		}
-
-		private int randomConnectionToGroup(int group){
-
-			ArrayList<Integer> connectedList = new ArrayList<Integer>();
-
-			int numConnections = xList.size();
-			int numConnectedToGroup = 0;
-
-			// find all points connected to the given group
-			for (int j=0; j<numConnections;j++){
-				if(group1List.get(j)==group || group2List.get(j)==group){					
-					connectedList.add(j);
-					numConnectedToGroup++;					
-				}
-			}
-			if(connectedList.size()>0){
-				return connectedList.get(rand.nextInt(numConnectedToGroup));
-			}else{
-				return -1;
-			}
-		}
-
-		private void print(){
-			int numConnections = xList.size();
-
-			for (int j=0; j<numConnections;j++){
-				int x = xList.get(j);
-				int y = yList.get(j);
-				int g1 = group1List.get(j);
-				int g2 = group2List.get(j);
-				System.out.format(" %2d %2d %2d %2d \n",x,y,g1,g2);
-
-			}
-		}
-
-
-	}
-
-
-	private void addPassages() {
-
-		// 1) pick a random group and add a random connection to it
-		// 2) for numBonusConnections attempts add another connection involving this group
-		// 3) add group from (1) to conected list
-		// 4) remove all connections between two groups in (1)
-		// 5) repeat until all groups are connected
-		
-		int numGroups = numRooms + mazes.size();
-
-		HashSet<Integer> connectedGroups = new HashSet<Integer>();
-		ArrayList<Integer> connected = new ArrayList<Integer>();
-				
-		// the first group is picked from the rooms
-		int currentGroup = rand.nextInt(numRooms)+1;
-
-		connectedGroups.add(currentGroup);
-		connected.add(currentGroup);
-		int nextGroup = currentGroup;
-
-				for(int kk = 0; kk<500; kk++){
-//		while(connectedGroups.size()<(numGroups)){
-					
-//					System.out.println(currentGroup);
-					
-					
-			for(int i = 0; i < (1+numBonusConnections); i++){
-
-				
-				
-				// add a routine that takes the connectedToGroupt hashset and finds a random point connected to any member of the group
-				
-				
-				// get a new connection to the current group
-				int connectionIndex = connections.randomConnectionToGroup(currentGroup);
-				
-//				System.out.println(connectionIndex);
-				// if there are no connections get a random group and try again
-				if(connectionIndex==-1){
-					
-					// you cant get items of a HashSet
-					int size = connectedGroups.size();
-					int randIndex = rand.nextInt(size);
-					currentGroup = connected.get(randIndex);
-					
-					continue;
-				}
-
-				// always add a connection to the first iteration
-				// only add additional connections probBonusConnection percent of the time
-				if(i==0 || (probBonusConnections>rand.nextFloat()) ){
-
-					addPassageToMap(connectionIndex);
-
-					int newGroup = connections.getOtherGroup(connectionIndex, currentGroup);
-
-					// prevent repeat connecitons by removing the current connection
-					connections.removeConnection(connectionIndex);
-
-					if(i==0){
-						nextGroup = newGroup;
-						connectedGroups.add(newGroup);
-						connected.add(newGroup);
-					}
-				}
-
-			}
-
-			// delete all connections between currentGroup and nextGroup to ensure the next round
-			// will connected nextGroup with a new group and not recconected to currentGroup
-			connections.removeConnectionsBetweenGroups(currentGroup,nextGroup);
-			currentGroup = nextGroup;
-//			connections.print();
-//			System.out.println(connectedGroups+" "+numGroups);
-
-		}
-	}
-
-	private void addPassageToMap(int connectionIndex){
-
-		int x = connections.getX(connectionIndex);
-		int y = connections.getY(connectionIndex);
-
-		map[y][x] = DOOR;
-
-	}
-
-
 
 	private class Maze{
 		private ArrayList<Integer> xList;
@@ -688,6 +299,13 @@ public class LevelBuilder {
 			yList.add(y);
 			openList.add(open);
 			numPoints++;
+		}
+
+		private void removePoint(int index){
+			xList.remove(index);
+			yList.remove(index);
+			openList.remove(index);
+			numPoints--;
 		}
 
 
@@ -732,8 +350,6 @@ public class LevelBuilder {
 					numOpen++;
 				}
 			}
-
-
 
 			// return an open point at random 
 			if(numOpen>0){
@@ -840,7 +456,6 @@ public class LevelBuilder {
 				continue;
 			}
 
-
 			// if turning, check if the turn is allowed 
 			if(newDir!=oldDir){
 				if(!canTurn(x,y,newDir)){
@@ -853,6 +468,11 @@ public class LevelBuilder {
 			// take step
 			int xNew = x+newDirX;
 			int yNew = y+newDirY;
+
+			// make sure no one is where you are going (relevant for backtracking)
+			if(map[yNew][xNew]!=0){
+				continue;
+			}
 
 			// make sure it is at lowest in row 1 and at most in height/width-2
 			if(xNew<1 | yNew<1 | xNew>(width-2) | yNew>(height-2) ){
@@ -937,7 +557,473 @@ public class LevelBuilder {
 
 	}
 
+	private void addHallways(){
 
+		mazes = new ArrayList<Maze>();
+
+		int[] xy = openPoint();
+		int x = xy[0];
+		int y = xy[1];
+
+		Maze maze = new Maze(x,y,true);
+
+		int oldDir = getNewDir(x,y,-1);
+		map[y][x] = groups;
+
+		boolean done = false;
+		while(!done){
+
+			int newDir = getNewDir(x,y,oldDir);
+
+			if(newDir!=-1){
+				x = x+getXDir(newDir);
+				y = y+getYDir(newDir);
+				oldDir = newDir;
+				map[y][x]=groups;
+
+				// add a new point
+				maze.addPoint(x,y,true);
+			}else{
+
+				// try to backtrack
+				int backtrackIndex = maze.size()-1;
+
+				// close last point
+				maze.setOpen(backtrackIndex, false);
+
+				boolean getNewPoint = true;
+				while(backtrackIndex>0){
+
+					backtrackIndex--;
+
+					// skip previously closed points
+					if(!maze.getOpen(backtrackIndex)){
+						continue;
+					}
+
+					// direction from n+1 -> n
+					oldDir = backtrackDir(maze,backtrackIndex); 
+
+					// check if there is an open direction
+					newDir = getNewDir(maze.getX(backtrackIndex),maze.getY(backtrackIndex),oldDir);
+
+					if(newDir==-1){
+						// close the point
+						maze.setOpen(backtrackIndex, false);
+					}else{
+						getNewPoint = false;
+						break;
+					}									
+
+				}
+
+				// if there was an open point on the maze keep going
+				if(!getNewPoint){
+
+					x = maze.getX(backtrackIndex);
+					y = maze.getY(backtrackIndex);
+
+					oldDir = getNewDir(x,y,-1);
+					continue;
+				}
+
+
+				// if there were no open points try to start a new maze
+				xy = openPoint();
+				x = xy[0];
+				y = xy[1];
+
+				// if there are no remaining open points stop looking for mazes
+				if(x==-1 && y==-1){
+					done = true;
+				}else{
+
+					// store current maze 
+					mazes.add(maze);					
+
+					// start new maze
+					maze = new Maze(x,y,true);
+
+					// increase the group counter for the new maze
+					groups++;
+
+					oldDir = getNewDir(x,y,-1);
+
+					map[y][x]=groups;
+
+				}
+
+			}
+
+
+
+		}
+
+		mazes.add(maze);
+		//		System.out.println(oldDir);
+
+	}
+
+	private int backtrackDir(Maze maze, int index){
+
+		// for a backtrack step we need to know which direction he stepped in
+
+		int xf = maze.getX(index);
+		int xi = maze.getX(index+1);
+		int yf = maze.getY(index);
+		int yi = maze.getY(index+1);
+
+		if(xf>xi){
+			return RIGHT; 
+		}
+		if(xf<xi){
+			return LEFT;		
+		}
+		if(yf>yi){
+			return DOWN; 
+		}
+		if(yf<yi){
+			return UP;		
+		}
+
+		return -1;
+
+
+	}
+
+	private Connection getConnectivty(int[][] map){
+		Connection connections = new Connection();
+
+		// loop over the entire map  and look for the following points
+		// where the a's and b's are 0's in the map
+
+
+		//      1  a  1 
+		//      b  0  0		
+		//      2  0  0
+
+		for(int x = 1; x<(width-1); x++){
+			for(int y = 1; y<(height-1); y++){
+
+				if(map[y][x]!=0){
+					continue;
+				}
+
+				// find connections of type b
+				if(map[y+1][x]!=0 && map[y-1][x]!=0){
+					if(map[y+1][x] != map[y-1][x]){
+						connections.addConnection(x,y,map[y-1][x],map[y+1][x]);
+						continue;
+					}
+				}
+
+				// find connections of type a
+				if(map[y][x+1]!=0 && map[y][x-1]!=0){
+					if(map[y][x+1]!=map[y][x-1]){
+						connections.addConnection(x,y,map[y][x-1],map[y][x+1]);
+					}
+				}
+
+
+			}
+		}
+
+		return connections;
+
+
+	}
+
+	private class Connection{
+
+		private ArrayList<Integer> xList = new ArrayList<Integer>();
+		private ArrayList<Integer> yList = new ArrayList<Integer>();
+		private ArrayList<Integer> group1List = new ArrayList<Integer>();
+		private ArrayList<Integer> group2List = new ArrayList<Integer>();
+
+		private Connection(){}
+
+		private void addConnection(int x, int y, int group1, int group2) {			
+			xList.add(x);
+			yList.add(y);
+			group1List.add(group1);
+			group2List.add(group2);
+		}
+
+		private void removeConnection(int index) {			
+			xList.remove(index);
+			yList.remove(index);
+			group1List.remove(index);
+			group2List.remove(index);
+		}
+
+		private int getX(int index){
+			return xList.get(index);
+		}
+		private int getY(int index){
+			return yList.get(index);
+		}
+
+
+		private int getOtherGroup(int index, int group){
+			int g1 = group1List.get(index);
+			int g2 = group2List.get(index);
+
+			if(g1==group){
+				return g2;
+			}
+			if(g2==group){
+				return g1;
+			}
+			return -1;
+		}
+
+		private int randomConnectionToGroup(int group){
+
+			ArrayList<Integer> connectedList = new ArrayList<Integer>();
+
+			int numConnections = xList.size();
+			int numConnectedToGroup = 0;
+
+			// find all points connected to the given group
+			for (int j=0; j<numConnections;j++){
+				if(group1List.get(j)==group || group2List.get(j)==group){					
+					connectedList.add(j);
+					numConnectedToGroup++;					
+				}
+			}
+			if(connectedList.size()>0){
+				return connectedList.get(rand.nextInt(numConnectedToGroup));
+			}else{
+				return -1;
+			}
+		}
+
+		private void print(){
+			int numConnections = xList.size();
+
+			for (int j=0; j<numConnections;j++){
+				int x = xList.get(j);
+				int y = yList.get(j);
+				int g1 = group1List.get(j);
+				int g2 = group2List.get(j);
+				System.out.format(" %2d %2d %2d %2d \n",x,y,g1,g2);
+
+			}
+		}
+
+		private void absorbGroup(int connectedGroup, int newGroup,int[][] map) {
+
+			//			find all newGroup in map and replace with connectedgroup
+
+			for(int i=0;i<width;i++){
+				for(int j=0;j<height;j++){
+					if(map[j][i]==newGroup){
+						map[j][i]=connectedGroup;
+					}
+				}			
+			}
+
+		}
+
+
+	}
+
+	private void addPassages() {
+
+		// 1) pick a random group and add a random connection to it
+		// 2) for numBonusConnections attempts add another connection involving this group
+		// 3) add group from (1) to conected list
+		// 4) remove all connections between two groups in (1)
+		// 5) repeat until all groups are connected
+
+		int[][] tempMap = new int[height][];
+		for(int i = 0; i < height; i++){
+			tempMap[i] = map[i].clone();
+		}
+
+		Connection connections = getConnectivty(tempMap);
+
+		int numGroups = numRooms + mazes.size()+1;
+
+		ArrayList<Integer> connected = new ArrayList<Integer>();
+
+		// the first group is picked from the rooms
+		int currentGroup = rand.nextInt(numRooms)+1;
+		connected.add(currentGroup);
+
+		for(int kk = 0; kk<500; kk++){
+
+			connections = getConnectivty(tempMap);
+			for(int i = 0; i < (1+numBonusConnections); i++){
+
+				// get a new connection to the current group
+				int connectionIndex = connections.randomConnectionToGroup(currentGroup);
+				// if there are no connections get a random group and try again
+				if(connectionIndex==-1){
+					continue;
+				}
+
+				// always add a connection to the first iteration
+				// only add additional connections probBonusConnection percent of the time
+				if(i==0 || (probBonusConnections>rand.nextFloat()) ){
+
+					addPassageToMap(connectionIndex, connections);
+
+					int newGroup = connections.getOtherGroup(connectionIndex, currentGroup);
+
+					// prevent repeat connecitons by removing the current connection
+					connections.removeConnection(connectionIndex);
+
+					if(i==0){
+						connected.add(newGroup);
+						connections.absorbGroup(currentGroup,newGroup,tempMap);
+					}
+				}
+
+			}
+			if(connected.size()==(numGroups-1)){
+				return;
+			}		
+		}
+		System.out.println("MAP NOT BUILT CORRECTLY. NOT ALL GROUPS PROPERLY CONNECTED");
+	}
+
+	private void addPassageToMap(int connectionIndex, Connection connections){
+
+		int x = connections.getX(connectionIndex);
+		int y = connections.getY(connectionIndex);
+
+		map[y][x] = DOOR;
+
+	}
+
+	private void removeDeadEnds(){
+
+		// loop over all Mazes in mazes list
+		for(int j = 0; j<mazes.size(); j++){
+
+			Maze mz = mazes.get(j);
+
+			boolean hasDeadEnds = true;
+
+			while(hasDeadEnds){
+
+				// if a point was deleted look again for more deletable points
+				boolean deletedPoint = false;
+				for(int i = 0; i<mz.size(); i++){
+
+					// current point in maze
+					int x = mz.getX(i);
+					int y = mz.getY(i);
+					//					System.out.println(map[y][x]);
+					// a point should be deleted if there is only 1 neighbor
+					if(numAdjacentPoints(x,y)<2){
+						mz.removePoint(i);
+						map[y][x]=0;
+						deletedPoint = true;
+						break;
+					}
+
+
+				}
+				// if a point was deleted keep looking
+				if(!deletedPoint){
+					// if it gets to the end there are no deadEnds left
+					hasDeadEnds = false;
+				}
+			}
+		}
+
+
+	}
+
+	private int numAdjacentPoints(int x, int y){
+
+		int numAdj = 0;
+		for(int d = 0; d < 4; d++){
+			int xd = x+getXDir(d);
+			int yd = y+getYDir(d);
+
+			if(map[yd][xd] !=0){
+				numAdj++;
+			}
+
+			if(numAdj>1){
+				break;
+			}
+
+		}
+
+		return numAdj;
+	}
+
+	private void removeBogusDoors(){
+		for (int y=1; y<(height-1);y++){
+			for (int x=1; x<(width-1);x++){
+
+				if(map[y][x]==DOOR){
+					if(numAdjacentPoints(x,y)<2){
+						map[y][x]=0;
+					}
+
+					// three doors in a row is too much
+					if(map[y+1][x]==DOOR&&map[y-1][x]==DOOR){
+						map[y][x]=0;
+					}
+					if(map[y][x+1]==DOOR&&map[y][x-1]==DOOR){
+						map[y][x]=0;
+					}
+
+				}
+
+
+
+			}
+		}
+
+	}
+
+	private void fillInHallways(){
+		//		this fills in gaps in winding hallways
+		//  1 1 1		1 1 1
+		//  0 0 1  --> 	0 1 1
+		//  0 1 1		0 1 1
+		//
+		for (int y=1; y<(height-1);y++){
+			for (int x=1; x<(width-1);x++){
+
+				if(map[y][x]==0){
+					if((map[y+1][x]==map[y-1][x]) && map[y+1][x]!=DOOR){
+						map[y][x]=map[y+1][x];
+					}
+
+					if((map[y][x+1]==map[y][x-1])&& map[y][x+1]!=DOOR){
+						map[y][x]=map[y][x+1];
+					}
+				}
+			}
+		}
+
+	}
+
+	private void reduceMapGroups(){
+		for (int y=0; y<height;y++){
+			for (int x=0; x<width;x++){
+
+				if(map[y][x]==0){
+					continue;
+				}else if(map[y][x]==DOOR){
+					map[y][x] = OBJECT_DOOR_TILE;
+
+				} else if(map[y][x]<= numRooms){					
+					map[y][x] = OBJECT_ROOM_TILE;					
+				} else{					
+					map[y][x] = OBJECT_HALLWAY_TILE;
+				}
+
+			}
+		}
+	}
 
 
 
@@ -949,7 +1035,7 @@ public class LevelBuilder {
 
 
 
-	private void printMap(){
+	private void printMap(int[][] map){
 		for (int k=0; k<height;k++){
 			for (int j=0; j<width;j++){
 
@@ -959,33 +1045,31 @@ public class LevelBuilder {
 		}
 	}
 
+	//
+	//	private void createMap(int height, int width){
+	//		map = new int[height][width];
+	//
+	//		for(int i=0;i<width;i++){
+	//			for(int j=0;j<height;j++){
+	//				map[j][i]=0;
+	//			}			
+	//		}
+	//
+	//
+	//	}
 
-	private void createMap(int height, int width){
-		map = new int[height][width];
-
-		for(int i=0;i<width;i++){
-			for(int j=0;j<height;j++){
-				map[j][i]=0;
-			}			
-		}
-
-
-	}
-
-	private void testOpenBacktrack(){
-		height = 4;
-		width = 3;
-		createMap(height,width);
-
-		map[2][1]=2;
-		map[1][1]=2;
-		map[0][1]=2;
-		printMap();
-		System.out.println(testOpen(1,1,1));
-
-
-
-	}
+	//	private void testOpenBacktrack(){
+	//		height = 4;
+	//		width = 3;
+	//		createMap(height,width);
+	//
+	//		map[2][1]=2;
+	//		map[1][1]=2;
+	//		map[0][1]=2;
+	//		printMap(map);
+	//		System.out.println(testOpen(1,1,1));
+	//
+	//	}
 
 	//	private void testOpenPoint(){
 	//		height = 4;
