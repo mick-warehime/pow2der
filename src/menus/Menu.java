@@ -1,6 +1,7 @@
 package menus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.command.Command;
@@ -28,7 +29,7 @@ public abstract class Menu {
 
 	protected boolean selectionActivated = false;
 	protected int currentSelection = 0;
-	protected ArrayList<MenuSelection> selections;
+	protected List<MenuSelection> selections;
 	
 	
 	public Menu(int menuType,int menuRenderX, int menuRenderY){

@@ -27,8 +27,8 @@ public class ItemEquippedMenu extends TextMenu {
 		selections = new ArrayList<MenuSelection>();
 
 		
-		addMenuSelection( new MenuUnequipItemCommand(item), "Unequip Item");
-		addMenuSelection( new MenuDropItemCommand(item), "Drop Item");
+		addMenuSelection( new MenuUnequipItemCommand(item), "Unequip");
+		addMenuSelection( new MenuDropItemCommand(item), "Drop");
 		addMenuSelection( new MenuCloseCurrentCommand(), "Cancel");
 
 

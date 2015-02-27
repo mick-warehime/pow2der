@@ -140,7 +140,7 @@ public class Item extends BasicObject implements Interactive{
 		public void applyPickup(Inventory inventory, Shape actorShape){
 			this.storingInventory = inventory;
 			this.ownerShape = actorShape;
-			storingInventory.addItem(owningItem);
+			storingInventory.addItemToInventory(owningItem);
 
 
 		}

@@ -24,8 +24,8 @@ public class ItemInventoryMenu extends TextMenu {
 	protected void defineMenuSelections(Item item) {
 		selections = new ArrayList<MenuSelection>();
 
-		addMenuSelection( new MenuEquipItemCommand(item), "Equip Item");
-		addMenuSelection( new MenuDropItemCommand(item), "Drop Item");
+		addMenuSelection( new MenuEquipItemCommand(item), "Equip");
+		addMenuSelection( new MenuDropItemCommand(item), "Drop");
 		addMenuSelection( new MenuCloseCurrentCommand(), "Cancel");
 
 

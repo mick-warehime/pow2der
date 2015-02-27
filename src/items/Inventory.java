@@ -22,7 +22,7 @@ public class Inventory {
 		return equippedItems.nonNullItems();
 	}
 	
-	public void addItem(Item item){
+	public void addItemToInventory(Item item){
 		inventoryItems.add(item);
 		
 	}
