@@ -26,8 +26,6 @@ public class World {
 	
 	private List<Level> levels = new ArrayList<Level>();
 	private Player terri;
-	private CollisionHandler collisionHandler;
-	private SpriteSheet spriteSheet;	
 	private ItemBuilder itemBuilder;
 	
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
@@ -81,7 +79,7 @@ public class World {
 		
 		currentLevelData.getCurrentLevel().update();
 		
-		if (terri.isDying()){
+		if (terri.shouldRemove()){
 			System.out.println("Terri is dead!");
 		}
 		

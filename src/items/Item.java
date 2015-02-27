@@ -3,6 +3,7 @@ package items;
 
 import gameobjects.BasicObject;
 import gameobjects.Interactive;
+import gameobjects.Removeable;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -19,7 +20,7 @@ import actors.Status;
 
 /* A basic object that can be picked up and put into inventory */
 
-public class Item extends BasicObject implements Interactive{
+public class Item extends BasicObject implements Interactive,Removeable{
 
 
 
@@ -30,6 +31,8 @@ public class Item extends BasicObject implements Interactive{
 	private static float SPRITE_DRAW_SCALE = 0.6f;
 	private static int SPRITE_MARGIN = 5;
 	private static float RECT_SHRINK_MARGIN = 15f;
+	
+	
 
 	public Item(Map<String, String> itmInfo, Image image, int xPos, int yPos) throws SlickException{		
 
@@ -329,6 +332,12 @@ public class Item extends BasicObject implements Interactive{
 
 
 
+	}
+
+
+	@Override
+	public boolean shouldRemove() {
+		return !this.isOnGround();
 	}
 
 
