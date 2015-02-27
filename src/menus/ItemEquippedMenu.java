@@ -7,15 +7,16 @@ import java.util.ArrayList;
 import commands.MenuCloseCurrentCommand;
 import commands.MenuDropItemCommand;
 import commands.MenuEquipItemCommand;
+import commands.MenuUnequipItemCommand;
 import commands.NullCommand;
 
-public class ItemMenu extends TextMenu {
+public class ItemEquippedMenu extends TextMenu {
 
 	
 	
 	
 
-	public ItemMenu( int menuRenderX, int menuRenderY, Item item) {
+	public ItemEquippedMenu( int menuRenderX, int menuRenderY, Item item) {
 		super(Menu.MENU_ITEM, menuRenderX, menuRenderY);
 		
 		defineMenuSelections(item);
@@ -26,8 +27,8 @@ public class ItemMenu extends TextMenu {
 		selections = new ArrayList<MenuSelection>();
 
 		
-		addMenuSelection( new MenuDropItemCommand(item), "Drop Item");
-		addMenuSelection( new MenuEquipItemCommand(item), "Equip Item");
+		addMenuSelection( new MenuUnequipItemCommand(item), "Unequip");
+		addMenuSelection( new MenuDropItemCommand(item), "Drop");
 		addMenuSelection( new MenuCloseCurrentCommand(), "Cancel");
 
 

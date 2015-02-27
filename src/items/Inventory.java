@@ -4,46 +4,103 @@ import java.util.ArrayList;
 
 public class Inventory {
 	
-	private ArrayList<Item> items = new ArrayList<Item>();
-	private ArrayList<Item> equippedItems = new ArrayList<Item>();
+	private ArrayList<Item> inventoryItems = new ArrayList<Item>();
+	private EquippedItems equippedItems;
+	
+	
+	
 	
 	public Inventory(){
-		
+		this.equippedItems = new EquippedItems();
 	}
 	
-	public ArrayList<Item> getItems(){
-		return items;
+	public ArrayList<Item> getInventoryItems(){
+		return inventoryItems;
 	}
 	
-	public ArrayList<Item>  getEquipped(){
-		return equippedItems;
+	public ArrayList<Item>  getEquippedItems(){
+		return equippedItems.nonNullItems();
 	}
 	
-	public void addItem(Item item){
-		items.add(item);
+	public void addItemToInventory(Item item){
+		inventoryItems.add(item);
 		
 	}
 	
 	public void removeItem(Item item){
-		items.remove(item);
-		if (equippedItems.contains(item)){
-			equippedItems.remove(item);
-		}
+		inventoryItems.remove(item);
+		unequipItem(item);
 	}
 	
 	public void equipItem(Item item){
-		assert items.contains(item) : "Tried to equip item," + item + " not in inventory" + this;
-		if (!equippedItems.contains(item)){
-			equippedItems.add(item);
-		}
+		assert inventoryItems.contains(item) : "Tried to equip item," + item + " not in inventory" + this;
+		equippedItems.equipItem(item);
+		inventoryItems.remove(item);
 		
 	}
 	
 	public void unequipItem(Item item){
-		assert items.contains(item) : "Tried to unequip item," + item + " not in inventory" + this;
-		if (equippedItems.contains(item)){
-			equippedItems.remove(item);
+		equippedItems.unequipItem(item);
+	}
+	
+	class EquippedItems{
+		
+		private static final int EQUIP_SLOTS = 10;
+		private ArrayList<Item> equipSlots ;
+		
+		
+		public EquippedItems(){
+			equipSlots = new ArrayList<Item>();
+			for (int i = 0; i< EQUIP_SLOTS; i++){
+				equipSlots.add(null);
+			}
 		}
+		
+		public ArrayList<Item> nonNullItems(){
+			ArrayList<Item> output  = new ArrayList<Item>() ;
+			
+			for (Item item : equipSlots){
+				if (item != null){
+					output.add(item);
+				}
+			}
+			
+			
+			return output;
+		}
+		
+		public void equipItem(Item item){
+			
+			
+			int index = item.getProperties().equipLocation;
+			
+			Item oldItem = equipSlots.get(index);
+			if (oldItem!=null){
+				inventoryItems.add(oldItem);
+			}
+			
+			equipSlots.set(index, item);
+			
+			
+			
+		}
+		
+		protected void unequipItem(Item item){
+			
+			assert item!= null : "Tried to unequip a null item!";
+			
+			if (equipSlots.contains(item)){
+				equipSlots.remove(item);
+				inventoryItems.add(item);
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
 	}
 	
 
