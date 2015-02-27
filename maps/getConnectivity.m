@@ -1,6 +1,5 @@
 function [locs,cxns] = getConnectivity(map)
 
-
 width = size(map,2);
 height = size(map,1);
 

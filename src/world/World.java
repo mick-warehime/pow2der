@@ -29,6 +29,7 @@ public class World {
 	private CollisionHandler collisionHandler;
 	private SpriteSheet spriteSheet;	
 	private ItemBuilder itemBuilder;
+	private LevelBuilder levelBuilder;
 	
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
 	
@@ -46,13 +47,16 @@ public class World {
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 		
+		this.levelBuilder = new LevelBuilder();
+		levelBuilder.newLevel2(31,21);
+		
 		terri = new Player();
 		
 		newLevel(50,50);
 		
 		currentLevelData.setCurrentLevel(levels.get(0));
 	
-		itemBuilder.testItems();
+//		itemBuilder.testItems();
 		
 
 	}
