@@ -1,5 +1,6 @@
 package actionEngines;
 
+import abilities.AbilityObject;
 import actors.Effect;
 import actors.Status;
 import commands.CommandProviderAggregator;
@@ -156,6 +157,18 @@ public class ActorActionEngine extends ActionEngine {
 	public void applyEffect(int effectName, int duration) {
 		status.gainEffect(effectName, duration);
 
+	}
+
+	public void activateAbility(AbilityObject ability) {
+		
+		int[][] onCastEffects = ability.getOnCastEffects();
+		
+		for (int i = 0; i<onCastEffects.length;i++){
+			status.gainEffect(onCastEffects[i][0], onCastEffects[i][1]);
+		}
+		
+		
+		
 	}
 
 }

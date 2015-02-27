@@ -54,6 +54,7 @@ public class InventoryMenu extends Menu{
 
 	private void defineSelectionsFromInventory(Inventory playerInventory) throws SlickException {
 		selections = new ArrayList<MenuSelection>();
+		currentSelection = 0;
 		
 		this.selectionGraph = new SelectionGraph();
 
