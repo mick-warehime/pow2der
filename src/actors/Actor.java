@@ -1,5 +1,6 @@
 package actors;
 
+import gameobjects.Removeable;
 import graphics.ActorGraphics;
 
 import org.newdawn.slick.Graphics;
@@ -11,7 +12,7 @@ import actionEngines.ActionEngine;
 import commands.CollisionCommandProvider;
 import commands.CommandProviderAggregator;
 
-public abstract class Actor {
+public abstract class Actor implements Removeable {
 
 	protected ActorGraphics graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
@@ -29,6 +30,7 @@ public abstract class Actor {
 	public float getY() {return status.getY();}
 
  
+	
 	
 	public void render( Graphics g, int mapX, int mapY) {
 		graphics.render(g,mapX, (int) mapY);
@@ -57,7 +59,7 @@ public abstract class Actor {
 	
  
 	
-	public boolean isDying(){
+	public boolean shouldRemove(){
 		return status.isDying();
 	}
 

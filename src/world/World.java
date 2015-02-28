@@ -78,7 +78,7 @@ public class World {
 		
 		currentLevelData.getCurrentLevel().update();
 		
-		if (terri.isDying()){
+		if (terri.shouldRemove()){
 			System.out.println("Terri is dead!");
 		}
 		

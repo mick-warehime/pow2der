@@ -15,6 +15,7 @@ import actors.Actor;
 import actors.Enemy;
 import gameobjects.BasicObject;
 import gameobjects.Broadcaster;
+import gameobjects.Removeable;
 
 
 
@@ -71,8 +72,15 @@ public class Level {
 
 	}
 
-
-
+	
+	private void removeFromAllLists(Object obj){
+		removeFromList(obj,actors);
+		removeFromList(obj,basicObjects);
+		removeFromList(obj,broadcasters);
+		removeFromList(obj,blocks);
+		
+	}
+	
 	private void removeFromList(Object obj, ArrayList<?> list){
 		if (list.contains(obj)){
 			list.remove(obj);
@@ -86,21 +94,21 @@ public class Level {
 			Actor nme = iterator.next();
 
 			nme.update();
-			if (nme.isDying()) {
+			if (nme.shouldRemove()) {
 				// Remove the current element from the iterator and the list.
 				iterator.remove();
-				removeFromList(nme,broadcasters);
+				removeFromAllLists(nme);
 			}
 		}
 
 		//Remove items that are not on the ground
 		for (Iterator<BasicObject> iterator = basicObjects.iterator(); iterator.hasNext();){
 			BasicObject obj = iterator.next();
-
-			if (obj instanceof Item){
-				if (!((Item)obj).isOnGround()){
+			
+			if (obj instanceof Removeable){
+				if (((Removeable)obj).shouldRemove()){
 					iterator.remove();
-					removeFromList(obj,broadcasters);
+					removeFromAllLists(obj);
 				}
 
 			}
