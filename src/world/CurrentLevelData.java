@@ -6,14 +6,14 @@ import org.newdawn.slick.geom.Shape;
 /* Stores data about the currently loaded level */
 public class CurrentLevelData {
 
-	private Level currentLevel;
+	private NewLevel currentLevel;
 	
 	
-	protected void setCurrentLevel(Level level){
-		this.currentLevel = level;
+	protected void setCurrentLevel(NewLevel newLevel){
+		this.currentLevel = newLevel;
 	}
 	
-	public Level getCurrentLevel(){
+	public NewLevel getCurrentLevel(){
 		return this.currentLevel;
 	}
 	

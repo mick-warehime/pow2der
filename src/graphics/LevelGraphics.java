@@ -9,6 +9,8 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Shape;
 
 import world.Level;
+import world.NewLevel;
+import world.NewLevelBuilder;
 import world.World;
 
 public class LevelGraphics{
@@ -33,17 +35,17 @@ public class LevelGraphics{
 	private int screenHeight;
 	
 	
-	public LevelGraphics(Level level, int levelHeight, int levelWidth) throws SlickException {
+	public LevelGraphics(NewLevel newLevel, int width, int height) throws SlickException {
 		
 		this.screenWidth = main.Game.WIDTH;
 		this.screenHeight = main.Game.HEIGHT;
 
-		this.levelWidth = levelWidth;
-		this.levelHeight = levelHeight;
+		this.levelWidth = width*NewLevelBuilder.SCALING;
+		this.levelHeight = height*NewLevelBuilder.SCALING;
 
 		this.tileSize = World.TILE_HEIGHT;
 		
-		blocks = level.getBlocks();
+		blocks = newLevel.getWalls();
 		
 	}
 	

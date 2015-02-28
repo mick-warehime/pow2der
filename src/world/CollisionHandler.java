@@ -34,6 +34,12 @@ public class CollisionHandler  {
 		this.broadcasters = level.getBroadcasters();
 	}
 
+	public CollisionHandler(NewLevel level){
+		this.blocks = level.getWalls();
+		this.basicObjects = level.getBasicObjects();
+		this.actors = level.getActors();
+		this.broadcasters = level.getBroadcasters();
+	}
 	
 
 	public void addPlayerRect(Rectangle playerRect){
