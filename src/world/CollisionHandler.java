@@ -27,14 +27,8 @@ public class CollisionHandler  {
 	}
 
 	
-	public CollisionHandler(Level level){
-		this.blocks = level.getBlocks();
-		this.basicObjects = level.getBasicObjects();
-		this.actors = level.getActors();
-		this.broadcasters = level.getBroadcasters();
-	}
 
-	public CollisionHandler(NewLevel level){
+	public CollisionHandler(Level level){
 		this.blocks = level.getWalls();
 		this.basicObjects = level.getBasicObjects();
 		this.actors = level.getActors();

@@ -4,13 +4,13 @@ package graphics;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Shape;
 
 import world.Level;
-import world.NewLevel;
-import world.NewLevelBuilder;
+import world.LevelBuilder;
 import world.World;
 
 public class LevelGraphics{
@@ -30,30 +30,34 @@ public class LevelGraphics{
 	private int offsetX = 0;
 	private int offsetY = 0;
 
-	private int bufferDistX = 12; // number of tiles away from edge
-	private int bufferDistY = 8; 
+	private int bufferDistX = 15; // number of tiles away from edge
+	private int bufferDistY = 10; 
 	private int bufferX; // number of tiles away from edge
 	private int bufferY; // number of tiles away from edge
 
 	private int tileSize;
 	private int screenWidth;
 	private int screenHeight;
+	
 
+	private ArrayList<Shape> visitedTiles;
 
-	public LevelGraphics(NewLevel newLevel) throws SlickException {
+	public LevelGraphics(Level level) throws SlickException {
 
 		this.screenWidth = main.Game.WIDTH;
 		this.screenHeight = main.Game.HEIGHT;
 
-		this.levelWidth = newLevel.getWidth()*NewLevelBuilder.SCALING;
-		this.levelHeight = newLevel.getHeight()*NewLevelBuilder.SCALING;
+		this.levelWidth = level.getWidth()*LevelBuilder.SCALING;
+		this.levelHeight = level.getHeight()*LevelBuilder.SCALING;
 
 		this.tileSize = World.TILE_HEIGHT;
 
-		walls = newLevel.getWalls();
-		floors = newLevel.getFloors();
-		doors = newLevel.getDoors();
-		halls = newLevel.getHalls();
+		this.walls = level.getWalls();
+		this.floors = level.getFloors();
+//		this.doors = level.getDoors();
+		this.halls = level.getHalls();
+		
+		visitedTiles = new ArrayList<Shape>();
 
 	}
 
@@ -63,33 +67,85 @@ public class LevelGraphics{
 
 		setLevelCoordinates(playerX,playerY);
 
+		renderDimmed(playerX, playerY);
+
+		renderVisible(playerX, playerY);
+
+	}
+
+	private void renderDimmed(int playerX, int playerY){
+
+		float alpha = 0.85f;
+		
 		for (Shape wall : walls){
 			if(onScreen(wall,playerX,playerY)){
-				spriteSheet.getSubImage(26,5).draw(wall.getX()-offsetX,wall.getY()-offsetY);
+				
+				Image im = spriteSheet.getSubImage(26,5);					
+				im.setAlpha(alpha);
+				im.draw(wall.getX()-offsetX,wall.getY()-offsetY);				
 			}
 
 		}
 		for (Shape floor : floors){
 			if(onScreen(floor,playerX,playerY)){
-				spriteSheet.getSubImage(25,40).draw(floor.getX()-offsetX,floor.getY()-offsetY);
+			
+				Image im = spriteSheet.getSubImage(25,40);
+
+				im.setAlpha(alpha);
+				im.draw(floor.getX()-offsetX,floor.getY()-offsetY);
 			}
 		}
 		for (Shape hall : halls){
 			if(onScreen(hall,playerX,playerY)){
-				spriteSheet.getSubImage(60,25).draw(hall.getX()-offsetX,hall.getY()-offsetY);
+				Image im = spriteSheet.getSubImage(60,25);
+
+				im.setAlpha(alpha);
+				im.draw(hall.getX()-offsetX,hall.getY()-offsetY);
 			}
 		}
-
 	}
 
-	private boolean onScreen(Shape shape, int playerX, int playerY){
-		//		given a shape and the players position determine if the shape should be drawn
 
-		boolean onScreen = true;
 
+	private void renderVisible(int playerX, int playerY){
+
+		float alpha = 50000f;
 		
-		int xCutoff = 30*tileSize;
-		int yCutoff = 25*tileSize;
+		for (Shape wall : walls){
+			if(visible(wall,playerX,playerY)){
+				
+				Image im = spriteSheet.getSubImage(26,5);					
+				
+				im.setAlpha((float) (alpha/distToPlayer(wall,playerX,playerY)));
+				im.draw(wall.getX()-offsetX,wall.getY()-offsetY);				
+			}
+
+		}
+		for (Shape floor : floors){
+			if(visible(floor,playerX,playerY)){
+			
+				Image im = spriteSheet.getSubImage(25,40);
+
+				im.setAlpha((float) (alpha/distToPlayer(floor,playerX,playerY)));
+				im.draw(floor.getX()-offsetX,floor.getY()-offsetY);
+			}
+		}
+		for (Shape hall : halls){
+			if(visible(hall,playerX,playerY)){
+				Image im = spriteSheet.getSubImage(60,25);
+
+				im.setAlpha((float) (alpha/distToPlayer(hall,playerX,playerY)));
+				im.draw(hall.getX()-offsetX,hall.getY()-offsetY);
+			}
+		}
+	}
+
+
+	
+	private boolean onScreen(Shape shape, int playerX, int playerY){
+		boolean onScreen = true;
+		int xCutoff = 35*tileSize;
+		int yCutoff = 30*tileSize;
 
 		if( Math.abs(shape.getX()-playerX) > xCutoff){
 			onScreen = false;
@@ -100,17 +156,39 @@ public class LevelGraphics{
 			return onScreen;
 		}
 
-//	double cutoff = 20*tileSize;
-//		
-//		double distance2 = Math.pow(playerX-shape.getX(),2) + Math.pow(playerY-shape.getY(),2);  
-//
-//		if( distance2 > Math.pow(cutoff,2)){
-//			onScreen = false;
-//			return onScreen;
-//		}
-		
+		//		given a shape and the players position determine if the shape should be drawn
+
+
+//		System.out.println(plaer);
 		return onScreen;
 
+	}
+
+
+
+
+	private boolean visible(Shape shape, int playerX, int playerY){
+
+		//		given a shape and the players position determine if the shape should be drawn
+
+		boolean onScreen = true;
+
+		double cutoff = 10*tileSize;
+
+		double distance2 = distToPlayer(shape,playerX,playerY);
+
+		if( distance2 > Math.pow(cutoff,2)){
+			onScreen = false;
+			return onScreen;
+		}
+
+		return onScreen;
+
+	}
+
+	private double distToPlayer(Shape shape, int playerX, int playerY){
+		double distance2 = Math.pow(playerX-shape.getX(),2) + Math.pow(playerY-shape.getY(),2);  
+		return distance2;
 	}
 
 
@@ -149,14 +227,10 @@ public class LevelGraphics{
 
 	public int boundCoordinate(int offset, int coord, int buffer, int levelDim, int screenDim ){
 
-
-		// have the 
 		if ((coord+buffer-screenDim)>offset){return (coord+buffer-screenDim);}
 		if ((coord-buffer)<offset){return (coord-buffer);}
 
-
 		return offset;
-
 	}
 
 
