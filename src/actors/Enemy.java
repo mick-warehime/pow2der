@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 import world.CollisionHandler;
+import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
 import commands.CollisionCommandProvider;
 import commands.DieCommand;
@@ -31,10 +32,12 @@ public class Enemy extends Actor implements Broadcaster{
 				
 		status = new Status(rect);
 		
+		abilitySlots = new AbilitySlots();
+		
 		
 		graphics = new ActorGraphics("data/dwarf.png", status);
 
-		engine = new EnemyActionEngine(commandProviderAggregator, status);
+		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots);
 
 		behavior = new EnemyBehavior(status);
 
@@ -42,7 +45,7 @@ public class Enemy extends Actor implements Broadcaster{
 		
 	}
 
-	public void update(){
+	public void update() throws SlickException{
 		behavior.determine();
 		super.update();
 		assert (status != null) : "Error! Collision Handler not incorporated!";

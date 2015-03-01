@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.InputProviderListener;
 
@@ -54,7 +55,7 @@ public class MenuHandler {
 		return this.keyboardInputs;
 	}
 
-	public void update() {
+	public void update() throws SlickException {
 		actionEngine.update();	
 		
 	}

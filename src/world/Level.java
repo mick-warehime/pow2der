@@ -31,6 +31,7 @@ public class Level {
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Shape> blocks;
+	private ArrayList<Updater> updaters;
 
 	public Level(ItemBuilder itemBuilder, int levelWidth, int levelHeight) throws SlickException {
 
@@ -48,6 +49,7 @@ public class Level {
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
 		this.blocks = new ArrayList<Shape>();
+		this.updaters = new ArrayList<Updater>();
 
 		for(int i=0; i<objectTypes.size(); i++){
 			Integer type = objectTypes.get(i);
@@ -56,7 +58,7 @@ public class Level {
 			if(type == LevelBuilder.OBJECT_BLOCK){
 				blocks.add(new Rectangle(pos[0],pos[1], World.TILE_WIDTH, World.TILE_HEIGHT));				
 			}else if(type == LevelBuilder.OBJECT_ITEM){
-				basicObjects.add(itemBuilder.newItem(pos[0],pos[1]));
+				addObject(itemBuilder.newItem(pos[0],pos[1]));
 			}else if(type == LevelBuilder.OBJECT_START){
 				startX = pos[0];
 				startY = pos[1];
@@ -78,7 +80,7 @@ public class Level {
 		removeFromList(obj,basicObjects);
 		removeFromList(obj,broadcasters);
 		removeFromList(obj,blocks);
-		
+		removeFromList(obj,updaters);
 	}
 	
 	private void removeFromList(Object obj, ArrayList<?> list){
@@ -155,7 +157,7 @@ public class Level {
 
 
 
-	public void addObject(Object obj) {
+	private void addObject(Object obj) {
 		if (obj instanceof Actor){
 			actors.add((Actor) obj);
 		}
@@ -164,6 +166,9 @@ public class Level {
 		}
 		if (obj instanceof Broadcaster){
 			broadcasters.add((Broadcaster) obj);
+		}
+		if (obj instanceof Updater){
+			updaters.add((Updater) obj);
 		}
 
 	}

@@ -1,5 +1,8 @@
 package actionEngines;
 
+import org.newdawn.slick.SlickException;
+
+import abilities.Ability;
 import abilities.AbilityObject;
 import actors.Effect;
 import actors.Status;
@@ -11,16 +14,19 @@ public class ActorActionEngine extends ActionEngine {
 
 
 	protected Status status;
-	protected float vx = 0;
-	protected float vy = 0;
-	protected float runAcc = 0; //Default values
-	protected float maxSpeed = 0;
+	protected float vx ;
+	protected float vy ;
+	protected float runAcc; 
+	protected float maxSpeed;
+	protected AbilitySlots abilitySlots;
 
 
 
-	public ActorActionEngine(CommandProviderAggregator listener, Status status2) {
+	public ActorActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots slots) {
 		super(listener);
-		this.status = status2;
+		this.status = status;
+		this.abilitySlots = slots;
+		
 	}
 
 	public void attemptRunTo(char xOrY, int direction) {
@@ -53,7 +59,7 @@ public class ActorActionEngine extends ActionEngine {
 		return;
 	}
 
-	public void update() {
+	public void update() throws SlickException {
 		
 		doActions();
 		movePhysics();
@@ -159,7 +165,9 @@ public class ActorActionEngine extends ActionEngine {
 
 	}
 
-	public void activateAbility(AbilityObject ability) {
+	public void activateAbility(int abilitySlot) throws SlickException {
+		
+		Ability ability = this.abilitySlots.getAbility(abilitySlot);
 		
 		int[][] onCastEffects = ability.getOnCastEffects();
 		
@@ -167,8 +175,12 @@ public class ActorActionEngine extends ActionEngine {
 			status.gainEffect(onCastEffects[i][0], onCastEffects[i][1]);
 		}
 		
+		ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
+		
 		
 		
 	}
+	
+	
 
 }

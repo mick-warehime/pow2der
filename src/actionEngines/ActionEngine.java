@@ -2,6 +2,7 @@ package actionEngines;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 
 import commands.GenericCommand;
@@ -15,12 +16,12 @@ public class ActionEngine {
 		this.listenerAggregator = listener;
 	}
 
-	public void update() {
+	public void update() throws SlickException {
 	
 		doActions();	
 	}
 
-	protected void doActions() {
+	protected void doActions() throws SlickException {
 	
 		//Get all player commands
 		ArrayList<Command> currentActionCommands = listenerAggregator.popCurrentActionCommands();

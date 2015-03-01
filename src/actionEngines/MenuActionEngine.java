@@ -64,7 +64,7 @@ public class MenuActionEngine extends ActionEngine{
 
 
 
-	public void update(){
+	public void update() throws SlickException{
 		super.update();
 
 		updateBusyTimer();
