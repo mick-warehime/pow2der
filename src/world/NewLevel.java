@@ -86,7 +86,7 @@ public class NewLevel {
 
 
 
-	private void removeFromAllLists(Object obj){
+	public void removeFromAllLists(Object obj){
 		removeFromList(obj,actors);
 		removeFromList(obj,basicObjects);
 		removeFromList(obj,broadcasters);
