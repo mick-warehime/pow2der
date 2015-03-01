@@ -11,7 +11,7 @@ public class NullAbility extends Ability {
 
 	public NullAbility() throws SlickException {		
 		super();
-		onCastEffects = new int[1][1];
+		onCastEffects = new int[1][2];
 		onCastEffects[0][0] = Effect.EFFECT_CASTING_ABILITY;
 		onCastEffects[0][1] = 20;
 	}
