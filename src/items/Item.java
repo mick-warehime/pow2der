@@ -94,7 +94,7 @@ public class Item extends BasicObject implements Interactive,Removeable{
 		Shape actorShape = status.getRect();
 		location.applyPickup(inventory, actorShape);
 
-		this.location.onGround = false;
+		
 
 
 	}
@@ -138,12 +138,17 @@ public class Item extends BasicObject implements Interactive,Removeable{
 			currentLevelData.getCurrentLevel().addObject(owningItem);
 			storingInventory.removeItem(owningItem);
 			storingInventory = null; //Prevents memory leak
+			
+//			System.out.println("Item dropped = " + this.onGround);
 		}
 
 		public void applyPickup(Inventory inventory, Shape actorShape){
 			this.storingInventory = inventory;
 			this.ownerShape = actorShape;
 			storingInventory.addItemToInventory(owningItem);
+			this.onGround = false;
+			
+//			System.out.println("Item dropped = " + this.onGround);
 
 
 		}

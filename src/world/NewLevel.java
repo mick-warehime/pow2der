@@ -37,6 +37,9 @@ public class NewLevel {
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	
+	//Dvir's additions:
+	private ArrayList<Updater> updaters;
+	
 
 	public NewLevel(ItemBuilder itemBuilder, int width, int height) throws SlickException {
 		
@@ -58,7 +61,29 @@ public class NewLevel {
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
 		
+		this.updaters = new ArrayList<Updater>();
+		
+		
+		
+		
+		Item newItem = itemBuilder.newItem(startX + 50, startY + 50);
+		addObject(newItem);
+		addObject(new Enemy(startX + 50,startY));
+		
+		
+		
 	};
+
+	
+	
+	
+
+
+
+	
+
+
+
 
 
 	private void removeFromAllLists(Object obj){
@@ -66,6 +91,7 @@ public class NewLevel {
 		removeFromList(obj,basicObjects);
 		removeFromList(obj,broadcasters);
 		removeFromList(obj,walls);
+		removeFromList(obj,updaters);
 		
 	}
 	
@@ -77,31 +103,20 @@ public class NewLevel {
 
 	protected void update() throws SlickException{
 
-		//Update actors and remove dead ones
-		for (Iterator<Actor> iterator = actors.iterator(); iterator.hasNext();) {
-			Actor nme = iterator.next();
-
-			nme.update();
-			if (nme.shouldRemove()) {
-				// Remove the current element from the iterator and the list.
-				iterator.remove();
-				removeFromAllLists(nme);
-			}
-		}
-
-		//Remove items that are not on the ground
-		for (Iterator<BasicObject> iterator = basicObjects.iterator(); iterator.hasNext();){
-			BasicObject obj = iterator.next();
+		for (Iterator<Updater> iterator = updaters.iterator(); iterator.hasNext();){
+			Updater updater = iterator.next();
 			
-			if (obj instanceof Removeable){
-				if (((Removeable)obj).shouldRemove()){
+			updater.update();
+
+			if (updater instanceof Removeable){
+				if (((Removeable)updater).shouldRemove()){
 					iterator.remove();
-					removeFromAllLists(obj);
+					removeFromAllLists(updater);
 				}
-
 			}
-
+			
 		}
+		
 
 	}
 
@@ -129,6 +144,7 @@ public class NewLevel {
 	public ArrayList<Actor> getActors(){
 		return actors;
 	}
+	
 	public ArrayList<Broadcaster> getBroadcasters(){
 		return broadcasters;	
 	}
@@ -158,6 +174,9 @@ public class NewLevel {
 		}
 		if (obj instanceof Broadcaster){
 			broadcasters.add((Broadcaster) obj);
+		}
+		if (obj instanceof Updater){
+			updaters.add((Updater) obj);
 		}
 
 	}
