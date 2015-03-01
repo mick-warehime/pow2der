@@ -83,6 +83,8 @@ public class Level {
 		int[] startPosition = levelBuilder.getStartingPosition();
 		startX = startPosition[0];
 		startY = startPosition[1];
+		
+		addObject(new Enemy(startX + 50, startY));
 	}
 	
 	
@@ -117,31 +119,6 @@ public class Level {
 			}
 		}
 		
-//		//Update actors and remove dead ones
-//		for (Iterator<Actor> iterator = actors.iterator(); iterator.hasNext();) {
-//			Actor nme = iterator.next();
-//
-//			nme.update();
-//			if (nme.shouldRemove()) {
-//				// Remove the current element from the iterator and the list.
-//				iterator.remove();
-//				removeFromAllLists(nme);
-//			}
-//		}
-//
-//		//Remove items that are not on the ground
-//		for (Iterator<BasicObject> iterator = basicObjects.iterator(); iterator.hasNext();){
-//			BasicObject obj = iterator.next();
-//			
-//			if (obj instanceof Removeable){
-//				if (((Removeable)obj).shouldRemove()){
-//					iterator.remove();
-//					removeFromAllLists(obj);
-//				}
-//
-//			}
-//
-//		}
 
 	}
 
