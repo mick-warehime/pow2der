@@ -1,7 +1,5 @@
 package items;
 
-import gameobjects.BasicObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +8,6 @@ import java.util.Map;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Shape;
-
-import world.CollisionHandler;
 
 public class ItemBuilder {
 

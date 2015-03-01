@@ -8,12 +8,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
+import world.Updater;
 import actionEngines.AbilitySlots;
 import actionEngines.ActionEngine;
 import commands.CollisionCommandProvider;
 import commands.CommandProviderAggregator;
 
-public abstract class Actor implements Removeable {
+public abstract class Actor implements Removeable, Updater {
 
 	protected ActorGraphics graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
