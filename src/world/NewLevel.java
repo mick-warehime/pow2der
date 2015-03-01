@@ -36,6 +36,7 @@ public class NewLevel {
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
+	private ArrayList<Shape> halls;
 	
 
 	public NewLevel(ItemBuilder itemBuilder, int width, int height) throws SlickException {
@@ -48,6 +49,7 @@ public class NewLevel {
 		walls = levelBuilder.getWalls();
 		doors = levelBuilder.getDoors();
 		floors = levelBuilder.getFloors();
+		halls = levelBuilder.getHalls();
 		
 		// poop out the starting position
 		int[] startPosition = levelBuilder.getStartingPosition();
@@ -58,9 +60,11 @@ public class NewLevel {
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
 		
+		this.width = width;
+		this.height = height;
+		
 	};
-
-
+	
 	private void removeFromAllLists(Object obj){
 		removeFromList(obj,actors);
 		removeFromList(obj,basicObjects);
@@ -125,6 +129,15 @@ public class NewLevel {
 
 	public ArrayList<Shape> getWalls(){
 		return walls;
+	}
+	public ArrayList<Shape> getFloors(){
+		return floors;
+	}
+	public ArrayList<Shape> getDoors(){
+		return doors;
+	}
+	public ArrayList<Shape> getHalls(){
+		return halls;
 	}
 	public ArrayList<Actor> getActors(){
 		return actors;

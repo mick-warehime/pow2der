@@ -15,10 +15,15 @@ import world.World;
 
 public class LevelGraphics{
 
-	
+
 	private SpriteSheet spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
-	private ArrayList<Shape> blocks;
-	
+
+	private ArrayList<Shape> walls;
+	private ArrayList<Shape> floors;
+	private ArrayList<Shape> doors;
+	private ArrayList<Shape> halls;
+
+
 	private int levelHeight;
 	private int levelWidth;
 
@@ -33,37 +38,82 @@ public class LevelGraphics{
 	private int tileSize;
 	private int screenWidth;
 	private int screenHeight;
-	
-	
-	public LevelGraphics(NewLevel newLevel, int width, int height) throws SlickException {
-		
+
+
+	public LevelGraphics(NewLevel newLevel) throws SlickException {
+
 		this.screenWidth = main.Game.WIDTH;
 		this.screenHeight = main.Game.HEIGHT;
 
-		this.levelWidth = width*NewLevelBuilder.SCALING;
-		this.levelHeight = height*NewLevelBuilder.SCALING;
+		this.levelWidth = newLevel.getWidth()*NewLevelBuilder.SCALING;
+		this.levelHeight = newLevel.getHeight()*NewLevelBuilder.SCALING;
 
 		this.tileSize = World.TILE_HEIGHT;
-		
-		blocks = newLevel.getWalls();
-		
+
+		walls = newLevel.getWalls();
+		floors = newLevel.getFloors();
+		doors = newLevel.getDoors();
+		halls = newLevel.getHalls();
+
 	}
-	
-	
-	
+
+
+
 	public void render(Graphics g, int playerX, int playerY) {
-		
+
 		setLevelCoordinates(playerX,playerY);
-		
-		
-		for (Shape block : blocks){
-//			System.out.println(block.getX()+" "+block.getY());
-			spriteSheet.getSubImage(2,2).draw(block.getX()-offsetX,block.getY()-offsetY);
+
+		for (Shape wall : walls){
+			if(onScreen(wall,playerX,playerY)){
+				spriteSheet.getSubImage(26,5).draw(wall.getX()-offsetX,wall.getY()-offsetY);
+			}
+
 		}
-		
+		for (Shape floor : floors){
+			if(onScreen(floor,playerX,playerY)){
+				spriteSheet.getSubImage(25,40).draw(floor.getX()-offsetX,floor.getY()-offsetY);
+			}
+		}
+		for (Shape hall : halls){
+			if(onScreen(hall,playerX,playerY)){
+				spriteSheet.getSubImage(60,25).draw(hall.getX()-offsetX,hall.getY()-offsetY);
+			}
+		}
+
 	}
-	
-	
+
+	private boolean onScreen(Shape shape, int playerX, int playerY){
+		//		given a shape and the players position determine if the shape should be drawn
+
+		boolean onScreen = true;
+
+		
+		int xCutoff = 30*tileSize;
+		int yCutoff = 25*tileSize;
+
+		if( Math.abs(shape.getX()-playerX) > xCutoff){
+			onScreen = false;
+			return onScreen;
+		}
+		if( Math.abs(shape.getY()-playerY) > yCutoff){
+			onScreen = false;
+			return onScreen;
+		}
+
+//	double cutoff = 20*tileSize;
+//		
+//		double distance2 = Math.pow(playerX-shape.getX(),2) + Math.pow(playerY-shape.getY(),2);  
+//
+//		if( distance2 > Math.pow(cutoff,2)){
+//			onScreen = false;
+//			return onScreen;
+//		}
+		
+		return onScreen;
+
+	}
+
+
 	private void setLevelCoordinates(int playerX, int playerY){
 
 		// allows the player to get within bufferX/bufferY of the top/side
@@ -96,7 +146,7 @@ public class LevelGraphics{
 			bufferY = bufferDistY*tileSize;
 		}
 	}
-	
+
 	public int boundCoordinate(int offset, int coord, int buffer, int levelDim, int screenDim ){
 
 
@@ -114,7 +164,7 @@ public class LevelGraphics{
 	public int getOffsetX() {
 		return offsetX;
 	}
-	
+
 	public int getOffsetY() {
 		return offsetY;
 	}

@@ -46,7 +46,8 @@ public class World {
 				
 		terri = new Player();
 		
-		newLevel(19,21);
+		// width and height must be ODD
+		newLevel(101,151);
 		
 		currentLevelData.setCurrentLevel(levels.get(0));
 	
@@ -91,7 +92,7 @@ public class World {
 		
 		newLevel.assignToItems(currentLevelData);
 		
-		levelGraphics = new LevelGraphics(newLevel, levelWidth, levelHeight);
+		levelGraphics = new LevelGraphics(newLevel);
 		
 		levels.add(newLevel);		
 		

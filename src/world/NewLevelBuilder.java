@@ -33,8 +33,9 @@ public class NewLevelBuilder {
 	private final static int RIGHT = 2;
 	private final static int DOWN = 3;
 
-	public final static int SCALING = 5;
-	
+	// this can be an odd number bigger than 5
+	public final static int SCALING = 3;
+
 
 	private List<Integer> objectTypes;
 	private List<Integer[]> objectPositions;
@@ -67,7 +68,8 @@ public class NewLevelBuilder {
 
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
-	private ArrayList<Shape> floors; 
+	private ArrayList<Shape> floors;
+	private ArrayList<Shape> halls;
 
 	// POSSIBLE IMPROVEMENTS / BUGS
 
@@ -93,7 +95,7 @@ public class NewLevelBuilder {
 
 		// use 1000 for debugging and systemtime for normal use
 		randomSeed = 1000;   
-		//		randomSeed = System.currentTimeMillis();
+		randomSeed = System.currentTimeMillis();
 
 		rand = new Random(randomSeed);
 
@@ -107,10 +109,10 @@ public class NewLevelBuilder {
 			removeBogusDoors();
 		}
 
-		//		fillInHallways();
+				fillInHallways();
 
 
-		reduceMapGroups2(map);
+		reduceMapGroups(map);
 
 		scaleMap();
 		removeBogusWalls();
@@ -168,8 +170,16 @@ public class NewLevelBuilder {
 	public ArrayList<Shape> getFloors(){
 		return floors;
 	}
+	public ArrayList<Shape> getHalls(){
+		return halls;
+	}
 
-
+	public int[][] getMap(){
+		return MAP;
+	}
+	public int[][] getMiniMap(){
+		return map;
+	}
 
 	private void generateRandomRooms(){
 
@@ -972,38 +982,14 @@ public class NewLevelBuilder {
 	}
 
 
-	private void reduceMapGroups(){
-
-		this.walls = new ArrayList<Shape>();
-		this.doors = new ArrayList<Shape>();
-		this.floors = new ArrayList<Shape>();
-
-		for (int y=0; y<height;y++){
-			for (int x=0; x<width;x++){
-
-				int xPos = x*World.TILE_WIDTH;
-				int yPos = y*World.TILE_HEIGHT;
-
-				if(map[y][x]==0){
-					walls.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));					
-				}else if(map[y][x]==DOOR){
-					map[y][x] = OBJECT_DOOR_TILE;
-					doors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
-				} else if(map[y][x]<= numRooms){					
-					map[y][x] = OBJECT_ROOM_TILE;		
-					floors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
-				} else{					
-					map[y][x] = OBJECT_HALLWAY_TILE;
-					floors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
-				}
-
-			}
-		}
-	}
 
 
-	private void reduceMapGroups2(int[][] map){
+	private void reduceMapGroups(int[][] map){
 
+		// at the start of this routine each hall / room has a unique number
+		// at the end of this routine all rooms have the same number
+		// and all halls have the same number
+		
 		for (int y=0; y<height;y++){
 			for (int x=0; x<width;x++){
 				if(map[y][x]!=0){
@@ -1028,6 +1014,7 @@ public class NewLevelBuilder {
 		this.walls = new ArrayList<Shape>();
 		this.doors = new ArrayList<Shape>();
 		this.floors = new ArrayList<Shape>();
+		this.halls = new ArrayList<Shape>();
 
 		for (int y=0; y<height;y++){
 			for (int x=0; x<width;x++){
@@ -1042,7 +1029,7 @@ public class NewLevelBuilder {
 				} else if(map[y][x] == OBJECT_ROOM_TILE){										
 					floors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
 				} else if(map[y][x] == OBJECT_HALLWAY_TILE){										
-					floors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
+					halls.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
 				}
 
 			}
@@ -1221,7 +1208,7 @@ public class NewLevelBuilder {
 
 						// dont add extra doors
 						if(mapXY==OBJECT_DOOR_TILE){
-							if(northSouthDoor(y+1,x+1)){
+							if(northSouthDoor(x+1,y+1)){
 								mapXY = map[y][x+1];
 							}else{
 								mapXY = map[y+1][x];
