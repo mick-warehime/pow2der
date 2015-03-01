@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
+import actionEngines.AbilitySlots;
 import actionEngines.ActionEngine;
 import commands.CollisionCommandProvider;
 import commands.CommandProviderAggregator;
@@ -18,6 +19,7 @@ public abstract class Actor implements Removeable {
 	protected CommandProviderAggregator commandProviderAggregator;
 	protected ActionEngine engine;
 	protected Status status;
+	protected AbilitySlots abilitySlots;
 	
 	
 	public Actor() throws SlickException {
@@ -38,7 +40,7 @@ public abstract class Actor implements Removeable {
 	
 	
 	
-	public void update() {
+	public void update() throws SlickException {
 	
 		//Note: The order of these calls is important!
 		//Update status

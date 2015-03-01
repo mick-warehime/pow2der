@@ -1,6 +1,5 @@
 package world;
 
-import org.newdawn.slick.geom.Shape;
 
 
 /* Stores data about the currently loaded level */

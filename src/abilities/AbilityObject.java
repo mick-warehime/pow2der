@@ -18,17 +18,16 @@ import gameobjects.Removeable;
 
 public abstract class AbilityObject extends BasicObject implements Removeable{
 
-	int[][] onCastEffects;
+	
 	
 	public AbilityObject(Image image, int xPos, int yPos) throws SlickException {
 		super(image, xPos, yPos);
+		 
 		
 	}
 	
 	public abstract void update();
-	public int[][] getOnCastEffects(){
-		return this.onCastEffects;
-	}
+	
 	
 	
 	

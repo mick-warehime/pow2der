@@ -1,5 +1,6 @@
 package commands;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.BasicCommand;
 
 import abilities.AbilityObject;
@@ -13,20 +14,20 @@ public class ActivateAbilityCommand extends BasicCommand implements GenericComma
 	
 
 
-	private AbilityObject ability;
+	private int abilitySlot;
 
-	public ActivateAbilityCommand(AbilityObject ability) {
-		super("Activate ability " + ability);
-		this.ability = ability;
+	public ActivateAbilityCommand(int abilitySlot) {
+		super("Activate ability slot " +abilitySlot );
+		this.abilitySlot = abilitySlot;
 
 		
 	}
 
 
 	@Override
-	public void execute(ActionEngine engine){
+	public void execute(ActionEngine engine) throws SlickException{
 		if (engine instanceof ActorActionEngine){
-			((ActorActionEngine) engine).activateAbility(ability);
+			((ActorActionEngine) engine).activateAbility(abilitySlot);
 			
 		}
 

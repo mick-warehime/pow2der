@@ -1,17 +1,16 @@
 package actionEngines;
 
-import items.Item;
+import gameobjects.BasicObject;
+import gameobjects.Interactive;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 
 import actors.Status;
 import commands.CommandProviderAggregator;
 import commands.MoveCommand;
-import gameobjects.BasicObject;
-import gameobjects.GameObject;
-import gameobjects.Interactive;
 
 
 //Takes in command inputs and implements corresponding actions
@@ -30,8 +29,8 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 
 
-	public PlayerActionEngine(CommandProviderAggregator listener, Status status){
-		super(listener,status);
+	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots){
+		super(listener,status, abilitySlots);
 		
 		this.runAcc = 2;
 		this.maxSpeed = 2;
@@ -78,7 +77,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 	
 	
-	protected void doActions() {
+	protected void doActions() throws SlickException {
 		
 		//Do actions from commands
 		super.doActions();

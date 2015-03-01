@@ -8,6 +8,7 @@ public class Effect {
 	public static final int EFFECT_WALKING_X = 3;
 	public static final int EFFECT_WALKING_Y = 4;
 	public static final int EFFECT_INTERACTING = 5;
+	public static final int EFFECT_CASTING_ABILITY = 6;
 	
 	
 	public int name;

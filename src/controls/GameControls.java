@@ -1,11 +1,9 @@
 package controls;
 
 
-import items.Inventory;
 import gameobjects.Interactive;
 import menus.InventoryMenu;
 import menus.MainMenu;
-import menus.Menu;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -17,6 +15,7 @@ import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.command.KeyControl;
 
+import commands.ActivateAbilityCommand;
 import commands.MenuActivateSelectionCommand;
 import commands.MenuChangeSelectionCommand;
 import commands.InteractCommand;
@@ -110,6 +109,7 @@ public class GameControls {
 		Command moveDown = new MoveCommand('y', 1);
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
+		Command ability = new ActivateAbilityCommand(0);
 		
 
 		//Bind commands to keyboard keys
@@ -119,7 +119,7 @@ public class GameControls {
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_S), moveDown);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
-		
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_Q), ability);
 		
 		//Bind commands to controller keys
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);

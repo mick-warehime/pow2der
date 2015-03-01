@@ -1,27 +1,26 @@
 package abilities;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class NullAbility extends AbilityObject {
+import actors.Effect;
+
+public class NullAbility extends Ability {
 
 	
-	private int countDown;
+	
 
-	public NullAbility(int xPos, int yPos) throws SlickException {		
-		super(new Image("data/thrusterFlame.png"), xPos, yPos);
-		this.countDown = 20;
+	public NullAbility() throws SlickException {		
+		super();
+		onCastEffects = new int[1][1];
+		onCastEffects[0][0] = Effect.EFFECT_CASTING_ABILITY;
+		onCastEffects[0][1] = 20;
 	}
 
 	@Override
-	public boolean shouldRemove() {
-		return this.countDown<0;
+	public AbilityObject instantiateAbilityObject(int xPos, int yPos) throws SlickException {
+		return new NullAbilityObject(xPos,yPos);
 	}
 
-	@Override
-	public void update() {
-		this.countDown -=1;
-
-	}
+	
 
 }

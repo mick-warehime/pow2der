@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
 import world.Level;
+import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
 import commands.CollisionCommandProvider;
 import commands.CommandProviderAggregator;
@@ -31,9 +32,9 @@ public class Player extends Actor {
 		Rectangle rect = new Rectangle(0f, 0f, 28, 28);
 		status = new Status(rect);
 
-		
+		abilitySlots = new AbilitySlots();
 
-		engine = new PlayerActionEngine(commandProviderAggregator,status);
+		engine = new PlayerActionEngine(commandProviderAggregator,status, abilitySlots);
 		
 		this.graphics = new ActorGraphics("data/dwarf2.png", status);
 		
