@@ -8,7 +8,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
-import world.Level;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
 import commands.CollisionCommandProvider;

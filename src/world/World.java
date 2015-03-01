@@ -24,7 +24,7 @@ import controls.GameControls;
 
 public class World {
 	
-	private List<NewLevel> levels = new ArrayList<NewLevel>();
+	private List<Level> levels = new ArrayList<Level>();
 	private Player terri;
 	private ItemBuilder itemBuilder;
 	
@@ -46,7 +46,8 @@ public class World {
 				
 		terri = new Player();
 		
-		newLevel(19,21);
+		// width and height must be ODD
+		newLevel(31,21);
 		
 		currentLevelData.setCurrentLevel(levels.get(0));
 	
@@ -63,7 +64,7 @@ public class World {
 		levelGraphics.render(graphics,(int) terri.getX(),(int)terri.getY());
 		
 		// draw level items/objects
-		NewLevel currentLevel = currentLevelData.getCurrentLevel();
+		Level currentLevel = currentLevelData.getCurrentLevel();
 		currentLevel.render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
 		
 		// draw player
@@ -87,20 +88,20 @@ public class World {
 	
 	public void newLevel(int levelWidth, int levelHeight) throws SlickException{
 		
-		NewLevel newLevel = new NewLevel(itemBuilder, levelWidth,levelHeight);
+		Level level = new Level(itemBuilder, levelWidth,levelHeight);
 		
-		newLevel.assignToItems(currentLevelData);
+		level.assignToItems(currentLevelData);
 		
-		levelGraphics = new LevelGraphics(newLevel, levelWidth, levelHeight);
+		levelGraphics = new LevelGraphics(level);
 		
-		levels.add(newLevel);		
+		levels.add(level);		
 		
-		CollisionHandler collisionHandler = new CollisionHandler(newLevel);
-		for (Actor dude : newLevel.getActors()){
+		CollisionHandler collisionHandler = new CollisionHandler(level);
+		for (Actor dude : level.getActors()){
 			dude.setCollisionHandler(collisionHandler);
 		}
 		
-		terri.placePlayer(newLevel.getStartX(),  newLevel.getStartY());
+		terri.placePlayer(level.getStartX(),  level.getStartY());
 		terri.setCollisionHandler(collisionHandler);
 		
 //		

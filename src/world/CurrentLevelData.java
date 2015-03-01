@@ -5,14 +5,14 @@ package world;
 /* Stores data about the currently loaded level */
 public class CurrentLevelData {
 
-	private NewLevel currentLevel;
+	private Level currentLevel;
 	
 	
-	protected void setCurrentLevel(NewLevel newLevel){
-		this.currentLevel = newLevel;
+	protected void setCurrentLevel(Level level){
+		this.currentLevel = level;
 	}
 	
-	public NewLevel getCurrentLevel(){
+	public Level getCurrentLevel(){
 		return this.currentLevel;
 	}
 	
