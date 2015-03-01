@@ -72,6 +72,10 @@ public class Level {
 
 	}
 
+<<<<<<< HEAD
+
+
+=======
 	
 	private void removeFromAllLists(Object obj){
 		removeFromList(obj,actors);
@@ -81,6 +85,7 @@ public class Level {
 		
 	}
 	
+>>>>>>> aec7320dd7b387bd14c351123862e4756610bad8
 	private void removeFromList(Object obj, ArrayList<?> list){
 		if (list.contains(obj)){
 			list.remove(obj);
@@ -104,9 +109,15 @@ public class Level {
 		//Remove items that are not on the ground
 		for (Iterator<BasicObject> iterator = basicObjects.iterator(); iterator.hasNext();){
 			BasicObject obj = iterator.next();
+<<<<<<< HEAD
+
+			if (obj instanceof Item){
+				if (!((Item)obj).isOnGround()){
+=======
 			
 			if (obj instanceof Removeable){
 				if (((Removeable)obj).shouldRemove()){
+>>>>>>> aec7320dd7b387bd14c351123862e4756610bad8
 					iterator.remove();
 					removeFromAllLists(obj);
 				}

@@ -21,63 +21,51 @@ import gameobjects.Removeable;
 
 /* Top level management of all game objects. */
 
-public class Level {
+public class NewLevel {
 
 
 	private int startX;
 	private int startY;
+	
+	private int height;
+	private int width;
 
 	private ArrayList<Actor> actors;
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
-	private ArrayList<Shape> blocks;
+	private ArrayList<Shape> walls;
+	private ArrayList<Shape> doors;
+	private ArrayList<Shape> floors;
+	
 
-	public Level(ItemBuilder itemBuilder, int levelWidth, int levelHeight) throws SlickException {
-
-		//  load a random map and populate the items 
-		initializeObjects(new LevelBuilder(levelWidth,levelHeight), itemBuilder);
-
-	};
-
-
-	private void initializeObjects(LevelBuilder levelBuilder, ItemBuilder itemBuilder) throws SlickException {
-		List<Integer> objectTypes = levelBuilder.getObjectTypes();
-		List<Integer[]> objectPositions = levelBuilder.getObjectPositions();
-
+	public NewLevel(ItemBuilder itemBuilder, int width, int height) throws SlickException {
+		
+		
+		// build a new Level
+		NewLevelBuilder levelBuilder = new NewLevelBuilder(width,height);
+		
+		// store the shapes for doors/walls/floors
+		walls = levelBuilder.getWalls();
+		doors = levelBuilder.getDoors();
+		floors = levelBuilder.getFloors();
+		
+		// poop out the starting position
+		int[] startPosition = levelBuilder.getStartingPosition();
+		startX = startPosition[0];
+		startY = startPosition[1];
+		
 		this.actors = new ArrayList<Actor>(); 
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
-		this.blocks = new ArrayList<Shape>();
-
-		for(int i=0; i<objectTypes.size(); i++){
-			Integer type = objectTypes.get(i);
-			Integer[] pos = objectPositions.get(i);
-
-			if(type == LevelBuilder.OBJECT_BLOCK){
-				blocks.add(new Rectangle(pos[0],pos[1], World.TILE_WIDTH, World.TILE_HEIGHT));				
-			}else if(type == LevelBuilder.OBJECT_ITEM){
-				basicObjects.add(itemBuilder.newItem(pos[0],pos[1]));
-			}else if(type == LevelBuilder.OBJECT_START){
-				startX = pos[0];
-				startY = pos[1];
-			}else if (type == LevelBuilder.OBJECT_ENEMY){
-				Enemy nme = new Enemy(pos[0],pos[1]);
-				addObject(nme);
-
-			}
+		
+	};
 
 
-		}
-
-
-	}
-
-	
 	private void removeFromAllLists(Object obj){
 		removeFromList(obj,actors);
 		removeFromList(obj,basicObjects);
 		removeFromList(obj,broadcasters);
-		removeFromList(obj,blocks);
+		removeFromList(obj,walls);
 		
 	}
 	
@@ -119,6 +107,7 @@ public class Level {
 
 
 
+
 	public void render(Graphics g, int offsetX, int offsetY){		
 
 		for (BasicObject obj : basicObjects){	
@@ -134,8 +123,8 @@ public class Level {
 	}
 
 
-	public ArrayList<Shape> getBlocks(){
-		return blocks;
+	public ArrayList<Shape> getWalls(){
+		return walls;
 	}
 	public ArrayList<Actor> getActors(){
 		return actors;
@@ -152,8 +141,13 @@ public class Level {
 	public int getStartY(){
 		return startY;
 	}
-
-
+	public int getHeight(){
+		return height;
+	}
+	public int getWidth(){
+		return width;
+	}
+	
 
 	public void addObject(Object obj) {
 		if (obj instanceof Actor){
@@ -167,7 +161,6 @@ public class Level {
 		}
 
 	}
-
 
 
 	public void assignToItems(CurrentLevelData currentLevelData) {

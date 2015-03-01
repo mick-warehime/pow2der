@@ -24,9 +24,12 @@ import controls.GameControls;
 
 public class World {
 	
-	private List<NewLevel> levels = new ArrayList<NewLevel>();
+	private List<Level> levels = new ArrayList<Level>();
 	private Player terri;
+	private CollisionHandler collisionHandler;
+	private SpriteSheet spriteSheet;	
 	private ItemBuilder itemBuilder;
+	private LevelBuilder levelBuilder;
 	
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
 	
@@ -43,10 +46,16 @@ public class World {
 		ItemParser parser = new ItemParser("items/items.xml");
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
-				
+		
+<<<<<<< HEAD
+		this.levelBuilder = new LevelBuilder();
+		levelBuilder.newLevel2(31,21);
+=======
+>>>>>>> 3b8e3ebfc7f00cf9a68be5ddcd8b3bb14ad9aee0
+		
 		terri = new Player();
 		
-		newLevel(19,21);
+		newLevel(50,50);
 		
 		currentLevelData.setCurrentLevel(levels.get(0));
 	
@@ -63,7 +72,7 @@ public class World {
 		levelGraphics.render(graphics,(int) terri.getX(),(int)terri.getY());
 		
 		// draw level items/objects
-		NewLevel currentLevel = currentLevelData.getCurrentLevel();
+		Level currentLevel = currentLevelData.getCurrentLevel();
 		currentLevel.render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
 		
 		// draw player
@@ -78,7 +87,7 @@ public class World {
 		
 		currentLevelData.getCurrentLevel().update();
 		
-		if (terri.shouldRemove()){
+		if (terri.isDying()){
 			System.out.println("Terri is dead!");
 		}
 		
@@ -87,11 +96,11 @@ public class World {
 	
 	public void newLevel(int levelWidth, int levelHeight) throws SlickException{
 		
-		NewLevel newLevel = new NewLevel(itemBuilder, levelWidth,levelHeight);
+		Level newLevel = new Level(itemBuilder,levelWidth,levelHeight);
 		
 		newLevel.assignToItems(currentLevelData);
 		
-		levelGraphics = new LevelGraphics(newLevel, levelWidth, levelHeight);
+		levelGraphics = new LevelGraphics(newLevel,levelWidth,levelHeight);
 		
 		levels.add(newLevel);		
 		
