@@ -10,6 +10,9 @@ public class Effect {
 	public static final int EFFECT_INTERACTING = 5;
 	public static final int EFFECT_CASTING_ABILITY = 6;
 	
+	public static final int[] EFFECTS_PREVENTING_ACTION = new int[]
+		{EFFECT_INTERACTING,EFFECT_CASTING_ABILITY};
+	
 	
 	public int name;
 	public int duration;
@@ -28,6 +31,7 @@ public class Effect {
 	}
 
 
+	
 
 
 

@@ -10,7 +10,6 @@ import org.newdawn.slick.geom.Rectangle;
 import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
-import commands.CollisionCommandProvider;
 import commands.CommandProviderAggregator;
 import commands.KeyboardInputListener;
 
@@ -33,7 +32,7 @@ public class Player extends Actor {
 
 		abilitySlots = new AbilitySlots();
 
-		engine = new PlayerActionEngine(commandProviderAggregator,status, abilitySlots);
+		engine = new PlayerActionEngine(commandProviderAggregator,status, abilitySlots, objsToCreate);
 		
 		this.graphics = new ActorGraphics("data/dwarf2.png", status);
 		
@@ -55,7 +54,7 @@ public class Player extends Actor {
 	
 	
 	
-	public void placePlayer(int startX, int startY){		
+	public void setPosition(int startX, int startY){		
 		status.setX(startX);
 		status.setY(startY);
 	}
@@ -79,6 +78,17 @@ public class Player extends Actor {
 		
 		
 	}
+
+
+
+
+
+
+
+
+
+
+	
 
 	
 

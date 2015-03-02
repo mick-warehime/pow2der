@@ -1,5 +1,8 @@
 package actors;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 import gameobjects.Removeable;
 import graphics.ActorGraphics;
 
@@ -8,22 +11,26 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
+import world.ObjectCreator;
 import world.Updater;
+import abilities.AbilityObject;
 import actionEngines.AbilitySlots;
 import actionEngines.ActionEngine;
 import commands.CollisionCommandProvider;
 import commands.CommandProviderAggregator;
 
-public abstract class Actor implements Removeable, Updater {
+public abstract class Actor implements Removeable, Updater,ObjectCreator{
 
 	protected ActorGraphics graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
 	protected ActionEngine engine;
 	protected Status status;
 	protected AbilitySlots abilitySlots;
+	protected ArrayList<Object> objsToCreate;
 	
 	
 	public Actor() throws SlickException {
+		this.objsToCreate = new ArrayList<Object>();
 				
 	}
 	
@@ -83,5 +90,18 @@ public abstract class Actor implements Removeable, Updater {
 	}
 	
 
+	
+
+
+
+	public boolean hasObjects(){
+		return !objsToCreate.isEmpty();
+	}
+	
+	public ArrayList<Object> popObjects() {
+		ArrayList<Object> output = objsToCreate;
+		objsToCreate = new ArrayList<Object>();
+		return output;
+	}
 
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 
+import actors.Effect;
 import actors.Status;
 import commands.CommandProviderAggregator;
 import commands.MoveCommand;
@@ -19,8 +20,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 	
 
-	private int interactTimer = 0;
-	private int interactTimerIncrement = 20;	
+		
 	private float runDec = 2.5f;
 
 	
@@ -29,8 +29,8 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 
 
-	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots){
-		super(listener,status, abilitySlots);
+	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots,ArrayList<Object>objectsToCreate){
+		super(listener,status, abilitySlots,objectsToCreate);
 		
 		this.runAcc = 2;
 		this.maxSpeed = 2;
@@ -43,16 +43,21 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 	
 	public void attemptInteract( int interactionType, Status status){
+		
+		if (!canInteract()){
+			return;
+		}
+		
 		//Get nearby objects to interact with
 		ArrayList<BasicObject> objs = status.nearbyInteractives();
 		
 		//Interact, if possible
-		if (interactTimer==0 && !objs.isEmpty()){
+		if (!objs.isEmpty()){
 			for (BasicObject obj : objs){
 				((Interactive) obj).interact(interactionType, status);
 			}
+			status.gainEffect(Effect.EFFECT_INTERACTING, 20);
 			
-			interactTimer+= interactTimerIncrement;
 		}
 	}
 	
@@ -65,15 +70,18 @@ public class PlayerActionEngine extends ActorActionEngine {
 
 
 
-	protected void updateTimers(){
+	private boolean canInteract() {
 		
-		if (interactTimer>0){
-			interactTimer -=1;
-		}
-		
-		
-		
+		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
 	}
+
+
+
+
+
+
+
+	
 	
 	
 	

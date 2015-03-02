@@ -27,7 +27,7 @@ public class ActivateAbilityCommand extends BasicCommand implements GenericComma
 	@Override
 	public void execute(ActionEngine engine) throws SlickException{
 		if (engine instanceof ActorActionEngine){
-			((ActorActionEngine) engine).activateAbility(abilitySlot);
+			((ActorActionEngine) engine).attemptActivateAbility(abilitySlot);
 			
 		}
 
