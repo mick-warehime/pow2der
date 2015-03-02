@@ -1,8 +1,6 @@
 package actors;
 
 
-import java.util.ArrayList;
-
 import items.Inventory;
 import graphics.ActorGraphics;
 
@@ -12,7 +10,6 @@ import org.newdawn.slick.geom.Rectangle;
 import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
-import commands.CollisionCommandProvider;
 import commands.CommandProviderAggregator;
 import commands.KeyboardInputListener;
 
@@ -57,7 +54,7 @@ public class Player extends Actor {
 	
 	
 	
-	public void placePlayer(int startX, int startY){		
+	public void setPosition(int startX, int startY){		
 		status.setX(startX);
 		status.setY(startY);
 	}

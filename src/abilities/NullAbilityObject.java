@@ -12,7 +12,7 @@ public class NullAbilityObject extends AbilityObject {
 		super(new Image("data/thrusterFlame.png"), xPos, yPos);
 		
 		this.countDown= 20;
-		
+		this.canCollide = false;
 		
 	}
 

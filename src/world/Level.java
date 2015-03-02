@@ -127,7 +127,6 @@ public class Level {
 			if (creator.hasObjects()){
 				for (Object obj: creator.popObjects()){
 					addObject(obj);
-					System.out.println("Added object: " + obj);
 				}
 			}
 		}

@@ -53,7 +53,6 @@ public class World {
 		
 		currentLevelData.setCurrentLevel(levels.get(0));
 	
-//		itemBuilder.testItems();
 		
 
 	}
@@ -69,14 +68,11 @@ public class World {
 		Level currentLevel = currentLevelData.getCurrentLevel();
 		currentLevel.render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
 		
-		// draw player
-		terri.render(graphics,levelGraphics.getOffsetX(),levelGraphics.getOffsetY());
 
 	}
 
 
 	public void update() throws SlickException {
-		terri.update();
 		
 		
 		currentLevelData.getCurrentLevel().update();
@@ -103,10 +99,10 @@ public class World {
 			dude.setCollisionHandler(collisionHandler);
 		}
 		
-		terri.placePlayer(level.getStartX(),  level.getStartY());
+		terri.setPosition(level.getStartX(),  level.getStartY());
 		terri.setCollisionHandler(collisionHandler);
-		
-//		
+		level.addObject(terri);
+	
 	}
 	
 	
