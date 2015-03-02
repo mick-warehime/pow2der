@@ -142,6 +142,26 @@ public class Status {
 		}
 		return false;
 	}
+	
+	public boolean hasEffects( int[] names){
+		
+		try{
+			for (Integer name : names){
+				if (hasEffect(name)){ return true;}
+			}
+			return false;
+			
+		} catch (NullPointerException e){
+			System.out.println("Tried to determine status of "
+					+ "a null array of effect names...");
+			
+		}
+		
+		return false;
+		
+		
+		
+	}
 
 
 		

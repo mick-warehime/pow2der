@@ -63,7 +63,6 @@ public class ActorActionEngine extends ActionEngine {
 		
 		doActions();
 		movePhysics();
-		updateTimers();
 	}
 	
 	//////////////////////////
@@ -91,9 +90,7 @@ public class ActorActionEngine extends ActionEngine {
 
 	}
 
-	protected void updateTimers(){
-		return;
-	}
+	
 
 	public boolean attemptDisplacement(float disp, char XorY){
 
@@ -165,7 +162,11 @@ public class ActorActionEngine extends ActionEngine {
 
 	}
 
-	public void activateAbility(int abilitySlot) throws SlickException {
+	public void attemptActivateAbility(int abilitySlot) throws SlickException {
+		
+		if (!canActivate(abilitySlot)){
+			return;
+		}
 		
 		Ability ability = this.abilitySlots.getAbility(abilitySlot);
 		
@@ -175,10 +176,16 @@ public class ActorActionEngine extends ActionEngine {
 			status.gainEffect(onCastEffects[i][0], onCastEffects[i][1]);
 		}
 		
-		ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
+		AbilityObject obj = ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
 		
 		
 		
+		
+	}
+
+	private boolean canActivate(int abilitySlot) {
+		
+		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
 	}
 	
 	
