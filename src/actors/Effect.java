@@ -1,6 +1,8 @@
 package actors;
 
-public class Effect {
+import gameobjects.Removeable;
+
+public class Effect implements Removeable {
 
 	public static final int EFFECT_X_COLLISION = 0;
 	public static final int EFFECT_Y_COLLISION = 1;
@@ -15,18 +17,22 @@ public class Effect {
 	
 	
 	public int name;
-	public int duration;
 	public int timer;
 
 	public Effect(int name, int duration){
 		this.name = name;
-		this.duration = duration;
 		this.timer = duration;
 	}
 
 	//Count down to effect end
-	public boolean countDown(){
+	public void countDown(){
 		timer -=1;
+		
+	}
+
+	@Override
+	public boolean shouldRemove() {
+		// TODO Auto-generated method stub
 		return (timer <= 0);
 	}
 

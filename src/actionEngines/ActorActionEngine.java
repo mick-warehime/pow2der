@@ -172,7 +172,6 @@ public class ActorActionEngine extends ActionEngine {
 		if (!canActivate(abilitySlot)){
 			return;
 		}
-		
 		Ability ability = this.abilitySlots.getAbility(abilitySlot);
 		
 		int[][] onCastEffects = ability.getOnCastEffects();
@@ -184,6 +183,7 @@ public class ActorActionEngine extends ActionEngine {
 		AbilityObject obj = ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
 		
 		objectsToCreate.add(obj);
+		
 		
 		
 	}

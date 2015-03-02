@@ -99,8 +99,9 @@ public abstract class Actor implements Removeable, Updater,ObjectCreator{
 	}
 	
 	public ArrayList<Object> popObjects() {
-		ArrayList<Object> output = objsToCreate;
-		objsToCreate = new ArrayList<Object>();
+		@SuppressWarnings("unchecked")
+		ArrayList<Object> output = (ArrayList<Object>) objsToCreate.clone();
+		objsToCreate.clear();
 		return output;
 	}
 

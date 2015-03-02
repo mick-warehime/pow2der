@@ -100,13 +100,13 @@ public class Status {
 
 	public void updateEffects(){
 
-
+		
 		//count down on each effect, remove ones that have run down
 		for (Iterator<Effect> iterator = effects.iterator(); iterator.hasNext();) {
 			Effect eff = iterator.next();
 				
-
-			if (eff.countDown()){
+			eff.countDown();
+			if (eff.shouldRemove()){
 				// Remove the current element from the iterator and the list.
 				iterator.remove();
 			}
@@ -143,11 +143,13 @@ public class Status {
 		return false;
 	}
 	
-	public boolean hasEffects( int[] names){
+	public boolean hasEffects( int[] effectList){
+		
+		
 		
 		try{
-			for (Integer name : names){
-				if (hasEffect(name)){ return true;}
+			for (Integer effectName : effectList){
+				if (hasEffect(effectName)){ return true;}
 			}
 			return false;
 			
@@ -156,6 +158,9 @@ public class Status {
 					+ "a null array of effect names...");
 			
 		}
+		
+	
+		
 		
 		return false;
 		
