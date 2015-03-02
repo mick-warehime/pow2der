@@ -1,5 +1,7 @@
 package actionEngines;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.SlickException;
 
 import abilities.Ability;
@@ -19,13 +21,16 @@ public class ActorActionEngine extends ActionEngine {
 	protected float runAcc; 
 	protected float maxSpeed;
 	protected AbilitySlots abilitySlots;
+	private ArrayList<Object> objectsToCreate;
 
 
 
-	public ActorActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots slots) {
+	public ActorActionEngine(CommandProviderAggregator listener, Status status, AbilitySlots slots, ArrayList<Object> objectsToCreate) {
 		super(listener);
 		this.status = status;
 		this.abilitySlots = slots;
+		this.objectsToCreate = objectsToCreate;
+		
 		
 	}
 
@@ -178,7 +183,7 @@ public class ActorActionEngine extends ActionEngine {
 		
 		AbilityObject obj = ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
 		
-		
+		objectsToCreate.add(obj);
 		
 		
 	}

@@ -37,7 +37,7 @@ public class Enemy extends Actor implements Broadcaster{
 		
 		graphics = new ActorGraphics("data/dwarf.png", status);
 
-		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots);
+		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate);
 
 		behavior = new EnemyBehavior(status);
 

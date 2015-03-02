@@ -29,8 +29,8 @@ public class PlayerActionEngine extends ActorActionEngine {
 	
 
 
-	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots){
-		super(listener,status, abilitySlots);
+	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots,ArrayList<Object>objectsToCreate){
+		super(listener,status, abilitySlots,objectsToCreate);
 		
 		this.runAcc = 2;
 		this.maxSpeed = 2;

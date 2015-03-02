@@ -39,16 +39,14 @@ public class Level {
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
 	private ArrayList<Updater> updaters;
-	
+	private ArrayList<ObjectCreator> creators;
 
 	
 
 	public Level(ItemBuilder itemBuilder, int width, int height) throws SlickException {
 		
 		
-		this.actors = new ArrayList<Actor>(); 
-		this.broadcasters = new ArrayList<Broadcaster>(); 
-		this.basicObjects = new ArrayList<BasicObject>();
+		
 		
 		this.width = width;
 		this.height = height;
@@ -63,6 +61,7 @@ public class Level {
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
 		this.updaters = new ArrayList<Updater>();
+		this.creators = new ArrayList<ObjectCreator>();
 		
 		// build a new Level
 		LevelBuilder levelBuilder = new LevelBuilder(width,height);
@@ -100,6 +99,7 @@ public class Level {
 		removeFromList(obj,broadcasters);
 		removeFromList(obj,walls);
 		removeFromList(obj,updaters);
+		removeFromList(obj,creators);
 	}
 	
 	private void removeFromList(Object obj, ArrayList<?> list){
@@ -119,6 +119,15 @@ public class Level {
 					// Remove the current element from the iterator and the list.
 					iterator.remove();
 					removeFromAllLists(updater);
+				}
+			}
+		}
+		
+		for (ObjectCreator creator : creators){
+			if (creator.hasObjects()){
+				for (Object obj: creator.popObjects()){
+					addObject(obj);
+					System.out.println("Added object: " + obj);
 				}
 			}
 		}
@@ -187,6 +196,9 @@ public class Level {
 		}
 		if (obj instanceof Updater){
 			updaters.add((Updater) obj);
+		}
+		if (obj instanceof ObjectCreator){
+			creators.add((ObjectCreator) obj);
 		}
 
 	}

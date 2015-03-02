@@ -13,7 +13,6 @@ public class NullAbilityObject extends AbilityObject {
 		
 		this.countDown= 20;
 		
-		System.out.println( "Null ability object generated at position" + xPos + "," + yPos);
 		
 	}
 

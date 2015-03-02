@@ -35,7 +35,7 @@ public class Player extends Actor {
 
 		abilitySlots = new AbilitySlots();
 
-		engine = new PlayerActionEngine(commandProviderAggregator,status, abilitySlots);
+		engine = new PlayerActionEngine(commandProviderAggregator,status, abilitySlots, objsToCreate);
 		
 		this.graphics = new ActorGraphics("data/dwarf2.png", status);
 		
