@@ -15,6 +15,7 @@ import actors.Actor;
 import actors.Enemy;
 import gameobjects.BasicObject;
 import gameobjects.Broadcaster;
+import gameobjects.Door;
 import gameobjects.Removeable;
 
 
@@ -71,13 +72,16 @@ public class Level {
 		floors = levelBuilder.getFloors();
 		halls = levelBuilder.getHalls();
 
-		// tri
-		ArrayList<int[]> itemLocations = levelBuilder.generateRandomItemLocations(0.5,3);
+		for(Shape doorShape : doors){
+			basicObjects.add(new Door(doorShape));
+		}
 		
+		
+		// build items using the levelbuilder to get the random locations
 		for(int[] itemLoc : levelBuilder.generateRandomItemLocations(0.75,3)){
 			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
-
 		}
+		
 		
 		// poop out the starting position
 		int[] startPosition = levelBuilder.getStartingPosition();

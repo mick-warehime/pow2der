@@ -33,10 +33,12 @@ public class LevelBuilder {
 	private final static int RIGHT = 2;
 	private final static int DOWN = 3;
 
-	// this can be an odd number bigger than 5
+	// this can be an odd number bigger than 1
 	public final static int SCALING = 3;
 
+	public final static int DOORSIZE = 3;					// when map(y,x) is a door DOORSIZE tells MAP how big to make the hole for a door 
 
+	
 	private List<Integer> objectTypes;
 	private List<Integer[]> objectPositions;
 
@@ -62,7 +64,6 @@ public class LevelBuilder {
 	private int numRooms;
 	private int groups; 					// each grp # is a unique room/hallway/door
 
-	private int doorSize;					// when map(y,x) is a door doorSize tells MAP how big to make the hole for a door 
 
 	private Random rand;
 
@@ -78,16 +79,14 @@ public class LevelBuilder {
 		this.width = width;
 		this.height = height;
 
-		probBonusConnections = 0.2f;
+		probBonusConnections = 0.3f;
 		numBonusConnections = 2;
 
 		turnBias = 0.7f;
 		roomMin = 3;
 		roomMax = 7;
 
-		doorSize = 3;
-
-		numRoomPuts = 100;		
+		numRoomPuts = 50;		
 
 		// use 1000 for debugging and systemtime for normal use
 		randomSeed = 1000;   
@@ -113,7 +112,8 @@ public class LevelBuilder {
 		scaleMap();
 		removeBogusWalls();
 		createShapes(MAP);
-
+		createDoorShapes(map);
+		
 		//		printMap(map);
 		//		printMap(MAP);
 
@@ -147,7 +147,7 @@ public class LevelBuilder {
 
 					int xPos = rand.nextInt((width-1)*World.TILE_WIDTH)+topLeftX*World.TILE_WIDTH;
 					int yPos = rand.nextInt((height-1)*World.TILE_WIDTH)+topLeftY*World.TILE_WIDTH;
-					
+
 					map[(int) (topLeftY + Math.floor(height/2)+1)][(int) (topLeftX + Math.floor(width/2)+1)] =5;
 
 
@@ -182,12 +182,6 @@ public class LevelBuilder {
 
 		int[] position = new int[] {xPos*SCALING, yPos*SCALING};
 
-		//		printMap(map);
-
-		//		System.out.format("x: %2d, y: %2d, w: %2d, h: %2d",topLeftX, topLeftY, width, height);	
-		//		System.out.println(Math.floor(height/2));
-
-		//		
 		return position;	
 	}
 
@@ -1041,8 +1035,7 @@ public class LevelBuilder {
 		int height = map.length;
 		int width = map[0].length;
 
-		this.walls = new ArrayList<Shape>();
-		this.doors = new ArrayList<Shape>();
+		this.walls = new ArrayList<Shape>();		
 		this.floors = new ArrayList<Shape>();
 		this.halls = new ArrayList<Shape>();
 
@@ -1054,13 +1047,44 @@ public class LevelBuilder {
 
 				if(map[y][x]==OBJECT_WALL_TILE){
 					walls.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));					
-				}else if(map[y][x]==OBJECT_DOOR_TILE){					
-					doors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
 				} else if(map[y][x] == OBJECT_ROOM_TILE){										
 					floors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
 				} else if(map[y][x] == OBJECT_HALLWAY_TILE){										
 					halls.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, World.TILE_HEIGHT));
 				}
+
+			}
+		}		
+	}
+
+
+	private void createDoorShapes(int[][] map){
+
+		int height = map.length;
+		int width = map[0].length;
+		
+		this.doors = new ArrayList<Shape>();
+		
+		// not entirely sure why this is necessary
+		int scalingOffset = (SCALING-1)/2-1;
+		
+		// loop over the doors, determine their orientation n/s or e/w and make the shape according to doorsize
+		for (int y=0; y<height;y++){
+			for (int x=0; x<width;x++){
+
+				
+
+				if(map[y][x]==OBJECT_DOOR_TILE){
+					if(northSouthDoor(x,y)){						
+						int xPos = (x*SCALING+scalingOffset)*World.TILE_WIDTH;
+						int yPos = (y*SCALING+scalingOffset+1)*World.TILE_HEIGHT;
+						doors.add(new Rectangle(xPos,yPos, DOORSIZE*World.TILE_WIDTH, World.TILE_HEIGHT));
+					}else{
+						int xPos = (x*SCALING+scalingOffset+1)*World.TILE_WIDTH;
+						int yPos = (y*SCALING+scalingOffset)*World.TILE_HEIGHT;
+						doors.add(new Rectangle(xPos,yPos, World.TILE_WIDTH, DOORSIZE*World.TILE_HEIGHT));
+					}
+				}  
 
 			}
 		}
@@ -1305,7 +1329,7 @@ public class LevelBuilder {
 
 		int midPt = Math.round(SCALING/2)+1;
 
-		int doorBuffer = (SCALING-doorSize)/2;
+		int doorBuffer = (SCALING-DOORSIZE)/2;
 
 		// add a horizontal door
 		if(northSouthDoor(x,y)){
@@ -1314,7 +1338,7 @@ public class LevelBuilder {
 				for(int Y = 0; Y < SCALING; Y++){
 
 					if(Y == midPt-1){
-						if(X<doorBuffer || X>(doorBuffer+doorSize-1)){
+						if(X<doorBuffer || X>(doorBuffer+DOORSIZE-1)){
 							MAP[Y+y*SCALING][X+x*SCALING] = OBJECT_WALL_TILE;
 						}else{
 							MAP[Y+y*SCALING][X+x*SCALING] = OBJECT_DOOR_TILE;
@@ -1329,12 +1353,12 @@ public class LevelBuilder {
 			}
 		}
 		else{
-			// add vertical door centered with size doorSize
+			// add vertical door centered with size DOORSIZE
 			for(int X = 0; X < SCALING; X++){
 				for(int Y = 0; Y < SCALING; Y++){
 
 					if(X == midPt-1){
-						if(Y<doorBuffer || Y>(doorBuffer+doorSize-1)){
+						if(Y<doorBuffer || Y>(doorBuffer+DOORSIZE-1)){
 							MAP[Y+y*SCALING][X+x*SCALING] = OBJECT_WALL_TILE;
 						}else{
 							MAP[Y+y*SCALING][X+x*SCALING] = OBJECT_DOOR_TILE;

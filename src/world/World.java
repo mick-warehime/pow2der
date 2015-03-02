@@ -23,7 +23,8 @@ import menus.MenuHandler;
 import controls.GameControls;
 
 public class World {
-	
+	public static SpriteSheet spriteSheet;
+
 	private List<Level> levels = new ArrayList<Level>();
 	private Player terri;
 	private ItemBuilder itemBuilder;
@@ -36,7 +37,8 @@ public class World {
 	public final static int TILE_WIDTH = 16;
 	
 	public World() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
-	
+		
+		 spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
 		
 		// construct item builders
 						
@@ -61,7 +63,7 @@ public class World {
 		
 		 
 		// draw current level
-		levelGraphics.render(graphics,(int) terri.getX(),(int)terri.getY());
+		levelGraphics.render((int) terri.getX(),(int)terri.getY());
 		
 		// draw level items/objects
 		Level currentLevel = currentLevelData.getCurrentLevel();
