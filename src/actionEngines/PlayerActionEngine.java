@@ -46,7 +46,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 
 	
 	
-	public void attemptInteract( int interactionType, Status status){
+	public void attemptInteract( int interactionType){
 		
 		if (!canInteract()){
 			return;

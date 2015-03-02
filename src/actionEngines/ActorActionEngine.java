@@ -163,9 +163,6 @@ public class ActorActionEngine extends ActionEngine {
 		status.setY(destY);
 	}
 	
-	public Status getStatus(){
-		return status;
-	}
 	
 
 	public void applyEffect(int effectName, int duration) {
