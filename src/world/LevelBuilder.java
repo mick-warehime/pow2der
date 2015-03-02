@@ -34,11 +34,11 @@ public class LevelBuilder {
 	private final static int DOWN = 3;
 
 	// this can be an odd number bigger than 1
-	public final static int SCALING = 3;
+	public final static int SCALING = 5;
 
 	public final static int DOORSIZE = 3;					// when map(y,x) is a door DOORSIZE tells MAP how big to make the hole for a door 
 
-	
+
 	private List<Integer> objectTypes;
 	private List<Integer[]> objectPositions;
 
@@ -89,8 +89,8 @@ public class LevelBuilder {
 		numRoomPuts = 50;		
 
 		// use 1000 for debugging and systemtime for normal use
-		randomSeed = 1000;   
-		//		randomSeed = System.currentTimeMillis();
+		//		randomSeed = 1000;   
+		randomSeed = System.currentTimeMillis();
 
 		rand = new Random(randomSeed);
 
@@ -113,7 +113,7 @@ public class LevelBuilder {
 		removeBogusWalls();
 		createShapes(MAP);
 		createDoorShapes(map);
-		
+
 		//		printMap(map);
 		//		printMap(MAP);
 
@@ -1062,17 +1062,17 @@ public class LevelBuilder {
 
 		int height = map.length;
 		int width = map[0].length;
-		
+
 		this.doors = new ArrayList<Shape>();
-		
+
 		// not entirely sure why this is necessary
 		int scalingOffset = (SCALING-1)/2-1;
-		
+
 		// loop over the doors, determine their orientation n/s or e/w and make the shape according to doorsize
 		for (int y=0; y<height;y++){
 			for (int x=0; x<width;x++){
 
-				
+
 
 				if(map[y][x]==OBJECT_DOOR_TILE){
 					if(northSouthDoor(x,y)){						

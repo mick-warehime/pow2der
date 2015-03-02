@@ -21,12 +21,16 @@ public class Door extends BasicObject implements Interactive{
 		
 		open = false;
 		
+		image = World.spriteSheet.getSubImage(52,36).copy();
+		
+		
 		northSouth = false;
 		if(shape.getHeight()>shape.getWidth()){
 			northSouth = true;
+			image.setRotation(90);
+//			image.rotate(90);
 		}
 		
-		image = World.spriteSheet.getSubImage(52,36);
 		
 	}
 
