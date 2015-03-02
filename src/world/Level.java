@@ -87,12 +87,14 @@ public class Level {
 		int[] startPosition = levelBuilder.getStartingPosition();
 		startX = startPosition[0];
 		startY = startPosition[1];
+		
+		addObject(new Enemy(startX + 50, startY));
 	}
 	
 	
 
 	
-	private void removeFromAllLists(Object obj){
+	public void removeFromAllLists(Object obj){
 		removeFromList(obj,actors);
 		removeFromList(obj,basicObjects);
 		removeFromList(obj,broadcasters);
@@ -108,31 +110,19 @@ public class Level {
 
 	protected void update() throws SlickException{
 
-		//Update actors and remove dead ones
-		for (Iterator<Actor> iterator = actors.iterator(); iterator.hasNext();) {
-			Actor nme = iterator.next();
+		for (Iterator<Updater> iterator = updaters.iterator(); iterator.hasNext();) {
+			Updater updater = iterator.next();
 
-			nme.update();
-			if (nme.shouldRemove()) {
-				// Remove the current element from the iterator and the list.
-				iterator.remove();
-				removeFromAllLists(nme);
-			}
-		}
-
-		//Remove items that are not on the ground
-		for (Iterator<BasicObject> iterator = basicObjects.iterator(); iterator.hasNext();){
-			BasicObject obj = iterator.next();
-			
-			if (obj instanceof Removeable){
-				if (((Removeable)obj).shouldRemove()){
+			updater.update();
+			if (updater instanceof Removeable){
+				if (((Removeable)updater).shouldRemove()) {
+					// Remove the current element from the iterator and the list.
 					iterator.remove();
-					removeFromAllLists(obj);
+					removeFromAllLists(updater);
 				}
-
 			}
-
 		}
+		
 
 	}
 

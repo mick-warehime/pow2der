@@ -90,11 +90,12 @@ public class Item extends BasicObject implements Interactive,Removeable{
 		}
 		assert location.onGround : "Error! Item receiving an interact command when it's not on the ground!";
 
+		
 		Inventory inventory = status.getInventory();
 		Shape actorShape = status.getRect();
-		location.applyPickup(inventory, actorShape);
+		location.moveToInventory(inventory, actorShape);
 
-		this.location.onGround = false;
+		
 
 
 	}
@@ -138,12 +139,21 @@ public class Item extends BasicObject implements Interactive,Removeable{
 			currentLevelData.getCurrentLevel().addObject(owningItem);
 			storingInventory.removeItem(owningItem);
 			storingInventory = null; //Prevents memory leak
+			
+			
+			
 		}
+		
+		
 
-		public void applyPickup(Inventory inventory, Shape actorShape){
+		public void moveToInventory(Inventory inventory, Shape actorShape){
 			this.storingInventory = inventory;
 			this.ownerShape = actorShape;
 			storingInventory.addItemToInventory(owningItem);
+			this.onGround = false;
+			this.currentLevelData.getCurrentLevel().removeFromAllLists(owningItem);
+			
+			
 
 
 		}
