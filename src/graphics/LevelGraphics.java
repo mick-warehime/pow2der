@@ -15,12 +15,8 @@ import world.World;
 
 public class LevelGraphics{
 
-
-	private SpriteSheet spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
-
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> floors;
-	private ArrayList<Shape> doors;
 	private ArrayList<Shape> halls;
 
 
@@ -54,7 +50,6 @@ public class LevelGraphics{
 
 		this.walls = level.getWalls();
 		this.floors = level.getFloors();
-//		this.doors = level.getDoors();
 		this.halls = level.getHalls();
 		
 		visitedTiles = new ArrayList<Shape>();
@@ -63,7 +58,7 @@ public class LevelGraphics{
 
 
 
-	public void render(Graphics g, int playerX, int playerY) {
+	public void render(int playerX, int playerY) {
 
 		setLevelCoordinates(playerX,playerY);
 
@@ -80,7 +75,7 @@ public class LevelGraphics{
 		for (Shape wall : walls){
 			if(onScreen(wall,playerX,playerY)){
 				
-				Image im = spriteSheet.getSubImage(26,5);					
+				Image im = World.spriteSheet.getSubImage(26,5);					
 				im.setAlpha(alpha);
 				im.draw(wall.getX()-offsetX,wall.getY()-offsetY);				
 			}
@@ -89,7 +84,7 @@ public class LevelGraphics{
 		for (Shape floor : floors){
 			if(onScreen(floor,playerX,playerY)){
 			
-				Image im = spriteSheet.getSubImage(25,40);
+				Image im = World.spriteSheet.getSubImage(25,40);
 
 				im.setAlpha(alpha);
 				im.draw(floor.getX()-offsetX,floor.getY()-offsetY);
@@ -97,7 +92,7 @@ public class LevelGraphics{
 		}
 		for (Shape hall : halls){
 			if(onScreen(hall,playerX,playerY)){
-				Image im = spriteSheet.getSubImage(60,25);
+				Image im = World.spriteSheet.getSubImage(60,25);
 
 				im.setAlpha(alpha);
 				im.draw(hall.getX()-offsetX,hall.getY()-offsetY);
@@ -114,7 +109,7 @@ public class LevelGraphics{
 		for (Shape wall : walls){
 			if(visible(wall,playerX,playerY)){
 				
-				Image im = spriteSheet.getSubImage(26,5);					
+				Image im = World.spriteSheet.getSubImage(26,5);					
 				
 				im.setAlpha((float) (alpha/distToPlayer(wall,playerX,playerY)));
 				im.draw(wall.getX()-offsetX,wall.getY()-offsetY);				
@@ -124,7 +119,7 @@ public class LevelGraphics{
 		for (Shape floor : floors){
 			if(visible(floor,playerX,playerY)){
 			
-				Image im = spriteSheet.getSubImage(25,40);
+				Image im = World.spriteSheet.getSubImage(25,40);
 
 				im.setAlpha((float) (alpha/distToPlayer(floor,playerX,playerY)));
 				im.draw(floor.getX()-offsetX,floor.getY()-offsetY);
@@ -132,7 +127,7 @@ public class LevelGraphics{
 		}
 		for (Shape hall : halls){
 			if(visible(hall,playerX,playerY)){
-				Image im = spriteSheet.getSubImage(60,25);
+				Image im = World.spriteSheet.getSubImage(60,25);
 
 				im.setAlpha((float) (alpha/distToPlayer(hall,playerX,playerY)));
 				im.draw(hall.getX()-offsetX,hall.getY()-offsetY);

@@ -24,7 +24,13 @@ public class BasicObject {
 	protected boolean canCollide = true;
 	
 	private static final int PROXIMITY = 1;
-
+	
+	public BasicObject(Shape shape) throws SlickException{
+		
+		this.shape = shape;
+	
+	}
+	
 	public BasicObject(Image image, int xPos, int yPos) throws SlickException{
 		
 		
