@@ -26,7 +26,7 @@ public class MoveCommand extends BasicCommand implements GenericCommand{
 	@Override
 	public void execute(ActionEngine engine){
 		if (engine instanceof ActorActionEngine){
-			((ActorActionEngine) engine).attemptRunTo(direction, value);
+			((ActorActionEngine) engine).attemptMoveTo(direction, value);
 			if( direction == 'x'){
 				((ActorActionEngine) engine).applyEffect(Effect.EFFECT_WALKING_X, 1);
 			}else{

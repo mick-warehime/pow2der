@@ -21,6 +21,11 @@ public class NullAbility extends Ability {
 		return new NullAbilityObject(xPos,yPos);
 	}
 
+	@Override
+	public boolean hasAbilityObject() {
+		return true;
+	}
+
 	
 
 }

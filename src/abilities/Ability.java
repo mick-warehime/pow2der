@@ -20,6 +20,8 @@ public abstract class Ability {
 		return this.onCastEffects;
 	}
 	
+	public abstract boolean hasAbilityObject();
+	
 	public abstract AbilityObject instantiateAbilityObject(int xPos,int yPos) throws SlickException;
 
 }

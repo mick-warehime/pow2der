@@ -19,7 +19,8 @@ public class ActorActionEngine extends ActionEngine {
 	protected float vx ;
 	protected float vy ;
 	protected float runAcc; 
-	protected float maxSpeed;
+	protected float walkSpeed;
+	protected float runSpeed;
 	protected AbilitySlots abilitySlots;
 	private ArrayList<Object> objectsToCreate;
 
@@ -34,8 +35,13 @@ public class ActorActionEngine extends ActionEngine {
 		
 	}
 
-	public void attemptRunTo(char xOrY, int direction) {
-
+	public void attemptMoveTo(char xOrY, int direction) {
+		float maxSpeed;
+		if (status.hasEffect(Effect.EFFECT_RUNNING)){
+			maxSpeed = runSpeed;
+		}else{
+			maxSpeed = walkSpeed;
+		}
 		
 		if (xOrY == 'x'){
 			if (direction>0 ){
@@ -180,9 +186,11 @@ public class ActorActionEngine extends ActionEngine {
 			status.gainEffect(onCastEffects[i][0], onCastEffects[i][1]);
 		}
 		
-		AbilityObject obj = ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
+		if (ability.hasAbilityObject()){
+			AbilityObject obj = ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
+			objectsToCreate.add(obj);
+		}
 		
-		objectsToCreate.add(obj);
 		
 		
 		
