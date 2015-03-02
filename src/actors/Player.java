@@ -1,6 +1,8 @@
 package actors;
 
 
+import java.util.ArrayList;
+
 import items.Inventory;
 import graphics.ActorGraphics;
 
@@ -79,6 +81,17 @@ public class Player extends Actor {
 		
 		
 	}
+
+
+
+
+
+
+
+
+
+
+	
 
 	
 

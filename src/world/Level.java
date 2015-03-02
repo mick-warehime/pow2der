@@ -39,6 +39,7 @@ public class Level {
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
 	private ArrayList<Updater> updaters;
+	
 
 	
 
@@ -88,7 +89,6 @@ public class Level {
 		startX = startPosition[0];
 		startY = startPosition[1];
 		
-		addObject(new Enemy(startX + 50, startY));
 	}
 	
 	
