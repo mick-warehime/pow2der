@@ -1,19 +1,11 @@
 package gameobjects;
 
-import graphics.BasicGraphics;
-import graphics.TileGraphics;
-
-import java.util.ArrayList;
-import java.util.Properties;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.tiled.TiledMap;
-
-import world.CollisionHandler;
+import render.BasicGraphics;
 
 /* An ingame object with rendering and collision functionality */
 

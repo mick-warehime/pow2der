@@ -1,6 +1,5 @@
 package world;
 
-import graphics.LevelGraphics;
 import items.Item;
 import items.ItemBuilder;
 import items.ItemParser;
@@ -17,6 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.xml.sax.SAXException;
 
+import render.LevelGraphics;
 import actors.Actor;
 import actors.Player;
 import menus.MenuHandler;

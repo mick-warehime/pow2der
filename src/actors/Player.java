@@ -2,11 +2,11 @@ package actors;
 
 
 import items.Inventory;
-import graphics.ActorGraphics;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import render.ActorGraphics;
 import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;

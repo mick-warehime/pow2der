@@ -1,4 +1,4 @@
-package graphics;
+package render;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Shape;
 import actors.Effect;
 import actors.Status;
 
-public class ActorGraphics {
+public class ActorGraphics extends Renderer{
 
 	private static int STAND = 0;
 	private static int WALK1 = 1;
@@ -56,7 +56,7 @@ public class ActorGraphics {
 	
 	
 	
-	public void render(Graphics g, int renderX, int renderY) {
+	public void render(Graphics g, int cornerX, int cornerY) {
 		
 //		renderShape( g,  renderX,  renderY);
 		
@@ -68,11 +68,12 @@ public class ActorGraphics {
 		float x = shape.getX();
 		float y = shape.getY();
 		
-		spriteSheet.getSubImage(currentActorAction,currentActorDirection ).draw(x-renderX, y-renderY);
+		spriteSheet.getSubImage(currentActorAction,currentActorDirection ).draw(x-cornerX, y-cornerY);
 		
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private void renderShape(Graphics g, int renderX, int renderY) {
 		Shape shape = status.getRect();
 		float x = shape.getX();

@@ -10,7 +10,6 @@ import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
 import gameobjects.BasicObject;
-import gameobjects.GameObject;
 
 public class Status {
 

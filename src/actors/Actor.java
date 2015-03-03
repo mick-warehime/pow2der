@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import gameobjects.Removeable;
-import graphics.ActorGraphics;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import render.ActorGraphics;
 import world.CollisionHandler;
 import world.ObjectCreator;
 import world.Updater;

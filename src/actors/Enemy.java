@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
+import render.ActorGraphics;
 import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
@@ -16,7 +17,6 @@ import commands.CollisionCommandProvider;
 import commands.DieCommand;
 import commands.CommandProviderAggregator;
 import gameobjects.Broadcaster;
-import graphics.ActorGraphics;
 
 public class Enemy extends Actor implements Broadcaster{
 

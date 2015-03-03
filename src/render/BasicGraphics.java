@@ -1,4 +1,4 @@
-package graphics;
+package render;
 
 
 import org.newdawn.slick.Graphics;
@@ -12,7 +12,7 @@ import actors.Status;
 
 /* Draws a single image at the location of a shape */
 
-public class BasicGraphics {
+public class BasicGraphics extends Renderer{
 
 	private int sprite_margin = 0;
 	protected Image sprite;
@@ -36,6 +36,7 @@ public class BasicGraphics {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void renderShape(Graphics g, int renderX, int renderY){
 		float x = shape.getX();
 		float y = shape.getY();
