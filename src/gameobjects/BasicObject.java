@@ -5,13 +5,13 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-import render.BasicGraphics;
+import render.BasicRenderer;
 
 /* An ingame object with rendering and collision functionality */
 
 public class BasicObject {
 	
-	protected BasicGraphics graphics;	
+	protected BasicRenderer graphics;	
 	protected Shape shape;	
 	protected boolean canCollide = true;
 	
@@ -31,7 +31,7 @@ public class BasicObject {
 			
 		shape = new Rectangle(xPos,yPos,w,h);
 	
-		this.graphics = new BasicGraphics(image,shape);
+		this.graphics = new BasicRenderer(image,shape);
 		
 	}
 	
@@ -41,8 +41,8 @@ public class BasicObject {
 	}
 
 
-	public void render(Graphics g, int renderX, int renderY){
-		graphics.render(g, renderX, renderY);		
+	public void render(Graphics g, int offsetX, int offsetY){
+		graphics.render(g, offsetX, offsetY);		
 	}
 
 	public boolean canCollide(){

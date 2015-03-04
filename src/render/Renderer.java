@@ -15,7 +15,7 @@ public abstract class Renderer {
 	 * the top left corner of the screen
 	 * 
 	 */
-	public abstract void render(Graphics g, int cornerX, int cornerY);
+	public abstract void render(Graphics g, int offsetX, int offsetY);
 	
 	
 }

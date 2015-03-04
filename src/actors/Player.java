@@ -6,7 +6,7 @@ import items.Inventory;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import render.ActorGraphics;
+import render.ActorRenderer;
 import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
@@ -34,7 +34,7 @@ public class Player extends Actor {
 
 		engine = new PlayerActionEngine(commandProviderAggregator,status, abilitySlots, objsToCreate);
 		
-		this.graphics = new ActorGraphics("data/dwarf2.png", status);
+		this.graphics = new ActorRenderer("data/dwarf2.png", status);
 		
 		
 	}

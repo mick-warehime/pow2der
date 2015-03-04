@@ -12,14 +12,14 @@ import actors.Status;
 
 /* Draws a single image at the location of a shape */
 
-public class BasicGraphics extends Renderer{
+public class BasicRenderer extends Renderer{
 
 	private int sprite_margin = 0;
 	protected Image sprite;
 	private Shape shape;
 	
 	//	public ItemGraphics(Image image, ItemLocation location) throws SlickException{
-	public BasicGraphics(Image sprite, Shape shape) throws SlickException{	
+	public BasicRenderer(Image sprite, Shape shape) throws SlickException{	
 		this.sprite = sprite;
 		this.shape = shape;		
 
@@ -30,9 +30,9 @@ public class BasicGraphics extends Renderer{
 	}
 
 
-	public void render(Graphics g, int renderX, int renderY) {
+	public void render(Graphics g, int offsetX, int offsetY) {
 
-		render(g, renderX,renderY,1f);
+		render(g, offsetX,offsetY,1f);
 
 	}
 

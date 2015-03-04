@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
-import render.ActorGraphics;
+import render.ActorRenderer;
 import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
@@ -35,7 +35,7 @@ public class Enemy extends Actor implements Broadcaster{
 		abilitySlots = new AbilitySlots();
 		
 		
-		graphics = new ActorGraphics("data/dwarf.png", status);
+		graphics = new ActorRenderer("data/dwarf.png", status);
 
 		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate);
 

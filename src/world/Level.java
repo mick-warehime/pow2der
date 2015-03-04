@@ -88,7 +88,7 @@ public class Level {
 		startX = startPosition[0];
 		startY = startPosition[1];
 		
-		actors.add(new Enemy(startX -50, startY));
+		addObject(new Enemy(startX -50, startY));
 		
 	}
 	
