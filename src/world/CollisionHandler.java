@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+
 import actors.Actor;
 import gameobjects.BasicObject;
 import gameobjects.Interactive;
@@ -49,17 +50,17 @@ public class CollisionHandler  {
 
 
 //	Returns a list of interactive game objects near the player
-	public ArrayList<BasicObject> interactiveObjectsNearRect(Rectangle rect){
+	public ArrayList<Interactive> interactiveObjectsNearRect(Rectangle rect){
 
 
-		ArrayList<BasicObject> output = new ArrayList<BasicObject>();
+		ArrayList<Interactive> output = new ArrayList<Interactive>();
 
 		for(BasicObject obj: basicObjects){
 			
 			if (obj instanceof Interactive){
 				
 				if (obj.isNear(playerRect)){
-					output.add(obj);
+					output.add((Interactive) obj);
 				}
 			}
 		}

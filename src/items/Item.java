@@ -1,9 +1,11 @@
 package items;
 
 
-import gameobjects.BasicObject;
+import gameobjects.StaticObject;
 import gameobjects.Interactive;
 import gameobjects.Removeable;
+
+import render.BasicRenderer;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -20,7 +22,7 @@ import actors.Status;
 
 /* A basic object that can be picked up and put into inventory */
 
-public class Item extends BasicObject implements Interactive,Removeable{
+public class Item extends StaticObject implements Interactive,Removeable{
 
 
 
@@ -40,7 +42,7 @@ public class Item extends BasicObject implements Interactive,Removeable{
 
 		this.definePropertiesFromMap(itmInfo);
 
-		this.graphics.setSpriteMargin(SPRITE_MARGIN);
+		((BasicRenderer)renderer).setSpriteMargin(SPRITE_MARGIN);
 
 		//Shrink shape because it's based on image size
 		shrinkShapes();
@@ -67,7 +69,7 @@ public class Item extends BasicObject implements Interactive,Removeable{
 	public void render(Graphics g, int renderX, int renderY){
 
 		if(location.onGround){
-			graphics.render(g, renderX , renderY, SPRITE_DRAW_SCALE);
+			((BasicRenderer)renderer).render(g, renderX , renderY, SPRITE_DRAW_SCALE);
 		}
 	}
 

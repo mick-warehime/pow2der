@@ -4,11 +4,7 @@ package render;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Shape;
-
-import actors.Effect;
-import actors.Status;
 
 /* Draws a single image at the location of a shape */
 

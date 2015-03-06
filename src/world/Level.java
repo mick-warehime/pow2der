@@ -5,10 +5,8 @@ import items.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
@@ -73,6 +71,8 @@ public class Level {
 		halls = levelBuilder.getHalls();
 
 		for(Shape doorShape : doors){
+			
+			
 			basicObjects.add(new Door(doorShape));
 		}
 		

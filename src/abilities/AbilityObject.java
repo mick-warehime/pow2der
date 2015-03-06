@@ -4,7 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import world.Updater;
-import gameobjects.BasicObject;
+import gameobjects.StaticObject;
 import gameobjects.Removeable;
 
 /*
@@ -17,7 +17,7 @@ import gameobjects.Removeable;
 * Ability to collide with objects, (apply effects if necessary)
  */
 
-public abstract class AbilityObject extends BasicObject implements Removeable,Updater{
+public abstract class AbilityObject extends StaticObject implements Removeable,Updater{
 
 	
 	

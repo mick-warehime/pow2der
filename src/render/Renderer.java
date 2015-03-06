@@ -10,7 +10,7 @@ import org.newdawn.slick.Graphics;
 public abstract class Renderer {
 
 	/*
-	 * g -> slick2D graphics object
+	 * g -> slick2D renderer object
 	 * cornerX, cornerY -> refers to the ingame position of 
 	 * the top left corner of the screen
 	 * 

@@ -11,7 +11,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import commands.DieCommand;
 
-public class DeadlyObject extends BasicObject implements Broadcaster{
+public class DeadlyObject extends StaticObject implements Broadcaster{
 		
 		 
 	
