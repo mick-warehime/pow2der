@@ -134,7 +134,6 @@ public class World {
 		private int screenWidth;
 		private int screenHeight;
 		
-		
 		private int bufferDistX = 15; // number of tiles away from edge
 		private int bufferDistY = 10; 
 		private int bufferX; // number of tiles away from edge

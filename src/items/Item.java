@@ -1,13 +1,10 @@
 package items;
 
 
-import gameobjects.StaticObject;
 import gameobjects.Interactive;
 import gameobjects.Removeable;
+import gameobjects.StaticObject;
 
-import render.BasicRenderer;
-
-import java.util.Hashtable;
 import java.util.Map;
 
 import org.newdawn.slick.Graphics;
@@ -16,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import render.BasicRenderer;
 import world.CurrentLevelData;
 import actors.Status;
 
@@ -131,6 +129,8 @@ public class Item extends StaticObject implements Interactive,Removeable{
 
 
 		public void applyDrop(){
+			
+			assert (currentLevelData != null): " Error! Using an item whose current level data hasn't been assigned!";
 			this.onGround = true;
 
 			float x = ownerShape.getX();
@@ -149,6 +149,9 @@ public class Item extends StaticObject implements Interactive,Removeable{
 		
 
 		public void moveToInventory(Inventory inventory, Shape actorShape){
+			assert (currentLevelData != null): " Error! Using an item whose current level data hasn't been assigned!";
+			
+			
 			this.storingInventory = inventory;
 			this.ownerShape = actorShape;
 			storingInventory.addItemToInventory(owningItem);
@@ -251,52 +254,52 @@ public class Item extends StaticObject implements Interactive,Removeable{
 				type = TYPE_AMULET;
 			break;
 			case ("book"):
-				type = this.TYPE_BOOK;
+				type = ItemProperties.TYPE_BOOK;
 			break;
 			case ("boots"):
-				type = this.TYPE_BOOTS;
+				type = ItemProperties.TYPE_BOOTS;
 			break;
 			case ("bottle"):
-				type = this.TYPE_BOTTLE;
+				type = ItemProperties.TYPE_BOTTLE;
 			break;
 			case ("chestArmor"):
-				type = this.TYPE_CHESTARMOR;
+				type = ItemProperties.TYPE_CHESTARMOR;
 			break;
 			case ("cloak"):
-				type = this.TYPE_CLOAK;
+				type = ItemProperties.TYPE_CLOAK;
 			break;
 			case ("gloves"):
-				type = this.TYPE_GLOVES;
+				type = ItemProperties.TYPE_GLOVES;
 			break;
 			case ("helm"):
-				type = this.TYPE_HELM;
+				type = ItemProperties.TYPE_HELM;
 			break;
 			case ("potion"):
-				type = this.TYPE_POTION;
+				type = ItemProperties.TYPE_POTION;
 			break;
 			case ("ring"):
-				type = this.TYPE_RING;
+				type = ItemProperties.TYPE_RING;
 			break;
 			case ("scroll"):
-				type = this.TYPE_SCROLL;
+				type = ItemProperties.TYPE_SCROLL;
 			break;
 			case ("shield"):
-				type = this.TYPE_SHIELD;
+				type = ItemProperties.TYPE_SHIELD;
 			break;
 			case ("staff"):
-				type = this.TYPE_STAFF;
+				type = ItemProperties.TYPE_STAFF;
 			break;
 			case ("wand"):
-				type = this.TYPE_WAND;
+				type = ItemProperties.TYPE_WAND;
 			break;
 			case ("weapon"):
-				type = this.TYPE_WEAPON;
+				type = ItemProperties.TYPE_WEAPON;
 			break;
 			case ("rangedWeapon"):
-				type = this.TYPE_WEAPONRANGED;
+				type = ItemProperties.TYPE_WEAPONRANGED;
 			break;
 			default: 
-				type = this.TYPE_UNDEFINED;
+				type = ItemProperties.TYPE_UNDEFINED;
 				break;
 			}
 
@@ -306,34 +309,34 @@ public class Item extends StaticObject implements Interactive,Removeable{
 
 			switch (location){
 			case ("neck"):
-				equipLocation = this.EQUIP_LOCATION_NECK;
+				equipLocation = ItemProperties.EQUIP_LOCATION_NECK;
 			break;
 			case ("chest"):
-				equipLocation = this.EQUIP_LOCATION_CHEST;
+				equipLocation = ItemProperties.EQUIP_LOCATION_CHEST;
 			break;
 			case ("offHand"):
-				equipLocation = this.EQUIP_LOCATION_OFFHAND;
+				equipLocation = ItemProperties.EQUIP_LOCATION_OFFHAND;
 			break;
 			case ("head"):
-				equipLocation = this.EQUIP_LOCATION_HEAD;
+				equipLocation = ItemProperties.EQUIP_LOCATION_HEAD;
 			break;
 			case ("hands"):
-				equipLocation = this.EQUIP_LOCATION_HANDS;
+				equipLocation = ItemProperties.EQUIP_LOCATION_HANDS;
 			break;
 			case ("back"):
-				equipLocation = this.EQUIP_LOCATION_BACK;
+				equipLocation = ItemProperties.EQUIP_LOCATION_BACK;
 			break;
 			case ("feet"):
-				equipLocation = this.EQUIP_LOCATION_FEET;
+				equipLocation = ItemProperties.EQUIP_LOCATION_FEET;
 			break;
 			case ("finger"):
-				equipLocation = this.EQUIP_LOCATION_FINGER;
+				equipLocation = ItemProperties.EQUIP_LOCATION_FINGER;
 			break;
 			case ("mainHand"):
-				equipLocation = this.EQUIP_LOCATION_MAINHAND;
+				equipLocation = ItemProperties.EQUIP_LOCATION_MAINHAND;
 			break;
 			default: 
-				equipLocation = this.EQUIP_LOCATION_UNDEFINED;
+				equipLocation = ItemProperties.EQUIP_LOCATION_UNDEFINED;
 				break;
 
 			}

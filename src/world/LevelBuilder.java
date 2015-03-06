@@ -1,12 +1,8 @@
 package world;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -37,12 +33,6 @@ public class LevelBuilder {
 	public final static int SCALING = 5;
 
 	public final static int DOORSIZE = 3;					// when map(y,x) is a door DOORSIZE tells MAP how big to make the hole for a door 
-
-
-	private List<Integer> objectTypes;
-	private List<Integer[]> objectPositions;
-
-	private int[][] objectMatrix;
 
 
 	private int width;
@@ -326,6 +316,7 @@ public class LevelBuilder {
 			return xList.size();
 		}
 
+		@SuppressWarnings("unused")
 		private int numOpenPoints(){
 			int n = xList.size();
 			int count = 0;
@@ -337,6 +328,7 @@ public class LevelBuilder {
 			return count;
 		}
 
+		@SuppressWarnings("unused")
 		private int randomOpen(){
 
 			ArrayList<Integer> openPts = new ArrayList<Integer>();
@@ -358,6 +350,7 @@ public class LevelBuilder {
 
 		}
 
+		@SuppressWarnings("unused")
 		private void print(){
 
 			int n = xList.size();
@@ -796,6 +789,7 @@ public class LevelBuilder {
 			}
 		}
 
+		@SuppressWarnings("unused")
 		private void print(){
 			int numConnections = xList.size();
 
@@ -1423,6 +1417,7 @@ public class LevelBuilder {
 
 
 
+	@SuppressWarnings("unused")
 	private void printMap(int[][] map){
 
 		int height = map.length;

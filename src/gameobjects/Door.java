@@ -6,9 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-import render.BasicRenderer;
 import render.Renderer;
-import world.CollisionHandler;
 import world.LevelBuilder;
 import world.World;
 import actors.Status;
