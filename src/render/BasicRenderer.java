@@ -1,14 +1,15 @@
-package graphics;
+package render;
 
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Shape;
 
 /* Draws a single image at the location of a shape */
 public class BasicGraphics{
+
+public class BasicRenderer extends Renderer{
 
 	private int sprite_margin = 0;
 	protected Image image;
@@ -18,10 +19,9 @@ public class BasicGraphics{
 	private static SpriteSheet ITEMSPRITES;
 
 	//	public ItemGraphics(Image image, ItemLocation location) throws SlickException{
-	public BasicGraphics() throws SlickException{
-		if(ITEMSPRITES == null){ITEMSPRITES = new SpriteSheet("data/items.png",48,48);}
-		if(METROIDSPRITES == null){METROIDSPRITES = new SpriteSheet("DATA/METROIDTILES.PNG",16,16);}
-	}
+	public BasicRenderer(Image sprite, Shape shape) throws SlickException{	
+		this.sprite = sprite;
+		this.shape = shape;		
 
 	public void setImage(Image image){
 		this.image = image;
@@ -37,12 +37,15 @@ public class BasicGraphics{
 		this.sprite_margin = marg;
 	}
 
-	public void render(Graphics g, int renderX, int renderY) {
-		render(g, renderX,renderY,1f);
+
+	public void render(Graphics g, int offsetX, int offsetY) {
+
+		render(g, offsetX,offsetY,1f);
+
 	}
 
-	public void render(Graphics g, int renderX, int renderY, float scale) {
-
+	@SuppressWarnings("unused")
+	private void renderShape(Graphics g, int renderX, int renderY){
 		float x = shape.getX();
 		float y = shape.getY();
 

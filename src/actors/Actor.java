@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import gameobjects.Removeable;
-import graphics.ActorGraphics;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import render.ActorRenderer;
 import world.CollisionHandler;
 import world.ObjectCreator;
 import world.Updater;
@@ -21,7 +21,7 @@ import commands.CommandProviderAggregator;
 
 public abstract class Actor implements Removeable, Updater,ObjectCreator{
 
-	protected ActorGraphics graphics;
+	protected ActorRenderer graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
 	protected ActionEngine engine;
 	protected Status status;
@@ -57,7 +57,6 @@ public abstract class Actor implements Removeable, Updater,ObjectCreator{
 		
 		//Do actions (depends on commandProviderAggregator)
 		engine.update();
-		
 		
 	}
 

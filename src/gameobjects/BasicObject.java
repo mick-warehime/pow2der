@@ -1,65 +1,32 @@
 package gameobjects;
 
-import graphics.BasicGraphics;
-import graphics.TileGraphics;
-
-import java.util.ArrayList;
-import java.util.Properties;
-
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.tiled.TiledMap;
 
-import world.CollisionHandler;
-
-/* An ingame object with rendering and collision functionality */
+import render.Renderer;
 
 public class BasicObject {
 
-	protected BasicGraphics graphics;	
-	protected Shape shape;	
-	protected boolean canCollide = true;
-
+	protected Renderer renderer;
+	protected Shape shape;
+	protected boolean canCollide;
 	private static final int PROXIMITY = 1;
 
-	public BasicObject(Shape shape) throws SlickException{
+	
 
-		this.shape = shape;
-
-	}
-
-	public BasicObject(Image image, int xPos, int yPos) throws SlickException{
-
-		shape = new Rectangle(xPos,yPos,image.getWidth(),image.getHeight());
-
-		graphics = new BasicGraphics();
-
-		graphics.setShape(shape);
-		graphics.setImage(image);
-
-	}
-
-	public void setShape(Shape shape){
-		this.shape = shape;
-	}
-
-	public Shape getShape(){
+	public Shape getShape() {
 		return shape;
 	}
 
-
-	public void render(Graphics g, int renderX, int renderY){
-		graphics.render(g, renderX, renderY);		
+	public void render(Graphics g, int offsetX, int offsetY) {
+		renderer.render(g, offsetX, offsetY);		
 	}
 
-	public boolean canCollide(){
+	public boolean canCollide() {
 		return canCollide;
 	}
 
-	//Checks if an input shape is near the object's shape
 	public boolean isNear(Rectangle rectTest) {
 
 		Rectangle slightlyBiggerRect = 
@@ -69,11 +36,5 @@ public class BasicObject {
 						shape.getHeight()+2*PROXIMITY);
 		return slightlyBiggerRect.intersects(rectTest);
 	}
-
-
-	public Image getImage(){
-		return this.graphics.getImage();
-	}
-
 
 }

@@ -1,6 +1,5 @@
 package actionEngines;
 
-import gameobjects.BasicObject;
 import gameobjects.Interactive;
 
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import org.newdawn.slick.command.Command;
 import abilities.RunAbility;
 import actors.Effect;
 import actors.Status;
+
 import commands.CommandProviderAggregator;
 import commands.MoveCommand;
 
@@ -53,12 +53,12 @@ public class PlayerActionEngine extends ActorActionEngine {
 		}
 		
 		//Get nearby objects to interact with
-		ArrayList<BasicObject> objs = status.nearbyInteractives();
+		ArrayList<Interactive> objs = status.nearbyInteractives();
 		
 		//Interact, if possible
 		if (!objs.isEmpty()){
-			for (BasicObject obj : objs){
-				((Interactive) obj).interact(interactionType, status);
+			for (Interactive obj : objs){
+				obj.interact(interactionType, status);
 			}
 			status.gainEffect(Effect.EFFECT_INTERACTING, 20);
 			

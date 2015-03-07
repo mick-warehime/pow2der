@@ -5,12 +5,10 @@ import items.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import music.TwelveTone;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
@@ -73,6 +71,8 @@ public class Level {
 		halls = levelBuilder.getHalls();
 
 		for(Shape doorShape : doors){
+			
+			
 			basicObjects.add(new Door(doorShape));
 		}
 		
@@ -92,6 +92,8 @@ public class Level {
 		int[] startPosition = levelBuilder.getStartingPosition();
 		startX = startPosition[0];
 		startY = startPosition[1];
+		
+		addObject(new Enemy(startX -50, startY));
 		
 	}
 	

@@ -1,7 +1,7 @@
 package actors;
 
+import gameobjects.Interactive;
 import items.Inventory;
-import items.Item;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,8 +9,6 @@ import java.util.Iterator;
 import org.newdawn.slick.geom.Rectangle;
 
 import world.CollisionHandler;
-import gameobjects.BasicObject;
-import gameobjects.GameObject;
 
 public class Status {
 
@@ -43,7 +41,7 @@ public class Status {
 	
 
 
-	public ArrayList<BasicObject> nearbyInteractives(){
+	public ArrayList<Interactive> nearbyInteractives(){
 
 		return collisionHandler.interactiveObjectsNearRect(this.rect);
 	}

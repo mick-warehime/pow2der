@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-import world.CollisionHandler;
+import render.Renderer;
 import world.LevelBuilder;
 import world.World;
 import actors.Status;
@@ -14,25 +14,23 @@ import actors.Status;
 public class Door extends BasicObject implements Interactive{
 	private boolean open;
 	private boolean northSouth;
-	private Image image;
 	private int proximity = 10;
-	public Door(Shape shape) throws SlickException {
-		super(shape);
+	public Door(Shape doorShape) throws SlickException {
+		
+		this.shape = doorShape;
 		
 		open = false;
 		
-		image = World.spriteSheet.getSubImage(52,36).copy();
+		this.northSouth = doorShape.getHeight()>doorShape.getWidth();	
 		
 		
-		northSouth = false;
-		if(shape.getHeight()>shape.getWidth()){
-			northSouth = true;
-			image.setRotation(90);
-//			image.rotate(90);
-		}
+		
+		this.renderer = new DoorRenderer();
 		
 		
 	}
+
+	
 
 	public boolean canCollide(){
 		return !open;
@@ -50,24 +48,6 @@ public class Door extends BasicObject implements Interactive{
 
 	}
 
-	public void render(Graphics g, int renderX, int renderY){
-		if(!open){
-			float x = shape.getX();
-			float y = shape.getY();
-			
-			if(northSouth){
-				for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
-					image.draw(x-renderX,y-renderY+j*World.TILE_HEIGHT);
-				}
-			}else{
-				for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
-					image.draw(x-renderX+j*World.TILE_WIDTH,y-renderY);
-				}
-			}
-
-
-		}
-	}
 
 	//Checks if an input shape is near the object's shape
 	public boolean isNear(Rectangle rectTest) {
@@ -81,7 +61,42 @@ public class Door extends BasicObject implements Interactive{
 	}
 
 
+	class DoorRenderer extends Renderer{
 
+		
+		
+		
+		private Image image;
+
+		public DoorRenderer() {
+			this.image = World.spriteSheet.getSubImage(52,36).copy();;
+			
+			if(northSouth){
+				image.setRotation(90);
+			}
+			
+		}
+
+		public void render(Graphics g, int offsetX, int offsetY){
+			if(!open){
+				float x = shape.getX();
+				float y = shape.getY();
+				
+				if(northSouth){
+					for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
+						image.draw(x-offsetX,y-offsetY+j*World.TILE_HEIGHT);
+					}
+				}else{
+					for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
+						image.draw(x-offsetX+j*World.TILE_WIDTH,y-offsetY);
+					}
+				}
+
+			}
+			
+		}
+		
+	}
 
 
 

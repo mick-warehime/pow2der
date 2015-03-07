@@ -1,4 +1,4 @@
-package graphics;
+package render;
 
 
 import java.util.ArrayList;
@@ -6,32 +6,28 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Shape;
 
 import world.Level;
-import world.LevelBuilder;
 import world.World;
 
-public class LevelGraphics{
+/* 
+ * Renders static objects close to the player's position
+ * 
+ */
+
+public class LevelStaticRenderer extends Renderer{
 
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
 
 
-	private int levelHeight;
-	private int levelWidth;
-
-	private int offsetX = 0;
-	private int offsetY = 0;
-
-	private int bufferDistX = 15; // number of tiles away from edge
-	private int bufferDistY = 10; 
-	private int bufferX; // number of tiles away from edge
-	private int bufferY; // number of tiles away from edge
+	private int playerX;
+	private int playerY;
 
 	private int tileSize;
+<<<<<<< HEAD:src/graphics/LevelGraphics.java
 	private int screenWidth;
 	private int screenHeight;
 	
@@ -42,6 +38,11 @@ public class LevelGraphics{
 
 		this.levelWidth = level.getWidth()*LevelBuilder.SCALING;
 		this.levelHeight = level.getHeight()*LevelBuilder.SCALING;
+=======
+	public LevelStaticRenderer(Level level) throws SlickException {
+
+		
+>>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
 
 		this.tileSize = World.TILE_HEIGHT;
 
@@ -49,6 +50,7 @@ public class LevelGraphics{
 		this.floors = level.getFloors();
 		this.halls = level.getHalls();
 		
+<<<<<<< HEAD:src/graphics/LevelGraphics.java
 	}
 
 	public void render(int playerX, int playerY) {
@@ -58,10 +60,29 @@ public class LevelGraphics{
 		renderDimmed(playerX, playerY);
 
 //		renderVisible(playerX, playerY);
+=======
+		new ArrayList<Shape>();
 
 	}
 
-	private void renderDimmed(int playerX, int playerY){
+
+	public void recordPlayerPosition(int playerX, int playerY){
+		
+		this.playerX = playerX;
+		this.playerY = playerY;
+		
+	}
+	
+	private void render(int offsetX, int offsetY) {
+
+		renderDimmed(offsetX,offsetY);
+
+		renderVisible(offsetX,offsetY);
+>>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
+
+	}
+
+	private void renderDimmed(int offsetX, int offsetY){
 
 		float alpha = 0.85f;
 		
@@ -95,6 +116,42 @@ public class LevelGraphics{
 
 
 
+<<<<<<< HEAD:src/graphics/LevelGraphics.java
+=======
+	private void renderVisible( int offsetX, int offsetY){
+
+		float alpha = 50000f;
+		
+		for (Shape wall : walls){
+			if(isVisible(wall,playerX,playerY)){
+				
+				Image im = World.spriteSheet.getSubImage(26,5);					
+				
+				im.setAlpha((float) (alpha/distToPlayer(wall,playerX,playerY)));
+				im.draw(wall.getX()-offsetX,wall.getY()-offsetY);				
+			}
+
+		}
+		for (Shape floor : floors){
+			if(isVisible(floor,playerX,playerY)){
+			
+				Image im = World.spriteSheet.getSubImage(25,40);
+
+				im.setAlpha((float) (alpha/distToPlayer(floor,playerX,playerY)));
+				im.draw(floor.getX()-offsetX,floor.getY()-offsetY);
+			}
+		}
+		for (Shape hall : halls){
+			if(isVisible(hall,playerX,playerY)){
+				Image im = World.spriteSheet.getSubImage(60,25);
+
+				im.setAlpha((float) (alpha/distToPlayer(hall,playerX,playerY)));
+				im.draw(hall.getX()-offsetX,hall.getY()-offsetY);
+			}
+		}
+	}
+
+>>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
 
 	
 	private boolean onScreen(Shape shape, int playerX, int playerY){
@@ -114,12 +171,12 @@ public class LevelGraphics{
 		//		given a shape and the players position determine if the shape should be drawn
 
 
-//		System.out.println(plaer);
 		return onScreen;
 
 	}
 
 
+<<<<<<< HEAD:src/graphics/LevelGraphics.java
 	private void setLevelCoordinates(int playerX, int playerY){
 
 		// allows the player to get within bufferX/bufferY of the top/side
@@ -151,24 +208,46 @@ public class LevelGraphics{
 		else{
 			bufferY = bufferDistY*tileSize;
 		}
+=======
+
+
+	private boolean isVisible(Shape shape, int playerX, int playerY){
+
+		//		given a shape and the players position determine if the shape should be drawn
+
+		boolean onScreen = true;
+
+		double cutoff = 10*tileSize;
+
+		double distance2 = distToPlayer(shape,playerX,playerY);
+
+		if( distance2 > Math.pow(cutoff,2)){
+			onScreen = false;
+			return onScreen;
+		}
+
+		return onScreen;
+
 	}
 
-	public int boundCoordinate(int offset, int coord, int buffer, int levelDim, int screenDim ){
-
-		if ((coord+buffer-screenDim)>offset){return (coord+buffer-screenDim);}
-		if ((coord-buffer)<offset){return (coord-buffer);}
-
-		return offset;
+	private double distToPlayer(Shape shape, int playerX, int playerY){
+		double distance2 = Math.pow(playerX-shape.getX(),2) + Math.pow(playerY-shape.getY(),2);  
+		return distance2;
 	}
 
 
-
-	public int getOffsetX() {
-		return offsetX;
+	@Override
+	public void render(Graphics g, int offsetX, int offsetY) {
+		render(offsetX,offsetY);
+		
+>>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
 	}
 
-	public int getOffsetY() {
-		return offsetY;
-	}
+
+	
+	
+
+
+
 
 }

@@ -1,4 +1,4 @@
-package graphics;
+package render;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,7 +9,9 @@ import org.newdawn.slick.geom.Shape;
 import actors.Effect;
 import actors.Status;
 
-public class ActorGraphics {
+/* Uses a spriteSheet and an actor's status to draw it. */
+
+public class ActorRenderer extends Renderer{
 
 	private static int STAND = 0;
 	private static int WALK1 = 1;
@@ -42,7 +44,7 @@ public class ActorGraphics {
 	private int walkSpriteCounter = 0;
 	
 	
-	public ActorGraphics(String spriteSheetFileName, Status status) throws SlickException{
+	public ActorRenderer(String spriteSheetFileName, Status status) throws SlickException{
 		
 		Image img = new Image(spriteSheetFileName);
 		int w = SPRITEWIDTHPIXELS-SPRITESPACINGINPIXELS;
@@ -56,7 +58,7 @@ public class ActorGraphics {
 	
 	
 	
-	public void render(Graphics g, int renderX, int renderY) {
+	public void render(Graphics g, int offsetX, int offsetY) {
 		
 //		renderShape( g,  renderX,  renderY);
 		
@@ -68,11 +70,12 @@ public class ActorGraphics {
 		float x = shape.getX();
 		float y = shape.getY();
 		
-		spriteSheet.getSubImage(currentActorAction,currentActorDirection ).draw(x-renderX, y-renderY);
+		spriteSheet.getSubImage(currentActorAction,currentActorDirection ).draw(x-offsetX, y-offsetY);
 		
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private void renderShape(Graphics g, int renderX, int renderY) {
 		Shape shape = status.getRect();
 		float x = shape.getX();
@@ -96,7 +99,7 @@ public class ActorGraphics {
 		
 		
 		if (isInteracting){
-			currentActorAction = ActorGraphics.INTERACT;
+			currentActorAction = ActorRenderer.INTERACT;
 			return;
 		}
 		if (isWalkingX || isWalkingY){
@@ -116,7 +119,7 @@ public class ActorGraphics {
 			
 			return;
 		}
-		currentActorAction = ActorGraphics.STAND;
+		currentActorAction = ActorRenderer.STAND;
 		
 		
 		
