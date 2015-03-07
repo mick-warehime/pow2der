@@ -28,9 +28,9 @@ public class ItemParser {
 	// store items as hashmaps in a big list
 	private List<Map<String, String>> itemMaps = new ArrayList<Map<String, String>>();
 
-	public ItemParser(String fileName) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException {
+	public ItemParser() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException {
 
-		setItemMaps(fileName);
+		setItemMaps("items/items.xml");
 
 	}
 

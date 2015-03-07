@@ -6,6 +6,8 @@ import items.ItemBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import music.TwelveTone;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 
@@ -44,8 +46,6 @@ public class Level {
 	public Level(ItemBuilder itemBuilder, int width, int height) throws SlickException {
 		
 		
-		
-		
 		this.width = width;
 		this.height = height;
 		
@@ -78,9 +78,14 @@ public class Level {
 		
 		
 		// build items using the levelbuilder to get the random locations
-		for(int[] itemLoc : levelBuilder.generateRandomItemLocations(0.75,3)){
+		for(int[] itemLoc : levelBuilder.randomRoomLocations(0.75,3)){
 			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
 		}
+		
+		for(int[] enemyLoc : levelBuilder.randomRoomLocations(1,1)){
+			addObject(new Enemy(enemyLoc[0],enemyLoc[1]));
+		}
+		
 		
 		
 		// poop out the starting position

@@ -40,9 +40,9 @@ public class World {
 		spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
 
 		// construct item builders
-
-		ItemParser parser = new ItemParser("items/items.xml");
-
+						
+		ItemParser parser = new ItemParser();
+		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 
 		terri = new Player();

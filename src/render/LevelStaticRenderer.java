@@ -27,6 +27,8 @@ public class LevelStaticRenderer extends Renderer{
 	private int playerY;
 
 	private int tileSize;
+
+
 	public LevelStaticRenderer(Level level) throws SlickException {
 
 		
@@ -37,9 +39,9 @@ public class LevelStaticRenderer extends Renderer{
 		this.floors = level.getFloors();
 		this.halls = level.getHalls();
 		
-		new ArrayList<Shape>();
-
 	}
+
+ 
 
 
 	public void recordPlayerPosition(int playerX, int playerY){
@@ -91,6 +93,7 @@ public class LevelStaticRenderer extends Renderer{
 
 
 
+ 
 	private void renderVisible( int offsetX, int offsetY){
 
 		float alpha = 50000f;
@@ -124,8 +127,7 @@ public class LevelStaticRenderer extends Renderer{
 		}
 	}
 
-
-	
+ 
 	private boolean onScreen(Shape shape, int playerX, int playerY){
 		boolean onScreen = true;
 		int xCutoff = 35*tileSize;
@@ -147,8 +149,7 @@ public class LevelStaticRenderer extends Renderer{
 
 	}
 
-
-
+ 
 
 	private boolean isVisible(Shape shape, int playerX, int playerY){
 
@@ -179,7 +180,7 @@ public class LevelStaticRenderer extends Renderer{
 	public void render(Graphics g, int offsetX, int offsetY) {
 		render(offsetX,offsetY);
 		
-	}
+ 	}
 
 
 	
