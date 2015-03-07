@@ -18,31 +18,33 @@ import world.CollisionHandler;
 /* An ingame object with rendering and collision functionality */
 
 public class BasicObject {
-	
+
 	protected BasicGraphics graphics;	
 	protected Shape shape;	
 	protected boolean canCollide = true;
-	
+
 	private static final int PROXIMITY = 1;
-	
+
 	public BasicObject(Shape shape) throws SlickException{
-		
+
 		this.shape = shape;
-	
+
 	}
-	
+
 	public BasicObject(Image image, int xPos, int yPos) throws SlickException{
-		
-		
-		int h = image.getHeight();
-		int w = image.getWidth();
-			
-		shape = new Rectangle(xPos,yPos,w,h);
-	
-		this.graphics = new BasicGraphics(image,shape);
-		
+
+		shape = new Rectangle(xPos,yPos,image.getWidth(),image.getHeight());
+
+		graphics = new BasicGraphics();
+
+		graphics.setShape(shape);
+		graphics.setImage(image);
+
 	}
-	
+
+	public void setShape(Shape shape){
+		this.shape = shape;
+	}
 
 	public Shape getShape(){
 		return shape;
@@ -59,12 +61,12 @@ public class BasicObject {
 
 	//Checks if an input shape is near the object's shape
 	public boolean isNear(Rectangle rectTest) {
-		
+
 		Rectangle slightlyBiggerRect = 
 				new Rectangle(shape.getX()-PROXIMITY,
-							shape.getY()-PROXIMITY,
-							shape.getWidth()+2*PROXIMITY,
-							shape.getHeight()+2*PROXIMITY);
+						shape.getY()-PROXIMITY,
+						shape.getWidth()+2*PROXIMITY,
+						shape.getHeight()+2*PROXIMITY);
 		return slightlyBiggerRect.intersects(rectTest);
 	}
 
@@ -72,6 +74,6 @@ public class BasicObject {
 	public Image getImage(){
 		return this.graphics.getImage();
 	}
-	
+
 
 }

@@ -20,11 +20,10 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		commandStack.clear();
 
 
-		if (status.hasEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER)){
-			resolvePlayerCollision();
-		}
+//		if (status.hasEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER)){
+//			resolvePlayerCollision();
+//		}
 
-		
 
 		decideMovement();
 	}

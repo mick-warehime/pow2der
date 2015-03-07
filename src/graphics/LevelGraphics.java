@@ -35,9 +35,6 @@ public class LevelGraphics{
 	private int screenWidth;
 	private int screenHeight;
 	
-
-	private ArrayList<Shape> visitedTiles;
-
 	public LevelGraphics(Level level) throws SlickException {
 
 		this.screenWidth = main.Game.WIDTH;
@@ -52,11 +49,7 @@ public class LevelGraphics{
 		this.floors = level.getFloors();
 		this.halls = level.getHalls();
 		
-		visitedTiles = new ArrayList<Shape>();
-
 	}
-
-
 
 	public void render(int playerX, int playerY) {
 
@@ -64,7 +57,7 @@ public class LevelGraphics{
 
 		renderDimmed(playerX, playerY);
 
-		renderVisible(playerX, playerY);
+//		renderVisible(playerX, playerY);
 
 	}
 
@@ -102,39 +95,6 @@ public class LevelGraphics{
 
 
 
-	private void renderVisible(int playerX, int playerY){
-
-		float alpha = 50000f;
-		
-		for (Shape wall : walls){
-			if(visible(wall,playerX,playerY)){
-				
-				Image im = World.spriteSheet.getSubImage(26,5);					
-				
-				im.setAlpha((float) (alpha/distToPlayer(wall,playerX,playerY)));
-				im.draw(wall.getX()-offsetX,wall.getY()-offsetY);				
-			}
-
-		}
-		for (Shape floor : floors){
-			if(visible(floor,playerX,playerY)){
-			
-				Image im = World.spriteSheet.getSubImage(25,40);
-
-				im.setAlpha((float) (alpha/distToPlayer(floor,playerX,playerY)));
-				im.draw(floor.getX()-offsetX,floor.getY()-offsetY);
-			}
-		}
-		for (Shape hall : halls){
-			if(visible(hall,playerX,playerY)){
-				Image im = World.spriteSheet.getSubImage(60,25);
-
-				im.setAlpha((float) (alpha/distToPlayer(hall,playerX,playerY)));
-				im.draw(hall.getX()-offsetX,hall.getY()-offsetY);
-			}
-		}
-	}
-
 
 	
 	private boolean onScreen(Shape shape, int playerX, int playerY){
@@ -157,33 +117,6 @@ public class LevelGraphics{
 //		System.out.println(plaer);
 		return onScreen;
 
-	}
-
-
-
-
-	private boolean visible(Shape shape, int playerX, int playerY){
-
-		//		given a shape and the players position determine if the shape should be drawn
-
-		boolean onScreen = true;
-
-		double cutoff = 10*tileSize;
-
-		double distance2 = distToPlayer(shape,playerX,playerY);
-
-		if( distance2 > Math.pow(cutoff,2)){
-			onScreen = false;
-			return onScreen;
-		}
-
-		return onScreen;
-
-	}
-
-	private double distToPlayer(Shape shape, int playerX, int playerY){
-		double distance2 = Math.pow(playerX-shape.getX(),2) + Math.pow(playerY-shape.getY(),2);  
-		return distance2;
 	}
 
 

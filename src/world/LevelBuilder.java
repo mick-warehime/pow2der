@@ -34,7 +34,7 @@ public class LevelBuilder {
 	private final static int DOWN = 3;
 
 	// this can be an odd number bigger than 1
-	public final static int SCALING = 5;
+	public final static int SCALING = 3;
 
 	public final static int DOORSIZE = 3;					// when map(y,x) is a door DOORSIZE tells MAP how big to make the hole for a door 
 
@@ -114,7 +114,7 @@ public class LevelBuilder {
 		createShapes(MAP);
 		createDoorShapes(map);
 
-		//		printMap(map);
+//						printMap(map);
 		//		printMap(MAP);
 
 
@@ -127,7 +127,7 @@ public class LevelBuilder {
 		//      testGetDir();
 	}
 
-	public ArrayList<int[]> generateRandomItemLocations(double placeProbability, int placeAttempts){
+	public ArrayList<int[]> randomRoomLocations(double placeProbability, int placeAttempts){
 
 
 		ArrayList<int[]> itemLocations = new ArrayList<int[]>();
@@ -964,11 +964,17 @@ public class LevelBuilder {
 						map[y][x]=0;
 					}
 
-					// three doors in a row is too much
-					if(map[y+1][x]==DOOR&map[y-1][x]==DOOR){
+					// no adjacent doors
+					if(map[y+1][x]==DOOR){
 						map[y][x]=0;
 					}
-					if(map[y][x+1]==DOOR&map[y][x-1]==DOOR){
+					if(map[y-1][x]==DOOR){
+						map[y][x]=0;
+					}
+					if(map[y][x+1]==DOOR){
+						map[y][x]=0;
+					}
+					if(map[y][x-1]==DOOR){
 						map[y][x]=0;
 					}
 
