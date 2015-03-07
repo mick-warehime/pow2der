@@ -27,22 +27,11 @@ public class LevelStaticRenderer extends Renderer{
 	private int playerY;
 
 	private int tileSize;
-<<<<<<< HEAD:src/graphics/LevelGraphics.java
-	private int screenWidth;
-	private int screenHeight;
-	
-	public LevelGraphics(Level level) throws SlickException {
 
-		this.screenWidth = main.Game.WIDTH;
-		this.screenHeight = main.Game.HEIGHT;
 
-		this.levelWidth = level.getWidth()*LevelBuilder.SCALING;
-		this.levelHeight = level.getHeight()*LevelBuilder.SCALING;
-=======
 	public LevelStaticRenderer(Level level) throws SlickException {
 
 		
->>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
 
 		this.tileSize = World.TILE_HEIGHT;
 
@@ -50,20 +39,9 @@ public class LevelStaticRenderer extends Renderer{
 		this.floors = level.getFloors();
 		this.halls = level.getHalls();
 		
-<<<<<<< HEAD:src/graphics/LevelGraphics.java
 	}
 
-	public void render(int playerX, int playerY) {
-
-		setLevelCoordinates(playerX,playerY);
-
-		renderDimmed(playerX, playerY);
-
-//		renderVisible(playerX, playerY);
-=======
-		new ArrayList<Shape>();
-
-	}
+ 
 
 
 	public void recordPlayerPosition(int playerX, int playerY){
@@ -78,7 +56,6 @@ public class LevelStaticRenderer extends Renderer{
 		renderDimmed(offsetX,offsetY);
 
 		renderVisible(offsetX,offsetY);
->>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
 
 	}
 
@@ -116,8 +93,7 @@ public class LevelStaticRenderer extends Renderer{
 
 
 
-<<<<<<< HEAD:src/graphics/LevelGraphics.java
-=======
+ 
 	private void renderVisible( int offsetX, int offsetY){
 
 		float alpha = 50000f;
@@ -151,9 +127,7 @@ public class LevelStaticRenderer extends Renderer{
 		}
 	}
 
->>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
-
-	
+ 
 	private boolean onScreen(Shape shape, int playerX, int playerY){
 		boolean onScreen = true;
 		int xCutoff = 35*tileSize;
@@ -175,41 +149,7 @@ public class LevelStaticRenderer extends Renderer{
 
 	}
 
-
-<<<<<<< HEAD:src/graphics/LevelGraphics.java
-	private void setLevelCoordinates(int playerX, int playerY){
-
-		// allows the player to get within bufferX/bufferY of the top/side
-		// int offset, int coord, int buffer, int levelDim, int screenDim ){
-		offsetX = boundCoordinate(offsetX,playerX,bufferX,levelWidth*tileSize,screenWidth);
-		offsetY = boundCoordinate(offsetY,playerY,bufferY,levelHeight*tileSize,screenHeight);
-
-
-		if(offsetX<0){
-			offsetX = 0;
-			bufferX = 0;			
-		}else if(offsetX>(levelWidth*tileSize-screenWidth)){
-			offsetX = levelWidth*tileSize-screenWidth;
-			bufferX = 0;
-		}else{
-			bufferX = bufferDistX*tileSize;
-
-		}
-
-
-		if(offsetY<0){
-			offsetY = 0;
-			bufferY = 0;			
-		}
-		else if(offsetY>(levelHeight*tileSize-screenHeight)){
-			offsetY = levelHeight*tileSize-screenHeight;
-			bufferY = 0;
-		}
-		else{
-			bufferY = bufferDistY*tileSize;
-		}
-=======
-
+ 
 
 	private boolean isVisible(Shape shape, int playerX, int playerY){
 
@@ -240,8 +180,7 @@ public class LevelStaticRenderer extends Renderer{
 	public void render(Graphics g, int offsetX, int offsetY) {
 		render(offsetX,offsetY);
 		
->>>>>>> 4134c8ff81e56ab80be00b9c12568442ee96f6c7:src/render/LevelStaticRenderer.java
-	}
+ 	}
 
 
 	
