@@ -14,6 +14,7 @@ import org.newdawn.slick.command.ControllerDirectionControl;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.command.KeyControl;
+import org.newdawn.slick.command.MouseButtonControl;
 
 import commands.ActivateAbilityCommand;
 import commands.MenuActivateSelectionCommand;
@@ -120,7 +121,7 @@ public class GameControls {
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_LSHIFT), ability0);
-		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_Q), ability1);
+		avatarInputProvider.bindCommand(new MouseButtonControl(Input.MOUSE_LEFT_BUTTON), ability1);
 		
 		//Bind commands to controller keys
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
