@@ -4,6 +4,7 @@ import knowledge.Knowledge;
 import commands.CommandProvider;
 import commands.DieCommand;
 import commands.MoveCommand;
+import commands.MoveCommandNew;
 
 //Gives commands to an actor based on world conditions
 public class EnemyBehavior extends ActorBehavior implements CommandProvider{
@@ -17,43 +18,48 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	}
 
 	public void determine(){
-		
+
 		commandStack.clear();
 
 
-//		if (status.hasEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER)){
-//			resolvePlayerCollision();
-//		}
+		//		if (status.hasEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER)){
+		//			resolvePlayerCollision();
+		//		}
 
 
 		decideMovement();
 	}
-	
-	
-	
+
+
+
 	private void resolvePlayerCollision(){
 		commandStack.add(new DieCommand());
-		
+
 	}
-	
+
 	private void decideMovement(){
-		
-		if (status.hasEffect(Effect.EFFECT_X_COLLISION)){
-			int oldXDir = status.getDirection('x');
-			status.setDirection('x',-oldXDir);
+
+		// if the dude can see the player chase him, otherwise keep going in same direction
+		float[] currentDirection = status.getFacingDirection();
+		if(knowledge.playerIsVisible()){
+			currentDirection = knowledge.directionToPlayer();
+		}else{
+
+			if (status.hasEffect(Effect.EFFECT_X_COLLISION)){
+				currentDirection[0] = -currentDirection[0];			
+			}
+
+			if (status.hasEffect(Effect.EFFECT_Y_COLLISION)){
+				currentDirection[1] = -currentDirection[1];
+			}
 		}
-		
-		commandStack.add(new MoveCommand('x', status.getDirection('x')));
-		
-		if (status.hasEffect(Effect.EFFECT_Y_COLLISION)){
-			int oldYDir = status.getDirection('y');
-			status.setDirection('y',-oldYDir);
-		}
-		
-		commandStack.add(new MoveCommand('y', status.getDirection('y')));
-		
+
+		status.setFacingDirection(currentDirection);
+
+		commandStack.add(new MoveCommandNew(currentDirection));
+
 		return;
 	}
-	
-	
+
+
 }

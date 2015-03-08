@@ -17,9 +17,9 @@ public class Status {
 	private int xDirection = 1;
 	private int yDirection = 1;
 	
-	private float[] facingDirection = new float[] {0f,1f};
+	private float[] facingDirection;
 	
-	protected Inventory inventory = new Inventory();
+	protected Inventory inventory;
 
 	private Rectangle rect;
 	private CollisionHandler collisionHandler;
@@ -28,6 +28,9 @@ public class Status {
 		this.isDying = false;
 		this.rect = rect;
 		effects = new ArrayList<Effect>();
+		facingDirection = new float[] {(float) Math.random(),(float) Math.random()};
+		
+		inventory = new Inventory();
 	}
 
 	public Rectangle getRect(){

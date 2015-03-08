@@ -18,9 +18,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 	protected Status status;
 	protected float vx;
 	protected float vy;
-	
-	protected float currentSpeed;
-	
+
 	protected float acceleration; 
 	protected float walkSpeed;
 	protected float runSpeed;
@@ -34,11 +32,13 @@ public abstract class ActorActionEngine extends ActionEngine {
 		this.status = status;
 		this.abilitySlots = slots;
 		this.objectsToCreate = objectsToCreate;
-		
-		
+
+		vx = 0;
+		vy = 0;
+
 	}
 
-	
+
 
 	public void move(float[] direction) {
 		float maxSpeed;
@@ -47,18 +47,25 @@ public abstract class ActorActionEngine extends ActionEngine {
 		}else{
 			maxSpeed = walkSpeed;
 		}
-		
-		// increase speed
-		currentSpeed = Math.min(currentSpeed + acceleration, maxSpeed);
-				
-		vx = vx + currentSpeed*direction[0];
-		vy = vy + currentSpeed*direction[1];
-		
-		status.setFacingDirection(direction);
 
+
+		if (direction[0]>0 ){
+			vx = Math.min(vx + acceleration, maxSpeed);
+		}else {
+			vx = Math.max(vx - acceleration, -maxSpeed);
+		} 
+
+
+
+		if (direction[1]>0 ){
+			vy = Math.min(vy + acceleration, maxSpeed);
+		}else {
+			vy = Math.max(vy - acceleration, -maxSpeed);
+		} 
+
+		status.setFacingDirection(direction);
 	}
-	
-	
+
 	public void attemptMoveTo(char xOrY, int direction) {
 		float maxSpeed;
 		if (status.hasEffect(Effect.EFFECT_RUNNING)){
@@ -66,16 +73,15 @@ public abstract class ActorActionEngine extends ActionEngine {
 		}else{
 			maxSpeed = walkSpeed;
 		}
-		
+
 		if (xOrY == 'x'){
 			if (direction>0 ){
 				vx = Math.min(vx + acceleration, maxSpeed);
-//				status.setDirection('x', 1);
 			}else if(direction<0){
 				vx = Math.max(vx - acceleration, -maxSpeed);
 			} 
 		}
-		
+
 		if (xOrY == 'y'){
 			if (direction>0 ){
 				vy = Math.min(vy + acceleration, maxSpeed);
@@ -83,7 +89,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 				vy = Math.max(vy - acceleration, -maxSpeed);
 			} 
 		}
-		
+
 		status.setDirection(xOrY, direction);
 
 		return;
@@ -96,15 +102,16 @@ public abstract class ActorActionEngine extends ActionEngine {
 	}
 
 	public void update() throws SlickException {
-		
+
+
 		doActions();
 		movePhysics();
+
 	}
-	
+
 	//////////////////////////
 
 	protected void movePhysics() {        
-
 
 		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
@@ -120,13 +127,11 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vy = 0;
 		}
 
-
-
 		assert !status.isCollided() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
 
 	}
 
-	
+
 
 	public boolean attemptDisplacement(float disp, char XorY){
 
@@ -183,43 +188,36 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 	}
 
-	public void Teleport(int destX, int destY) {
-		status.setX(destX);
-		status.setY(destY);
-	}
-	
-	
-
 	public void applyEffect(int effectName, int duration) {
 		status.gainEffect(effectName, duration);
 
 	}
 
 	public void attemptActivateAbility(int abilitySlot) throws SlickException {
-		
+
 		if (!canActivate(abilitySlot)){
 			return;
 		}
 		Ability ability = this.abilitySlots.getAbility(abilitySlot);
-		
+
 		int[][] onCastEffects = ability.getOnCastEffects();
-		
+
 		for (int i = 0; i<onCastEffects.length;i++){
 			status.gainEffect(onCastEffects[i][0], onCastEffects[i][1]);
 		}
-		
+
 		if (ability.hasAbilityObject()){
 			AbilityObject obj = ability.instantiateAbilityObject(status);
 			objectsToCreate.add(obj);
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
 	private boolean canActivate(int abilitySlot) {
-		
+
 		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
 	}
 
@@ -231,5 +229,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 	}
 	
 	
+
+
 
 }

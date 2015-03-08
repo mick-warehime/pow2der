@@ -24,12 +24,6 @@ public class PlayerActionEngine extends ActorActionEngine {
 		
 	private float runDec = 2.5f;
 
-	
-	
-
-	
-
-
 	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots,ArrayList<Object>objectsToCreate) throws NullPointerException, IndexOutOfBoundsException, SlickException{
 		super(listener,status, abilitySlots,objectsToCreate);
 		
@@ -39,8 +33,6 @@ public class PlayerActionEngine extends ActorActionEngine {
 		
 		abilitySlots.setAbility(new RunAbility(), 0);
 		abilitySlots.setAbility(new FireballAbility(), 1);
-		
-		
 		
 	}
 
