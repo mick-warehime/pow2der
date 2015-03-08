@@ -11,9 +11,13 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 	private Knowledge knowledge;
 
+	private BehaviorProfile behaviorProfile;
+	
 	public EnemyBehavior(Status status, Knowledge knowledge) {
 		super(status);
 		this.knowledge = knowledge;
+		
+		behaviorProfile  = new BehaviorProfile();
 
 	}
 
@@ -21,16 +25,12 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 		commandStack.clear();
 
-
-		//		if (status.hasEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER)){
-		//			resolvePlayerCollision();
-		//		}
-
-
 		decideMovement();
 	}
 
 
+ 
+	
 
 	private void resolvePlayerCollision(){
 		commandStack.add(new DieCommand());

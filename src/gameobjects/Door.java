@@ -99,6 +99,12 @@ public class Door extends BasicObject implements Interactive{
 	}
 
 
+	public boolean isOpen() {
+		// TODO Auto-generated method stub
+		return open;
+	}
+
+
 
 
 }
