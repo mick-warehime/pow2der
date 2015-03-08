@@ -14,14 +14,14 @@ public class LevelBuilder {
 
 	protected static final int OBJECT_BLANK = 0;
 
-	protected static final int OBJECT_BLOCK = 1;
-	protected static final int OBJECT_ITEM = 2;
-	protected static final int OBJECT_DOOR = 3;
-	protected static final int OBJECT_ENEMY = 4;
-	protected static final int OBJECT_ROOM_TILE = 1;
-	protected static final int OBJECT_HALLWAY_TILE = 3;
-	protected static final int OBJECT_DOOR_TILE = 2;
-	protected static final int OBJECT_WALL_TILE = 8;
+	public static final int OBJECT_BLOCK = 1;
+	public static final int OBJECT_ITEM = 2;
+	public static final int OBJECT_DOOR = 3;
+	public static final int OBJECT_ENEMY = 4;
+	public static final int OBJECT_ROOM_TILE = 1;
+	public static final int OBJECT_HALLWAY_TILE = 3;
+	public static final int OBJECT_DOOR_TILE = 2;
+	public static final int OBJECT_WALL_TILE = 8;
 	// used for building map
 	protected static final int DOOR = -2;
 	private final static int LEFT = 0;
@@ -96,16 +96,17 @@ public class LevelBuilder {
 
 		fillInHallways();
 
-
 		reduceMapGroups(map);
 
 		scaleMap();
+		
 		removeBogusWalls();
+		
 		createShapes(MAP);
 		createDoorShapes(map);
 
 //						printMap(map);
-		//		printMap(MAP);
+//				printMap(MAP);
 
 
 

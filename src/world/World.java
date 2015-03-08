@@ -96,7 +96,7 @@ public class World {
 
 	public void newLevel(int levelWidth, int levelHeight) throws SlickException{
 
-		Level level = new Level(itemBuilder, levelWidth,levelHeight);
+		Level level = new Level(itemBuilder, levelWidth, levelHeight, terri);
 
 		level.assignToItems(currentLevelData);
 
