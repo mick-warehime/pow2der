@@ -1,10 +1,12 @@
-package commands;
+package controls;
 
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.InputProviderListener;
+
+import commands.CommandProvider;
 
 //Takes in input commands and implements them for the player
 public class KeyboardInputListener implements InputProviderListener,CommandProvider{
@@ -17,12 +19,7 @@ public class KeyboardInputListener implements InputProviderListener,CommandProvi
 	}
 	
 	
-	private void addCommand(Command cmd){
-		currentActions.add(cmd);
-	}
-	private void removeCommand(Command cmd){
-		currentActions.remove(cmd);
-	}
+	
 	
 
 	public ArrayList<Command> getCommands(){
@@ -32,7 +29,7 @@ public class KeyboardInputListener implements InputProviderListener,CommandProvi
 	@Override
 	public void controlPressed(Command cmd) {
 		
-		addCommand(cmd);
+		currentActions.add(cmd);
 		
 		
 	}
@@ -40,7 +37,7 @@ public class KeyboardInputListener implements InputProviderListener,CommandProvi
 	@Override
 	public void controlReleased(Command cmd) {
 		
-		removeCommand(cmd);
+		currentActions.remove(cmd);
 		
 	}
 

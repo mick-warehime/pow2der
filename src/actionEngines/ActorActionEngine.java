@@ -200,6 +200,13 @@ public class ActorActionEngine extends ActionEngine {
 		
 		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
 	}
+
+
+
+	public void setFacingDirection(float[] newDirection) {
+		status.setFacingDirection(newDirection);
+		
+	}
 	
 	
 

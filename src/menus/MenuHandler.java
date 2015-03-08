@@ -14,7 +14,7 @@ import org.newdawn.slick.command.InputProviderListener;
 import actionEngines.MenuActionEngine;
 import commands.CommandProvider;
 import commands.CommandProviderAggregator;
-import commands.KeyboardInputListener;
+import controls.KeyboardInputListener;
 
 
 /* Applies player input commands to menus, stores them, and plots them.

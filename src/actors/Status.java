@@ -180,8 +180,8 @@ public class Status {
 
 	}
 	
-	public void setFacingDirection(float[] moveDirection){
-		this.facingDirection = moveDirection;
+	public void setFacingDirection(float[] newDirection){
+		this.facingDirection = newDirection;
 	}
 
 	public int getDirection(char xOrY){

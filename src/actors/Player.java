@@ -11,7 +11,7 @@ import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
 import commands.CommandProviderAggregator;
-import commands.KeyboardInputListener;
+import controls.KeyboardInputListener;
 
 public class Player extends Actor {
 
@@ -23,8 +23,12 @@ public class Player extends Actor {
  			
 		
 		keyboard = new KeyboardInputListener();
+		
+		
 		commandProviderAggregator = new CommandProviderAggregator();
 		commandProviderAggregator.addProvider(keyboard);
+		
+		
 		
 		
 		Rectangle rect = new Rectangle(0f, 0f, 28, 28);

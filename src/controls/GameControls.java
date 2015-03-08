@@ -58,9 +58,6 @@ public class GameControls {
 		mousePos[1] = mouseY;
 	}
 	
-	public int[] getMousePos(){
-		return mousePos;
-	}
 
 	public void addAvatarInputProviderListener(InputProviderListener listener) {
 	
