@@ -3,6 +3,7 @@ package abilities;
 import org.newdawn.slick.SlickException;
 
 import actors.Effect;
+import actors.Status;
 
 public class NullAbility extends Ability {
 
@@ -17,8 +18,8 @@ public class NullAbility extends Ability {
 	}
 
 	@Override
-	public AbilityObject instantiateAbilityObject(int xPos, int yPos) throws SlickException {
-		return new NullAbilityObject(xPos,yPos);
+	public AbilityObject instantiateAbilityObject(Status casterStatus) throws SlickException {
+		return new NullAbilityObject((int) casterStatus.getX(), (int) casterStatus.getY());
 	}
 
 	@Override

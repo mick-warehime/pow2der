@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 
+import abilities.FireballAbility;
 import abilities.RunAbility;
 import actors.Effect;
 import actors.Status;
-
 import commands.CommandProviderAggregator;
 import commands.MoveCommand;
 
@@ -38,6 +38,10 @@ public class PlayerActionEngine extends ActorActionEngine {
 		this.runSpeed = 4;
 		
 		abilitySlots.setAbility(new RunAbility(), 0);
+		abilitySlots.setAbility(new FireballAbility(), 1);
+		
+		
+		
 	}
 
 	

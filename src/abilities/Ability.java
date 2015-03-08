@@ -2,6 +2,8 @@ package abilities;
 
 import org.newdawn.slick.SlickException;
 
+import actors.Status;
+
 /*
  * Represents an actor's ingame Ability, including on cast effects and instantiation
  * of an ability object
@@ -22,6 +24,6 @@ public abstract class Ability {
 	
 	public abstract boolean hasAbilityObject();
 	
-	public abstract AbilityObject instantiateAbilityObject(int xPos,int yPos) throws SlickException;
+	public abstract AbilityObject instantiateAbilityObject(Status casterStatus) throws SlickException;
 
 }

@@ -41,13 +41,14 @@ public class Knowledge {
 		AStarPathFinder astar = new AStarPathFinder(map,searchDistance,true);
 		
 		
+		
 		// position of enemy in tiles
-		int sx = Math.floorDiv((int) self.getX(), map.getWidthInTiles());
-		int sy = Math.floorDiv((int) self.getY(), map.getHeightInTiles());
+		int sx = (int) Math.floor(self.getX()/map.getWidthInTiles());
+		int sy = (int) Math.floor((int) self.getY()/map.getHeightInTiles());
 		
 		// position of the player in tiles
-		int tx = Math.floorDiv((int) player.getX(), map.getWidthInTiles());
-		int ty = Math.floorDiv((int) player.getY(), map.getHeightInTiles());
+		int tx = (int) Math.floor((int) player.getX()/ map.getWidthInTiles());
+		int ty = (int) Math.floor((int) player.getY()/ map.getHeightInTiles());
 		
 		// try to calculate the astar path from enemy to player
 		Path path = astar.findPath(self, sx, sy, tx, ty);
