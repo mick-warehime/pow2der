@@ -110,7 +110,7 @@ public class GameControls {
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
 		Command ability0 = new ActivateAbilityCommand(0);
-		
+		Command ability1 = new ActivateAbilityCommand(1);
 
 		//Bind commands to keyboard keys
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
@@ -120,6 +120,7 @@ public class GameControls {
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_LSHIFT), ability0);
+		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_Q), ability1);
 		
 		//Bind commands to controller keys
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);

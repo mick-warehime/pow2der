@@ -2,11 +2,7 @@ package main;
 
 
 
-import items.Item;
-
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.newdawn.slick.*;
@@ -24,8 +20,8 @@ public class Game extends BasicGame {
 	static int LEVEL_STATE = 1;
 	static int PAUSE_STATE = 2;
 
-	public final static int WIDTH = 640;
-	public final static int HEIGHT = 480;
+	public final static int WIDTH = 1200;
+	public final static int HEIGHT = 800;
 	
 	static boolean fullscreen = false;
 	static boolean showFPS = true;
@@ -37,7 +33,6 @@ public class Game extends BasicGame {
 
 	private GameControls gameControls;
 	private MenuHandler menuHandler;
-//	private WiimoteJoysticks jsticks;
 
 	private World world;
 	
