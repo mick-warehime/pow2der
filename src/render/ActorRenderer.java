@@ -145,7 +145,7 @@ public class ActorRenderer extends Renderer{
 		currentActorDirection = dir/2;
 		
 		
-		
+	
 		
 		
 		
