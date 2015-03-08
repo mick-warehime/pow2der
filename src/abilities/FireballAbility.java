@@ -23,8 +23,15 @@ public class FireballAbility extends Ability {
 	public AbilityObject instantiateAbilityObject(Status casterStatus)
 			throws SlickException {
 		
+		float dx = 0.5f*casterStatus.getRect().getWidth();
+		float dy = 0.5f*casterStatus.getRect().getHeight();
 		
-		return new FireballAbilityObject(casterStatus);
+		float startX = casterStatus.getX() + dx;
+		float startY = casterStatus.getY() + dy;
+		
+		
+		
+		return new FireballAbilityObject( startX,startY, casterStatus.getFacingDirection());
 	}
 
 	
