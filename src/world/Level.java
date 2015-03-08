@@ -77,7 +77,6 @@ public class Level {
 		map = levelBuilder.getMap();
 		
 		for(Shape doorShape : doors){
-			
 			basicObjects.add(new Door(doorShape));
 		}
 		
@@ -87,10 +86,9 @@ public class Level {
 			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
 		}
 		
-		for(int[] enemyLoc : levelBuilder.randomRoomLocations(0.2,1)){
+		for(int[] enemyLoc : levelBuilder.randomRoomLocations(2,1)){
 			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
 		}
-		
 		
 		
 		// poop out the starting position
@@ -163,6 +161,18 @@ public class Level {
 
 	public ArrayList<Shape> getWalls(){
 		return walls;
+	}
+	
+	public ArrayList<Shape> getClosedDoors(){
+		ArrayList<Shape> closedDoors = new ArrayList<Shape>();
+		for(BasicObject obj: basicObjects){
+			if(obj instanceof Door)
+				if(!((Door) obj).isOpen()){
+					closedDoors.add(obj.getShape());	
+				}
+			
+		}
+		return closedDoors;
 	}
 	public ArrayList<Shape> getFloors(){
 		return floors;

@@ -53,6 +53,7 @@ public class Knowledge {
 	}
 	
 	public float distToPlayer(){
+		
 		//Make a line from centers of player and object
 		float x1 = self.getShape().getCenterX();
 		float y1 = self.getShape().getCenterY();
@@ -68,7 +69,7 @@ public class Knowledge {
 	// any other collideable shape
 	public boolean playerIsVisible() {
 		
-		ArrayList<Shape> walls = level.getWalls();
+		
 
 		//Make a line from centers of player and object
 		float x1 = self.getShape().getCenterX();
@@ -79,11 +80,20 @@ public class Knowledge {
 		Line line = new Line(x1, y1, x2, y2);
 
 		//Also check the basic game tiles
+		ArrayList<Shape> walls = level.getWalls();
 		for(Shape wall : walls){
 			if(line.intersects(wall)){
 				return false;
 			}
 		}
+		ArrayList<Shape> doors = level.getClosedDoors();
+		for(Shape door : doors){
+			if(line.intersects(door)){
+				return false;
+			}
+		}
+		
+		
 		
 		return true;
 
@@ -104,6 +114,19 @@ public class Knowledge {
 		float yDir = (y2-y1);
 		
 		float length = (float) Math.sqrt((double) Math.pow(xDir,2)+Math.pow(yDir,2));
+		
+		xDir = xDir/length;
+		yDir = yDir/length;
+		
+		double tol = 0.001;
+		if(Math.abs((double) xDir)<tol){
+			xDir = 0;
+		}
+		
+		if(Math.abs((double) yDir)<tol){
+			yDir = 0;
+		}
+		
 		
 		return new float[] {xDir/length, yDir/length};
 
