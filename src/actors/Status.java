@@ -56,12 +56,12 @@ public class Status {
 	}
 
 	//Displaces the player 
-	public void displace(){
+	public void displace(float speed){
 
-		float newX = rect.getX() + moveDirection[0];
+		float newX = rect.getX() + speed*moveDirection[0];
 		rect.setX( newX);
 
-		float newY = rect.getY() + moveDirection[1];
+		float newY = rect.getY() + speed*moveDirection[1];
 		rect.setY( newY);
 		
 	}
