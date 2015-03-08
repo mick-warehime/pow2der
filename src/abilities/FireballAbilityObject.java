@@ -1,17 +1,28 @@
 package abilities;
 
+import gameobjects.Broadcaster;
+
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Shape;
 
 import render.ShapeRenderer;
+import actors.Enemy;
+import commands.DieCommand;
+import commands.IncrementHPCommand;
 
-public class FireballAbilityObject extends AbilityObject {
+public class FireballAbilityObject extends AbilityObject implements Broadcaster {
 
 	private int countDown;
 	private int radius= 10;
 	private float[] moveDirection;
 	private float speed = 4;
+	private int damage = 5;
+	private boolean shouldRemove;
 		
 	
 	public FireballAbilityObject(float startX, float startY, float[] moveDirection) throws SlickException {
@@ -23,13 +34,14 @@ public class FireballAbilityObject extends AbilityObject {
 		
 		this.countDown= 50;
 		this.canCollide = false;
+		shouldRemove = false;
 	}
 
 
 
 	@Override
 	public boolean shouldRemove() {
-		return countDown<0;
+		return shouldRemove;
 	}
 
 	@Override
@@ -41,7 +53,37 @@ public class FireballAbilityObject extends AbilityObject {
 		shape.setY(oldY + speed*moveDirection[1]);
 		
 		countDown -=1;
+		
+		if (countDown<0){
+			shouldRemove = true;
+		}
 
+	}
+
+
+
+	@Override
+	public void onCollisionDo(Class<?> collidingObjectClass,
+			Shape collidingObjectShape) {
+		
+		if (collidingObjectClass.equals(Enemy.class)){
+			shouldRemove = true;
+			
+		}
+		
+	}
+
+
+
+	@Override
+	public ArrayList<Command> onCollisionBroadcast(
+			Class<?> collidingObjectClass, Shape collidingObjectShape) {
+		ArrayList<Command> output = new ArrayList<Command>();
+		
+		if (collidingObjectClass.equals(Enemy.class)){
+			output.add( new IncrementHPCommand(-damage));
+		}
+		return output;
 	}
 
 }

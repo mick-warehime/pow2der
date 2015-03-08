@@ -97,7 +97,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 	}
 
 	public void die(){
-		status.setDying(true);
+		status.gainEffect(Effect.EFFECT_DYING, 2);
 		return;
 	}
 
@@ -225,6 +225,14 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 	public void setFacingDirection(float[] newDirection) {
 		status.setFacingDirection(newDirection);
+		
+	}
+
+
+
+	public void incrementHP(int increment) {
+		status.incrementHP(increment);
+		
 		
 	}
 	
