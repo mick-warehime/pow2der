@@ -5,7 +5,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 
 import render.ShapeRenderer;
-import actors.Status;
 
 public class FireballAbilityObject extends AbilityObject {
 
@@ -15,11 +14,11 @@ public class FireballAbilityObject extends AbilityObject {
 	private float speed = 4;
 		
 	
-	public FireballAbilityObject(Status casterStatus) throws SlickException {
+	public FireballAbilityObject(float startX, float startY, float[] moveDirection) throws SlickException {
 		
-		this.moveDirection = new float[] {0f,1f};
+		this.moveDirection = moveDirection;
 		
-		this.shape = new Circle(casterStatus.getX(),casterStatus.getY(), radius);
+		this.shape = new Circle(startX,startY, radius);
 		this.renderer = new ShapeRenderer(shape, Color.red);
 		
 		this.countDown= 50;
@@ -41,7 +40,6 @@ public class FireballAbilityObject extends AbilityObject {
 		shape.setX(oldX + speed*moveDirection[0]);
 		shape.setY(oldY + speed*moveDirection[1]);
 		
-		System.out.println(shape.getCenterX() + "," + shape.getCenterY());
 		countDown -=1;
 
 	}

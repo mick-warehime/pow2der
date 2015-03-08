@@ -17,7 +17,7 @@ public class Status {
 	private int xDirection = 1;
 	private int yDirection = 1;
 	
-	private float[] moveDirection;
+	private float[] facingDirection = new float[] {0f,1f};
 	
 	protected Inventory inventory = new Inventory();
 
@@ -58,10 +58,10 @@ public class Status {
 	//Displaces the player 
 	public void displace(float speed){
 
-		float newX = rect.getX() + speed*moveDirection[0];
+		float newX = rect.getX() + speed*facingDirection[0];
 		rect.setX( newX);
 
-		float newY = rect.getY() + speed*moveDirection[1];
+		float newY = rect.getY() + speed*facingDirection[1];
 		rect.setY( newY);
 		
 	}
@@ -175,13 +175,13 @@ public class Status {
 
 
 
-	public float[] getDirection(){
-		return moveDirection;
+	public float[] getFacingDirection(){
+		return facingDirection;
 
 	}
 	
-	public void setDirection(float[] moveDirection){
-		this.moveDirection = moveDirection;
+	public void setFacingDirection(float[] moveDirection){
+		this.facingDirection = moveDirection;
 	}
 
 	public int getDirection(char xOrY){
