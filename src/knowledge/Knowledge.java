@@ -18,6 +18,7 @@ public class Knowledge {
 	private Level level;
 	private Enemy self;
 	private int searchDistance;
+	private float agroDistance;
 
 	public Knowledge(Enemy self, Player player, Level level){
 
@@ -25,22 +26,16 @@ public class Knowledge {
 		this.level = level;
 		this.self = self;
 		
-		this.searchDistance = 15;
-		
+		searchDistance = 15;
+							
 	}
-
-	public int[] getDirection(){
-		
-		return new int[] {1,2};
-	}
+	
 	
 	private Path aStarPath(){
 		
 		// create the astar data
 		LevelMap map = new LevelMap(level.getMap());
 		AStarPathFinder astar = new AStarPathFinder(map,searchDistance,true);
-		
-		
 		
 		// position of enemy in tiles
 		int sx = (int) Math.floor(self.getX()/map.getWidthInTiles());
@@ -56,10 +51,22 @@ public class Knowledge {
 		return path;
 		
 	}
+	
+	public float distToPlayer(){
+		//Make a line from centers of player and object
+		float x1 = self.getShape().getCenterX();
+		float y1 = self.getShape().getCenterY();
+		float x2 = player.getShape().getCenterX();
+		float y2 = player.getShape().getCenterY();
+
+		return (float) Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+		
+	}
+	
 
 	//Checks if the straight line between two shapes intersects
 	// any other collideable shape
-	private boolean isPlayerVisible() {
+	public boolean playerIsVisible() {
 		
 		ArrayList<Shape> walls = level.getWalls();
 
@@ -81,6 +88,26 @@ public class Knowledge {
 		return true;
 
 	}
+	
+	// get direction to player
+	public float[] directionToPlayer() {
+		
+		ArrayList<Shape> walls = level.getWalls();
+
+		//Make a line from centers of player and object
+		float x1 = self.getShape().getCenterX();
+		float y1 = self.getShape().getCenterY();
+		float x2 = player.getShape().getCenterX();
+		float y2 = player.getShape().getCenterY();
+		
+		float xDir = (x2-x1);
+		float yDir = (y2-y1);
+		
+		float length = (float) Math.sqrt((double) Math.pow(xDir,2)+Math.pow(yDir,2));
+		
+		return new float[] {xDir/length, yDir/length};
+
+	}	
 
 
 	

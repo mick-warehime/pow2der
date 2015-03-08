@@ -78,7 +78,6 @@ public class Level {
 		
 		for(Shape doorShape : doors){
 			
-			
 			basicObjects.add(new Door(doorShape));
 		}
 		
@@ -88,7 +87,7 @@ public class Level {
 			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
 		}
 		
-		for(int[] enemyLoc : levelBuilder.randomRoomLocations(1,1)){
+		for(int[] enemyLoc : levelBuilder.randomRoomLocations(0.2,1)){
 			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
 		}
 		

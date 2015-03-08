@@ -1,6 +1,5 @@
 package commands;
 
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.BasicCommand;
 
 import actionEngines.ActionEngine;
@@ -11,30 +10,25 @@ import actors.Effect;
 public class MoveCommandNew extends BasicCommand implements GenericCommand{
 
 	private float[] moveDirection;
-	private float speed;
 
-	public MoveCommandNew(float moveDirection, float speed) {
-		super("Move dir: " + moveDirection+", speed: " + speed);
-
-
+	public MoveCommandNew(float[] moveDirection) {
+		super("Move dir: " + moveDirection);
+		this.moveDirection = moveDirection;
 	}
-
 
 	@Override
 	public void execute(ActionEngine engine){
 		if (engine instanceof ActorActionEngine){
-			((ActorActionEngine) engine).attemptMoveTo(moveDirection, speed);
-
+			((ActorActionEngine) engine).move(moveDirection);
 			((ActorActionEngine) engine).applyEffect(Effect.EFFECT_WALKING, 1);
-
 		}
 
 
 	}
-	//
-	//	public char getDirection(){
-	//		return this.direction;
-	//	}
+
+	public float[] getDirection(){
+		return moveDirection;
+	}
 
 
 

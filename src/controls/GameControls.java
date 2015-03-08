@@ -22,6 +22,7 @@ import commands.InteractCommand;
 import commands.MenuToggleCommand;
 import commands.MoveCommand;
 import commands.MenuOpenCommand;
+import commands.MoveCommandNew;
 
 
 //Handles keybindings and player inputs
@@ -103,10 +104,16 @@ public class GameControls {
 
 		//Define action commands for provider
 		//Command moveDown = new MoveCommand("move down", 0 ,8);
-		Command moveLeft = new MoveCommand('x', -1);
+		Command moveLeft = new MoveCommand('x', -1);		
 		Command moveRight = new MoveCommand('x', 1);
 		Command moveUp = new MoveCommand('y', -1);
 		Command moveDown = new MoveCommand('y', 1);
+//		
+//		Command moveLeft = new MoveCommandNew(new float[] {-1,0});		
+//		Command moveRight = new MoveCommandNew(new float[] {1,0});
+//		Command moveUp = new MoveCommandNew(new float[] {0,-1});
+//		Command moveDown = new MoveCommandNew(new float[] {0,1});
+		
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
 		Command ability0 = new ActivateAbilityCommand(0);
