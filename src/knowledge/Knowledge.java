@@ -21,7 +21,6 @@ public class Knowledge {
 
 	public Knowledge(Enemy self, Player player, Level level){
 
-		
 		this.player = player;
 		this.level = level;
 		this.self = self;

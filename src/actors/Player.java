@@ -48,7 +48,7 @@ public class Player extends Actor {
 
 	
 
-	public KeyboardInputListener getListener() {
+	public KeyboardInputListener getKeyboardListener() {
 		return keyboard;
 	}
 	

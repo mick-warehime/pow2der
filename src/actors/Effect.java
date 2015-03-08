@@ -12,6 +12,7 @@ public class Effect implements Removeable {
 	public static final int EFFECT_INTERACTING = 5;
 	public static final int EFFECT_CASTING_ABILITY = 6;
 	public static final int EFFECT_RUNNING = 7;
+	public static final int EFFECT_WALKING = 8;
 	
 	public static final int[] EFFECTS_PREVENTING_ACTION = new int[]
 		{EFFECT_INTERACTING,EFFECT_CASTING_ABILITY};

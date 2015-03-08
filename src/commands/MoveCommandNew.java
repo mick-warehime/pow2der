@@ -10,38 +10,31 @@ import actors.Effect;
 
 public class MoveCommandNew extends BasicCommand implements GenericCommand{
 
-	private float xDisp;
-	private float yDisp;
+	private float[] moveDirection;
+	private float speed;
 
-	public MoveCommandNew(float xDisp, float yDisp) {
-		super("Move x: " + xDisp +", y: " + yDisp);
-		
+	public MoveCommandNew(float moveDirection, float speed) {
+		super("Move dir: " + moveDirection+", speed: " + speed);
+
+
 	}
+
 
 	@Override
-	public void execute(ActionEngine actionEngine) throws SlickException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void execute(ActionEngine engine){
+		if (engine instanceof ActorActionEngine){
+			((ActorActionEngine) engine).attemptMoveTo(moveDirection, speed);
 
-//
-//	@Override
-//	public void execute(ActionEngine engine){
-//		if (engine instanceof ActorActionEngine){
-//			((ActorActionEngine) engine).attemptMoveTo(direction, value);
-//			if( direction == 'x'){
-//				((ActorActionEngine) engine).applyEffect(Effect.EFFECT_WALKING_X, 1);
-//			}else{
-//				((ActorActionEngine) engine).applyEffect(Effect.EFFECT_WALKING_Y, 1);
-//			}
-//		}
-//
-//
-//	}
-//
-//	public char getDirection(){
-//		return this.direction;
-//	}
+			((ActorActionEngine) engine).applyEffect(Effect.EFFECT_WALKING, 1);
+
+		}
+
+
+	}
+	//
+	//	public char getDirection(){
+	//		return this.direction;
+	//	}
 
 
 

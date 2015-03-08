@@ -35,6 +35,8 @@ public class ActorActionEngine extends ActionEngine {
 		
 	}
 
+	
+	
 	public void attemptMoveTo(char xOrY, int direction) {
 		float maxSpeed;
 		if (status.hasEffect(Effect.EFFECT_RUNNING)){
@@ -46,11 +48,12 @@ public class ActorActionEngine extends ActionEngine {
 		if (xOrY == 'x'){
 			if (direction>0 ){
 				vx = Math.min(vx + runAcc, maxSpeed);
-				status.setDirection('x', 1);
+//				status.setDirection('x', 1);
 			}else if(direction<0){
 				vx = Math.max(vx - runAcc, -maxSpeed);
 			} 
 		}
+		
 		if (xOrY == 'y'){
 			if (direction>0 ){
 				vy = Math.min(vy + runAcc, maxSpeed);

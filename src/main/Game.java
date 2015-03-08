@@ -102,7 +102,7 @@ public class Game extends BasicGame {
 		
 		
 		// add the player to the game management systems
-		gameControls.addAvatarInputProviderListener(world.getPlayer().getListener());
+		gameControls.addAvatarInputProviderListener(world.getPlayer().getKeyboardListener());
 		menuHandler.setPlayerInventory(world.getPlayer().getInventory());
 
 		
