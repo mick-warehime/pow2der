@@ -6,7 +6,6 @@ import items.ItemBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import music.TwelveTone;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;

@@ -184,7 +184,7 @@ public class ActorActionEngine extends ActionEngine {
 		}
 		
 		if (ability.hasAbilityObject()){
-			AbilityObject obj = ability.instantiateAbilityObject((int)status.getX(), (int)status.getY());
+			AbilityObject obj = ability.instantiateAbilityObject(status);
 			objectsToCreate.add(obj);
 		}
 		
