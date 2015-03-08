@@ -33,7 +33,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots,ArrayList<Object>objectsToCreate) throws NullPointerException, IndexOutOfBoundsException, SlickException{
 		super(listener,status, abilitySlots,objectsToCreate);
 		
-		this.runAcc = 2;
+		this.acceleration = 2;
 		this.walkSpeed = 2;
 		this.runSpeed = 4;
 		

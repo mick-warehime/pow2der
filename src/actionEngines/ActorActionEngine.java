@@ -11,14 +11,17 @@ import actors.Status;
 import commands.CommandProviderAggregator;
 
 
-public class ActorActionEngine extends ActionEngine {
+public abstract class ActorActionEngine extends ActionEngine {
 
 
 
 	protected Status status;
-	protected float vx ;
-	protected float vy ;
-	protected float runAcc; 
+	protected float vx;
+	protected float vy;
+	
+	protected float currentSpeed;
+	
+	protected float acceleration; 
 	protected float walkSpeed;
 	protected float runSpeed;
 	protected AbilitySlots abilitySlots;
@@ -36,6 +39,25 @@ public class ActorActionEngine extends ActionEngine {
 	}
 
 	
+
+	public void move(float[] direction) {
+		float maxSpeed;
+		if (status.hasEffect(Effect.EFFECT_RUNNING)){
+			maxSpeed = runSpeed;
+		}else{
+			maxSpeed = walkSpeed;
+		}
+		
+		// increase speed
+		currentSpeed = Math.min(currentSpeed + acceleration, maxSpeed);
+				
+		vx = vx + currentSpeed*direction[0];
+		vy = vy + currentSpeed*direction[1];
+		
+		status.setDirection(direction);
+
+	}
+	
 	
 	public void attemptMoveTo(char xOrY, int direction) {
 		float maxSpeed;
@@ -47,18 +69,18 @@ public class ActorActionEngine extends ActionEngine {
 		
 		if (xOrY == 'x'){
 			if (direction>0 ){
-				vx = Math.min(vx + runAcc, maxSpeed);
+				vx = Math.min(vx + acceleration, maxSpeed);
 //				status.setDirection('x', 1);
 			}else if(direction<0){
-				vx = Math.max(vx - runAcc, -maxSpeed);
+				vx = Math.max(vx - acceleration, -maxSpeed);
 			} 
 		}
 		
 		if (xOrY == 'y'){
 			if (direction>0 ){
-				vy = Math.min(vy + runAcc, maxSpeed);
+				vy = Math.min(vy + acceleration, maxSpeed);
 			}else if(direction<0){
-				vy = Math.max(vy - runAcc, -maxSpeed);
+				vy = Math.max(vy - acceleration, -maxSpeed);
 			} 
 		}
 		
