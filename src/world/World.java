@@ -32,12 +32,17 @@ public class World {
 
 	private ScreenPositionTracker screenTracker;
 
+	private MousePositionTracker mouseTracker;
+
 	public final static int TILE_HEIGHT = 16;
 	public final static int TILE_WIDTH = 16;
 
-	public World() throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
+	public World(int [] mouseScreenPosition) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
 		spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
+		
+		this.screenTracker = new ScreenPositionTracker();
+		this.mouseTracker = new MousePositionTracker(mouseScreenPosition);
 
 		// construct item builders
 						
@@ -45,14 +50,14 @@ public class World {
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 
-		terri = new Player();
+		terri = new Player(mouseTracker.getMouseLevelPosition());
 
 		// width and height must be ODD
 		newLevel(31,21);
 
 		currentLevelData.setCurrentLevel(levels.get(0));
 
-		this.screenTracker = new ScreenPositionTracker();
+		
 
 	}
 
@@ -84,7 +89,7 @@ public class World {
 
 	public void update() throws SlickException {
 
-
+		mouseTracker.updateMousePosition();
 		currentLevelData.getCurrentLevel().update();
 
 		if (terri.shouldRemove()){
@@ -200,6 +205,40 @@ public class World {
 		}
 
 
+	}
+	
+	/*
+	 * Determines ingame position of the mouse (using the mouse's position on the screen as reference)
+	 * 
+	 */
+	
+	class MousePositionTracker{
+	
+		
+	
+
+		private int[] mouseScreenPosition;
+		private int[] mouseLevelPosition;
+
+		public MousePositionTracker(int [] mouseScreenPositon){
+			this.mouseScreenPosition = mouseScreenPositon;
+			mouseLevelPosition = new int[] {0,0};
+			updateMousePosition();
+		}
+		
+		public void updateMousePosition(){
+			
+			int dx = screenTracker.getOffsetX();
+			int dy = screenTracker.getOffsetY();
+			
+			mouseLevelPosition[0] = mouseScreenPosition[0] + dx;
+			mouseLevelPosition[1] = mouseScreenPosition[1] + dy;
+		}
+		
+		public int[] getMouseLevelPosition(){
+			return mouseLevelPosition;
+		}
+		
 	}
 
 

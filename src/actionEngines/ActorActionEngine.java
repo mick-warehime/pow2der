@@ -54,7 +54,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 		vx = vx + currentSpeed*direction[0];
 		vy = vy + currentSpeed*direction[1];
 		
-		status.setDirection(direction);
+		status.setFacingDirection(direction);
 
 	}
 	

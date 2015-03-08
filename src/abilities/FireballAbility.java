@@ -15,7 +15,6 @@ public class FireballAbility extends Ability {
 	
 	@Override
 	public boolean hasAbilityObject() {
-		System.out.println("Fireball!!!!");
 		return true;
 	}
 
