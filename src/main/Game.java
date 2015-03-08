@@ -95,7 +95,7 @@ public class Game extends BasicGame {
 		
 		// initiate world
 		try {
-			world = new World();
+			world = new World(gameControls.getMouseScreenPosition());
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			e1.printStackTrace();
 		}

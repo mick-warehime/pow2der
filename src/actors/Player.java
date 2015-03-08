@@ -11,24 +11,34 @@ import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
 import commands.CommandProviderAggregator;
-import commands.KeyboardInputListener;
+import controls.DirectionCommandProvider;
+import controls.KeyboardInputListener;
 
 public class Player extends Actor {
 
 	private KeyboardInputListener keyboard;
 	
 
-	public Player() throws SlickException {
+	public Player(int [] mousePosition) throws SlickException {
 
  			
 		
-		keyboard = new KeyboardInputListener();
-		commandProviderAggregator = new CommandProviderAggregator();
-		commandProviderAggregator.addProvider(keyboard);
+		
+		
+		
 		
 		
 		Rectangle rect = new Rectangle(0f, 0f, 28, 28);
 		status = new Status(rect);
+		
+		keyboard = new KeyboardInputListener();
+		DirectionCommandProvider directionProvider = new DirectionCommandProvider(rect,mousePosition);
+		
+		commandProviderAggregator = new CommandProviderAggregator();
+		commandProviderAggregator.addProvider(keyboard);
+		commandProviderAggregator.addProvider(directionProvider);
+		
+		
 
 		abilitySlots = new AbilitySlots();
 

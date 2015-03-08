@@ -223,4 +223,13 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 
+	public void setFacingDirection(float[] newDirection) {
+		status.setFacingDirection(newDirection);
+		
+	}
+	
+	
+
+
+
 }

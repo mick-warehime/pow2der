@@ -44,7 +44,7 @@ public class GameControls {
 	public static final int WIIMOTE_HOME = 9;
 
 	public Joystick joystick;
-	private int[] mousePos = new int[2];
+	private int[] mouseScreenPosition = new int[2];
 	private InputProvider avatarInputProvider; //Controls pertaining to player's avatar
 	private InputProvider menuInputProvider;
 
@@ -55,12 +55,12 @@ public class GameControls {
 	}
 
 	public void setMousePosition(int mouseX, int mouseY) {
-		mousePos[0] = mouseX;
-		mousePos[1] = mouseY;
+		mouseScreenPosition[0] = mouseX;
+		mouseScreenPosition[1] = mouseY;
 	}
 	
-	public int[] getMousePos(){
-		return mousePos;
+	public int[] getMouseScreenPosition(){
+		return mouseScreenPosition;
 	}
 
 	public void addAvatarInputProviderListener(InputProviderListener listener) {
