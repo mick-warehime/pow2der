@@ -1,5 +1,6 @@
 package actors;
 
+import knowledge.Knowledge;
 import commands.CommandProvider;
 import commands.DieCommand;
 import commands.MoveCommand;
@@ -7,11 +8,11 @@ import commands.MoveCommand;
 //Gives commands to an actor based on world conditions
 public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
-	
-	
-	
-	public EnemyBehavior(Status status) {
+	private Knowledge knowledge;
+
+	public EnemyBehavior(Status status, Knowledge knowledge) {
 		super(status);
+		this.knowledge = knowledge;
 
 	}
 

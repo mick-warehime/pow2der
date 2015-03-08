@@ -1,16 +1,17 @@
 package actors;
 
 import java.util.ArrayList;
-import java.util.Properties;
+
+import knowledge.Knowledge;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.tiled.TiledMap;
 
+import pathfinding.Mover;
 import render.ActorRenderer;
-import world.CollisionHandler;
+import world.Level;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
 import commands.CollisionCommandProvider;
@@ -18,28 +19,26 @@ import commands.DieCommand;
 import commands.CommandProviderAggregator;
 import gameobjects.Broadcaster;
 
-public class Enemy extends Actor implements Broadcaster{
+public class Enemy extends Actor implements Broadcaster,Mover{
 
 	private EnemyBehavior behavior;
-	
 
-	public Enemy(int xPixels, int yPixels) throws SlickException {
+	public Enemy(int xPixels, int yPixels, Level level, Player player) throws SlickException {
 		super();
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
-		 
+		
 		commandProviderAggregator = new CommandProviderAggregator();
 				
 		status = new Status(rect);
 		
 		abilitySlots = new AbilitySlots();
 		
-		
 		graphics = new ActorRenderer("data/dwarf.png", status);
 
 		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate);
 
-		behavior = new EnemyBehavior(status);
+		behavior = new EnemyBehavior(status, new Knowledge(this,player,level));
 
 		commandProviderAggregator.addProvider(behavior);
 		

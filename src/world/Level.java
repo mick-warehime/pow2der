@@ -6,12 +6,12 @@ import items.ItemBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
 import actors.Enemy;
+import actors.Player;
 import gameobjects.BasicObject;
 import gameobjects.Broadcaster;
 import gameobjects.Door;
@@ -30,29 +30,34 @@ public class Level {
 	private int height;
 	private int width;
 
+	private int[][] map;
+	
 	private ArrayList<Actor> actors;
+	
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
+	
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
+	
 	private ArrayList<Updater> updaters;
 	private ArrayList<ObjectCreator> creators;
 
 	
 
-	public Level(ItemBuilder itemBuilder, int width, int height) throws SlickException {
+	public Level(ItemBuilder itemBuilder, int width, int height, Player player) throws SlickException {
 		
 		
 		this.width = width;
 		this.height = height;
 		
-		buildNewLevel(itemBuilder);
+		buildNewLevel(itemBuilder, player);
 		
 	};
 	
-	private void buildNewLevel(ItemBuilder itemBuilder) throws SlickException{
+	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
 		
 		this.actors = new ArrayList<Actor>(); 
 		this.broadcasters = new ArrayList<Broadcaster>(); 
@@ -69,6 +74,8 @@ public class Level {
 		floors = levelBuilder.getFloors();
 		halls = levelBuilder.getHalls();
 
+		map = levelBuilder.getMap();
+		
 		for(Shape doorShape : doors){
 			
 			
@@ -82,7 +89,7 @@ public class Level {
 		}
 		
 		for(int[] enemyLoc : levelBuilder.randomRoomLocations(1,1)){
-			addObject(new Enemy(enemyLoc[0],enemyLoc[1]));
+			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
 		}
 		
 		
@@ -91,9 +98,7 @@ public class Level {
 		int[] startPosition = levelBuilder.getStartingPosition();
 		startX = startPosition[0];
 		startY = startPosition[1];
-		
-		addObject(new Enemy(startX -50, startY));
-		
+				
 	}
 	
 	
@@ -186,6 +191,10 @@ public class Level {
 	}
 	public int getWidth(){
 		return width;
+	}
+	
+	public int[][] getMap(){
+		return map;
 	}
 
 

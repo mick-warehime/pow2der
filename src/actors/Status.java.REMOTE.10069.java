@@ -79,6 +79,8 @@ public class Status {
 			rect.setY(newY);
 			return;
 		}
+
+		//		throw new UnsupportedOperationException("Improper input arguments!");
 	}
 
 

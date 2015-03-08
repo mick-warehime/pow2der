@@ -3,6 +3,8 @@ package pathfinding;
 
 import java.util.ArrayList;
 
+import world.LevelBuilder;
+
 public class LevelMap implements TileBasedMap {
 
 
@@ -11,26 +13,14 @@ public class LevelMap implements TileBasedMap {
 	private int[][] map;
 	private ArrayList<int[]> visited;
 
-	public LevelMap(int height, int width){
+	public LevelMap(int[][] map){
 
 		this.visited = new ArrayList<int[]>();
 		
-		this.height = height;
-		this.width = width;
-
-		// build a map with a wall in the middle
-		map = new int[height][width];
-
-		for(int row = 0; row < height; row++){
-			for(int col = 0; col < width; col ++){
-				if( row == 5 & col>1 & col<8){				
-					map[row][col] = 1;
-				}else{
-					map[row][col] = 0;
-				}
-			}
-		}
-
+		this.map = map;
+		this.height = map.length;
+		this.width = map[0].length;
+		
 	}
 
 	@Override
@@ -69,7 +59,18 @@ public class LevelMap implements TileBasedMap {
 	 */
 	@Override
 	public boolean blocked(Mover mover, int x, int y){
-		return map[y][x]==1;
+		
+		boolean blocked = false;
+		
+		if(map[y][x]==LevelBuilder.OBJECT_DOOR){
+			blocked = true;
+		}
+		if(map[y][x]==LevelBuilder.OBJECT_WALL_TILE){
+			blocked = true;
+		}
+		
+		return blocked;
+		
 	}
 
 	/**
@@ -88,22 +89,6 @@ public class LevelMap implements TileBasedMap {
 		return 1f;
 	}
 
-	public void printMap(){
 
-		for(int row = 0; row < height; row++){
-			for(int col = 0; col < width; col ++){
-				System.out.format(" %2d ",map[row][col]);
-			}
-			System.out.println();
-		}
-	}
-	
-	public int[][] getMap(){
-		return map;
-	}
-	
-	public void setMap(int[][] map){
-		this.map = map;
-	}
 
 }

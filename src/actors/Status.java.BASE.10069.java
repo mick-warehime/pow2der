@@ -14,13 +14,10 @@ public class Status {
 
 	private boolean isDying;
 	private ArrayList<Effect> effects;
-	private int xDirection = 1;
+	private int xDirection = -1;
 	private int yDirection = 1;
-	
-	private float[] moveDirection;
-	
 	protected Inventory inventory = new Inventory();
-
+	
 	private Rectangle rect;
 	private CollisionHandler collisionHandler;
 
@@ -28,6 +25,7 @@ public class Status {
 		this.isDying = false;
 		this.rect = rect;
 		effects = new ArrayList<Effect>();
+
 	}
 
 	public Rectangle getRect(){
@@ -37,6 +35,10 @@ public class Status {
 	public void setCollisionHandler(CollisionHandler collisionHandler){
 		this.collisionHandler = collisionHandler;
 	}
+
+
+
+	
 
 
 	public ArrayList<Interactive> nearbyInteractives(){
@@ -50,25 +52,14 @@ public class Status {
 
 
 	public boolean isCollided(){
-
+		
 		return collisionHandler.isCollided(rect);
 
 	}
 
 	//Displaces the player 
-	public void displace(){
-
-		float newX = rect.getX() + moveDirection[0];
-		rect.setX( newX);
-
-		float newY = rect.getY() + moveDirection[1];
-		rect.setY( newY);
-		
-	}
-
-
-	//Displaces the player 
 	public void displace(float disp, char XorY){
+
 
 		if (XorY == 'x' || XorY == 'X'){
 			float newX = rect.getX() + disp;
@@ -79,14 +70,16 @@ public class Status {
 			rect.setY(newY);
 			return;
 		}
+		
+//		throw new UnsupportedOperationException("Improper input arguments!");
 	}
 
-
+	
 	public Inventory getInventory(){
 		return inventory;
 	}
 
-
+	
 	public void setX(float x){
 		this.rect.setX(x);
 	}
@@ -105,11 +98,11 @@ public class Status {
 
 	public void updateEffects(){
 
-
+		
 		//count down on each effect, remove ones that have run down
 		for (Iterator<Effect> iterator = effects.iterator(); iterator.hasNext();) {
 			Effect eff = iterator.next();
-
+				
 			eff.countDown();
 			if (eff.shouldRemove()){
 				// Remove the current element from the iterator and the list.
@@ -147,43 +140,35 @@ public class Status {
 		}
 		return false;
 	}
-
+	
 	public boolean hasEffects( int[] effectList){
-
-
-
+		
+		
+		
 		try{
 			for (Integer effectName : effectList){
 				if (hasEffect(effectName)){ return true;}
 			}
 			return false;
-
+			
 		} catch (NullPointerException e){
 			System.out.println("Tried to determine status of "
 					+ "a null array of effect names...");
-
+			
 		}
-
-
-
-
-		return false;
-
-
-
-	}
-
-
-
-	public float[] getDirection(){
-		return moveDirection;
-
-	}
+		
 	
-	public void setDirection(float[] moveDirection){
-		this.moveDirection = moveDirection;
+		
+		
+		return false;
+		
+		
+		
 	}
 
+
+		
+	
 	public int getDirection(char xOrY){
 		assert (xOrY == 'x' || xOrY == 'y') : "x or y inputs only";
 		if (xOrY == 'x'){ return xDirection;}
@@ -192,17 +177,17 @@ public class Status {
 	}
 
 
+	
+	
 
-
-
-
+	
 	public void setDirection(char xOrY, int direction) {
 		assert (xOrY == 'x' || xOrY == 'y') : "x or y inputs only";
 		assert (direction*direction ==1): "+1 or -1 values only";
-
+		
 		if (xOrY == 'x'){ xDirection = direction;}
 		else {yDirection = direction;}
 	}
-
+	
 
 }
