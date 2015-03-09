@@ -3,6 +3,7 @@ package abilities;
 import org.newdawn.slick.SlickException;
 
 import actors.Effect;
+import actors.Status;
 
 public class RunAbility extends Ability {
 
@@ -16,16 +17,20 @@ public class RunAbility extends Ability {
 		onCastEffects[0][1] = 2;
 	}
 
-	@Override
-	public AbilityObject instantiateAbilityObject(int xPos, int yPos) throws SlickException {
-		throw new UnsupportedOperationException("This ability should not be instantiating an object!");
-		
-//		return new NullAbilityObject(xPos,yPos);
-	}
+	
 
 	@Override
 	public boolean hasAbilityObject() {
 		return false;
+	}
+
+
+
+	@Override
+	public AbilityObject instantiateAbilityObject(Status casterStatus)
+			throws SlickException {
+		throw new UnsupportedOperationException("This ability should not be instantiating an object!");
+		
 	}
 
 	

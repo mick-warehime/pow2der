@@ -18,7 +18,7 @@ public class InventorySelectionGraphics implements MenuSelectionGraphics{
 	public InventorySelectionGraphics(Image image) throws SlickException{
 		//Loading of background image should only be called once
 		if (BACKGROUND_IMAGE == null){
-			InventorySelectionGraphics.BACKGROUND_IMAGE=new Image("data/InventoryBackground.jpg");
+			InventorySelectionGraphics.BACKGROUND_IMAGE=new Image("data/inventoryBackground.jpg");
 		}
 
 		this.image = image;

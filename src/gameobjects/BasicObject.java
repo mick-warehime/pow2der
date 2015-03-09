@@ -28,12 +28,12 @@ public class BasicObject {
 	}
 
 	public boolean isNear(Rectangle rectTest) {
-		
+
 		Rectangle slightlyBiggerRect = 
 				new Rectangle(shape.getX()-PROXIMITY,
-							shape.getY()-PROXIMITY,
-							shape.getWidth()+2*PROXIMITY,
-							shape.getHeight()+2*PROXIMITY);
+						shape.getY()-PROXIMITY,
+						shape.getWidth()+2*PROXIMITY,
+						shape.getHeight()+2*PROXIMITY);
 		return slightlyBiggerRect.intersects(rectTest);
 	}
 

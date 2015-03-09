@@ -1,10 +1,7 @@
 package abilities;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import world.Updater;
-import gameobjects.StaticObject;
+import gameobjects.BasicObject;
 import gameobjects.Removeable;
 
 /*
@@ -17,15 +14,11 @@ import gameobjects.Removeable;
 * Ability to collide with objects, (apply effects if necessary)
  */
 
-public abstract class AbilityObject extends StaticObject implements Removeable,Updater{
+public abstract class AbilityObject extends BasicObject implements Removeable,Updater{
 
 	
 	
-	public AbilityObject(Image image, int xPos, int yPos) throws SlickException {
-		super(image, xPos, yPos);
-		 
-		
-	}
+	
 	
 	public abstract void update();
 	

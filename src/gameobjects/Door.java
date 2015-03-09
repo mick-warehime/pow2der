@@ -1,5 +1,7 @@
 package gameobjects;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -9,14 +11,17 @@ import org.newdawn.slick.geom.Shape;
 import render.Renderer;
 import world.LevelBuilder;
 import world.World;
+import actors.Actor;
 import actors.Status;
 
 public class Door extends BasicObject implements Interactive{
 	private boolean open;
 	private boolean northSouth;
 	private int proximity = 10;
-	public Door(Shape doorShape) throws SlickException {
-		
+	private ArrayList<Actor> actors;
+	
+	public Door(Shape doorShape, ArrayList<Actor> actors) throws SlickException {
+		this.actors  = actors;
 		this.shape = doorShape;
 		
 		open = false;
@@ -39,10 +44,17 @@ public class Door extends BasicObject implements Interactive{
 	@Override
 	public void interact(int interactionType, Status status) {
 
+		
 		if (interactionType != Interactive.INTERACTION_TOGGLE){return;}
 		
 		
-		if (this.shape.intersects(status.getRect())){return;}
+		if (shape.intersects(status.getRect())){return;}
+		
+		for(Actor actor : actors){
+			if(shape.intersects(actor.getShape())){
+				return;
+			}
+		}
 		
 		open = !open;
 
@@ -96,6 +108,12 @@ public class Door extends BasicObject implements Interactive{
 			
 		}
 		
+	}
+
+
+	public boolean isOpen() {
+		// TODO Auto-generated method stub
+		return open;
 	}
 
 

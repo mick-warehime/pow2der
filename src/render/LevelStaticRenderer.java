@@ -3,6 +3,8 @@ package render;
 
 import java.util.ArrayList;
 
+import main.Game;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -26,20 +28,29 @@ public class LevelStaticRenderer extends Renderer{
 	private int playerX;
 	private int playerY;
 
+	private int xDrawCutoffPixels;
+	private int yDrawCutoffPixels;
+	
 	private int tileSize;
+
+
 	public LevelStaticRenderer(Level level) throws SlickException {
 
 		
 
 		this.tileSize = World.TILE_HEIGHT;
+		
+		this.xDrawCutoffPixels = Game.WIDTH;
+		this.yDrawCutoffPixels = Game.HEIGHT;
+		
 
 		this.walls = level.getWalls();
 		this.floors = level.getFloors();
 		this.halls = level.getHalls();
 		
-		new ArrayList<Shape>();
-
 	}
+
+ 
 
 
 	public void recordPlayerPosition(int playerX, int playerY){
@@ -91,6 +102,7 @@ public class LevelStaticRenderer extends Renderer{
 
 
 
+ 
 	private void renderVisible( int offsetX, int offsetY){
 
 		float alpha = 50000f;
@@ -124,18 +136,16 @@ public class LevelStaticRenderer extends Renderer{
 		}
 	}
 
-
-	
+ 
 	private boolean onScreen(Shape shape, int playerX, int playerY){
 		boolean onScreen = true;
-		int xCutoff = 35*tileSize;
-		int yCutoff = 30*tileSize;
+		
 
-		if( Math.abs(shape.getX()-playerX) > xCutoff){
+		if( Math.abs(shape.getX()-playerX) > xDrawCutoffPixels){
 			onScreen = false;
 			return onScreen;
 		}
-		if( Math.abs(shape.getY()-playerY) > yCutoff){
+		if( Math.abs(shape.getY()-playerY) > yDrawCutoffPixels){
 			onScreen = false;
 			return onScreen;
 		}
@@ -147,8 +157,7 @@ public class LevelStaticRenderer extends Renderer{
 
 	}
 
-
-
+ 
 
 	private boolean isVisible(Shape shape, int playerX, int playerY){
 
@@ -179,7 +188,7 @@ public class LevelStaticRenderer extends Renderer{
 	public void render(Graphics g, int offsetX, int offsetY) {
 		render(offsetX,offsetY);
 		
-	}
+ 	}
 
 
 	

@@ -14,14 +14,14 @@ public class LevelBuilder {
 
 	protected static final int OBJECT_BLANK = 0;
 
-	protected static final int OBJECT_BLOCK = 1;
-	protected static final int OBJECT_ITEM = 2;
-	protected static final int OBJECT_DOOR = 3;
-	protected static final int OBJECT_ENEMY = 4;
-	protected static final int OBJECT_ROOM_TILE = 1;
-	protected static final int OBJECT_HALLWAY_TILE = 3;
-	protected static final int OBJECT_DOOR_TILE = 2;
-	protected static final int OBJECT_WALL_TILE = 8;
+	public static final int OBJECT_BLOCK = 1;
+	public static final int OBJECT_ITEM = 2;
+	public static final int OBJECT_DOOR = 3;
+	public static final int OBJECT_ENEMY = 4;
+	public static final int OBJECT_ROOM_TILE = 1;
+	public static final int OBJECT_HALLWAY_TILE = 3;
+	public static final int OBJECT_DOOR_TILE = 2;
+	public static final int OBJECT_WALL_TILE = 8;
 	// used for building map
 	protected static final int DOOR = -2;
 	private final static int LEFT = 0;
@@ -30,7 +30,7 @@ public class LevelBuilder {
 	private final static int DOWN = 3;
 
 	// this can be an odd number bigger than 1
-	public final static int SCALING = 5;
+	public final static int SCALING = 3;
 
 	public final static int DOORSIZE = 3;					// when map(y,x) is a door DOORSIZE tells MAP how big to make the hole for a door 
 
@@ -96,16 +96,17 @@ public class LevelBuilder {
 
 		fillInHallways();
 
-
 		reduceMapGroups(map);
 
 		scaleMap();
+		
 		removeBogusWalls();
+		
 		createShapes(MAP);
 		createDoorShapes(map);
 
-		//		printMap(map);
-		//		printMap(MAP);
+//						printMap(map);
+//				printMap(MAP);
 
 
 
@@ -117,7 +118,7 @@ public class LevelBuilder {
 		//      testGetDir();
 	}
 
-	public ArrayList<int[]> generateRandomItemLocations(double placeProbability, int placeAttempts){
+	public ArrayList<int[]> randomRoomLocations(double placeProbability, int placeAttempts){
 
 
 		ArrayList<int[]> itemLocations = new ArrayList<int[]>();
@@ -958,11 +959,17 @@ public class LevelBuilder {
 						map[y][x]=0;
 					}
 
-					// three doors in a row is too much
-					if(map[y+1][x]==DOOR&map[y-1][x]==DOOR){
+					// no adjacent doors
+					if(map[y+1][x]==DOOR){
 						map[y][x]=0;
 					}
-					if(map[y][x+1]==DOOR&map[y][x-1]==DOOR){
+					if(map[y-1][x]==DOOR){
+						map[y][x]=0;
+					}
+					if(map[y][x+1]==DOOR){
+						map[y][x]=0;
+					}
+					if(map[y][x-1]==DOOR){
 						map[y][x]=0;
 					}
 

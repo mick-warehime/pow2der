@@ -14,6 +14,7 @@ import org.newdawn.slick.command.ControllerDirectionControl;
 import org.newdawn.slick.command.InputProvider;
 import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.command.KeyControl;
+import org.newdawn.slick.command.MouseButtonControl;
 
 import commands.ActivateAbilityCommand;
 import commands.MenuActivateSelectionCommand;
@@ -22,6 +23,7 @@ import commands.InteractCommand;
 import commands.MenuToggleCommand;
 import commands.MoveCommand;
 import commands.MenuOpenCommand;
+import commands.MoveCommandNew;
 
 
 //Handles keybindings and player inputs
@@ -43,7 +45,7 @@ public class GameControls {
 	public static final int WIIMOTE_HOME = 9;
 
 	public Joystick joystick;
-	private int[] mousePos = new int[2];
+	private int[] mouseScreenPosition = new int[2];
 	private InputProvider avatarInputProvider; //Controls pertaining to player's avatar
 	private InputProvider menuInputProvider;
 
@@ -54,12 +56,12 @@ public class GameControls {
 	}
 
 	public void setMousePosition(int mouseX, int mouseY) {
-		mousePos[0] = mouseX;
-		mousePos[1] = mouseY;
+		mouseScreenPosition[0] = mouseX;
+		mouseScreenPosition[1] = mouseY;
 	}
 	
-	public int[] getMousePos(){
-		return mousePos;
+	public int[] getMouseScreenPosition(){
+		return mouseScreenPosition;
 	}
 
 	public void addAvatarInputProviderListener(InputProviderListener listener) {
@@ -103,14 +105,20 @@ public class GameControls {
 
 		//Define action commands for provider
 		//Command moveDown = new MoveCommand("move down", 0 ,8);
-		Command moveLeft = new MoveCommand('x', -1);
+		Command moveLeft = new MoveCommand('x', -1);		
 		Command moveRight = new MoveCommand('x', 1);
 		Command moveUp = new MoveCommand('y', -1);
 		Command moveDown = new MoveCommand('y', 1);
+//		
+//		Command moveLeft = new MoveCommandNew(new float[] {-1,0});		
+//		Command moveRight = new MoveCommandNew(new float[] {1,0});
+//		Command moveUp = new MoveCommandNew(new float[] {0,-1});
+//		Command moveDown = new MoveCommandNew(new float[] {0,1});
+		
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
 		Command ability0 = new ActivateAbilityCommand(0);
-		
+		Command ability1 = new ActivateAbilityCommand(1);
 
 		//Bind commands to keyboard keys
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
@@ -120,6 +128,7 @@ public class GameControls {
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_E), toggle);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_LSHIFT), ability0);
+		avatarInputProvider.bindCommand(new MouseButtonControl(Input.MOUSE_LEFT_BUTTON), ability1);
 		
 		//Bind commands to controller keys
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);

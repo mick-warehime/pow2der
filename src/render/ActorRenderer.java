@@ -19,13 +19,13 @@ public class ActorRenderer extends Renderer{
 	private static int WALK3 = 0;
 	private static int INTERACT = 3;
 	private static int RIGHT = 0;
-	private static int DOWNRIGHT = 1;
-	private static int DOWN = 2;
-	private static int DOWNLEFT = 3;
+	private static int UPRIGHT = 1;
+	private static int UP = 2;
+	private static int UPLEFT = 3;
 	private static int LEFT = 4;
-	private static int UPLEFT = 5;
-	private static int UP = 6;
-	private static int UPRIGHT = 7;
+	private static int DOWNLEFT = 5;
+	private static int DOWN = 6;
+	private static int DOWNRIGHT = 7;
 	
 	private static int SPRITEWIDTHPIXELS = 32;
 	private static int SPRITEHEIGHTPIXELS = 32;
@@ -127,41 +127,28 @@ public class ActorRenderer extends Renderer{
 	}
 	private void determineCurrentActorDirection(){
 		
-		int xDirection = status.getDirection('x');
-		int yDirection = status.getDirection('y');
 		
 		
-		boolean isWalkingX = status.hasEffect(Effect.EFFECT_WALKING_X);
-		boolean isWalkingY = status.hasEffect(Effect.EFFECT_WALKING_Y);
+		float [] faceDirection = status.getFacingDirection();
 		
 		
 		
+		double facingAngle  = Math.atan2(faceDirection[1], faceDirection[0]) ;
+		//Output of atan2 is from -pi to pi. Need to translate to 0 to 2 pi
+		if (facingAngle<0){ facingAngle = facingAngle + 2*Math.PI;}
 		
-		//Diagonal movement
-		if (isWalkingX && isWalkingY){
-
-			if (xDirection == 1){
-				if(yDirection==1){ currentActorDirection = DOWNRIGHT;}
-				if(yDirection==-1){ currentActorDirection = UPRIGHT;}
-			}
-			if (xDirection == -1){
-				if(yDirection==1){ currentActorDirection = DOWNLEFT;}
-				if(yDirection==-1){ currentActorDirection = UPLEFT;}
-			}
-
-		}
+		//Assign actor direction according to octants, but we need to translate by a 16th of a rotation
+		int dir = (int) Math.floor(16*facingAngle/(2*Math.PI));
+		dir = (dir+1) %16;
 		
-		//Vertical movement
-		if (!isWalkingX && isWalkingY){
-			if (yDirection == 1){currentActorDirection = DOWN;}
-			if (yDirection == -1){currentActorDirection = UP;}
-		}
 		
-		//Horizontal movement
-		if (isWalkingX && !isWalkingY){
-			if (xDirection == 1){currentActorDirection = RIGHT;}
-			if (xDirection == -1){currentActorDirection = LEFT;}
-		}
+		currentActorDirection = dir/2;
+		
+		
+	
+		
+		
+		
 		
 		return;
 		

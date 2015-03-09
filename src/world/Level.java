@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
 import actors.Enemy;
+import actors.Player;
 import gameobjects.BasicObject;
 import gameobjects.Broadcaster;
 import gameobjects.Door;
@@ -29,31 +30,34 @@ public class Level {
 	private int height;
 	private int width;
 
+	private int[][] map;
+	
 	private ArrayList<Actor> actors;
+	
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
+	
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
+	
 	private ArrayList<Updater> updaters;
 	private ArrayList<ObjectCreator> creators;
 
 	
 
-	public Level(ItemBuilder itemBuilder, int width, int height) throws SlickException {
-		
-		
+	public Level(ItemBuilder itemBuilder, int width, int height, Player player) throws SlickException {
 		
 		
 		this.width = width;
 		this.height = height;
 		
-		buildNewLevel(itemBuilder);
+		buildNewLevel(itemBuilder, player);
 		
 	};
 	
-	private void buildNewLevel(ItemBuilder itemBuilder) throws SlickException{
+	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
 		
 		this.actors = new ArrayList<Actor>(); 
 		this.broadcasters = new ArrayList<Broadcaster>(); 
@@ -70,26 +74,30 @@ public class Level {
 		floors = levelBuilder.getFloors();
 		halls = levelBuilder.getHalls();
 
-		for(Shape doorShape : doors){
-			
-			
-			basicObjects.add(new Door(doorShape));
-		}
+		map = levelBuilder.getMap();
+		
+		
 		
 		
 		// build items using the levelbuilder to get the random locations
-		for(int[] itemLoc : levelBuilder.generateRandomItemLocations(0.75,3)){
+		for(int[] itemLoc : levelBuilder.randomRoomLocations(0.75,3)){
 			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
 		}
 		
+		for(int[] enemyLoc : levelBuilder.randomRoomLocations(2,1)){
+			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
+		}
+		
+		
+		for(Shape doorShape : doors){
+			basicObjects.add(new Door(doorShape,  actors));
+		}
 		
 		// poop out the starting position
 		int[] startPosition = levelBuilder.getStartingPosition();
 		startX = startPosition[0];
 		startY = startPosition[1];
-		
-		addObject(new Enemy(startX -50, startY));
-		
+				
 	}
 	
 	
@@ -156,6 +164,18 @@ public class Level {
 	public ArrayList<Shape> getWalls(){
 		return walls;
 	}
+	
+	public ArrayList<Shape> getClosedDoors(){
+		ArrayList<Shape> closedDoors = new ArrayList<Shape>();
+		for(BasicObject obj: basicObjects){
+			if(obj instanceof Door)
+				if(!((Door) obj).isOpen()){
+					closedDoors.add(obj.getShape());	
+				}
+			
+		}
+		return closedDoors;
+	}
 	public ArrayList<Shape> getFloors(){
 		return floors;
 	}
@@ -182,6 +202,10 @@ public class Level {
 	}
 	public int getWidth(){
 		return width;
+	}
+	
+	public int[][] getMap(){
+		return map;
 	}
 
 

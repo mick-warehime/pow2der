@@ -33,8 +33,6 @@ public class MoveCommand extends BasicCommand implements GenericCommand{
 				((ActorActionEngine) engine).applyEffect(Effect.EFFECT_WALKING_Y, 1);
 			}
 		}
-
-
 	}
 
 	public char getDirection(){

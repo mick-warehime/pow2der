@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 
+import abilities.FireballAbility;
 import abilities.RunAbility;
 import actors.Effect;
 import actors.Status;
-
 import commands.CommandProviderAggregator;
 import commands.MoveCommand;
 
@@ -24,20 +24,16 @@ public class PlayerActionEngine extends ActorActionEngine {
 		
 	private float runDec = 2.5f;
 
-	
-	
-
-	
-
-
 	public PlayerActionEngine(CommandProviderAggregator listener, Status status,AbilitySlots abilitySlots,ArrayList<Object>objectsToCreate) throws NullPointerException, IndexOutOfBoundsException, SlickException{
 		super(listener,status, abilitySlots,objectsToCreate);
 		
-		this.runAcc = 2;
+		this.acceleration = 2;
 		this.walkSpeed = 2;
 		this.runSpeed = 4;
 		
 		abilitySlots.setAbility(new RunAbility(), 0);
+		abilitySlots.setAbility(new FireballAbility(), 1);
+		
 	}
 
 	
