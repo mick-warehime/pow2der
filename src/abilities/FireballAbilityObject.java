@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
 import render.ShapeRenderer;
+import actors.Actor;
 import actors.Enemy;
 import commands.DieCommand;
 import commands.IncrementHPCommand;
@@ -23,15 +24,15 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	private float speed = 4;
 	private int damage = 5;
 	private boolean shouldRemove;
-		
-	
+
+
 	public FireballAbilityObject(float startX, float startY, float[] moveDirection) throws SlickException {
-		
+
 		this.moveDirection = moveDirection;
-		
+
 		this.shape = new Circle(startX,startY, radius);
 		this.renderer = new ShapeRenderer(shape, Color.red);
-		
+
 		this.countDown= 50;
 		this.canCollide = false;
 		shouldRemove = false;
@@ -48,12 +49,12 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	public void update() {
 		float oldX = shape.getX();
 		float oldY = shape.getY();
-		
+
 		shape.setX(oldX + speed*moveDirection[0]);
 		shape.setY(oldY + speed*moveDirection[1]);
-		
+
 		countDown -=1;
-		
+
 		if (countDown<0){
 			shouldRemove = true;
 		}
@@ -65,12 +66,11 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	@Override
 	public void onCollisionDo(Class<?> collidingObjectClass,
 			Shape collidingObjectShape) {
-		
-		if (collidingObjectClass.equals(Enemy.class)){
-			shouldRemove = true;
-			
-		}
-		
+
+		//		if (collidingObjectClass.equals(Actor.class)){
+		shouldRemove = true;			
+		//		}
+
 	}
 
 
@@ -79,10 +79,10 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	public ArrayList<Command> onCollisionBroadcast(
 			Class<?> collidingObjectClass, Shape collidingObjectShape) {
 		ArrayList<Command> output = new ArrayList<Command>();
-		
-		if (collidingObjectClass.equals(Enemy.class)){
-			output.add( new IncrementHPCommand(-damage));
-		}
+
+		//		if (collidingObjectClass.equals(Actor.class)){
+		output.add( new IncrementHPCommand(-damage));
+		//		}
 		return output;
 	}
 

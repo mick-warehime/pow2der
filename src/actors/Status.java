@@ -16,7 +16,7 @@ public class Status {
 	private int xDirection = 1;
 	private int yDirection = 1;
 	
-	private int hp =10;
+	private int hp = 10;
 	
 	private float[] facingDirection;
 	
@@ -46,7 +46,7 @@ public class Status {
 
 		return collisionHandler.interactiveObjectsNearRect(this.rect);
 	}
-
+	public int getHP(){return hp;};
 
 	public float getX (){return rect.getX();}
 	public float getY (){return rect.getY();}
