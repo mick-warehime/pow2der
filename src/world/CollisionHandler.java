@@ -23,10 +23,6 @@ public class CollisionHandler  {
 	private ArrayList<BasicObject> basicObjects;
 
 
-	public CollisionHandler(ArrayList<Shape> blockedList){
-		this.blocks = blockedList;
-	}
-
 	
 
 	public CollisionHandler(Level level){
@@ -42,14 +38,12 @@ public class CollisionHandler  {
 		assert playerRect!= null : "Error! Attempted to set a null Player rect!";
 		this.playerRect = playerRect;
 		
-
-
 		
 		
 	}
 
 
-//	Returns a list of interactive game objects near the player
+//	Returns a list of interactive game objects near the rect
 	public ArrayList<Interactive> interactiveObjectsNearRect(Rectangle rect){
 
 
@@ -79,7 +73,7 @@ public class CollisionHandler  {
 		return answer;
 	}
 
-	public boolean isCollidedWithBlocks(Shape shape){
+	private boolean isCollidedWithBlocks(Shape shape){
 		for(Shape r: blocks ){
 			if(shape.intersects(r)){
 				return true;
@@ -87,20 +81,8 @@ public class CollisionHandler  {
 		}
 		return false;
 	}
-
-	public boolean isCollidedWithActor(Shape shape){
-		for (Actor nme: actors){
-
-			if(nme.getShape().intersects(shape)){
-				return true;
-			}
-
-		}
-
-		return playerRect.intersects(shape); 
-	}
 	
-	public boolean isCollidedWithObjects(Shape shape){
+	private boolean isCollidedWithObjects(Shape shape){
 		
 		for(BasicObject obj: basicObjects){
 			// don't check with its own shape and dont check with objects that are currently being held
@@ -117,14 +99,7 @@ public class CollisionHandler  {
 		return false;
 	}
 
-	public boolean isCollidedWithPlayer(Shape shape){
-		return playerRect.intersects(shape);
-	}
-
-
-//	public ArrayList<Command> getCommands(){
-//		return resolveBroadcasterCollisions(playerRect, Player.class);
-//	}
+	
 
 
 	//Checks a shape for collisions with interactive collideables
