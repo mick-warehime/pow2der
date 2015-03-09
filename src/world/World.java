@@ -36,6 +36,8 @@ public class World {
 
 	public final static int TILE_HEIGHT = 16;
 	public final static int TILE_WIDTH = 16;
+	
+	private boolean gameOver;
 
 	public World(int [] mouseScreenPosition) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
@@ -45,11 +47,13 @@ public class World {
 		this.mouseTracker = new MousePositionTracker(mouseScreenPosition);
 
 		// construct item builders
-						
+		
 		ItemParser parser = new ItemParser();
 		
 		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 
+		gameOver = false;
+		
 		terri = new Player(mouseTracker.getMouseLevelPosition());
 
 		// width and height must be ODD
@@ -92,8 +96,10 @@ public class World {
 		mouseTracker.updateMousePosition();
 		currentLevelData.getCurrentLevel().update();
 
+		
 		if (terri.shouldRemove()){
 			System.out.println("Terri is dead!");
+			gameOver = true;
 		}
 
 
@@ -121,6 +127,10 @@ public class World {
 	}
 
 
+	public boolean gameOver(){
+		return gameOver;
+	}
+	
 	public Player getPlayer(){
 		return terri;
 	}

@@ -246,19 +246,12 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 	public void incrementHP(int increment) {
 		status.incrementHP(increment);
-		
-		
 	}
 	
 	
 
 
 
-	public void attemptAttack() {
-		// TODO Auto-generated method stub
-		vx = 0;
-		vy = 0;		
-	}
 
 
 

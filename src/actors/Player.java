@@ -98,6 +98,20 @@ public class Player extends Actor {
 
 
 
+	public Status getStatus() {
+		// TODO Auto-generated method stub
+		return status;
+	}
+
+
+
+
+
+
+
+
+
+
 	
 
 	

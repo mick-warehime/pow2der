@@ -3,6 +3,7 @@ package main;
 
 
 import java.io.IOException;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.newdawn.slick.*;
@@ -79,6 +80,10 @@ public class Game extends BasicGame {
 			}
 		}
 		
+		if( world.gameOver()){
+			newGame();
+		}
+		
 		
 
 	}
@@ -93,21 +98,24 @@ public class Game extends BasicGame {
 		this.menuHandler = new MenuHandler();
 		gameControls.addMenuInputProviderListener(menuHandler.getKeyboardListener());
 		
+		newGame();
+		
+	}
+
+	private void newGame() throws SlickException{
 		// initiate world
 		try {
 			world = new World(gameControls.getMouseScreenPosition());
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			e1.printStackTrace();
 		}
-		
-		
+				
 		// add the player to the game management systems
 		gameControls.addAvatarInputProviderListener(world.getPlayer().getKeyboardListener());
 		menuHandler.setPlayerInventory(world.getPlayer().getInventory());
 
-		
 	}
-
+	
 	@Override
 	public void render(GameContainer gc, Graphics graphics) throws SlickException {
 
