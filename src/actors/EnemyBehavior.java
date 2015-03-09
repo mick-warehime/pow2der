@@ -3,10 +3,7 @@ package actors;
 import pathfinding.Path;
 import knowledge.Knowledge;
 import commands.ActivateAbilityCommand;
-import commands.AttackCommand;
 import commands.CommandProvider;
-import commands.DieCommand;
-import commands.MoveCommand;
 import commands.MoveCommandNew;
 
 //Gives commands to an actor based on world conditions

@@ -1,6 +1,5 @@
 package actors;
 
-import commands.AttackCommand;
 
 public class BehaviorProfile {
 	
