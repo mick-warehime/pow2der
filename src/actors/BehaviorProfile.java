@@ -13,7 +13,7 @@ public class BehaviorProfile {
 	public BehaviorProfile(){
 		agroDistance = 200;
 		attackDistance = 150;
-		attackCooldown = 60;
+		attackCooldown = 120;
 		agroTime = 60;
 		updateSearchDirectionTime = 10;
 	}

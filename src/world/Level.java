@@ -77,7 +77,11 @@ public class Level {
 		map = levelBuilder.getMap();
 		
 		
-		
+
+		// poop out the starting position
+		int[] startPosition = levelBuilder.getStartingPosition();
+		startX = startPosition[0];
+		startY = startPosition[1];
 		
 		// build items using the levelbuilder to get the random locations
 		for(int[] itemLoc : levelBuilder.randomRoomLocations(0.75,3)){
@@ -93,10 +97,6 @@ public class Level {
 			basicObjects.add(new Door(doorShape,  actors));
 		}
 		
-		// poop out the starting position
-		int[] startPosition = levelBuilder.getStartingPosition();
-		startX = startPosition[0];
-		startY = startPosition[1];
 				
 	}
 	

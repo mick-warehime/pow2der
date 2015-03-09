@@ -61,6 +61,8 @@ public class LevelBuilder {
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
+	
+	private int startingRoom;
 
 
 	public LevelBuilder(int width, int height){
@@ -127,6 +129,9 @@ public class LevelBuilder {
 		//		if a random number is smaller than placeProbability then an item is placed randomly in that room
 
 		for(int i = 0; i < numRooms; i++){
+			if(i==startingRoom){
+				continue;
+			}
 			for(int j = 0; j<placeAttempts; j++){
 				if(placeProbability > Math.random()){
 					// start in the center of a random room		
@@ -157,12 +162,12 @@ public class LevelBuilder {
 	public int[] getStartingPosition(){
 
 		// start in the center of a random room		
-		int randRoom = rand.nextInt(numRooms);
+		startingRoom = rand.nextInt(numRooms);
 
-		int topLeftX = rooms[randRoom][0];
-		int topLeftY = rooms[randRoom][1];
-		int width = rooms[randRoom][2];
-		int height = rooms[randRoom][3];
+		int topLeftX = rooms[startingRoom][0];
+		int topLeftY = rooms[startingRoom][1];
+		int width = rooms[startingRoom][2];
+		int height = rooms[startingRoom][3];
 
 		int xPos = (int) (topLeftX + Math.floor(width/2))*World.TILE_WIDTH;
 		int yPos = (int) (topLeftY + Math.floor(height/2))*World.TILE_HEIGHT;
