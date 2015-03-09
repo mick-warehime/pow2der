@@ -51,8 +51,11 @@ public class CommandProviderAggregator {
 	
 	public ArrayList<Command> popCurrentActionCommands(){
 		receiveExternalInputs();
-		ArrayList<Command> output = currentActionCommands;
-		currentActionCommands = new ArrayList<Command>();
+		@SuppressWarnings("unchecked")
+		ArrayList<Command> output = (ArrayList<Command>) currentActionCommands.clone();
+		currentActionCommands.clear();
+		
+		
 		return output;
 	}
 

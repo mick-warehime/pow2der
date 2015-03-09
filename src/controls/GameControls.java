@@ -110,10 +110,10 @@ public class GameControls {
 		Command moveUp = new MoveCommand('y', -1);
 		Command moveDown = new MoveCommand('y', 1);
 //		
-//		Command moveLeft = new MoveCommandNew(new float[] {-1,0});		
-//		Command moveRight = new MoveCommandNew(new float[] {1,0});
-//		Command moveUp = new MoveCommandNew(new float[] {0,-1});
-//		Command moveDown = new MoveCommandNew(new float[] {0,1});
+//		Command moveLeft = new MoveCommandNew(new float[] {-1f,0f});		
+//		Command moveRight = new MoveCommandNew(new float[] {1f,0f});
+//		Command moveUp = new MoveCommandNew(new float[] {0f,-1f});
+//		Command moveDown = new MoveCommandNew(new float[] {0f,1f});
 		
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);

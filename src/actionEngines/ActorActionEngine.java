@@ -40,33 +40,41 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 
-	public void move(float[] direction) {
+	public void attemptMove(float[] direction) {
+		
+		if(!canMove()){
+			return;
+		}
+
 		float maxSpeed;
 		if (status.hasEffect(Effect.EFFECT_RUNNING)){
 			maxSpeed = runSpeed;
 		}else{
-			maxSpeed = walkSpeed;
+			maxSpeed = walkSpeed;		
+			status.gainEffect(Effect.EFFECT_WALKING,1);
 		}
 
+		vx += direction[0]*acceleration;
+		vy += direction[1]*acceleration;
 
-		if (direction[0]>0 ){
-			vx = Math.min(vx + acceleration, maxSpeed);
-		}else {
-			vx = Math.max(vx - acceleration, -maxSpeed);
-		} 
+		double speed = Math.sqrt( vx*vx + vy*vy);
 
+		if(speed>maxSpeed){ 
+			vx = (float) (vx*(maxSpeed/speed)); 
+			vy = (float) (vy*(maxSpeed/speed)); 
+		}
 
-
-		if (direction[1]>0 ){
-			vy = Math.min(vy + acceleration, maxSpeed);
-		}else {
-			vy = Math.max(vy - acceleration, -maxSpeed);
-		} 
+		
 
 		status.setFacingDirection(direction);
 	}
 
 	public void attemptMoveTo(char xOrY, int direction) {
+
+		if(!canMove()){
+			return;
+		}
+
 		float maxSpeed;
 		if (status.hasEffect(Effect.EFFECT_RUNNING)){
 			maxSpeed = runSpeed;
@@ -112,7 +120,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 	//////////////////////////
 
 	protected void movePhysics() {        
-
+		
 		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
 		if (!displacedX){
@@ -198,6 +206,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 		if (!canActivate(abilitySlot)){
 			return;
 		}
+		
 		Ability ability = this.abilitySlots.getAbility(abilitySlot);
 
 		int[][] onCastEffects = ability.getOnCastEffects();
@@ -221,11 +230,16 @@ public abstract class ActorActionEngine extends ActionEngine {
 		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
 	}
 
+	private boolean canMove() {
+
+		return !status.hasEffects(Effect.EFFECTS_PREVENTING_MOVEMENT);
+	}
+
 
 
 	public void setFacingDirection(float[] newDirection) {
 		status.setFacingDirection(newDirection);
-		
+
 	}
 
 
@@ -237,6 +251,16 @@ public abstract class ActorActionEngine extends ActionEngine {
 	}
 	
 	
+
+
+
+	public void attemptAttack() {
+		// TODO Auto-generated method stub
+		vx = 0;
+		vy = 0;		
+	}
+
+
 
 
 

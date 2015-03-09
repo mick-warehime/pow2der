@@ -8,9 +8,11 @@ import actors.Status;
 public class FireballAbility extends Ability {
 
 	public FireballAbility(){
-		onCastEffects = new int[1][2];
+		onCastEffects = new int[2][2];
 		onCastEffects[0][0] = Effect.EFFECT_CASTING_ABILITY;
 		onCastEffects[0][1] = 20;
+		onCastEffects[1][0] = Effect.EFFECT_ATTACKING;
+		onCastEffects[1][1] = 1;
 	}
 	
 	@Override
@@ -25,12 +27,14 @@ public class FireballAbility extends Ability {
 		float dx = 0.5f*casterStatus.getRect().getWidth();
 		float dy = 0.5f*casterStatus.getRect().getHeight();
 		
-		float startX = casterStatus.getX() + dx;
-		float startY = casterStatus.getY() + dy;
+		float[]  facingDirection = casterStatus.getFacingDirection();
+		float initialPositionOffset = 50f;
+		float startX = casterStatus.getX() + dx + facingDirection[0]*initialPositionOffset;
+		float startY = casterStatus.getY() + dy + facingDirection[1]*initialPositionOffset;
 		
 		
 		
-		return new FireballAbilityObject( startX,startY, casterStatus.getFacingDirection());
+		return new FireballAbilityObject( startX,startY, facingDirection);
 	}
 
 	
