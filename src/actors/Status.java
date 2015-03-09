@@ -12,10 +12,11 @@ import world.CollisionHandler;
 
 public class Status {
 
-	private boolean isDying;
 	private ArrayList<Effect> effects;
 	private int xDirection = 1;
 	private int yDirection = 1;
+	
+	private int hp =10;
 	
 	private float[] facingDirection;
 	
@@ -25,7 +26,6 @@ public class Status {
 	private CollisionHandler collisionHandler;
 
 	public Status(Rectangle rect) {
-		this.isDying = false;
 		this.rect = rect;
 		effects = new ArrayList<Effect>();
 		facingDirection = new float[] {(float) Math.random(),(float) Math.random()};
@@ -69,7 +69,17 @@ public class Status {
 		
 	}
 
-
+	public void incrementHP(int increment){
+		
+		hp += increment;
+		
+		if (hp<=0){
+			gainEffect(Effect.EFFECT_DYING,1);
+		}
+		
+		
+	}
+	
 	//Displaces the player 
 	public void displace(float disp, char XorY){
 
@@ -98,13 +108,9 @@ public class Status {
 		this.rect.setY(y);
 	}
 
-	public void setDying(boolean b) {
-		this.isDying = b;		
-	}
+	
 
-	public boolean isDying(){
-		return isDying;
-	}
+	
 
 	public void updateEffects(){
 

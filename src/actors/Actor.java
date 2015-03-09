@@ -67,7 +67,7 @@ public abstract class Actor implements Removeable, Updater,ObjectCreator{
  
 	
 	public boolean shouldRemove(){
-		return status.isDying();
+		return status.hasEffect(Effect.EFFECT_DYING);
 	}
 
 	public void incorporateCollisionHandler(CollisionHandler collisionHandler) {
