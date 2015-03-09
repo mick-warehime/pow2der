@@ -22,7 +22,7 @@ import commands.MenuChangeSelectionCommand;
 import commands.InteractCommand;
 import commands.MenuToggleCommand;
 import commands.MenuOpenCommand;
-import commands.MoveCommandNew;
+import commands.MoveCommand;
 
 
 //Handles keybindings and player inputs
@@ -109,10 +109,10 @@ public class GameControls {
 //		Command moveUp = new MoveCommand('y', -1);
 //		Command moveDown = new MoveCommand('y', 1);
 //		
-		Command moveLeft = new MoveCommandNew(new float[] {-1f,0f});		
-		Command moveRight = new MoveCommandNew(new float[] {1f,0f});
-		Command moveUp = new MoveCommandNew(new float[] {0f,-1f});
-		Command moveDown = new MoveCommandNew(new float[] {0f,1f});
+		Command moveLeft = new MoveCommand(new float[] {-1f,0f});		
+		Command moveRight = new MoveCommand(new float[] {1f,0f});
+		Command moveUp = new MoveCommand(new float[] {0f,-1f});
+		Command moveDown = new MoveCommand(new float[] {0f,1f});
 		
 		Command toggle = new InteractCommand(Interactive.INTERACTION_TOGGLE);
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);

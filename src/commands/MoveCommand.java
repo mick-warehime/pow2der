@@ -4,14 +4,13 @@ import org.newdawn.slick.command.BasicCommand;
 
 import actionEngines.ActionEngine;
 import actionEngines.ActorActionEngine;
-import actors.Effect;
 
 
-public class MoveCommandNew extends BasicCommand implements GenericCommand{
+public class MoveCommand extends BasicCommand implements GenericCommand{
 
 	private float[] moveDirection;
 
-	public MoveCommandNew(float[] moveDirection) {
+	public MoveCommand(float[] moveDirection) {
 		super("Move dir: " + moveDirection);
 		this.moveDirection = moveDirection;
 	}
