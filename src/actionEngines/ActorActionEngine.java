@@ -66,9 +66,6 @@ public abstract class ActorActionEngine extends ActionEngine {
 		
 		
 
-		
-
-		status.setFacingDirection(direction);
 	}
 
 	public void attemptMoveTo(char xOrY, int direction) {
