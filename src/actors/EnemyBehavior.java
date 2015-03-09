@@ -51,7 +51,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		if(knowledge.distToPlayer() > behaviorProfile.getAttackDistance()){
 			return false;
 		}
-		if(status.hasEffect(Effect.EFFECT_ATTACKING)){
+		if(status.hasEffects(Effect.EFFECTS_PREVENTING_MOVEMENT)){
 			return false;
 		}
 

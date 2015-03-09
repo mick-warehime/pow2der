@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
 
-import world.CollisionHandler;
 import commands.CommandProvider;
 
 public class ActorBehavior implements CommandProvider{

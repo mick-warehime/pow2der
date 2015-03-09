@@ -93,8 +93,7 @@ public class ActorRenderer extends Renderer{
 
 	private void determineCurrentActorAction(){
 		
-		boolean isWalkingX = status.hasEffect(Effect.EFFECT_WALKING_X);
-		boolean isWalkingY = status.hasEffect(Effect.EFFECT_WALKING_Y);
+		boolean isWalking = status.hasEffects(Effect.EFFECTS_AMBULATING);
 		boolean isInteracting = status.hasEffect(Effect.EFFECT_INTERACTING);
 		
 		
@@ -102,7 +101,7 @@ public class ActorRenderer extends Renderer{
 			currentActorAction = ActorRenderer.INTERACT;
 			return;
 		}
-		if (isWalkingX || isWalkingY){
+		if (isWalking){
 			
 			walkSpriteCounter =(1 + walkSpriteCounter)%walkSpriteDuration;
 			if (walkSpriteCounter == 0){

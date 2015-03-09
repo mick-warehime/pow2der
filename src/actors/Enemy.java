@@ -1,12 +1,8 @@
 package actors;
 
-import java.util.ArrayList;
-
 import knowledge.Knowledge;
 
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.command.Command;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Rectangle;
 
 import pathfinding.Mover;
@@ -15,10 +11,7 @@ import world.Level;
 import abilities.FireballAbility;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
-import commands.BroadcasterCommandProvider;
-import commands.DieCommand;
 import commands.CommandProviderAggregator;
-import gameobjects.Broadcaster;
 
 public class Enemy extends Actor implements Mover{
 

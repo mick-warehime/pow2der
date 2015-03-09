@@ -14,6 +14,7 @@ public class EnemyActionEngine extends ActorActionEngine {
 		
 		this.walkSpeed = (float) 1.5;
 		this.acceleration = (float) 0.5;
+		this.runSpeed = 3;
 		
 	}
 

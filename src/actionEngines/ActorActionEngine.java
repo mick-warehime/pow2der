@@ -41,7 +41,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	public void attemptMove(float[] direction) {
-		
+				
 		if(!canMove()){
 			return;
 		}
@@ -63,6 +63,8 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vx = (float) (vx*(maxSpeed/speed)); 
 			vy = (float) (vy*(maxSpeed/speed)); 
 		}
+		
+		
 
 		
 
@@ -134,6 +136,8 @@ public abstract class ActorActionEngine extends ActionEngine {
 			status.gainEffect(Effect.EFFECT_Y_COLLISION, 1);
 			vy = 0;
 		}
+		
+		if (status.hasEffect(Effect.EFFECT_WALKING));
 
 		assert !status.isCollided() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
 
