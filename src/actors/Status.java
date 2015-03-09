@@ -132,7 +132,7 @@ public class Status {
 	}
 
 
-	void removeEffect(int name){
+	public void removeEffect(int name){
 		//Iterate over all effect's elements and remove
 		for (Iterator<Effect> iterator = effects.iterator(); iterator.hasNext();) {
 			Effect eff = iterator.next();

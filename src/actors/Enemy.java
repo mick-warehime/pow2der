@@ -14,12 +14,12 @@ import render.ActorRenderer;
 import world.Level;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
-import commands.CollisionCommandProvider;
+import commands.BroadcasterCommandProvider;
 import commands.DieCommand;
 import commands.CommandProviderAggregator;
 import gameobjects.Broadcaster;
 
-public class Enemy extends Actor implements Broadcaster,Mover{
+public class Enemy extends Actor implements Mover{
 
 	private EnemyBehavior behavior;
 
@@ -50,21 +50,9 @@ public class Enemy extends Actor implements Broadcaster,Mover{
 		assert (status != null) : "Error! Collision Handler not incorporated!";
 	}
 
-	@Override
-	public void onCollisionDo(Class<?> collidingObjectClass, Shape collidingObjectShape) {
-		if (collidingObjectClass.equals(Player.class)){
-			status.gainEffect(Effect.EFFECT_COLLIDED_WITH_PLAYER, 1);
-		}
-	}
+	
 
-	@Override
-	public ArrayList<Command> onCollisionBroadcast(Class<?> collidingObjectClass, Shape collidingObjectShape) {
-		ArrayList<Command> outputCommands = new ArrayList<Command>();
-//		if (collidingObjectClass.equals(Player.class)){
-//			outputCommands.add( new DieCommand());
-//		}
-		return outputCommands;
-	}
+	
 
 	
 

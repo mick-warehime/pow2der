@@ -1,8 +1,6 @@
 package actors;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
 import gameobjects.Removeable;
 
 import org.newdawn.slick.Graphics;
@@ -13,13 +11,12 @@ import render.ActorRenderer;
 import world.CollisionHandler;
 import world.ObjectCreator;
 import world.Updater;
-import abilities.AbilityObject;
 import actionEngines.AbilitySlots;
 import actionEngines.ActionEngine;
-import commands.CollisionCommandProvider;
+import commands.BroadcasterCommandProvider;
 import commands.CommandProviderAggregator;
 
-public abstract class Actor implements Removeable, Updater,ObjectCreator{
+public abstract class Actor implements Removeable, Updater, ObjectCreator{
 
 	protected ActorRenderer graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
@@ -40,8 +37,8 @@ public abstract class Actor implements Removeable, Updater,ObjectCreator{
 	public float getY() {return status.getY();}
 
 	
-	public void render( Graphics g, int mapX, int mapY) {
-		graphics.render(g,mapX, (int) mapY);
+	public void render( Graphics g, int offsetX, int offsetY) {
+		graphics.render(g,offsetX, (int) offsetY);
 	}
 	
 	
@@ -77,13 +74,11 @@ public abstract class Actor implements Removeable, Updater,ObjectCreator{
 
 	public void setCollisionHandler(CollisionHandler collisionHandler) {
 
-		
-		
 		status.setCollisionHandler(collisionHandler);
 		
-		CollisionCommandProvider ccp = new CollisionCommandProvider(collisionHandler,this.getClass(), this.getShape());
-		commandProviderAggregator.removeListenersOfClass(ccp.getClass());
-		commandProviderAggregator.addProvider(ccp);
+		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(collisionHandler,this.getClass(), this.getShape());
+		commandProviderAggregator.removeListenersOfClass(bcp.getClass());
+		commandProviderAggregator.addProvider(bcp);
 	}
 	
 
