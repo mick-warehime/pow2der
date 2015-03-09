@@ -12,12 +12,11 @@ public class BehaviorProfile {
 	private int updateSearchDirectionTime;
 	
 	public BehaviorProfile(){
-		agroDistance = 150;
-		attackDistance = 20;
+		agroDistance = 200;
+		attackDistance = 150;
 		attackCooldown = 60;
 		agroTime = 60;
 		updateSearchDirectionTime = 10;
-		
 	}
 	
 

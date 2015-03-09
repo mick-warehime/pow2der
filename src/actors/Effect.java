@@ -22,7 +22,7 @@ public class Effect implements Removeable {
 		{EFFECT_INTERACTING,EFFECT_CASTING_ABILITY,EFFECT_ATTACKING};
 	
 	public static final int[] EFFECTS_PREVENTING_MOVEMENT = new int[]
-			{EFFECT_ATTACKING};
+			{EFFECT_ATTACKING,EFFECT_CASTING_ABILITY};
 	
 	
 	

@@ -41,6 +41,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	public void attemptMove(float[] direction) {
+		
 		if(!canMove()){
 			return;
 		}
@@ -49,9 +50,9 @@ public abstract class ActorActionEngine extends ActionEngine {
 		if (status.hasEffect(Effect.EFFECT_RUNNING)){
 			maxSpeed = runSpeed;
 		}else{
-			maxSpeed = walkSpeed;			
+			maxSpeed = walkSpeed;		
+			status.gainEffect(Effect.EFFECT_WALKING,1);
 		}
-
 
 		vx += direction[0]*acceleration;
 		vy += direction[1]*acceleration;
@@ -63,7 +64,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vy = (float) (vy*(maxSpeed/speed)); 
 		}
 
-
+		
 
 		status.setFacingDirection(direction);
 	}
@@ -119,7 +120,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 	//////////////////////////
 
 	protected void movePhysics() {        
-
+		
 		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
 		if (!displacedX){
@@ -205,6 +206,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 		if (!canActivate(abilitySlot)){
 			return;
 		}
+		
 		Ability ability = this.abilitySlots.getAbility(abilitySlot);
 
 		int[][] onCastEffects = ability.getOnCastEffects();

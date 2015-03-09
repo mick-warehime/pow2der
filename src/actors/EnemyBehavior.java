@@ -2,6 +2,7 @@ package actors;
 
 import pathfinding.Path;
 import knowledge.Knowledge;
+import commands.ActivateAbilityCommand;
 import commands.AttackCommand;
 import commands.CommandProvider;
 import commands.DieCommand;
@@ -41,8 +42,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 	private void decideAttack(){
 		if(canAttack()){
-			commandStack.add(new AttackCommand(0));
-			status.gainEffect(Effect.EFFECT_ATTACKING, behaviorProfile.getAttackCooldown());
+			commandStack.add(new ActivateAbilityCommand(0));			
 		}
 	}
 

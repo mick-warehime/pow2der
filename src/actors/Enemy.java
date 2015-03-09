@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Rectangle;
 import pathfinding.Mover;
 import render.ActorRenderer;
 import world.Level;
+import abilities.FireballAbility;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
 import commands.BroadcasterCommandProvider;
@@ -33,6 +34,7 @@ public class Enemy extends Actor implements Mover{
 		status = new Status(rect);
 		
 		abilitySlots = new AbilitySlots();
+		abilitySlots.setAbility(new FireballAbility(),0);
 		
 		graphics = new ActorRenderer("data/dwarf.png", status);
 
