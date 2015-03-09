@@ -38,6 +38,10 @@ public abstract class Actor implements Removeable, Updater,ObjectCreator{
 	public float getX() {return status.getX();}
 
 	public float getY() {return status.getY();}
+	
+	public float getCenterX() {return status.getRect().getX()+status.getRect().getWidth()/2;}
+
+	public float getCenterY() {return status.getRect().getY()+status.getRect().getHeight()/2;}
 
 	
 	public void render( Graphics g, int mapX, int mapY) {

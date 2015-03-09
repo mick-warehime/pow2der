@@ -9,18 +9,24 @@ public class BehaviorProfile {
 	
 	private float attackDistance;
 	private int attackCooldown;
+	private int updateSearchDirectionTime;
 	
 	public BehaviorProfile(){
 		agroDistance = 150;
 		attackDistance = 20;
 		attackCooldown = 60;
-		agroTime = 15;
+		agroTime = 60;
+		updateSearchDirectionTime = 10;
 		
 	}
 	
 
 	public int getAgroTime(){
 		return agroTime;
+	}
+	
+	public int getChaseTime(){
+		return updateSearchDirectionTime;
 	}
 	
 	public float getAttackDistance(){
