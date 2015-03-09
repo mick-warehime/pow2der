@@ -4,7 +4,7 @@ import pathfinding.Path;
 import knowledge.Knowledge;
 import commands.ActivateAbilityCommand;
 import commands.CommandProvider;
-import commands.MoveCommandNew;
+import commands.MoveCommand;
 
 //Gives commands to an actor based on world conditions
 public class EnemyBehavior extends ActorBehavior implements CommandProvider{
@@ -51,9 +51,9 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		if(knowledge.distToPlayer() > behaviorProfile.getAttackDistance()){
 			return false;
 		}
-//		if(!status.hasEffect(Effect.EFFECT_CASTING_ABILITY)){
-//			return false;
-//		}
+		if(status.hasEffects(Effect.EFFECTS_PREVENTING_MOVEMENT)){
+			return false;
+		}
 
 		return true;
 
@@ -108,7 +108,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 		status.setFacingDirection(currentDirection);
 
-		commandStack.add(new MoveCommandNew(currentDirection));
+		commandStack.add(new MoveCommand(currentDirection));
 
 		return;
 	}

@@ -41,7 +41,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	public void attemptMove(float[] direction) {
-		
+				
 		if(!canMove()){
 			return;
 		}
@@ -63,10 +63,9 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vx = (float) (vx*(maxSpeed/speed)); 
 			vy = (float) (vy*(maxSpeed/speed)); 
 		}
-
+		
 		
 
-		status.setFacingDirection(direction);
 	}
 
 	public void attemptMoveTo(char xOrY, int direction) {
@@ -134,9 +133,36 @@ public abstract class ActorActionEngine extends ActionEngine {
 			status.gainEffect(Effect.EFFECT_Y_COLLISION, 1);
 			vy = 0;
 		}
+		
+		if (!status.hasEffects(Effect.EFFECTS_AMBULATING)){
+			decelerate();
+		}
 
 		assert !status.isCollided() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
 
+	}
+
+
+
+	private void decelerate() {
+		
+		
+		double currentSpeed = Math.sqrt(vx*vx + vy*vy);
+		
+		if (currentSpeed>0.01){
+		
+			double newSpeed = Math.max(0, currentSpeed - acceleration);
+			
+			vx = (float) (vx*newSpeed/currentSpeed);
+			vy = (float) (vy*newSpeed/currentSpeed);
+			
+		}else{
+			vx =0;
+			vy = 0;
+		}
+		
+		
+		
 	}
 
 

@@ -8,10 +8,11 @@ import actors.Status;
 public class FireballAbility extends Ability {
 
 	public FireballAbility(){
-		onCastEffects = new int[1][2];
+		onCastEffects = new int[2][2];
 		onCastEffects[0][0] = Effect.EFFECT_CASTING_ABILITY;
-		onCastEffects[0][1] = 120;
-		
+		onCastEffects[0][1] = 20;
+		onCastEffects[1][0] = Effect.EFFECT_WINDED;
+		onCastEffects[1][1] = 5;
 	}
 	
 	@Override

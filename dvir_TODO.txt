@@ -10,6 +10,8 @@ ActorActionEngine is coupled too strongly to Actor? I.e., has access to too much
 
 Broadcasters should not be given the colliding objects class, since it's kludgy to test for inherited classes. What's a better way to do this?
 
-Change player avatar move commands to the new version, remove obselete command and methods.
-
 Figure out how to do collision handling better, since abilityObjects also need it.
+
+
+
+Changed player avatar move commands to the new version, removed obselete command and methods. Removed walking_X and walking_Y effects. 
