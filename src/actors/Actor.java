@@ -39,8 +39,6 @@ public abstract class Actor implements Removeable, Updater,ObjectCreator{
 
 	public float getY() {return status.getY();}
 
- 
-	
 	
 	public void render( Graphics g, int mapX, int mapY) {
 		graphics.render(g,mapX, (int) mapY);

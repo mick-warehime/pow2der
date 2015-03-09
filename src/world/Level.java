@@ -76,9 +76,7 @@ public class Level {
 
 		map = levelBuilder.getMap();
 		
-		for(Shape doorShape : doors){
-			basicObjects.add(new Door(doorShape));
-		}
+		
 		
 		
 		// build items using the levelbuilder to get the random locations
@@ -90,6 +88,10 @@ public class Level {
 			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
 		}
 		
+		
+		for(Shape doorShape : doors){
+			basicObjects.add(new Door(doorShape,  actors));
+		}
 		
 		// poop out the starting position
 		int[] startPosition = levelBuilder.getStartingPosition();

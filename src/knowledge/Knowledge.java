@@ -11,6 +11,7 @@ import pathfinding.Path;
 import world.Level;
 import actors.Enemy;
 import actors.Player;
+import actors.Status;
 
 public class Knowledge {
 
@@ -55,10 +56,10 @@ public class Knowledge {
 	public float distToPlayer(){
 		
 		//Make a line from centers of player and object
-		float x1 = self.getShape().getCenterX();
-		float y1 = self.getShape().getCenterY();
-		float x2 = player.getShape().getCenterX();
-		float y2 = player.getShape().getCenterY();
+		float x1 = self.getShape().getX();
+		float y1 = self.getShape().getY();
+		float x2 = player.getShape().getX();
+		float y2 = player.getShape().getY();
 
 		return (float) Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
 		
@@ -72,10 +73,10 @@ public class Knowledge {
 		
 
 		//Make a line from centers of player and object
-		float x1 = self.getShape().getCenterX();
-		float y1 = self.getShape().getCenterY();
-		float x2 = player.getShape().getCenterX();
-		float y2 = player.getShape().getCenterY();
+		float x1 = self.getShape().getX();
+		float y1 = self.getShape().getY();
+		float x2 = player.getShape().getX();
+		float y2 = player.getShape().getY();
 
 		Line line = new Line(x1, y1, x2, y2);
 
@@ -92,49 +93,42 @@ public class Knowledge {
 				return false;
 			}
 		}
-		
-		
-		
+			
 		return true;
-
 	}
+	
+	 
 	
 	// get direction to player
 	public float[] directionToPlayer() {
-		
-		ArrayList<Shape> walls = level.getWalls();
-
+	
 		//Make a line from centers of player and object
-		float x1 = self.getShape().getCenterX();
-		float y1 = self.getShape().getCenterY();
-		float x2 = player.getShape().getCenterX();
-		float y2 = player.getShape().getCenterY();
+		float x1 = self.getShape().getX();
+		float y1 = self.getShape().getY();
+		float x2 = player.getShape().getX();
+		float y2 = player.getShape().getY();
 		
-		float xDir = (x2-x1);
-		float yDir = (y2-y1);
+		double xDir = x2-x1;
+		double yDir = y2-y1;
 		
-		float length = (float) Math.sqrt((double) Math.pow(xDir,2)+Math.pow(yDir,2));
+		double length = Math.sqrt((double) Math.pow(xDir,2)+Math.pow(yDir,2));
 		
 		xDir = xDir/length;
 		yDir = yDir/length;
 		
-		double tol = 0.001;
-		if(Math.abs((double) xDir)<tol){
-			xDir = 0;
-		}
-		
-		if(Math.abs((double) yDir)<tol){
-			yDir = 0;
-		}
-		
-		
-		return new float[] {xDir/length, yDir/length};
+		return new float[] {(float) xDir, (float) yDir};
 
 	}	
 
-
+	private float getCenterX(Shape shape){
+		return shape.getX()+shape.getWidth()/2;
+	}
 	
-
+	private float getCenterY(Shape shape){
+		return shape.getY()+shape.getHeight()/2;
+	}
+	
+	
 
 
 }

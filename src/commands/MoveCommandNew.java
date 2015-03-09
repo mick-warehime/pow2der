@@ -19,8 +19,7 @@ public class MoveCommandNew extends BasicCommand implements GenericCommand{
 	@Override
 	public void execute(ActionEngine engine){
 		if (engine instanceof ActorActionEngine){
-			((ActorActionEngine) engine).move(moveDirection);
-			((ActorActionEngine) engine).applyEffect(Effect.EFFECT_WALKING, 1);
+			((ActorActionEngine) engine).attemptMove(moveDirection);
 		}
 
 
