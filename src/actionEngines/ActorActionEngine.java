@@ -137,10 +137,35 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vy = 0;
 		}
 		
-		if (status.hasEffect(Effect.EFFECT_WALKING));
+		if (!status.hasEffects(Effect.EFFECTS_AMBULATING)){
+			decelerate();
+		}
 
 		assert !status.isCollided() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
 
+	}
+
+
+
+	private void decelerate() {
+		
+		
+		double currentSpeed = Math.sqrt(vx*vx + vy*vy);
+		
+		if (currentSpeed>0.01){
+		
+			double newSpeed = Math.max(0, currentSpeed - acceleration);
+			
+			vx = (float) (vx*newSpeed/currentSpeed);
+			vy = (float) (vy*newSpeed/currentSpeed);
+			
+		}else{
+			vx =0;
+			vy = 0;
+		}
+		
+		
+		
 	}
 
 
