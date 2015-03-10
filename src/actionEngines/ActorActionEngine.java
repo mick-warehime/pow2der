@@ -1,5 +1,6 @@
 package actionEngines;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.newdawn.slick.SlickException;
@@ -108,7 +109,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 		return;
 	}
 
-	public void update() throws SlickException {
+	public void update() throws SlickException, IOException {
 
 
 		doActions();
@@ -227,7 +228,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 	}
 
-	public void attemptActivateAbility(int abilitySlot) throws SlickException {
+	public void attemptActivateAbility(int abilitySlot) throws SlickException, IOException {
 
 		if (!canActivate(abilitySlot)){
 			return;

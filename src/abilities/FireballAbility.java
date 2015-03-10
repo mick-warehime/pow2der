@@ -1,5 +1,7 @@
 package abilities;
 
+import java.io.IOException;
+
 import org.newdawn.slick.SlickException;
 
 import actors.Effect;
@@ -22,13 +24,13 @@ public class FireballAbility extends Ability {
 
 	@Override
 	public AbilityObject instantiateAbilityObject(Status casterStatus)
-			throws SlickException {
+			throws SlickException, IOException {
 		
 		float dx = 0.5f*casterStatus.getRect().getWidth();
 		float dy = 0.5f*casterStatus.getRect().getHeight();
 		
 		float[]  facingDirection = casterStatus.getFacingDirection();
-		float initialPositionOffset = 50f;
+		float initialPositionOffset = 40f;
 		float startX = casterStatus.getX() + dx + facingDirection[0]*initialPositionOffset;
 		float startY = casterStatus.getY() + dy + facingDirection[1]*initialPositionOffset;
 		

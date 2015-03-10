@@ -3,6 +3,7 @@ package menus;
 import items.Inventory;
 import items.Item;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -55,7 +56,7 @@ public class MenuHandler {
 		return this.keyboardInputs;
 	}
 
-	public void update() throws SlickException {
+	public void update() throws SlickException, IOException {
 		actionEngine.update();	
 		
 	}

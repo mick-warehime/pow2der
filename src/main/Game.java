@@ -47,7 +47,12 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer gc, int t) throws SlickException {
 		
-		menuHandler.update();
+		try {
+			menuHandler.update();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(menuHandler.isQuitting()){gc.exit();}
 		
 		if (menuHandler.isMenuActive()){
@@ -57,7 +62,6 @@ public class Game extends BasicGame {
 		
 		if (gameState == LOAD_STATE){
 			gameState = LEVEL_STATE;
-
 		}
 
 		if (gameState == LEVEL_STATE){
@@ -66,14 +70,17 @@ public class Game extends BasicGame {
 			int mouseY = gc.getInput().getMouseY();
 			gameControls.setMousePosition(mouseX,mouseY);
 			
-			world.update();
+			try {
+				world.update();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
 
 		if ( gameState == PAUSE_STATE){
-			
-			
 			
 			if (!menuHandler.isMenuActive()){
 				gameState = LEVEL_STATE;

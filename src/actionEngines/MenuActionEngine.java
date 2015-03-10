@@ -1,6 +1,7 @@
 package actionEngines;
 
 
+import java.io.IOException;
 import java.util.Stack;
 
 import items.Inventory;
@@ -64,7 +65,7 @@ public class MenuActionEngine extends ActionEngine{
 
 
 
-	public void update() throws SlickException{
+	public void update() throws SlickException, IOException{
 		super.update();
 
 		updateBusyTimer();

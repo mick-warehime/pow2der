@@ -1,5 +1,7 @@
 package commands;
 
+import java.io.IOException;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.BasicCommand;
 
@@ -23,7 +25,7 @@ public class ActivateAbilityCommand extends BasicCommand implements GenericComma
 
 
 	@Override
-	public void execute(ActionEngine engine) throws SlickException{
+	public void execute(ActionEngine engine) throws SlickException, IOException{
 		if (engine instanceof ActorActionEngine){
 			((ActorActionEngine) engine).attemptActivateAbility(abilitySlot);
 			

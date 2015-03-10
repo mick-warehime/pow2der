@@ -3,6 +3,7 @@ package world;
 import items.Item;
 import items.ItemBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -118,7 +119,7 @@ public class Level {
 		}
 	}
 
-	protected void update() throws SlickException{
+	protected void update() throws SlickException, IOException{
 
 		for (Iterator<Updater> iterator = updaters.iterator(); iterator.hasNext();) {
 			Updater updater = iterator.next();
@@ -145,17 +146,14 @@ public class Level {
 	}
 
 
-
 	public void render(Graphics g, int offsetX, int offsetY){		
 
 		for (BasicObject obj : basicObjects){	
-			obj.render(g, offsetX,offsetY);
-
+			obj.render(g, offsetX, offsetY);
 		}
 
 		for (Actor actor : actors){	
-			actor.render(g, offsetX,offsetY);
-
+			actor.render(g, offsetX, offsetY);
 		}
 
 	}

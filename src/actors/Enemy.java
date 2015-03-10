@@ -1,5 +1,7 @@
 package actors;
 
+import java.io.IOException;
+
 import knowledge.Knowledge;
 
 import org.newdawn.slick.SlickException;
@@ -39,7 +41,7 @@ public class Enemy extends Actor implements Mover{
 		
 	}
 
-	public void update() throws SlickException{
+	public void update() throws SlickException, IOException{
 		behavior.determine();
 		super.update();
 		assert (status != null) : "Error! Collision Handler not incorporated!";

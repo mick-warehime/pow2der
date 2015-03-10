@@ -91,7 +91,7 @@ public class World {
 	}
 
 
-	public void update() throws SlickException {
+	public void update() throws SlickException, IOException {
 
 		mouseTracker.updateMousePosition();
 		currentLevelData.getCurrentLevel().update();

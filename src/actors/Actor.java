@@ -1,6 +1,8 @@
 package actors;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
 import gameobjects.Removeable;
 
 import org.newdawn.slick.Graphics;
@@ -47,7 +49,7 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 	
 	
 	
-	public void update() throws SlickException {
+	public void update() throws SlickException, IOException {
 	
 		//Note: The order of these calls is important!
 		//Update status

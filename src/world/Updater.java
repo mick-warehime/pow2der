@@ -1,5 +1,7 @@
 package world;
 
+import java.io.IOException;
+
 import org.newdawn.slick.SlickException;
 
 /*
@@ -8,6 +10,6 @@ import org.newdawn.slick.SlickException;
 
 public interface Updater {
 	
-	public void update() throws SlickException;
+	public void update() throws SlickException, IOException;
 
 }

@@ -1,5 +1,7 @@
 package abilities;
 
+import java.io.IOException;
+
 import org.newdawn.slick.SlickException;
 
 import actors.Status;
@@ -24,6 +26,6 @@ public abstract class Ability {
 	
 	public abstract boolean hasAbilityObject();
 	
-	public abstract AbilityObject instantiateAbilityObject(Status casterStatus) throws SlickException;
+	public abstract AbilityObject instantiateAbilityObject(Status casterStatus) throws SlickException, IOException;
 
 }

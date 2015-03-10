@@ -2,6 +2,7 @@ package abilities;
 
 import gameobjects.Broadcaster;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -10,6 +11,7 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
+import render.ParticleRenderer;
 import render.ShapeRenderer;
 import commands.IncrementHPCommand;
 
@@ -23,14 +25,15 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	private boolean shouldRemove;
 
 
-	public FireballAbilityObject(float startX, float startY, float[] moveDirection) throws SlickException {
+	public FireballAbilityObject(float startX, float startY, float[] moveDirection) throws SlickException, IOException {
 
 		this.moveDirection = moveDirection;
 
 		this.shape = new Circle(startX,startY, radius);
-		this.renderer = new ShapeRenderer(shape, Color.red);
-
-		this.countDown= 50;
+		this.renderer = new ParticleRenderer("data/particle.png","data/fireball.xml",shape,moveDirection);
+		
+		this.countDown = 50;
+		
 		this.canCollide = false;
 		shouldRemove = false;
 	}
@@ -44,6 +47,7 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 
 	@Override
 	public void update() {
+		
 		float oldX = shape.getX();
 		float oldY = shape.getY();
 
