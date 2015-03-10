@@ -5,14 +5,12 @@ import gameobjects.Broadcaster;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
 import render.ParticleRenderer;
-import render.ShapeRenderer;
 import commands.IncrementHPCommand;
 
 public class FireballAbilityObject extends AbilityObject implements Broadcaster {

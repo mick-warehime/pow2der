@@ -103,12 +103,6 @@ public class GameControls {
 		avatarInputProvider = new InputProvider(gc.getInput());
 
 		//Define action commands for provider
-		//Command moveDown = new MoveCommand("move down", 0 ,8);
-//		Command moveLeft = new MoveCommand('x', -1);		
-//		Command moveRight = new MoveCommand('x', 1);
-//		Command moveUp = new MoveCommand('y', -1);
-//		Command moveDown = new MoveCommand('y', 1);
-//		
 		Command moveLeft = new MoveCommand(new float[] {-1f,0f});		
 		Command moveRight = new MoveCommand(new float[] {1f,0f});
 		Command moveUp = new MoveCommand(new float[] {0f,-1f});

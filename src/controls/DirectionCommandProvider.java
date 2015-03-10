@@ -4,7 +4,6 @@ package controls;
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
-import org.newdawn.slick.command.InputProviderListener;
 import org.newdawn.slick.geom.Shape;
 
 import commands.CommandProvider;
