@@ -80,24 +80,6 @@ public class Player extends Actor {
 	
 
 
-
-	@Override
-	public void setCollisionHandler(CollisionHandler collisionHandler){
-		super.setCollisionHandler(collisionHandler);
-		collisionHandler.addPlayerRect(status.getRect());
-		
-		
-	}
-
-
-
-
-
-
-
-
-
-
 	public Status getStatus() {
 		// TODO Auto-generated method stub
 		return status;

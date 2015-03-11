@@ -16,8 +16,6 @@ public class CollisionHandler  {
 
 	private ArrayList<Shape> blocks;
 	private ArrayList<Actor> actors;
-	private Rectangle playerRect;
-
 	// Objects that do something on collision
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
@@ -33,15 +31,6 @@ public class CollisionHandler  {
 	}
 	
 
-	public void addPlayerRect(Rectangle playerRect){
-		
-		assert playerRect!= null : "Error! Attempted to set a null Player rect!";
-		this.playerRect = playerRect;
-		
-		
-		
-	}
-
 
 //	Returns a list of interactive game objects near the rect
 	public ArrayList<Interactive> interactiveObjectsNearRect(Rectangle rect){
@@ -53,7 +42,7 @@ public class CollisionHandler  {
 			
 			if (obj instanceof Interactive){
 				
-				if (obj.isNear(playerRect)){
+				if (obj.isNear(rect)){
 					output.add((Interactive) obj);
 				}
 			}
