@@ -107,9 +107,9 @@ public class CollisionHandler  {
 	// and does the interactive's inherent collision command
 	// For collisions to be class specific, we pass in a 
 	// collidingObjectClass.
-	public ArrayList <Command> resolveBroadcasterCollisions(Shape collidingShape, Class<?> collidingObjectClass ){
+	public ArrayList <Command> resolveBroadcasterCollisions(final Shape collidingShape, Class<?> collidingObjectClass ){
 		ArrayList<Command> outputCommands = new  ArrayList <Command>();
-
+		
 		//Make a slightly bigger rectangle because physics don't 
 		// allow you to actually move into another object
 		int proximity = 1;
