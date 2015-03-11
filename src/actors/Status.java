@@ -46,15 +46,16 @@ public class Status {
 
 		return collisionHandler.interactiveObjectsNearRect(this.rect);
 	}
+	
 	public int getHP(){return hp;};
 
 	public float getX (){return rect.getX();}
 	public float getY (){return rect.getY();}
 
 
-	public boolean isCollided(){
+	public boolean isCollidedWithSolids(){
 
-		return collisionHandler.isCollided(rect);
+		return collisionHandler.isCollidedWithSolids(rect);
 
 	}
 

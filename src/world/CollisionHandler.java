@@ -52,7 +52,7 @@ public class CollisionHandler  {
 	}
 
 	//Checks for collisions with blocks and game Objects
-	public boolean isCollided(Shape shape){	
+	public boolean isCollidedWithSolids(Shape shape){	
 		boolean answer = false;
 		//	check if collided with permanent solid blocks	
 		answer = answer || isCollidedWithBlocks(shape);

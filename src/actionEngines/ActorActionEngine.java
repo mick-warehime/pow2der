@@ -139,7 +139,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 			decelerate();
 		}
 
-		assert !status.isCollided() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
+		assert !status.isCollidedWithSolids() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
 
 	}
 
@@ -193,7 +193,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 			//Check if dMax displacement collides
 			status.displace(dMax,XorY);
-			collided = status.isCollided();
+			collided = status.isCollidedWithSolids();
 			status.displace(-dMax, XorY);
 
 			if (!collided && dMax == disp){ //Maximum initial displacement doesn't collide, so accept it

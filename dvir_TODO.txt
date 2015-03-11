@@ -18,9 +18,12 @@ Refactor collisionHandler::
 
 Current collisionHandler calls: 
 
-isCollided by status of actor
+isCollidedWithSolids by status of actor, which is used in attemptDisplacement and movePhysics (This should not be an event!)
 
-interactiveObjectsNearRect by status of actor
+interactiveObjectsNearRect by status of actor for outputting nearbyInteractives (can be treated as an event)
 
-resolveBroadcasterCollisions by BroadcasterCommandProvider, which pushes commands to actor
+resolveBroadcasterCollisions by BroadcasterCommandProvider, which pushes commands to actors and makes the broadcasters do their onCollisionDo’s (can be treated as an event…)
 
+
+New functionality:
+Make two collisionHandlers, one for physical collisions, one for collisions associated with interactions
