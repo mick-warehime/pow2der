@@ -15,6 +15,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.xml.sax.SAXException;
 
+import collisions.CollisionHandler;
+import collisions.PhysicalCollisionDetector;
 import render.LevelStaticRenderer;
 import actors.Actor;
 import actors.Player;
@@ -116,12 +118,13 @@ public class World {
 		levels.add(level);		
 
 		CollisionHandler collisionHandler = new CollisionHandler(level);
+		PhysicalCollisionDetector detector = new PhysicalCollisionDetector(level);
 		for (Actor dude : level.getActors()){
-			dude.setCollisionHandler(collisionHandler);
+			dude.setCollisionHandler(collisionHandler,detector);
 		}
 
 		terri.setPosition(level.getStartX(),  level.getStartY());
-		terri.setCollisionHandler(collisionHandler);
+		terri.setCollisionHandler(collisionHandler,detector);
 		level.addObject(terri);
 
 	}

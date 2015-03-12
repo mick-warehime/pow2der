@@ -1,4 +1,4 @@
-package world;
+package collisions;
 
 
 import java.util.ArrayList;
@@ -7,14 +7,14 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import world.Level;
 import actors.Actor;
 import gameobjects.BasicObject;
 import gameobjects.Interactive;
 import gameobjects.Broadcaster;
-//
+
 public class CollisionHandler  {
 
-	private ArrayList<Shape> blocks;
 	private ArrayList<Actor> actors;
 	// Objects that do something on collision
 	private ArrayList<Broadcaster> broadcasters;
@@ -24,7 +24,6 @@ public class CollisionHandler  {
 	
 
 	public CollisionHandler(Level level){
-		this.blocks = level.getWalls();
 		this.basicObjects = level.getBasicObjects();
 		this.actors = level.getActors();
 		this.broadcasters = level.getBroadcasters();
@@ -51,42 +50,10 @@ public class CollisionHandler  {
 		return output;
 	}
 
-	//Checks for collisions with blocks and game Objects
-	public boolean isCollidedWithSolids(Shape shape){	
-		boolean answer = false;
-		//	check if collided with permanent solid blocks	
-		answer = answer || isCollidedWithBlocks(shape);
-		// check if collided with solid etherable Objects
-		answer = answer || isCollidedWithObjects(shape);
-
-		return answer;
-	}
-
-	private boolean isCollidedWithBlocks(Shape shape){
-		for(Shape r: blocks ){
-			if(shape.intersects(r)){
-				return true;
-			}	
-		}
-		return false;
-	}
 	
-	private boolean isCollidedWithObjects(Shape shape){
-		
-		for(BasicObject obj: basicObjects){
-			// don't check with its own shape and dont check with objects that are currently being held
-			assert (obj.getShape() != null) : "Error! Object" + obj + " has no shape!";
-			
-			if(obj.getShape() != shape){
-				if(obj.canCollide()){
-					if(shape.intersects(obj.getShape())){
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+
+	
+	
 
 	
 

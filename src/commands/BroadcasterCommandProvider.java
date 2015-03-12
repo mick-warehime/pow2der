@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 
-import world.CollisionHandler;
+import collisions.CollisionHandler;
 
 /* Gives commands based on collisions with broadcasters */
 public class BroadcasterCommandProvider implements CommandProvider {

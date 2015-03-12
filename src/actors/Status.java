@@ -8,7 +8,8 @@ import java.util.Iterator;
 
 import org.newdawn.slick.geom.Rectangle;
 
-import world.CollisionHandler;
+import collisions.CollisionHandler;
+import collisions.PhysicalCollisionDetector;
 
 public class Status {
 
@@ -24,6 +25,7 @@ public class Status {
 
 	private Rectangle rect;
 	private CollisionHandler collisionHandler;
+	private PhysicalCollisionDetector collisionDetector;
 
 	public Status(Rectangle rect) {
 		this.rect = rect;
@@ -37,8 +39,9 @@ public class Status {
 		return rect;
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler){
-		this.collisionHandler = collisionHandler;
+	public void setCollisionHandler(CollisionHandler handler, PhysicalCollisionDetector detector){
+		this.collisionDetector = detector;
+		this.collisionHandler = handler;
 	}
 
 
@@ -55,7 +58,7 @@ public class Status {
 
 	public boolean isCollidedWithSolids(){
 
-		return collisionHandler.isCollidedWithSolids(rect);
+		return collisionDetector.isCollidedWithSolids(rect);
 
 	}
 

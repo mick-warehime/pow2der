@@ -9,8 +9,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import collisions.CollisionHandler;
+import collisions.PhysicalCollisionDetector;
 import render.ActorRenderer;
-import world.CollisionHandler;
 import world.ObjectCreator;
 import world.Updater;
 import actionEngines.AbilitySlots;
@@ -78,9 +79,9 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler) {
+	public void setCollisionHandler(CollisionHandler collisionHandler, PhysicalCollisionDetector detector) {
 
-		status.setCollisionHandler(collisionHandler);
+		status.setCollisionHandler(collisionHandler,detector);
 		
 		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(collisionHandler,this.getClass(), this.getShape());
 		commandProviderAggregator.removeListenersOfClass(bcp.getClass());

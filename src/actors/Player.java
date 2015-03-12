@@ -6,8 +6,8 @@ import items.Inventory;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import collisions.CollisionHandler;
 import render.ActorRenderer;
-import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
 import commands.CommandProviderAggregator;
