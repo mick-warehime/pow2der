@@ -23,9 +23,9 @@ public class PlayerActionEngine extends ActorActionEngine {
 		this.walkSpeed = 2;
 		this.runSpeed = 4;
 		
-//		abilitySlots.setAbility(new RunAbility(), 0);
-		abilitySlots.setAbility(new FireballAbility(), 0);
-		abilitySlots.setAbility(new LightningAbility(), 1);
+		abilitySlots.setAbility(new RunAbility(), 0);
+		abilitySlots.setAbility(new FireballAbility(), 1);
+		abilitySlots.setAbility(new LightningAbility(), 2);
 		
 	}
 	

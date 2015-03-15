@@ -112,6 +112,7 @@ public class GameControls {
 		Command pickup = new InteractCommand(Interactive.INTERACTION_PICKUP);
 		Command ability0 = new ActivateAbilityCommand(0);
 		Command ability1 = new ActivateAbilityCommand(1);
+		Command ability2 = new ActivateAbilityCommand(2);
 
 		//Bind commands to keyboard keys
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_A), moveLeft);
@@ -122,6 +123,7 @@ public class GameControls {
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_G), pickup);
 		avatarInputProvider.bindCommand(new KeyControl(Input.KEY_LSHIFT), ability0);
 		avatarInputProvider.bindCommand(new MouseButtonControl(Input.MOUSE_LEFT_BUTTON), ability1);
+		avatarInputProvider.bindCommand(new MouseButtonControl(Input.MOUSE_RIGHT_BUTTON), ability2);
 		
 		//Bind commands to controller keys
 		avatarInputProvider.bindCommand(new ControllerDirectionControl(0, ControllerDirectionControl.LEFT), moveLeft);
