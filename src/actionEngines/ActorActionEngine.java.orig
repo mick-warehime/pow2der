@@ -183,10 +183,14 @@ public abstract class ActorActionEngine extends ActionEngine {
 		}else{
 			vx = 0;
 			vy = 0;
+<<<<<<< HEAD
+		}	
+=======
 		}
 
 
 
+>>>>>>> f4688747ff5e814ce885521cb0086341d4d3ab3b
 	}
 
 

@@ -78,7 +78,7 @@ public class LevelBuilder {
 		roomMin = 3;
 		roomMax = 7;
 
-		numRoomPuts = 50;		
+		numRoomPuts = 20;		
 
 		// use 1000 for debugging and systemtime for normal use
 		//		randomSeed = 1000;   

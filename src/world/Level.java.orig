@@ -10,7 +10,6 @@ import items.ItemBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -126,7 +125,6 @@ public class Level {
 		for (Updater updater : updaters){
 			updater.update();
 		}
-		
 		ArrayList<Object> objsToAdd = new ArrayList<Object>();
 		for (Iterator<ObjectCreator> iterator = creators.iterator(); iterator.hasNext();) {
 			ObjectCreator creator = iterator.next();
@@ -142,9 +140,12 @@ public class Level {
 			addObject(obj);
 		}
 		
+<<<<<<< HEAD
+=======
 		checkAndRemoveRemovables();
 		
 
+>>>>>>> f4688747ff5e814ce885521cb0086341d4d3ab3b
 	}
 	
 	

@@ -19,6 +19,8 @@ public class NullAbilityObject extends AbilityObject {
 		this.canCollide = false;
 		
 	}
+	
+	
 
 	
 	
