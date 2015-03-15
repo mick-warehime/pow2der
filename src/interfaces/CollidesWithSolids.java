@@ -1,5 +1,7 @@
 package interfaces;
 
+import org.newdawn.slick.SlickException;
+
 import collisions.PhysicalCollisionDetector;
 
 /*
@@ -9,6 +11,6 @@ import collisions.PhysicalCollisionDetector;
 
 public interface CollidesWithSolids {
 	
-	public void assignCollisionDetector(PhysicalCollisionDetector detector);
+	public void assignCollisionDetector(PhysicalCollisionDetector detector) throws SlickException;
 
 }

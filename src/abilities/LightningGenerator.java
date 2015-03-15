@@ -5,24 +5,13 @@ import interfaces.ObjectCreator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Player;
-import render.LightningLine;
-import render.LineObject;
-import render.LineRenderer;
-import render.ParticleRenderer;
-import render.ShapeRenderer;
-import commands.IncrementHPCommand;
 
 public class LightningGenerator extends AbilityObject implements Broadcaster, ObjectCreator {
 
@@ -32,8 +21,6 @@ public class LightningGenerator extends AbilityObject implements Broadcaster, Ob
 	private float[] startPt;
 	private float[] facingDirection;
 	private ArrayList<Object> objsToCreate;
-	private boolean createdObject;
-	
 	public LightningGenerator(float[] startPt, float[] facingDirection) throws SlickException, IOException {
 
 		this.startPt = startPt;
@@ -101,9 +88,12 @@ public class LightningGenerator extends AbilityObject implements Broadcaster, Ob
 			Shape collidingObjectShape) {
 		
 		if(!(collidingObjectClass.equals(Player.class))){			
-			try {				
+			try {	
+				float endX = (float) (collidingObjectShape.getX() + collidingObjectShape.getWidth()*.5);
+				float endY = (float) (collidingObjectShape.getY() + collidingObjectShape.getHeight()*.5);
+						
 				objsToCreate.add(new LightningAbilityObject(startPt,
-						new float[] {collidingObjectShape.getX(),collidingObjectShape.getY()}));
+						new float[] {endX,endY}));
 			
 			} catch (SlickException | IOException e) {
 				// TODO Auto-generated catch block
