@@ -103,7 +103,7 @@ public class LightningGenerator extends AbilityObject implements Broadcaster, Ob
 		if(!(collidingObjectClass.equals(Player.class))){			
 			try {				
 				objsToCreate.add(new LightningAbilityObject(startPt,
-						new float[] {collidingObjectShape.getX(),collidingObjectShape.getY()},shape));
+						new float[] {collidingObjectShape.getX(),collidingObjectShape.getY()}));
 			
 			} catch (SlickException | IOException e) {
 				// TODO Auto-generated catch block
