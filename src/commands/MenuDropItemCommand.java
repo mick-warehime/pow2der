@@ -2,6 +2,7 @@ package commands;
 
 import items.Item;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.BasicCommand;
 
 import actionEngines.ActionEngine;
@@ -20,7 +21,7 @@ public class MenuDropItemCommand extends BasicCommand implements GenericCommand 
 	}
 
 	@Override
-	public void execute(ActionEngine actionEngine) {
+	public void execute(ActionEngine actionEngine) throws SlickException {
 		((MenuActionEngine)actionEngine).dropItem(item);
 		
 	}

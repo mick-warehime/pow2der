@@ -1,43 +1,38 @@
 package abilities;
 
 import interfaces.Broadcaster;
+import interfaces.CollidesWithSolids;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
-import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Path;
 import org.newdawn.slick.geom.Shape;
 
+import collisions.PhysicalCollisionDetector;
 import actors.Player;
 import render.LightningLine;
 import render.LineObject;
 import render.LineRenderer;
-import render.ParticleRenderer;
-import render.ShapeRenderer;
 import commands.IncrementHPCommand;
 
-public class LightningAbilityObject extends AbilityObject implements Broadcaster {
+public class LightningAbilityObject extends AbilityObject implements Broadcaster, CollidesWithSolids {
 
 	private int countDown;
-	private int radius= 5;
-	private float range = 100f;
 	private int damage = 2;
 	private boolean shouldRemove;
-	private ArrayList<LineObject> lightningBolt;
+	private ArrayList<LineObject> boltLines;
 	private ArrayList<float[]> boltPoints;
 	private float[] endPt;
-	private float[] startPt;
 	private int concavity;
 
 	public LightningAbilityObject(float[] startPt, float[] endPt) throws SlickException, IOException {
 
-		this.startPt = startPt;
 		this.endPt = endPt;		
 
 		canCollide = false;
@@ -45,7 +40,7 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 
 		countDown = 20;
 
-		lightningBolt = new ArrayList<LineObject>();
+		boltLines = new ArrayList<LineObject>();
 		boltPoints = new ArrayList<float[]>();
 
 		concavity = 1;
@@ -56,16 +51,16 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 
 		defineBoltPoints(startPt,endPt);
 		
-		makeShapeFromBoltPoints();
+	
 //		addBolts(2);
 
-		renderer = new LineRenderer(lightningBolt);
+		renderer = new LineRenderer(boltLines);
 
 
 
 	}
 
-	private void makeShapeFromBoltPoints() {
+	private void makeShapeFromBoltPoints(PhysicalCollisionDetector detector) throws SlickException {
 		
 		
 		
@@ -77,13 +72,23 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 		
 		shape = new Path(bp[0],bp[1]);
 		
+		float[] bplast = bp;
+		
 		for (int i = 1; i<len; i++){
 			bp = boltPoints.get(i);
+			
+			Line testLine = new Line(bplast[0],bplast[1],bp[0],bp[1]);
+			if (detector.isCollidedWithSolids(testLine)){
+				break;
+			}
 			((Path) shape).lineTo(bp[0],bp[1]);
+			boltLines.add(new LightningLine(bplast,bp));
+			bplast = bp;
 		}
 		
 	}
 
+	@SuppressWarnings("unused")
 	private void addBolts(int numBolts) throws SlickException{
 
 		for(int b = 0; b < numBolts; b++){
@@ -91,9 +96,9 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 			Random rand = new Random();
 
 			// make sure new bolt is at least midway in the bolt
-			int bolt = rand.nextInt(lightningBolt.size());
-			while(bolt>lightningBolt.size()/3){
-				bolt = rand.nextInt(lightningBolt.size());	
+			int bolt = rand.nextInt(boltLines.size());
+			while(bolt>boltLines.size()/3){
+				bolt = rand.nextInt(boltLines.size());	
 			}
 
 			defineBoltPoints(boltPoints.get(bolt),endPt);
@@ -153,7 +158,7 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 
 
 			// create a new bolt line and store the points in case we want to add more bolties later
-			lightningBolt.add(new LightningLine(point,prevPoint));
+			
 			boltPoints.add(new float[] {(float) px,(float) py});
 
 
@@ -220,6 +225,16 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	@Override
 	public void onRemoveDo() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void assignCollisionDetector(PhysicalCollisionDetector detector) throws SlickException {
+		makeShapeFromBoltPoints(detector);
+		
+		
+		
+		
 		
 	}
 

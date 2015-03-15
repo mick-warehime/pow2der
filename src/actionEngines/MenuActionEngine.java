@@ -118,7 +118,7 @@ public class MenuActionEngine extends ActionEngine{
 		
 	}
 
-	public void dropItem(Item item) {
+	public void dropItem(Item item) throws SlickException {
 		if (!isBusy()){
 			menuHandlerData.getPlayerInventory().removeItem(item);
 			closeAllMenus();

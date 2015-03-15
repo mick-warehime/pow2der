@@ -277,7 +277,7 @@ public class Level {
 	}
 
 
-	public void addObject(Object obj) {
+	public void addObject(Object obj) throws SlickException {
 		if (obj instanceof Actor){
 			actors.add((Actor) obj);
 		}

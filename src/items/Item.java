@@ -105,7 +105,7 @@ public class Item extends StaticObject implements Interactive,Removeable, Broadc
 
 	}
 
-	public void drop(){
+	public void drop() throws SlickException{
 		location.applyDrop();
 	}
 
@@ -133,7 +133,7 @@ public class Item extends StaticObject implements Interactive,Removeable, Broadc
 
 
 
-		public void applyDrop(){
+		public void applyDrop() throws SlickException{
 			
 			assert (currentLevelData != null): " Error! Using an item whose current level data hasn't been assigned!";
 			this.onGround = true;
