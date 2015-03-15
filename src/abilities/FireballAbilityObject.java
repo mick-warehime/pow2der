@@ -1,6 +1,7 @@
 package abilities;
 
-import gameobjects.Broadcaster;
+import interfaces.Broadcaster;
+import interfaces.CollidesWithSolids;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,11 +11,11 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
-import render.LineRenderer;
+import collisions.PhysicalCollisionDetector;
 import render.ParticleRenderer;
 import commands.IncrementHPCommand;
 
-public class FireballAbilityObject extends AbilityObject implements Broadcaster {
+public class FireballAbilityObject extends AbilityObject implements Broadcaster, CollidesWithSolids {
 
 	private int countDown;
 	private int radius= 5;
@@ -22,6 +23,9 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	private float speed = 5;
 	private int damage = 2;
 	private boolean shouldRemove;
+	private PhysicalCollisionDetector detector;
+	
+	
 
 
 	public FireballAbilityObject(float startX, float startY, float[] moveDirection) throws SlickException, IOException {
@@ -60,6 +64,9 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 		if (countDown<0){
 			shouldRemove = true;
 		}
+		if (detector.isCollidedWithSolids(shape)){
+			shouldRemove = true;
+		}
 
 	}
 
@@ -94,6 +101,22 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	public Shape getInteractionRange() {
 		// TODO Auto-generated method stub
 		return this.shape;
+	}
+
+
+
+	@Override
+	public void onRemoveDo() {
+		this.moveDirection = new float[] {0f,1f};
+		
+	}
+
+
+
+	@Override
+	public void assignCollisionDetector(PhysicalCollisionDetector detector) {
+		this.detector = detector;
+		
 	}
 
 }

@@ -1,26 +1,26 @@
 package actors;
 
+import interfaces.CollidesWithSolids;
+import interfaces.ObjectCreator;
+import interfaces.Removeable;
+import interfaces.Updater;
+
 import java.io.IOException;
 import java.util.ArrayList;
-
-import gameobjects.Removeable;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import collisions.ContextualCollisions;
-import collisions.PhysicalCollisionDetector;
 import render.ActorRenderer;
-import render.EnemyRenderer;
-import world.ObjectCreator;
-import world.Updater;
 import actionEngines.AbilitySlots;
 import actionEngines.ActionEngine;
-import commands.BroadcasterCommandProvider;
+import collisions.BroadcasterCommandProvider;
+import collisions.ContextualCollisions;
+import collisions.PhysicalCollisionDetector;
 import commands.CommandProviderAggregator;
 
-public abstract class Actor implements Removeable, Updater, ObjectCreator{
+public abstract class Actor implements Removeable, Updater, ObjectCreator, CollidesWithSolids{
 
 	protected ActorRenderer graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
@@ -79,14 +79,13 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 
 	
 
-	public void setCollisionHandlers( PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
+	public void setCollisionHandlers( ContextualCollisions contextuals) {
 
-		status.setCollisionHandler(detector);
 		
 		
 		
 		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(this.getClass(), this.getShape());
-		commandProviderAggregator.removeListenersOfClass(bcp.getClass());
+		
 		commandProviderAggregator.addProvider(bcp);
 		
 		contextuals.addListener(bcp);
@@ -96,7 +95,10 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 	
 
 	
-
+	public void assignCollisionDetector(PhysicalCollisionDetector detector){
+		status.setCollisionDetector(detector);
+		
+	}
 
 
 	public boolean hasObjects(){
@@ -108,6 +110,14 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		ArrayList<Object> output = (ArrayList<Object>) objsToCreate.clone();
 		objsToCreate.clear();
 		return output;
+	}
+	
+	public void onRemoveDo(){
+		
+		BroadcasterCommandProvider BCP = (BroadcasterCommandProvider) commandProviderAggregator.getProviderOfClass(BroadcasterCommandProvider.class);
+		
+		BCP.setForRemoval();
+		
 	}
 
 }

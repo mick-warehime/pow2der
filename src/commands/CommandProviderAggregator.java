@@ -1,9 +1,13 @@
 package commands;
 
+import interfaces.CommandProvider;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.newdawn.slick.command.Command;
+
+import collisions.BroadcasterCommandProvider;
 
 
 //Listens to command inputs from generic providers
@@ -22,11 +26,13 @@ public class CommandProviderAggregator {
 	}
 
 	public void addProvider( CommandProvider provider){
+		removeListenersOfClass(provider.getClass()); //The aggregator can only have one provider of a given class.
+		
 		providers.add(provider);
 	}
 	
 	
-	public void removeListenersOfClass(Class<?> providerClass){
+	private void removeListenersOfClass(Class<?> providerClass){
 		for (Iterator<CommandProvider> iterator = providers.iterator(); iterator.hasNext();){
 			CommandProvider provider2 = iterator.next();
 			Class<? extends CommandProvider> className = provider2.getClass();
@@ -56,6 +62,19 @@ public class CommandProviderAggregator {
 		currentActionCommands.clear();
 		
 		
+		return output;
+	}
+
+	public  CommandProvider getProviderOfClass(Class<BroadcasterCommandProvider> className) {
+		
+		CommandProvider output = null;
+		
+		for (CommandProvider provider : providers){
+			if (provider.getClass().equals(className)){
+				output = provider;
+			}
+			
+		}
 		return output;
 	}
 

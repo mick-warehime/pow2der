@@ -1,10 +1,10 @@
 package actors;
 
+import interfaces.CommandProvider;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
-
-import commands.CommandProvider;
 
 public class ActorBehavior implements CommandProvider{
 

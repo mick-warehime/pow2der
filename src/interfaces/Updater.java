@@ -1,4 +1,4 @@
-package world;
+package interfaces;
 
 import java.io.IOException;
 

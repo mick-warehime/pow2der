@@ -121,14 +121,16 @@ public class World {
 		levels.add(level);		
 
 		
-		PhysicalCollisionDetector detector = new PhysicalCollisionDetector(level);
+		
 		this.contextuals = new ContextualCollisions(level);
 		for (Actor dude : level.getActors()){
-			dude.setCollisionHandlers(detector, contextuals);
+			dude.setCollisionHandlers(contextuals);
+			
 		}
 
 		terri.setPosition(level.getStartX(),  level.getStartY());
-		terri.setCollisionHandlers(detector, contextuals);
+		terri.setCollisionHandlers(contextuals);
+		
 		level.addObject(terri);
 
 	}

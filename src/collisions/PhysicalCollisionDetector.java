@@ -1,12 +1,11 @@
 package collisions;
 
 
+import gameobjects.BasicObject;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Shape;
-
-import world.Level;
-import gameobjects.BasicObject;
 
 /*
  * Given a shape, says if that shape is collided with any other 
@@ -23,9 +22,9 @@ public class PhysicalCollisionDetector  {
 
 	
 
-	public PhysicalCollisionDetector(Level level){
-		this.blocks = level.getWalls();
-		this.basicObjects = level.getBasicObjects();
+	public PhysicalCollisionDetector( ArrayList<Shape> blocks,  ArrayList<BasicObject> basicObjects){
+		this.blocks = blocks;
+		this.basicObjects = basicObjects;
 		
 	}
 	

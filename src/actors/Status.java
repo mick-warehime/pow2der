@@ -36,7 +36,7 @@ public class Status {
 		return rect;
 	}
 
-	public void setCollisionHandler( PhysicalCollisionDetector detector){
+	public void setCollisionDetector( PhysicalCollisionDetector detector){
 		this.collisionDetector = detector;
 	}
 

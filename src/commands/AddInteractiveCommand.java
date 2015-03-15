@@ -1,6 +1,6 @@
 package commands;
 
-import gameobjects.Interactive;
+import interfaces.Interactive;
 
 import org.newdawn.slick.command.BasicCommand;
 

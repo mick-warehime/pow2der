@@ -1,6 +1,6 @@
 package abilities;
 
-import gameobjects.Broadcaster;
+import interfaces.Broadcaster;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Path;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Player;
@@ -34,12 +35,11 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	private float[] startPt;
 	private int concavity;
 
-	public LightningAbilityObject(float[] startPt, float[] endPt, Shape shape) throws SlickException, IOException {
+	public LightningAbilityObject(float[] startPt, float[] endPt) throws SlickException, IOException {
 
 		this.startPt = startPt;
 		this.endPt = endPt;		
 
-		this.shape = shape;
 		canCollide = false;
 		shouldRemove = false;
 
@@ -54,13 +54,34 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 		}
 
 
-		getBoltPoints(startPt,endPt);
-		addBolts(2);
+		defineBoltPoints(startPt,endPt);
+		
+		makeShapeFromBoltPoints();
+//		addBolts(2);
 
 		renderer = new LineRenderer(lightningBolt);
 
 
 
+	}
+
+	private void makeShapeFromBoltPoints() {
+		
+		
+		
+		int len = boltPoints.size();
+		
+		assert len>1 : "Tried to make a liightning bolt with no points!!!";
+		
+		float[] bp = boltPoints.get(0);
+		
+		shape = new Path(bp[0],bp[1]);
+		
+		for (int i = 1; i<len; i++){
+			bp = boltPoints.get(i);
+			((Path) shape).lineTo(bp[0],bp[1]);
+		}
+		
 	}
 
 	private void addBolts(int numBolts) throws SlickException{
@@ -75,14 +96,14 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 				bolt = rand.nextInt(lightningBolt.size());	
 			}
 
-			getBoltPoints(boltPoints.get(bolt),endPt);
+			defineBoltPoints(boltPoints.get(bolt),endPt);
 		}
 
 	}
 
 
 
-	private void getBoltPoints(float[] startPt, float[] endPt) throws SlickException{
+	private void defineBoltPoints(float[] startPt, float[] endPt) throws SlickException{
 
 		// this algorithm is stolen from 
 		// http://gamedevelopment.tutsplus.com/tutorials/how-to-generate-shockingly-good-2d-lightning-effects--gamedev-2681
@@ -194,6 +215,12 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	public Shape getInteractionRange() {
 		// TODO Auto-generated method stub
 		return shape;
+	}
+
+	@Override
+	public void onRemoveDo() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

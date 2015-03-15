@@ -1,4 +1,4 @@
-package gameobjects;
+package interfaces;
 
 import actors.Status;
 

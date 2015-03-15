@@ -3,8 +3,6 @@ package menus;
 import java.util.ArrayList;
 
 import commands.MenuCloseCurrentCommand;
-import commands.MenuQuitCommand;
-import commands.MenuCloseAllCommand;
 import commands.NullCommand;
 
 public class OptionsMenu extends TextMenu{

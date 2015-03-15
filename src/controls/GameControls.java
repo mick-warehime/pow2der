@@ -1,7 +1,7 @@
 package controls;
 
 
-import gameobjects.Interactive;
+import interfaces.Interactive;
 import menus.InventoryMenu;
 import menus.MainMenu;
 
