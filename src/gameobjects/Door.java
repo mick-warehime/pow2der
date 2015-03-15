@@ -5,19 +5,25 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+
+import commands.AddInteractiveCommand;
 
 import render.Renderer;
 import world.LevelBuilder;
 import world.World;
 import actors.Actor;
+import actors.Enemy;
+import actors.Player;
 import actors.Status;
 
-public class Door extends BasicObject implements Interactive{
-	private boolean open;
+public class Door extends BasicObject implements Interactive, Broadcaster{
+	private boolean isOpen;
 	private boolean northSouth;
 	private ArrayList<Actor> actors;
+	private Rectangle interactionRange;
 	
 	private static final int INTERACTION_RANGE = 10;
 	
@@ -25,7 +31,7 @@ public class Door extends BasicObject implements Interactive{
 		this.actors  = actors;
 		this.shape = doorShape;
 		
-		open = false;
+		isOpen = false;
 		
 		this.northSouth = doorShape.getHeight()>doorShape.getWidth();	
 		
@@ -33,13 +39,19 @@ public class Door extends BasicObject implements Interactive{
 		
 		this.renderer = new DoorRenderer();
 		
+		this.interactionRange= new Rectangle(shape.getX()-INTERACTION_RANGE,
+				shape.getY()-INTERACTION_RANGE,
+				shape.getWidth()+2*INTERACTION_RANGE,
+				shape.getHeight()+2*INTERACTION_RANGE);
+		
+		
 		
 	}
 
 	
 
 	public boolean canCollide(){
-		return !open;
+		return !isOpen;
 	}
 
 	@Override
@@ -57,7 +69,7 @@ public class Door extends BasicObject implements Interactive{
 			}
 		}
 		
-		open = !open;
+		isOpen = !isOpen;
 
 	}
 
@@ -82,7 +94,7 @@ public class Door extends BasicObject implements Interactive{
 		}
 
 		public void render(Graphics g, int offsetX, int offsetY){
-			if(!open){
+			if(!isOpen){
 				float x = shape.getX();
 				float y = shape.getY();
 				
@@ -105,7 +117,7 @@ public class Door extends BasicObject implements Interactive{
 
 	public boolean isOpen() {
 		// TODO Auto-generated method stub
-		return open;
+		return isOpen;
 	}
 
 
@@ -113,26 +125,50 @@ public class Door extends BasicObject implements Interactive{
 	@Override
 	public boolean isAccessible(Status status) {
 		
-		return isNear(status.getRect());
+		return this.interactionRange.intersects(status.getRect());
 	}
 	
+	
+
+
+
 	@Override
-	public boolean isNear(Shape shape2){
+	public void onCollisionDo(Class<?> collidingObjectClass,
+			Shape collidingObjectShape) {
 		
-		
-		Rectangle slightlyBiggerRect = 
-				new Rectangle(shape.getX()-INTERACTION_RANGE,
-						shape.getY()-INTERACTION_RANGE,
-						shape.getWidth()+2*INTERACTION_RANGE,
-						shape.getHeight()+2*INTERACTION_RANGE);
-		
-		boolean output = slightlyBiggerRect.intersects(shape2);
-		
-		
-		return output;
 		
 	}
 
+
+
+	@Override
+	public ArrayList<Command> onCollisionBroadcast(
+			Class<?> collidingObjectClass, Shape collidingObjectShape) {
+		
+		
+		boolean doBroadcast = collidingObjectClass.equals(Actor.class);
+		doBroadcast = doBroadcast || collidingObjectClass.equals(Enemy.class);
+		doBroadcast = doBroadcast || collidingObjectClass.equals(Player.class);
+		
+		ArrayList<Command> output = new ArrayList<Command>();
+		
+		if (doBroadcast){
+			output.add(new AddInteractiveCommand(this));
+			
+		}
+		
+		
+		return output;
+	}
+
+
+
+	@Override
+	public Shape getInteractionRange() {
+		return this.interactionRange;
+	}
+	
+	
 
 
 

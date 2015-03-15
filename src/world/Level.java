@@ -95,7 +95,7 @@ public class Level {
 		
 		
 		for(Shape doorShape : doors){
-			basicObjects.add(new Door(doorShape,  actors));
+			addObject(new Door(doorShape,  actors));
 		}
 		
 				

@@ -34,6 +34,11 @@ public class DeadlyObject extends StaticObject implements Broadcaster{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public Shape getInteractionRange() {
+		// TODO Auto-generated method stub
+		return this.shape;
+	}
 
 	
 }
