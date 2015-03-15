@@ -14,20 +14,4 @@ Figure out how to do collision handling better, since abilityObjects also need i
 
 Changed player avatar move commands to the new version, removed obselete command and methods. Removed walking_X and walking_Y effects. 
 
-Refactor collisionHandler::
 
-Current collisionHandler calls: 
-
-isCollidedWithSolids by status of actor, which is used in attemptDisplacement and movePhysics (This should not be an event!)
-
-interactiveObjectsNearRect by status of actor for outputting nearbyInteractives (can be treated as an event -> near interactive?)
-
-resolveBroadcasterCollisions by BroadcasterCommandProvider, which pushes commands to actors and makes the broadcasters do their onCollisionDo’s (can be treated as an event…)
-
-
-New functionality:
-Make two collisionHandlers, one for physical collisions, one for collisions associated with interactions
-
-Merge inter actives with broadcasters???
-
-Made collisionHandler to ContextualCollisions
