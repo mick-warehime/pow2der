@@ -1,22 +1,23 @@
 package world;
 
+import gameobjects.BasicObject;
+import gameobjects.Broadcaster;
+import gameobjects.Door;
+import gameobjects.Removeable;
 import items.Item;
 import items.ItemBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 
-import org.newdawn.slick.*;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
 import actors.Enemy;
 import actors.Player;
-import gameobjects.BasicObject;
-import gameobjects.Broadcaster;
-import gameobjects.Door;
-import gameobjects.Removeable;
 
 
 
@@ -34,17 +35,17 @@ public class Level {
 	private int[][] map;
 	
 	private ArrayList<Actor> actors;
-	
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
+	private ArrayList<Updater> updaters;
+	private ArrayList<ObjectCreator> creators;
 	
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
 	
-	private ArrayList<Updater> updaters;
-	private ArrayList<ObjectCreator> creators;
+	
 
 	
 
@@ -95,7 +96,7 @@ public class Level {
 		
 		
 		for(Shape doorShape : doors){
-			basicObjects.add(new Door(doorShape,  actors));
+			addObject(new Door(doorShape,  actors));
 		}
 		
 				
@@ -121,17 +122,8 @@ public class Level {
 
 	protected void update() throws SlickException, IOException{
 
-		for (Iterator<Updater> iterator = updaters.iterator(); iterator.hasNext();) {
-			Updater updater = iterator.next();
-
+		for (Updater updater : updaters){
 			updater.update();
-			if (updater instanceof Removeable){
-				if (((Removeable)updater).shouldRemove()) {
-					// Remove the current element from the iterator and the list.
-					iterator.remove();
-					removeFromAllLists(updater);
-				}
-			}
 		}
 		ArrayList<Object> objsToAdd = new ArrayList<Object>();
 		for (Iterator<ObjectCreator> iterator = creators.iterator(); iterator.hasNext();) {
@@ -148,8 +140,63 @@ public class Level {
 			addObject(obj);
 		}
 		
-	}
+		checkAndRemoveRemovables();
+		
 
+	}
+	
+	
+
+
+	private void checkAndRemoveRemovables() {
+		
+		HashSet<Object> toRemove = new HashSet<Object>();
+		
+		for (Actor actor: actors){ 
+			if (actor.shouldRemove()){
+				toRemove.add(actor);
+			}
+		}
+		
+		for (Broadcaster bcaster : broadcasters){
+			if (bcaster instanceof Removeable){
+				if (((Removeable) bcaster).shouldRemove()){
+					toRemove.add(bcaster);
+				}
+			}
+		}
+		
+		for (BasicObject basic : basicObjects){
+			if (basic instanceof Removeable){
+				if (((Removeable) basic).shouldRemove()){
+					toRemove.add(basic);
+				}
+			}
+		}
+		
+		for (Updater obj : updaters){
+			if (obj instanceof Removeable){
+				if (((Removeable) obj).shouldRemove()){
+					toRemove.add(obj);
+				}
+			}
+		}
+		
+		for (ObjectCreator obj: creators){
+			if (obj instanceof Removeable){
+				if (((Removeable) obj).shouldRemove()){
+					toRemove.add(obj);
+				}
+			}
+		}
+		
+		for (Object obj : toRemove){
+			removeFromAllLists(obj);
+		}
+		
+		
+		
+	}
 
 	public void render(Graphics g, int offsetX, int offsetY){		
 

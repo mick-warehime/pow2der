@@ -27,6 +27,7 @@ public class Enemy extends Actor implements Mover{
 		commandProviderAggregator = new CommandProviderAggregator();
 				
 		status = new Status(rect);
+		status.incrementHP(-8);
 		
 		abilitySlots = new AbilitySlots();
 		abilitySlots.setAbility(new FireballAbility(),0);
@@ -44,7 +45,7 @@ public class Enemy extends Actor implements Mover{
 	public void update() throws SlickException, IOException{
 		behavior.determine();
 		super.update();
-		assert (status != null) : "Error! Collision Handler not incorporated!";
+		assert (status != null) : "Error! Collision Handlers not incorporated!";
 	}
 
 	

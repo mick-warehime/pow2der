@@ -9,8 +9,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import collisions.ContextualCollisions;
+import collisions.PhysicalCollisionDetector;
 import render.ActorRenderer;
-import world.CollisionHandler;
 import world.ObjectCreator;
 import world.Updater;
 import actionEngines.AbilitySlots;
@@ -59,6 +60,8 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		//Do actions (depends on commandProviderAggregator)
 		engine.update();
 		
+		
+		
 	}
 
 	
@@ -73,18 +76,21 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		return status.hasEffect(Effect.EFFECT_DYING);
 	}
 
-	public void incorporateCollisionHandler(CollisionHandler collisionHandler) {
-		throw new UnsupportedOperationException("Not implemented!");
-		
-	}
+	
 
-	public void setCollisionHandler(CollisionHandler collisionHandler) {
+	public void setCollisionHandlers( PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
 
-		status.setCollisionHandler(collisionHandler);
+		status.setCollisionHandler(detector);
 		
-		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(collisionHandler,this.getClass(), this.getShape());
+		
+		
+		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(this.getClass(), this.getShape());
 		commandProviderAggregator.removeListenersOfClass(bcp.getClass());
 		commandProviderAggregator.addProvider(bcp);
+		
+		contextuals.addListener(bcp);
+		
+	
 	}
 	
 

@@ -5,25 +5,62 @@ import java.util.ArrayList;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 
-import world.CollisionHandler;
 
 /* Gives commands based on collisions with broadcasters */
 public class BroadcasterCommandProvider implements CommandProvider {
 
-	private CollisionHandler collisionHandler;
 	private Class<?> ownerClass;
 	private Shape ownerShape;
+	private ArrayList<Command> outputCommands;
+	
+	
 
-	public BroadcasterCommandProvider(CollisionHandler col, Class<?> ownerClass, Shape ownerShape){
-		this.collisionHandler = col;
+	public BroadcasterCommandProvider(Class<?> ownerClass, Shape ownerShape){
+		
 		this.ownerClass = ownerClass;
 		this.ownerShape = ownerShape;
+		
+		this.outputCommands = new ArrayList<Command>();
+
+		
 	}
 	
-	@Override
-	public ArrayList<Command> getCommands() {
+
+
+	
+	
+	public Shape getOwnerShape(){
+		return this.ownerShape;
+	}
+	
+	
+
+	public Class<?> getOwnerClass() {
+		return this.ownerClass;
+	}
+
+	public void addCommands(ArrayList<Command> commands) {
+		this.outputCommands.addAll(commands);		
+	}
+	
+	public ArrayList<Command> getCommands(){
+		 @SuppressWarnings("unchecked")
+		ArrayList<Command> output = (ArrayList<Command>) outputCommands.clone();
+		outputCommands.clear();
+		return output;
 		
-		return collisionHandler.resolveBroadcasterCollisions(ownerShape, ownerClass);
+	}
+
+
+
+
+
+	public void addCommand(AddInteractiveCommand cmd) {
+		this.outputCommands.add(cmd);
+		if (cmd == null){
+			throw new NullPointerException("Attempted to add a null command!");
+		}
+		
 	}
 
 }

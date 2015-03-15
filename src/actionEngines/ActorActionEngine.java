@@ -1,7 +1,9 @@
 package actionEngines;
 
+import gameobjects.Interactive;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.SlickException;
 
@@ -25,6 +27,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 	protected float runSpeed;
 	protected AbilitySlots abilitySlots;
 	private ArrayList<Object> objectsToCreate;
+	private ArrayList<Interactive> accessibleInteractives = new ArrayList<Interactive>();
 
 
 
@@ -42,7 +45,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	public void attemptMove(float[] direction) {
-				
+
 		if(!canMove()){
 			return;
 		}
@@ -64,8 +67,8 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vx = (float) (vx*(maxSpeed/speed)); 
 			vy = (float) (vy*(maxSpeed/speed)); 
 		}
-		
-		
+
+
 
 	}
 
@@ -114,13 +117,33 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 		doActions();
 		movePhysics();
+		updateAccessibleInteractives();
 
 	}
 
 	//////////////////////////
 
+	private void updateAccessibleInteractives() {
+
+
+
+		for (Iterator<Interactive> iterator = accessibleInteractives.iterator(); iterator.hasNext();) {
+			Interactive interactive = iterator.next();
+
+
+			if (!interactive.isAccessible(status)){
+
+				iterator.remove();
+			}
+		}
+	}
+
+
+
+
+
 	protected void movePhysics() {        
-		
+
 		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
 		if (!displacedX){
@@ -134,33 +157,36 @@ public abstract class ActorActionEngine extends ActionEngine {
 			status.gainEffect(Effect.EFFECT_Y_COLLISION, 1);
 			vy = 0;
 		}
-		
+
 		if (!status.hasEffects(Effect.EFFECTS_AMBULATING)){
 			decelerate();
 		}
 
-		assert !status.isCollided() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
+		assert !status.isCollidedWithSolids() : "Actor at" + status.getX() + "," + status.getY() + " is inside an object!";
 
 	}
 
 
 
 	private void decelerate() {
-		
-		
+
+
 		double currentSpeed = Math.sqrt(vx*vx + vy*vy);
-		
+
 		if (currentSpeed>0.01){
-		
+
 			double newSpeed = Math.max(0, currentSpeed - acceleration);
-			
+
 			vx = (float) (vx*newSpeed/currentSpeed);
 			vy = (float) (vy*newSpeed/currentSpeed);
-			
+
 		}else{
 			vx = 0;
 			vy = 0;
-		}	
+		}
+
+
+
 	}
 
 
@@ -190,7 +216,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 			//Check if dMax displacement collides
 			status.displace(dMax,XorY);
-			collided = status.isCollided();
+			collided = status.isCollidedWithSolids();
 			status.displace(-dMax, XorY);
 
 			if (!collided && dMax == disp){ //Maximum initial displacement doesn't collide, so accept it
@@ -230,7 +256,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 		if (!canActivate(abilitySlot)){
 			return;
 		}
-		
+
 		Ability ability = this.abilitySlots.getAbility(abilitySlot);
 
 		int[][] onCastEffects = ability.getOnCastEffects();
@@ -271,13 +297,50 @@ public abstract class ActorActionEngine extends ActionEngine {
 	public void incrementHP(int increment) {
 		status.incrementHP(increment);
 	}
-	
-	
 
 
 
 
 
+
+	public void attemptInteract( int interactionType){
+
+		
+
+		if (!canInteract()){
+			return;
+		}
+
+
+
+
+
+		for (Interactive obj : accessibleInteractives){
+			obj.interact(interactionType, status);
+		}
+		status.gainEffect(Effect.EFFECT_INTERACTING, 20);
+
+
+
+
+
+	}
+
+	private boolean canInteract() {
+		boolean output = !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
+		output = output && !accessibleInteractives.isEmpty();
+
+		return output;
+	}
+
+
+
+	public void addAccessibleInteractive(Interactive toAdd) {
+		if (!accessibleInteractives.contains(toAdd)){
+			this.accessibleInteractives.add(toAdd);
+		}
+
+	}
 
 
 

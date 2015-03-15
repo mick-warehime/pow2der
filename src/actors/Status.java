@@ -1,6 +1,5 @@
 package actors;
 
-import gameobjects.Interactive;
 import items.Inventory;
 
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.Iterator;
 
 import org.newdawn.slick.geom.Rectangle;
 
-import world.CollisionHandler;
+import collisions.PhysicalCollisionDetector;
 
 public class Status {
 
@@ -23,7 +22,7 @@ public class Status {
 	protected Inventory inventory;
 
 	private Rectangle rect;
-	private CollisionHandler collisionHandler;
+	private PhysicalCollisionDetector collisionDetector;
 
 	public Status(Rectangle rect) {
 		this.rect = rect;
@@ -37,15 +36,13 @@ public class Status {
 		return rect;
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler){
-		this.collisionHandler = collisionHandler;
+	public void setCollisionHandler( PhysicalCollisionDetector detector){
+		this.collisionDetector = detector;
 	}
 
 
-	public ArrayList<Interactive> nearbyInteractives(){
-
-		return collisionHandler.interactiveObjectsNearRect(this.rect);
-	}
+	
+	
 	public int getHP(){return hp;};
 
 	public float getX (){return rect.getX();}
@@ -55,9 +52,9 @@ public class Status {
 	public float getCenterY (){return rect.getY()+rect.getHeight()/2;}
 
 
-	public boolean isCollided(){
+	public boolean isCollidedWithSolids(){
 
-		return collisionHandler.isCollided(rect);
+		return collisionDetector.isCollidedWithSolids(rect);
 
 	}
 

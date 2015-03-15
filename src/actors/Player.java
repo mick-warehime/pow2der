@@ -7,7 +7,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import render.ActorRenderer;
-import world.CollisionHandler;
 import actionEngines.AbilitySlots;
 import actionEngines.PlayerActionEngine;
 import commands.CommandProviderAggregator;
@@ -78,24 +77,6 @@ public class Player extends Actor {
 	}
 
 	
-
-
-
-	@Override
-	public void setCollisionHandler(CollisionHandler collisionHandler){
-		super.setCollisionHandler(collisionHandler);
-		collisionHandler.addPlayerRect(status.getRect());
-		
-		
-	}
-
-
-
-
-
-
-
-
 
 
 	public Status getStatus() {

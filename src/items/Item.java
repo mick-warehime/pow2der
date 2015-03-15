@@ -1,28 +1,34 @@
 package items;
 
 
+import gameobjects.Broadcaster;
 import gameobjects.Interactive;
 import gameobjects.Removeable;
 import gameobjects.StaticObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import commands.AddInteractiveCommand;
+
 import render.BasicRenderer;
 import world.CurrentLevelData;
+import actors.Actor;
+import actors.Enemy;
+import actors.Player;
 import actors.Status;
 
 
 /* A basic object that can be picked up and put into inventory */
 
-public class Item extends StaticObject implements Interactive,Removeable{
-
-
+public class Item extends StaticObject implements Interactive,Removeable, Broadcaster{
 
 
 
@@ -156,7 +162,6 @@ public class Item extends StaticObject implements Interactive,Removeable{
 			this.ownerShape = actorShape;
 			storingInventory.addItemToInventory(owningItem);
 			this.onGround = false;
-			this.currentLevelData.getCurrentLevel().removeFromAllLists(owningItem);
 			
 			
 
@@ -352,7 +357,45 @@ public class Item extends StaticObject implements Interactive,Removeable{
 
 	@Override
 	public boolean shouldRemove() {
+		
 		return !this.isOnGround();
+	}
+
+	@Override
+	public boolean isAccessible(Status status) {
+		
+		return isNear(status.getRect()) && isOnGround();
+	}
+
+	@Override
+	public void onCollisionDo(Class<?> collidingObjectClass,
+			Shape collidingObjectShape) {
+		
+		return;
+	}
+
+	@Override
+	public ArrayList<Command> onCollisionBroadcast(
+			Class<?> collidingObjectClass, Shape collidingObjectShape) {
+		boolean doBroadcast = collidingObjectClass.equals(Actor.class);
+		doBroadcast = doBroadcast || collidingObjectClass.equals(Enemy.class);
+		doBroadcast = doBroadcast || collidingObjectClass.equals(Player.class);
+		
+		ArrayList<Command> output = new ArrayList<Command>();
+		
+		if (doBroadcast){
+			output.add(new AddInteractiveCommand(this));
+			
+		}
+		
+		
+		return output;
+	}
+
+	@Override
+	public Shape getInteractionRange() {
+		
+		return this.shape;
 	}
 
 

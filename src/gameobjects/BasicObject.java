@@ -11,7 +11,7 @@ public class BasicObject {
 	protected Renderer renderer;
 	protected Shape shape;
 	protected boolean canCollide;
-	private static final int PROXIMITY = 1;
+	private static final int INTERACTION_RANGE = 1;
 
 	
 
@@ -27,14 +27,14 @@ public class BasicObject {
 		return canCollide;
 	}
 
-	public boolean isNear(Rectangle rectTest) {
+	public boolean isNear(Shape shape2) {
 
 		Rectangle slightlyBiggerRect = 
-				new Rectangle(shape.getX()-PROXIMITY,
-						shape.getY()-PROXIMITY,
-						shape.getWidth()+2*PROXIMITY,
-						shape.getHeight()+2*PROXIMITY);
-		return slightlyBiggerRect.intersects(rectTest);
+				new Rectangle(shape.getX()-INTERACTION_RANGE,
+						shape.getY()-INTERACTION_RANGE,
+						shape.getWidth()+2*INTERACTION_RANGE,
+						shape.getHeight()+2*INTERACTION_RANGE);
+		return slightlyBiggerRect.intersects(shape2);
 	}
 
 }

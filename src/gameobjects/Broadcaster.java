@@ -13,6 +13,6 @@ public interface Broadcaster {
 
 	public void onCollisionDo(Class<?> collidingObjectClass, Shape collidingObjectShape);
 	public ArrayList<Command> onCollisionBroadcast(Class<?> collidingObjectClass, Shape collidingObjectShape);
-	public Shape getShape();
+	public Shape getInteractionRange();
 	
 }
