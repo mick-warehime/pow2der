@@ -18,15 +18,6 @@ public class ActorRenderer extends Renderer{
 	private static int WALK2 = 2;
 	private static int WALK3 = 0;
 	private static int INTERACT = 3;
-	private static int RIGHT = 0;
-	private static int UPRIGHT = 1;
-	private static int UP = 2;
-	private static int UPLEFT = 3;
-	private static int LEFT = 4;
-	private static int DOWNLEFT = 5;
-	private static int DOWN = 6;
-	private static int DOWNRIGHT = 7;
-	
 	private static int SPRITEWIDTHPIXELS = 32;
 	private static int SPRITEHEIGHTPIXELS = 32;
 	private static int SPRITESPACINGINPIXELS = 4;
