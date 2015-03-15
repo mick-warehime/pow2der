@@ -27,6 +27,7 @@ public class Enemy extends Actor implements Mover{
 		commandProviderAggregator = new CommandProviderAggregator();
 				
 		status = new Status(rect);
+		status.incrementHP(-8);
 		
 		abilitySlots = new AbilitySlots();
 		abilitySlots.setAbility(new FireballAbility(),0);
