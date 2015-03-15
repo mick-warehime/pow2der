@@ -1,16 +1,15 @@
 package collisions;
 
 
-import gameobjects.Broadcaster;
+import interfaces.Broadcaster;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 
 import world.Level;
-
-import commands.BroadcasterCommandProvider;
 
 public class ContextualCollisions {
 
@@ -44,6 +43,13 @@ public class ContextualCollisions {
 			
 			
 			
+		}
+		
+		for (Iterator<BroadcasterCommandProvider> iterator = listeners.iterator(); iterator.hasNext();){
+			BroadcasterCommandProvider bcp = iterator.next();
+			if (bcp.shouldRemove()){
+				iterator.remove();
+			}
 		}
 		
 	}

@@ -1,12 +1,13 @@
 package controls;
 
 
+import interfaces.CommandProvider;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 
-import commands.CommandProvider;
 import commands.FaceDirectionCommand;
 
 //uses mouse (or joystick?) inputs to tell the player's avatar where to face.

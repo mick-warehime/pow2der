@@ -1,9 +1,9 @@
 package actors;
 
+import interfaces.CommandProvider;
 import pathfinding.Path;
 import knowledge.Knowledge;
 import commands.ActivateAbilityCommand;
-import commands.CommandProvider;
 import commands.MoveCommand;
 
 //Gives commands to an actor based on world conditions

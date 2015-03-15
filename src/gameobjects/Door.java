@@ -1,5 +1,8 @@
 package gameobjects;
 
+import interfaces.Broadcaster;
+import interfaces.Interactive;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
@@ -10,7 +13,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import commands.AddInteractiveCommand;
-
 import render.Renderer;
 import world.LevelBuilder;
 import world.World;

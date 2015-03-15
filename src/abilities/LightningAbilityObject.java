@@ -1,6 +1,6 @@
 package abilities;
 
-import gameobjects.Broadcaster;
+import interfaces.Broadcaster;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -194,6 +194,12 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	public Shape getInteractionRange() {
 		// TODO Auto-generated method stub
 		return shape;
+	}
+
+	@Override
+	public void onRemoveDo() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

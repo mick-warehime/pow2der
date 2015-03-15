@@ -35,4 +35,14 @@ public class NullAbilityObject extends AbilityObject {
 
 	}
 
+
+
+
+
+	@Override
+	public void onRemoveDo() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

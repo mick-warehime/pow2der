@@ -1,12 +1,12 @@
 package controls;
 
 
+import interfaces.CommandProvider;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.InputProviderListener;
-
-import commands.CommandProvider;
 
 //Takes in input commands and implements them for the player
 public class KeyboardInputListener implements InputProviderListener,CommandProvider{

@@ -1,6 +1,7 @@
 package actionEngines;
 
-import gameobjects.Interactive;
+import interfaces.Interactive;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;

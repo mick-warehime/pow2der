@@ -1,6 +1,6 @@
 package actors;
 
-import gameobjects.Removeable;
+import interfaces.Removeable;
 
 public class Effect implements Removeable {
 
@@ -47,6 +47,11 @@ public class Effect implements Removeable {
 	public boolean shouldRemove() {
 		// TODO Auto-generated method stub
 		return (timer <= 0);
+	}
+
+	@Override
+	public void onRemoveDo() {
+		
 	}
 
 

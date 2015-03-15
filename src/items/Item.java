@@ -1,10 +1,10 @@
 package items;
 
 
-import gameobjects.Broadcaster;
-import gameobjects.Interactive;
-import gameobjects.Removeable;
 import gameobjects.StaticObject;
+import interfaces.Broadcaster;
+import interfaces.Interactive;
+import interfaces.Removeable;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,7 +17,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import commands.AddInteractiveCommand;
-
 import render.BasicRenderer;
 import world.CurrentLevelData;
 import actors.Actor;
@@ -396,6 +395,13 @@ public class Item extends StaticObject implements Interactive,Removeable, Broadc
 	public Shape getInteractionRange() {
 		
 		return this.shape;
+	}
+
+	//Removal from level
+	@Override
+	public void onRemoveDo() {
+		location.onGround = false;
+		
 	}
 
 

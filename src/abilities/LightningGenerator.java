@@ -1,6 +1,7 @@
 package abilities;
 
-import gameobjects.Broadcaster;
+import interfaces.Broadcaster;
+import interfaces.ObjectCreator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ import render.LineObject;
 import render.LineRenderer;
 import render.ParticleRenderer;
 import render.ShapeRenderer;
-import world.ObjectCreator;
 import commands.IncrementHPCommand;
 
 public class LightningGenerator extends AbilityObject implements Broadcaster, ObjectCreator {
@@ -140,6 +140,15 @@ public class LightningGenerator extends AbilityObject implements Broadcaster, Ob
 	@Override
 	public Shape getInteractionRange() {
 		return shape;
+	}
+
+
+	@Override
+	public void onRemoveDo() {
+		if (!this.objsToCreate.isEmpty()){
+			objsToCreate = null;
+		}
+		
 	}
 
 }

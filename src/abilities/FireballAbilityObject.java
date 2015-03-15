@@ -1,6 +1,6 @@
 package abilities;
 
-import gameobjects.Broadcaster;
+import interfaces.Broadcaster;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
-import render.LineRenderer;
 import render.ParticleRenderer;
+
 import commands.IncrementHPCommand;
 
 public class FireballAbilityObject extends AbilityObject implements Broadcaster {
@@ -94,6 +94,14 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 	public Shape getInteractionRange() {
 		// TODO Auto-generated method stub
 		return this.shape;
+	}
+
+
+
+	@Override
+	public void onRemoveDo() {
+		this.moveDirection = new float[] {0f,1f};
+		
 	}
 
 }

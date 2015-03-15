@@ -1,9 +1,11 @@
 package world;
 
 import gameobjects.BasicObject;
-import gameobjects.Broadcaster;
 import gameobjects.Door;
-import gameobjects.Removeable;
+import interfaces.Broadcaster;
+import interfaces.ObjectCreator;
+import interfaces.Removeable;
+import interfaces.Updater;
 import items.Item;
 import items.ItemBuilder;
 
@@ -194,6 +196,7 @@ public class Level {
 		
 		for (Object obj : toRemove){
 			removeFromAllLists(obj);
+			((Removeable)obj).onRemoveDo();
 		}
 		
 		

@@ -1,10 +1,14 @@
 package gameobjects;
 
+import interfaces.Broadcaster;
+
 import java.util.ArrayList;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
+
 import commands.DieCommand;
 
 public class DeadlyObject extends StaticObject implements Broadcaster{

@@ -1,8 +1,8 @@
 package abilities;
 
-import world.Updater;
+import interfaces.Removeable;
+import interfaces.Updater;
 import gameobjects.BasicObject;
-import gameobjects.Removeable;
 
 /*
  * Represents an observable ability in the game, e.g. a fireball or a sword swipe., 
