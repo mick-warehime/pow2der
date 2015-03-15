@@ -1,6 +1,5 @@
 package actionEngines;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.newdawn.slick.SlickException;
@@ -8,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import abilities.FireballAbility;
 import abilities.RunAbility;
 import actors.Status;
+
 import commands.CommandProviderAggregator;
 
 
@@ -26,12 +26,6 @@ public class PlayerActionEngine extends ActorActionEngine {
 		abilitySlots.setAbility(new FireballAbility(), 1);
 		
 	}
-	
-	public void update() throws SlickException, IOException{
-		super.update();
-		System.out.println(status.getInventory().getInventoryItems());
-	}
-
 	
 	
 	
