@@ -50,6 +50,9 @@ public class Status {
 
 	public float getX (){return rect.getX();}
 	public float getY (){return rect.getY();}
+	
+	public float getCenterX (){return rect.getX()+rect.getWidth()/2;}
+	public float getCenterY (){return rect.getY()+rect.getHeight()/2;}
 
 
 	public boolean isCollided(){

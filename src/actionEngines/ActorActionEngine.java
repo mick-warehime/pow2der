@@ -158,12 +158,9 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vy = (float) (vy*newSpeed/currentSpeed);
 			
 		}else{
-			vx =0;
+			vx = 0;
 			vy = 0;
-		}
-		
-		
-		
+		}	
 	}
 
 

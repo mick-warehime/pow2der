@@ -133,22 +133,27 @@ public class Level {
 				}
 			}
 		}
-		
-		for (ObjectCreator creator : creators){
+		ArrayList<Object> objsToAdd = new ArrayList<Object>();
+		for (Iterator<ObjectCreator> iterator = creators.iterator(); iterator.hasNext();) {
+			ObjectCreator creator = iterator.next();
+
 			if (creator.hasObjects()){
 				for (Object obj: creator.popObjects()){
-					addObject(obj);
+					objsToAdd.add(obj);
 				}
 			}
+		}		
+		
+		for(Object obj : objsToAdd){
+			addObject(obj);
 		}
 		
-
 	}
 
 
 	public void render(Graphics g, int offsetX, int offsetY){		
 
-		for (BasicObject obj : basicObjects){	
+		for (BasicObject obj : basicObjects){
 			obj.render(g, offsetX, offsetY);
 		}
 

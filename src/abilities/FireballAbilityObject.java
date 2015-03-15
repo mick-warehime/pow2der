@@ -11,6 +11,7 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
+import render.LineRenderer;
 import render.ParticleRenderer;
 import render.ShapeRenderer;
 import commands.IncrementHPCommand;
@@ -18,9 +19,9 @@ import commands.IncrementHPCommand;
 public class FireballAbilityObject extends AbilityObject implements Broadcaster {
 
 	private int countDown;
-	private int radius= 10;
+	private int radius= 5;
 	private float[] moveDirection;
-	private float speed = 2;
+	private float speed = 5;
 	private int damage = 2;
 	private boolean shouldRemove;
 
@@ -30,12 +31,14 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster 
 		this.moveDirection = moveDirection;
 
 		this.shape = new Circle(startX,startY, radius);
-		this.renderer = new ParticleRenderer("data/particle.png","data/fireball.xml",shape,moveDirection);
+		this.renderer = new ParticleRenderer("data/particle.png","data/fire.xml",shape,moveDirection,5);
+//		this.renderer = new LineRenderer();
 		
 		this.countDown = 50;
 		
 		this.canCollide = false;
 		shouldRemove = false;
+		
 	}
 
 
