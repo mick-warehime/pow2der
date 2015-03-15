@@ -27,6 +27,8 @@ public abstract class ActorActionEngine extends ActionEngine {
 	protected float runSpeed;
 	protected AbilitySlots abilitySlots;
 	private ArrayList<Object> objectsToCreate;
+	private ArrayList<Interactive> nearbyInteractives = new ArrayList<Interactive>();
+	
 
 
 	public ActorActionEngine(CommandProviderAggregator listener, Status status, AbilitySlots slots, ArrayList<Object> objectsToCreate) {
@@ -283,26 +285,39 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 	public void attemptInteract( int interactionType){
 
+		System.out.println(nearbyInteractives);
+		
 		if (!canInteract()){
 			return;
 		}
+		
+		
 
-		//Get nearby objects to interact with
-		ArrayList<Interactive> objs = status.nearbyInteractives();
 
-		//Interact, if possible
-		if (!objs.isEmpty()){
-			for (Interactive obj : objs){
-				obj.interact(interactionType, status);
-			}
-			status.gainEffect(Effect.EFFECT_INTERACTING, 20);
 
+		for (Interactive obj : nearbyInteractives){
+			obj.interact(interactionType, status);
 		}
+		status.gainEffect(Effect.EFFECT_INTERACTING, 20);
+
+		nearbyInteractives.clear();
+		
 	}
 
 	private boolean canInteract() {
+		boolean output = !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
+		output = output && !nearbyInteractives.isEmpty();
 
-		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
+		return output;
+	}
+
+
+
+	public void addNearbyInteractive(Interactive toAdd) {
+		if (!nearbyInteractives.contains(toAdd)){
+			this.nearbyInteractives.add(toAdd);
+		}
+		
 	}
 
 

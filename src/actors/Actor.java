@@ -80,9 +80,9 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler, PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
+	public void setCollisionHandler( PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
 
-		status.setCollisionHandler(collisionHandler,detector);
+		status.setCollisionHandler(detector);
 		
 		
 		
@@ -91,6 +91,8 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		commandProviderAggregator.addProvider(bcp);
 		
 		contextuals.addListener(bcp);
+		
+	
 	}
 	
 

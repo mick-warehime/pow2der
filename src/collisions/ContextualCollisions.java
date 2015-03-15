@@ -12,6 +12,7 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import commands.AddInteractiveCommand;
 import commands.BroadcasterCommandProvider;
 import world.Level;
 
@@ -50,7 +51,8 @@ public class ContextualCollisions {
 			for (BasicObject obj : basicObjects){
 				if(obj instanceof Interactive){
 					if(obj.isNear(shape)){
-						listener.addInteractive((Interactive) obj);
+						AddInteractiveCommand cmd = new AddInteractiveCommand((Interactive) obj);
+						listener.addCommand(cmd);
 					}
 				}
 			}

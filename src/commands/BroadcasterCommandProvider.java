@@ -1,7 +1,5 @@
 package commands;
 
-import gameobjects.Interactive;
-
 import java.util.ArrayList;
 
 import org.newdawn.slick.command.Command;
@@ -14,7 +12,6 @@ public class BroadcasterCommandProvider implements CommandProvider {
 	private Class<?> ownerClass;
 	private Shape ownerShape;
 	private ArrayList<Command> outputCommands;
-	private ArrayList<Interactive> nearbyInteractives;
 	
 	
 
@@ -25,20 +22,11 @@ public class BroadcasterCommandProvider implements CommandProvider {
 		
 		this.outputCommands = new ArrayList<Command>();
 
-		this.nearbyInteractives = new ArrayList<Interactive>();
 		
 	}
 	
-	public void addInteractive(Interactive obj){
-		nearbyInteractives.add(obj);
-	}
-	
-	public ArrayList<Interactive> popNearbyInteractives(){
-		@SuppressWarnings("unchecked")
-		ArrayList<Interactive> output = (ArrayList<Interactive>) this.nearbyInteractives.clone();
-		this.nearbyInteractives.clear();
-		return output;
-	}
+
+
 	
 	
 	public Shape getOwnerShape(){
@@ -60,6 +48,18 @@ public class BroadcasterCommandProvider implements CommandProvider {
 		ArrayList<Command> output = (ArrayList<Command>) outputCommands.clone();
 		outputCommands.clear();
 		return output;
+		
+	}
+
+
+
+
+
+	public void addCommand(AddInteractiveCommand cmd) {
+		this.outputCommands.add(cmd);
+		if (cmd == null){
+			throw new NullPointerException("Attempted to add a null command!");
+		}
 		
 	}
 
