@@ -1,23 +1,23 @@
 package world;
 
+import gameobjects.BasicObject;
+import gameobjects.Broadcaster;
+import gameobjects.Door;
+import gameobjects.Removeable;
 import items.Item;
 import items.ItemBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
-import org.newdawn.slick.*;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
 import actors.Enemy;
 import actors.Player;
-import gameobjects.BasicObject;
-import gameobjects.Broadcaster;
-import gameobjects.Door;
-import gameobjects.Removeable;
 
 
 

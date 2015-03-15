@@ -357,13 +357,14 @@ public class Item extends StaticObject implements Interactive,Removeable, Broadc
 
 	@Override
 	public boolean shouldRemove() {
+		
 		return !this.isOnGround();
 	}
 
 	@Override
 	public boolean isAccessible(Status status) {
 		
-		return isNear(status.getRect());
+		return isNear(status.getRect()) && isOnGround();
 	}
 
 	@Override
