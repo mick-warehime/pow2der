@@ -1,14 +1,17 @@
 package actors;
 
 import java.io.IOException;
+import java.util.Random;
 
 import knowledge.Knowledge;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import pathfinding.Mover;
 import render.ActorRenderer;
+import render.EnemyRenderer;
 import world.Level;
 import abilities.FireballAbility;
 import actionEngines.AbilitySlots;
@@ -18,9 +21,15 @@ import commands.CommandProviderAggregator;
 public class Enemy extends Actor implements Mover{
 
 	private EnemyBehavior behavior;
-
+	private EnemyRenderer enemyGraphics;
+	private int enemyID;
+	
 	public Enemy(int xPixels, int yPixels, Level level, Player player) throws SlickException {
 		super();
+		
+		int numEnemies = 7;
+		Random rand = new Random();
+		enemyID = rand.nextInt(numEnemies);
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		
@@ -32,7 +41,7 @@ public class Enemy extends Actor implements Mover{
 		abilitySlots = new AbilitySlots();
 		abilitySlots.setAbility(new FireballAbility(),0);
 		
-		graphics = new ActorRenderer("data/dwarf.png", status);
+		enemyGraphics = new EnemyRenderer("data/monster_bright.png", status,enemyID);
 
 		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate);
 
@@ -49,7 +58,9 @@ public class Enemy extends Actor implements Mover{
 	}
 
 	
-
+	public void render( Graphics g, int offsetX, int offsetY) {
+		enemyGraphics.render(g,offsetX, (int) offsetY);
+	}
 	
 
 	

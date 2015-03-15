@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Rectangle;
 import collisions.ContextualCollisions;
 import collisions.PhysicalCollisionDetector;
 import render.ActorRenderer;
+import render.EnemyRenderer;
 import world.ObjectCreator;
 import world.Updater;
 import actionEngines.AbilitySlots;
