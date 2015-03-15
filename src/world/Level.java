@@ -3,6 +3,7 @@ package world;
 import gameobjects.BasicObject;
 import gameobjects.Door;
 import interfaces.Broadcaster;
+import interfaces.CollidesWithSolids;
 import interfaces.ObjectCreator;
 import interfaces.Removeable;
 import interfaces.Updater;
@@ -18,6 +19,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
+import collisions.PhysicalCollisionDetector;
 import actors.Actor;
 import actors.Enemy;
 import actors.Player;
@@ -42,11 +44,14 @@ public class Level {
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Updater> updaters;
 	private ArrayList<ObjectCreator> creators;
+	private ArrayList<CollidesWithSolids> colliders;
 	
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
+	
+	private PhysicalCollisionDetector detector;
 	
 	
 
@@ -60,6 +65,12 @@ public class Level {
 		
 		buildNewLevel(itemBuilder, player);
 		
+		this.detector = new PhysicalCollisionDetector(walls,basicObjects);
+		
+		for (CollidesWithSolids col : colliders){
+			col.assignCollisionDetector(detector);
+		}
+		
 	};
 	
 	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
@@ -69,6 +80,7 @@ public class Level {
 		this.basicObjects = new ArrayList<BasicObject>();
 		this.updaters = new ArrayList<Updater>();
 		this.creators = new ArrayList<ObjectCreator>();
+		this.colliders = new ArrayList<CollidesWithSolids>();
 		
 		// build a new Level
 		LevelBuilder levelBuilder = new LevelBuilder(width,height);
@@ -115,6 +127,7 @@ public class Level {
 		removeFromList(obj,walls);
 		removeFromList(obj,updaters);
 		removeFromList(obj,creators);
+		removeFromList(obj,colliders);
 	}
 	
 	private void removeFromList(Object obj, ArrayList<?> list){
@@ -279,6 +292,10 @@ public class Level {
 		}
 		if (obj instanceof ObjectCreator){
 			creators.add((ObjectCreator) obj);
+		}
+		if (obj instanceof CollidesWithSolids){
+			this.colliders.add((CollidesWithSolids) obj);
+			((CollidesWithSolids) obj).assignCollisionDetector(detector);
 		}
 
 	}

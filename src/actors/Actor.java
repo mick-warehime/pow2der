@@ -1,5 +1,6 @@
 package actors;
 
+import interfaces.CollidesWithSolids;
 import interfaces.ObjectCreator;
 import interfaces.Removeable;
 import interfaces.Updater;
@@ -17,10 +18,9 @@ import actionEngines.ActionEngine;
 import collisions.BroadcasterCommandProvider;
 import collisions.ContextualCollisions;
 import collisions.PhysicalCollisionDetector;
-
 import commands.CommandProviderAggregator;
 
-public abstract class Actor implements Removeable, Updater, ObjectCreator{
+public abstract class Actor implements Removeable, Updater, ObjectCreator, CollidesWithSolids{
 
 	protected ActorRenderer graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
@@ -79,9 +79,8 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 
 	
 
-	public void setCollisionHandlers( PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
+	public void setCollisionHandlers( ContextualCollisions contextuals) {
 
-		status.setCollisionHandler(detector);
 		
 		
 		
@@ -96,7 +95,10 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 	
 
 	
-
+	public void assignCollisionDetector(PhysicalCollisionDetector detector){
+		status.setCollisionDetector(detector);
+		
+	}
 
 
 	public boolean hasObjects(){

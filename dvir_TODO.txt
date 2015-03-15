@@ -2,10 +2,6 @@ Why does menu activation not work when I add makeBusy at the end of the method?
 
 Game crashes if you open an inventory menu with more items than can be displayed.
 
-Can't go top right or bottom right while holding interact???
-
-Should the object of interaction apply the effects to the status of the actor?
-
 ActorActionEngine is coupled too strongly to Actor? I.e., has access to too much stuff of actor class.
 
 Broadcasters should not be given the colliding objects class, since it's kludgy to test for inherited classes. What's a better way to do this?
@@ -14,4 +10,4 @@ Figure out how to do collision handling better, since abilityObjects also need i
 
 Changed player avatar move commands to the new version, removed obselete command and methods. Removed walking_X and walking_Y effects. 
 
-
+made a collidesWithSolids interface, which is an object that needs to know if it's collided with solids. Had track these objects, and assign them the detector accordingly. Assigned this interface to actors.
