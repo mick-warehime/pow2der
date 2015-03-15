@@ -190,4 +190,10 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	return output;
 }
 
+	@Override
+	public Shape getInteractionRange() {
+		// TODO Auto-generated method stub
+		return shape;
+	}
+
 }

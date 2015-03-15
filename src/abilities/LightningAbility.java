@@ -16,7 +16,7 @@ public class LightningAbility extends Ability {
 		onCastEffects[0][0] = Effect.EFFECT_CASTING_ABILITY;
 		onCastEffects[0][1] = 20;
 		onCastEffects[1][0] = Effect.EFFECT_WINDED;
-		onCastEffects[1][1] = 20;
+		onCastEffects[1][1] = 10;
 	}
 	
 	

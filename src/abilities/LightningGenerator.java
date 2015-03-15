@@ -136,4 +136,10 @@ public class LightningGenerator extends AbilityObject implements Broadcaster, Ob
 		return output;
 	}
 
+
+	@Override
+	public Shape getInteractionRange() {
+		return shape;
+	}
+
 }
