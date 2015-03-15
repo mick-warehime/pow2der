@@ -6,8 +6,6 @@ import java.util.List;
 import items.Inventory;
 import items.Item;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 
@@ -113,7 +111,7 @@ public class InventoryMenu extends Menu{
 
 		private static final int EQUIP_SLOTS = 10; //Make sure this matches in inventory class
 		
-		private static final int INDEX_UNASSIGNED = -1;
+		
 
 		private static final int DIR_LEFT = 0;
 		private static final int DIR_UP = 1;

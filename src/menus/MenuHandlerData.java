@@ -1,12 +1,7 @@
 package menus;
 
 import items.Inventory;
-import items.Item;
-
-import java.util.ArrayList;
 import java.util.Stack;
-
-import commands.CommandProviderAggregator;
 
 /* Stores basic information used by the menu Handler class:
  * stack of currently active Menus,

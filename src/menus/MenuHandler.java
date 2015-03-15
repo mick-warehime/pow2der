@@ -2,7 +2,6 @@ package menus;
 
 import interfaces.CommandProvider;
 import items.Inventory;
-import items.Item;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +13,9 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.InputProviderListener;
 
 import actionEngines.MenuActionEngine;
+
 import commands.CommandProviderAggregator;
+
 import controls.KeyboardInputListener;
 
 

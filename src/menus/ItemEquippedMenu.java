@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 import commands.MenuCloseCurrentCommand;
 import commands.MenuDropItemCommand;
-import commands.MenuEquipItemCommand;
 import commands.MenuUnequipItemCommand;
-import commands.NullCommand;
 
 public class ItemEquippedMenu extends TextMenu {
 
