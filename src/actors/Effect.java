@@ -15,7 +15,8 @@ public class Effect implements Removeable {
 	public static final int EFFECT_AGRO = 10;
 	public static final int EFFECT_DYING = 11;
 	public static final int EFFECT_CHASING = 12;
-	
+	public static final int AGROED = 13;
+
 	public static final int[] EFFECTS_PREVENTING_ACTION = new int[]
 		{EFFECT_INTERACTING,EFFECT_CASTING_ABILITY};
 	

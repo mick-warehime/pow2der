@@ -15,11 +15,11 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 	private Path path;
 
-	public EnemyBehavior(Status status, Knowledge knowledge) {
+	public EnemyBehavior(Status status, Knowledge knowledge, int enemyID) {
 		super(status);
 		this.knowledge = knowledge;
 
-		behaviorProfile  = new BehaviorProfile();
+		behaviorProfile  = new BehaviorProfile(enemyID);
 
 	}
 
@@ -27,8 +27,9 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 		commandStack.clear();
 
-		// if not already in the process of attacking check for an attack
-
+		// check to see if you can now see the duder
+		getsAgro();
+		
 		decideAttack();
 
 
@@ -44,7 +45,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	}
 
 	private boolean canAttack(){
-
+		
 		if(!knowledge.playerIsVisible()){
 			return false;
 		}
@@ -54,14 +55,19 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		if(status.hasEffects(Effect.EFFECTS_PREVENTING_MOVEMENT)){
 			return false;
 		}
+		if(!status.hasEffect(Effect.AGROED)){
+			return false;
+		}
 
 		return true;
 
 	}
 
-	private boolean getsAgro(){
-		return knowledge.playerIsVisible() 
-				& knowledge.distToPlayer() < behaviorProfile.getAgroDistance();
+	private void getsAgro(){
+		
+		if(behaviorProfile.getsAgro(knowledge)){
+			status.gainEffect(Effect.AGROED,behaviorProfile.getAgroTime());
+		}
 
 	}
 
@@ -76,7 +82,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		// if the dude can see the player chase him, otherwise keep going in same direction
 		float[] currentDirection = status.getFacingDirection();
 
-		if(getsAgro()){
+		if(status.hasEffect(Effect.AGROED)){
 
 			// only update 
 			currentDirection = knowledge.directionToPlayer();
