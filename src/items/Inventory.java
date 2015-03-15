@@ -23,6 +23,9 @@ public class Inventory {
 	}
 	
 	public void addItemToInventory(Item item){
+		if( inventoryItems.contains(item)){
+			throw new ArrayStoreException("Attempted to add an item to the inventory that was already in there.");
+		}
 		inventoryItems.add(item);
 		
 	}

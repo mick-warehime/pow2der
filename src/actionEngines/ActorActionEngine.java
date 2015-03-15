@@ -1,15 +1,12 @@
 package actionEngines;
 
 import gameobjects.Interactive;
-import gameobjects.Removeable;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.newdawn.slick.SlickException;
 
-import world.Updater;
 import abilities.Ability;
 import abilities.AbilityObject;
 import actors.Effect;
@@ -308,7 +305,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 	public void attemptInteract( int interactionType){
 
-		System.out.println(accessibleInteractives);
+		
 
 		if (!canInteract()){
 			return;
