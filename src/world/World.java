@@ -16,6 +16,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.xml.sax.SAXException;
 
 import collisions.CollisionHandler;
+import collisions.ContextualCollisions;
 import collisions.PhysicalCollisionDetector;
 import render.LevelStaticRenderer;
 import actors.Actor;
@@ -40,6 +41,8 @@ public class World {
 	public final static int TILE_WIDTH = 16;
 	
 	private boolean gameOver;
+
+	private ContextualCollisions contextuals;
 
 	public World(int [] mouseScreenPosition) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
@@ -95,6 +98,7 @@ public class World {
 
 	public void update() throws SlickException, IOException {
 
+		contextuals.update();
 		mouseTracker.updateMousePosition();
 		currentLevelData.getCurrentLevel().update();
 
@@ -119,12 +123,13 @@ public class World {
 
 		CollisionHandler collisionHandler = new CollisionHandler(level);
 		PhysicalCollisionDetector detector = new PhysicalCollisionDetector(level);
+		this.contextuals = new ContextualCollisions(level);
 		for (Actor dude : level.getActors()){
-			dude.setCollisionHandler(collisionHandler,detector);
+			dude.setCollisionHandler(collisionHandler,detector, contextuals);
 		}
 
 		terri.setPosition(level.getStartX(),  level.getStartY());
-		terri.setCollisionHandler(collisionHandler,detector);
+		terri.setCollisionHandler(collisionHandler,detector, contextuals);
 		level.addObject(terri);
 
 	}

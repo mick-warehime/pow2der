@@ -1,5 +1,7 @@
 package actionEngines;
 
+import gameobjects.Interactive;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,7 +29,6 @@ public abstract class ActorActionEngine extends ActionEngine {
 	private ArrayList<Object> objectsToCreate;
 
 
-
 	public ActorActionEngine(CommandProviderAggregator listener, Status status, AbilitySlots slots, ArrayList<Object> objectsToCreate) {
 		super(listener);
 		this.status = status;
@@ -42,7 +43,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	public void attemptMove(float[] direction) {
-				
+
 		if(!canMove()){
 			return;
 		}
@@ -64,8 +65,8 @@ public abstract class ActorActionEngine extends ActionEngine {
 			vx = (float) (vx*(maxSpeed/speed)); 
 			vy = (float) (vy*(maxSpeed/speed)); 
 		}
-		
-		
+
+
 
 	}
 
@@ -120,7 +121,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 	//////////////////////////
 
 	protected void movePhysics() {        
-		
+
 		//X movement and collision checking
 		boolean displacedX = attemptDisplacement(vx,'x');
 		if (!displacedX){
@@ -134,7 +135,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 			status.gainEffect(Effect.EFFECT_Y_COLLISION, 1);
 			vy = 0;
 		}
-		
+
 		if (!status.hasEffects(Effect.EFFECTS_AMBULATING)){
 			decelerate();
 		}
@@ -146,24 +147,24 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	private void decelerate() {
-		
-		
+
+
 		double currentSpeed = Math.sqrt(vx*vx + vy*vy);
-		
+
 		if (currentSpeed>0.01){
-		
+
 			double newSpeed = Math.max(0, currentSpeed - acceleration);
-			
+
 			vx = (float) (vx*newSpeed/currentSpeed);
 			vy = (float) (vy*newSpeed/currentSpeed);
-			
+
 		}else{
 			vx =0;
 			vy = 0;
 		}
-		
-		
-		
+
+
+
 	}
 
 
@@ -233,7 +234,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 		if (!canActivate(abilitySlot)){
 			return;
 		}
-		
+
 		Ability ability = this.abilitySlots.getAbility(abilitySlot);
 
 		int[][] onCastEffects = ability.getOnCastEffects();
@@ -274,13 +275,35 @@ public abstract class ActorActionEngine extends ActionEngine {
 	public void incrementHP(int increment) {
 		status.incrementHP(increment);
 	}
-	
-	
 
 
 
 
 
+
+	public void attemptInteract( int interactionType){
+
+		if (!canInteract()){
+			return;
+		}
+
+		//Get nearby objects to interact with
+		ArrayList<Interactive> objs = status.nearbyInteractives();
+
+		//Interact, if possible
+		if (!objs.isEmpty()){
+			for (Interactive obj : objs){
+				obj.interact(interactionType, status);
+			}
+			status.gainEffect(Effect.EFFECT_INTERACTING, 20);
+
+		}
+	}
+
+	private boolean canInteract() {
+
+		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
+	}
 
 
 

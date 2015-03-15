@@ -27,14 +27,14 @@ public class BasicObject {
 		return canCollide;
 	}
 
-	public boolean isNear(Rectangle rectTest) {
+	public boolean isNear(Shape shape2) {
 
 		Rectangle slightlyBiggerRect = 
 				new Rectangle(shape.getX()-PROXIMITY,
 						shape.getY()-PROXIMITY,
 						shape.getWidth()+2*PROXIMITY,
 						shape.getHeight()+2*PROXIMITY);
-		return slightlyBiggerRect.intersects(rectTest);
+		return slightlyBiggerRect.intersects(shape2);
 	}
 
 }

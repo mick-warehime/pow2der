@@ -30,7 +30,6 @@ public class CollisionHandler  {
 	}
 	
 
-
 //	Returns a list of interactive game objects near the rect
 	public ArrayList<Interactive> interactiveObjectsNearRect(Rectangle rect){
 
@@ -58,34 +57,7 @@ public class CollisionHandler  {
 	
 
 
-	//Checks a shape for collisions with interactive collideables
-	// outputs a list of commands for an actor with the shape to do,
-	// and does the interactive's inherent collision command
-	// For collisions to be class specific, we pass in a 
-	// collidingObjectClass.
-	public ArrayList <Command> resolveBroadcasterCollisions(final Shape collidingShape, Class<?> collidingObjectClass ){
-		ArrayList<Command> outputCommands = new  ArrayList <Command>();
-		
-		//Make a slightly bigger rectangle because physics don't 
-		// allow you to actually move into another object
-		int proximity = 1;
-		Rectangle slightlyBiggerRect = new Rectangle(collidingShape.getX()-proximity,collidingShape.getY()-proximity,collidingShape.getWidth()+2*proximity,collidingShape.getHeight()+2*proximity);
-
-		
-		for (Broadcaster bcaster : broadcasters){
-
-			if (slightlyBiggerRect.intersects(bcaster.getShape())){
-				bcaster.onCollisionDo(collidingObjectClass, collidingShape);
-				ArrayList<Command> newCommands = bcaster.onCollisionBroadcast(collidingObjectClass, collidingShape);
-				outputCommands.addAll(newCommands);	
-//				System.out.println("Class type" + collidingObjectClass + " collided with" + bcaster);
-//				System.out.println("received commands: " + newCommands);
-			}
-		}
-		
-		
-		return outputCommands;
-	}
+	
 
 
 

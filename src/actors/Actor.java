@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import collisions.CollisionHandler;
+import collisions.ContextualCollisions;
 import collisions.PhysicalCollisionDetector;
 import render.ActorRenderer;
 import world.ObjectCreator;
@@ -79,13 +80,17 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		
 	}
 
-	public void setCollisionHandler(CollisionHandler collisionHandler, PhysicalCollisionDetector detector) {
+	public void setCollisionHandler(CollisionHandler collisionHandler, PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
 
 		status.setCollisionHandler(collisionHandler,detector);
 		
-		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(collisionHandler,this.getClass(), this.getShape());
+		
+		
+		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(this.getClass(), this.getShape());
 		commandProviderAggregator.removeListenersOfClass(bcp.getClass());
 		commandProviderAggregator.addProvider(bcp);
+		
+		contextuals.addListener(bcp);
 	}
 	
 

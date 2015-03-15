@@ -35,24 +35,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 
 	
 	
-	public void attemptInteract( int interactionType){
-		
-		if (!canInteract()){
-			return;
-		}
-		
-		//Get nearby objects to interact with
-		ArrayList<Interactive> objs = status.nearbyInteractives();
-		
-		//Interact, if possible
-		if (!objs.isEmpty()){
-			for (Interactive obj : objs){
-				obj.interact(interactionType, status);
-			}
-			status.gainEffect(Effect.EFFECT_INTERACTING, 20);
-			
-		}
-	}
+	
 	
 	
 	
@@ -63,10 +46,7 @@ public class PlayerActionEngine extends ActorActionEngine {
 
 
 
-	private boolean canInteract() {
-		
-		return !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
-	}
+	
 
 
 
