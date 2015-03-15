@@ -9,7 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import collisions.CollisionHandler;
 import collisions.ContextualCollisions;
 import collisions.PhysicalCollisionDetector;
 import render.ActorRenderer;
@@ -61,6 +60,8 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		//Do actions (depends on commandProviderAggregator)
 		engine.update();
 		
+		
+		
 	}
 
 	
@@ -75,12 +76,9 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator{
 		return status.hasEffect(Effect.EFFECT_DYING);
 	}
 
-	public void incorporateCollisionHandler(CollisionHandler collisionHandler) {
-		throw new UnsupportedOperationException("Not implemented!");
-		
-	}
+	
 
-	public void setCollisionHandler( PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
+	public void setCollisionHandlers( PhysicalCollisionDetector detector, ContextualCollisions contextuals) {
 
 		status.setCollisionHandler(detector);
 		

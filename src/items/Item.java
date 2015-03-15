@@ -355,6 +355,12 @@ public class Item extends StaticObject implements Interactive,Removeable{
 		return !this.isOnGround();
 	}
 
+	@Override
+	public boolean isAccessible(Status status) {
+		
+		return isNear(status.getRect());
+	}
+
 
 
 }

@@ -1,12 +1,15 @@
 package actionEngines;
 
 import gameobjects.Interactive;
+import gameobjects.Removeable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.SlickException;
 
+import world.Updater;
 import abilities.Ability;
 import abilities.AbilityObject;
 import actors.Effect;
@@ -27,8 +30,8 @@ public abstract class ActorActionEngine extends ActionEngine {
 	protected float runSpeed;
 	protected AbilitySlots abilitySlots;
 	private ArrayList<Object> objectsToCreate;
-	private ArrayList<Interactive> nearbyInteractives = new ArrayList<Interactive>();
-	
+	private ArrayList<Interactive> accessibleInteractives = new ArrayList<Interactive>();
+
 
 
 	public ActorActionEngine(CommandProviderAggregator listener, Status status, AbilitySlots slots, ArrayList<Object> objectsToCreate) {
@@ -117,10 +120,30 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 		doActions();
 		movePhysics();
+		updateAccessibleInteractives();
 
 	}
 
 	//////////////////////////
+
+	private void updateAccessibleInteractives() {
+
+
+
+		for (Iterator<Interactive> iterator = accessibleInteractives.iterator(); iterator.hasNext();) {
+			Interactive interactive = iterator.next();
+
+
+			if (!interactive.isAccessible(status)){
+
+				iterator.remove();
+			}
+		}
+	}
+
+
+
+
 
 	protected void movePhysics() {        
 
@@ -285,39 +308,41 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 	public void attemptInteract( int interactionType){
 
-		System.out.println(nearbyInteractives);
-		
+		System.out.println(accessibleInteractives);
+
 		if (!canInteract()){
 			return;
 		}
-		
-		
 
 
 
-		for (Interactive obj : nearbyInteractives){
+
+
+		for (Interactive obj : accessibleInteractives){
 			obj.interact(interactionType, status);
 		}
 		status.gainEffect(Effect.EFFECT_INTERACTING, 20);
 
-		nearbyInteractives.clear();
-		
+
+
+
+
 	}
 
 	private boolean canInteract() {
 		boolean output = !status.hasEffects(Effect.EFFECTS_PREVENTING_ACTION);
-		output = output && !nearbyInteractives.isEmpty();
+		output = output && !accessibleInteractives.isEmpty();
 
 		return output;
 	}
 
 
 
-	public void addNearbyInteractive(Interactive toAdd) {
-		if (!nearbyInteractives.contains(toAdd)){
-			this.nearbyInteractives.add(toAdd);
+	public void addAccessibleInteractive(Interactive toAdd) {
+		if (!accessibleInteractives.contains(toAdd)){
+			this.accessibleInteractives.add(toAdd);
 		}
-		
+
 	}
 
 

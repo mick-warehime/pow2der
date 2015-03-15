@@ -29,7 +29,7 @@ public class AddInteractiveCommand extends BasicCommand implements GenericComman
 	@Override
 	public void execute(ActionEngine engine){
 		if (engine instanceof ActorActionEngine){
-			((ActorActionEngine)engine).addNearbyInteractive(toAdd);
+			((ActorActionEngine)engine).addAccessibleInteractive(toAdd);
 		}
 
 

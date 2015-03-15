@@ -17,8 +17,9 @@ import actors.Status;
 public class Door extends BasicObject implements Interactive{
 	private boolean open;
 	private boolean northSouth;
-	private int proximity = 10;
 	private ArrayList<Actor> actors;
+	
+	private static final int INTERACTION_RANGE = 10;
 	
 	public Door(Shape doorShape, ArrayList<Actor> actors) throws SlickException {
 		this.actors  = actors;
@@ -61,16 +62,7 @@ public class Door extends BasicObject implements Interactive{
 	}
 
 
-	//Checks if an input shape is near the object's shape
-	public boolean isNear(Rectangle rectTest) {
-		
-		Rectangle slightlyBiggerRect = 
-				new Rectangle(shape.getX()-proximity,
-							shape.getY()-proximity,
-							shape.getWidth()+2*proximity,
-							shape.getHeight()+2*proximity);
-		return slightlyBiggerRect.intersects(rectTest);
-	}
+	
 
 
 	class DoorRenderer extends Renderer{
@@ -114,6 +106,31 @@ public class Door extends BasicObject implements Interactive{
 	public boolean isOpen() {
 		// TODO Auto-generated method stub
 		return open;
+	}
+
+
+
+	@Override
+	public boolean isAccessible(Status status) {
+		
+		return isNear(status.getRect());
+	}
+	
+	@Override
+	public boolean isNear(Shape shape2){
+		
+		
+		Rectangle slightlyBiggerRect = 
+				new Rectangle(shape.getX()-INTERACTION_RANGE,
+						shape.getY()-INTERACTION_RANGE,
+						shape.getWidth()+2*INTERACTION_RANGE,
+						shape.getHeight()+2*INTERACTION_RANGE);
+		
+		boolean output = slightlyBiggerRect.intersects(shape2);
+		
+		
+		return output;
+		
 	}
 
 

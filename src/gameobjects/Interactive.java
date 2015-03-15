@@ -11,5 +11,6 @@ public interface Interactive {
 
 	
 	public void interact(int interactionType, Status status);
+	public boolean isAccessible(Status status);
 
 }

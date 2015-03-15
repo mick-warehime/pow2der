@@ -6,10 +6,7 @@ import gameobjects.Broadcaster;
 import gameobjects.Interactive;
 
 import java.util.ArrayList;
-import java.util.Observable;
-
 import org.newdawn.slick.command.Command;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import commands.AddInteractiveCommand;
