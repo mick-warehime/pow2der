@@ -32,8 +32,6 @@ public class Item extends StaticObject implements Interactive,Removeable, Broadc
 
 
 
-
-
 	private ItemProperties properties = new ItemProperties();
 	private ItemLocation location = new ItemLocation(this);
 	private static float SPRITE_DRAW_SCALE = 0.6f;
