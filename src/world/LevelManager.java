@@ -133,9 +133,7 @@ public class LevelManager {
 			
 			ArrayList<Stairs> stairsUp = levels.get(nextLevel).getStairsUp();
 			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairsDown();
-			
-			System.out.println(stairsDown);
-			
+						
 			int xPos = (int) stairsUp.get(0).getShape().getX();
 			int yPos = (int) stairsUp.get(0).getShape().getY();
 			setLevel(nextLevel,xPos,yPos);

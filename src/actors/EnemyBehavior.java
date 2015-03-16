@@ -23,6 +23,10 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 	}
 
+	public BehaviorProfile getBehaviorProfile(){
+		return behaviorProfile;
+	}
+	
 	public void determine(){
 
 		commandStack.clear();
