@@ -2,6 +2,7 @@ package actionEngines;
 
 import java.util.ArrayList;
 
+import actors.Effect;
 import actors.Status;
 import commands.CommandProviderAggregator;
 
@@ -17,5 +18,14 @@ public class EnemyActionEngine extends ActorActionEngine {
 		this.runSpeed = 3;
 		
 	}
+	
+	@Override
+	public void incrementHP(int increment) {
+		int agroAttackTime = 50000;
+		status.gainEffect(Effect.AGROED,agroAttackTime);
+
+		status.incrementHP(increment);
+	}
+
 
 }

@@ -296,9 +296,8 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	public void incrementHP(int increment) {
-		int agroAttackTime = 500;
+ 		
 		status.incrementHP(increment);
-		status.gainEffect(Effect.AGROED,agroAttackTime);
 	}
 
 

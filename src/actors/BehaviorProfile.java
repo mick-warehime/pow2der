@@ -10,25 +10,24 @@ public class BehaviorProfile {
 	
 	private float attackDistance;
 	private int attackCooldown;
+	private int agroOnAttackTime;
 	private int updateSearchDirectionTime;
 	private boolean agroOnSight;
 	
 	public BehaviorProfile(int enemyID){
+		agroDistance = 200;
+		attackDistance = 150;
+		attackCooldown = 120;
+		agroTime = 60;
+		updateSearchDirectionTime = 10;
+		agroOnAttackTime = 50000;
+		
+		// only difference between enemies is 
 		switch(enemyID){
-		case 0:
-			agroDistance = 200;
-			attackDistance = 150;
-			attackCooldown = 120;
-			agroTime = 60;
-			updateSearchDirectionTime = 10;
+		case 0:			
 			agroOnSight = false;
 			break;
 		case 1:
-			agroDistance = 200;
-			attackDistance = 150;
-			attackCooldown = 120;
-			agroTime = 60;
-			updateSearchDirectionTime = 10;
 			agroOnSight = true;
 			break;
 		}
@@ -37,6 +36,9 @@ public class BehaviorProfile {
 
 	public int getAgroTime(){
 		return agroTime;
+	}
+	public int getAgroOnAttackTime(){
+		return agroOnAttackTime;
 	}
 	
 	public int getChaseTime(){

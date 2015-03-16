@@ -226,7 +226,7 @@ public class Level {
 
 	}
 	public void removeStairsDown(){
-		stairsUp = new ArrayList<Stairs>();
+		stairsDown = new ArrayList<Stairs>();
 
 		HashSet<Object> toRemove = new HashSet<Object>();
 

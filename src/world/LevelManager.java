@@ -116,11 +116,13 @@ public class LevelManager {
 
 		Level level = levels.get(currentLevel); 
 		int stairClimb = level.checkStairs();
+		int nextLevel = currentLevel+stairClimb;
+		
 		if(stairClimb == 1){
 			// otherwise it constantly thinks you are climbing 
 			levels.get(currentLevel).resetStairs();
 
-			ArrayList<Stairs> stairsDown = levels.get(currentLevel+stairClimb).getStairsDown();
+			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairsDown();
 			int xPos = (int) stairsDown.get(0).getShape().getX();
 			int yPos = (int) stairsDown.get(0).getShape().getY();
 
@@ -128,10 +130,15 @@ public class LevelManager {
 		} else if(stairClimb == -1){
 			// otherwise it constantly thinks you are climbing 
 			levels.get(currentLevel).resetStairs();
-			ArrayList<Stairs> stairsUp = levels.get(currentLevel-1).getStairsUp();
+			
+			ArrayList<Stairs> stairsUp = levels.get(nextLevel).getStairsUp();
+			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairsDown();
+			
+			System.out.println(stairsDown);
+			
 			int xPos = (int) stairsUp.get(0).getShape().getX();
 			int yPos = (int) stairsUp.get(0).getShape().getY();
-			setLevel(currentLevel-1,xPos,yPos);
+			setLevel(nextLevel,xPos,yPos);
 		}
 	}
 
