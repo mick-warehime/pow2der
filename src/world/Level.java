@@ -34,52 +34,52 @@ public class Level {
 
 	private int startX;
 	private int startY;
-	
+
 	private int height;
 	private int width;
 
 	private int[][] map;
-	
+
 	private ArrayList<Actor> actors;
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Updater> updaters;
 	private ArrayList<ObjectCreator> creators;
 	private ArrayList<CollidesWithSolids> colliders;
-	
+
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
-	
+
 	private PhysicalCollisionDetector detector;
 	private ArrayList<Stairs> stairsUp;
 	private ArrayList<Stairs> stairsDown;
-	
-	
 
-	
+
+
+
 
 	public Level(ItemBuilder itemBuilder, int width, int height, Player player) throws SlickException {
-		
-		
+
+
 		this.width = width;
 		this.height = height;
-		
+
 		buildNewLevel(itemBuilder, player);
-		
- 		
-		
+
+
+
 		this.detector = new PhysicalCollisionDetector(walls,basicObjects);
-		
+
 		for (CollidesWithSolids col : colliders){
 			col.assignCollisionDetector(detector);
 		}
-		
+
 	};
-	
+
 	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
-		
+
 		this.actors = new ArrayList<Actor>(); 
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
@@ -90,7 +90,7 @@ public class Level {
 		this.stairsDown = new ArrayList<Stairs>();
 		// build a new Level
 		LevelBuilder levelBuilder = new LevelBuilder(width,height);
-		
+
 		// store the shapes for doors/walls/floors
 		walls = levelBuilder.getWalls();
 		doors = levelBuilder.getDoors();
@@ -98,25 +98,25 @@ public class Level {
 		halls = levelBuilder.getHalls();
 
 		map = levelBuilder.getMap();
-		
-		
+
+
 
 		// poop out the starting position
 		int[] startPosition = levelBuilder.getStartingPosition();
 		startX = startPosition[0];
 		startY = startPosition[1];
-		
+
 		// build items using the levelbuilder to get the random locations
 		for(int[] itemLoc : levelBuilder.randomLocationsAllRooms(0.75,3)){
 			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
 		}
-		
+
 		for(int[] enemyLoc : levelBuilder.randomLocationsAllRooms(1,2)){
 			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
 		}
-		
+
 		// build two sets of stairs to the next world
- 		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
+		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
 			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],false);
 			stairsUp.add(stairs);
 			addObject(stairs);
@@ -126,18 +126,18 @@ public class Level {
 			stairsDown.add(stairs);
 			addObject(stairs);
 		}
-		
-		
+
+
 		for(Shape doorShape : doors){
 			addObject(new Door(doorShape,  actors));
 		}
-		
-				
-	}
-	
-	
 
-	
+
+	}
+
+
+
+
 	public void removeFromAllLists(Object obj){
 		removeFromList(obj,actors);
 		removeFromList(obj,basicObjects);
@@ -147,7 +147,7 @@ public class Level {
 		removeFromList(obj,creators);
 		removeFromList(obj,colliders);
 	}
-	
+
 	private void removeFromList(Object obj, ArrayList<?> list){
 		if (list.contains(obj)){
 			list.remove(obj);
@@ -159,7 +159,7 @@ public class Level {
 		for (Updater updater : updaters){
 			updater.update();
 		}
-		
+
 		ArrayList<Object> objsToAdd = new ArrayList<Object>();
 		for (Iterator<ObjectCreator> iterator = creators.iterator(); iterator.hasNext();) {
 			ObjectCreator creator = iterator.next();
@@ -170,16 +170,16 @@ public class Level {
 				}
 			}
 		}		
-		
+
 		for(Object obj : objsToAdd){
 			addObject(obj);
 		}
-		
+
 		checkAndRemoveRemovables();
-		
+
 		checkStairs();
 	}
-	
+
 	public void resetStairs(){
 		for(Stairs stairs : stairsUp){
 			stairs.setClimbed(false);
@@ -188,7 +188,7 @@ public class Level {
 			stairs.setClimbed(false);
 		}
 	}
-	
+
 	public int checkStairs(){
 		for (BasicObject basic : basicObjects){
 			if (basic instanceof Stairs){
@@ -200,25 +200,60 @@ public class Level {
 		}
 		return 0;
 	}
-	
+
 	public ArrayList<Stairs> getStairsUp(){
 		return stairsUp;
 	}
 	public ArrayList<Stairs> getStairsDown(){
 		return stairsDown;
 	}
+	public void removeStairsUp(){
+		stairsUp = new ArrayList<Stairs>();
+
+		HashSet<Object> toRemove = new HashSet<Object>();
+
+		for(BasicObject obj: basicObjects){
+			if(obj instanceof Stairs){
+				if( !((Stairs) obj).isStairsDown()){
+					toRemove.add(obj);
+				}
+			}
+		}
+
+		for (Object obj : toRemove){
+			removeFromAllLists(obj);
+		}
+
+	}
+	public void removeStairsDown(){
+		stairsUp = new ArrayList<Stairs>();
+
+		HashSet<Object> toRemove = new HashSet<Object>();
+
+		for(BasicObject obj: basicObjects){
+			if(obj instanceof Stairs){
+				if( ((Stairs) obj).isStairsDown()){
+					toRemove.add(obj);
+				}
+			}
+		}
+
+		for (Object obj : toRemove){
+			removeFromAllLists(obj);
+		}
+	}
 
 
 	private void checkAndRemoveRemovables() {
-		
+
 		HashSet<Object> toRemove = new HashSet<Object>();
-		
+
 		for (Actor actor: actors){ 
 			if (actor.shouldRemove()){
 				toRemove.add(actor);
 			}
 		}
-		
+
 		for (Broadcaster bcaster : broadcasters){
 			if (bcaster instanceof Removeable){
 				if (((Removeable) bcaster).shouldRemove()){
@@ -226,7 +261,7 @@ public class Level {
 				}
 			}
 		}
-		
+
 		for (BasicObject basic : basicObjects){
 			if (basic instanceof Removeable){
 				if (((Removeable) basic).shouldRemove()){
@@ -234,7 +269,7 @@ public class Level {
 				}
 			}
 		}
-		
+
 		for (Updater obj : updaters){
 			if (obj instanceof Removeable){
 				if (((Removeable) obj).shouldRemove()){
@@ -242,7 +277,7 @@ public class Level {
 				}
 			}
 		}
-		
+
 		for (ObjectCreator obj: creators){
 			if (obj instanceof Removeable){
 				if (((Removeable) obj).shouldRemove()){
@@ -250,14 +285,14 @@ public class Level {
 				}
 			}
 		}
-		
+
 		for (Object obj : toRemove){
 			removeFromAllLists(obj);
 			((Removeable)obj).onRemoveDo();
 		}
-		
-		
-		
+
+
+
 	}
 
 	public void render(Graphics g, int offsetX, int offsetY){		
@@ -276,7 +311,7 @@ public class Level {
 	public ArrayList<Shape> getWalls(){
 		return walls;
 	}
-	
+
 	public ArrayList<Shape> getClosedDoors(){
 		ArrayList<Shape> closedDoors = new ArrayList<Shape>();
 		for(BasicObject obj: basicObjects){
@@ -284,7 +319,7 @@ public class Level {
 				if(!((Door) obj).isOpen()){
 					closedDoors.add(obj.getShape());	
 				}
-			
+
 		}
 		return closedDoors;
 	}
@@ -315,7 +350,7 @@ public class Level {
 	public int getWidth(){
 		return width;
 	}
-	
+
 	public int[][] getMap(){
 		return map;
 	}
@@ -341,7 +376,7 @@ public class Level {
 			this.colliders.add((CollidesWithSolids) obj);
 			((CollidesWithSolids) obj).assignCollisionDetector(detector);
 		}
-		
+
 	}
 
 

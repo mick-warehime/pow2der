@@ -160,7 +160,9 @@ public class Stairs extends BasicObject implements Interactive, Broadcaster{
 		return this.interactionRange;
 	}
 
-
+	public boolean isStairsDown(){
+		return stairsDown;
+	}
 
 
 

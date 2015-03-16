@@ -45,7 +45,10 @@ public class LevelManager {
 		for(int l = 0; l < numLevels; l++){
 			newLevel(levelWidth,levelHeight);
 		}
-
+		
+		levels.get(0).removeStairsDown();
+		levels.get(numLevels-1).removeStairsUp();
+		
 
 		setLevel(0,levels.get(0).getStartX(),levels.get(0).getStartY());
 
