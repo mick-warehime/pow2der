@@ -73,7 +73,7 @@ public class LevelManager {
 
 		levelStaticRenderer = new LevelStaticRenderer(level);
 
-
+		level.assignToItems(currentLevelData);
 	}
 
 

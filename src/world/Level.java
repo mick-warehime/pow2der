@@ -116,10 +116,7 @@ public class Level {
 		}
 		
 		// build two sets of stairs to the next world
-		
-		
-//		for(int[] stairLoc : levelBuilder.randomLocationsNRooms(1,1,2)){
-		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
+ 		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
 			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],false);
 			stairsUp.add(stairs);
 			addObject(stairs);
