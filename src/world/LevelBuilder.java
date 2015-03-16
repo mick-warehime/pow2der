@@ -61,7 +61,7 @@ public class LevelBuilder {
 	private ArrayList<Shape> doors;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
-	
+
 	private int startingRoom;
 
 
@@ -78,7 +78,7 @@ public class LevelBuilder {
 		roomMin = 3;
 		roomMax = 7;
 
-		numRoomPuts = 20;		
+		numRoomPuts = 50;		
 
 		// use 1000 for debugging and systemtime for normal use
 		//		randomSeed = 1000;   
@@ -101,14 +101,14 @@ public class LevelBuilder {
 		reduceMapGroups(map);
 
 		scaleMap();
-		
+
 		removeBogusWalls();
-		
+
 		createShapes(MAP);
 		createDoorShapes(map);
 
-//						printMap(map);
-//				printMap(MAP);
+		//						printMap(map);
+		//				printMap(MAP);
 
 
 
@@ -120,10 +120,76 @@ public class LevelBuilder {
 		//      testGetDir();
 	}
 
-	public ArrayList<int[]> randomRoomLocations(double placeProbability, int placeAttempts){
+	public ArrayList<int[]> randomLocationsStartRoom(){
+
+		// pick N random rooms
+		// attemp placeAttemps times to get a random location
+		// use placeProbability to determine if a randomLocation should be placed
 
 
-		ArrayList<int[]> itemLocations = new ArrayList<int[]>();
+		ArrayList<int[]> randomLocations = new ArrayList<int[]>();
+
+		//		for every room in the map this routine tries to place an item placeAttempts time
+		//		if a random number is smaller than placeProbability then an item is placed randomly in that room
+
+
+
+		// start in the center of a random room		
+
+		int topLeftX = rooms[startingRoom][0];
+		int topLeftY = rooms[startingRoom][1];
+		int width = rooms[startingRoom][2];
+		int height = rooms[startingRoom][3];
+
+		int xPos = rand.nextInt((width-1)*World.TILE_WIDTH)+topLeftX*World.TILE_WIDTH;
+		int yPos = rand.nextInt((height-1)*World.TILE_WIDTH)+topLeftY*World.TILE_WIDTH;
+
+		randomLocations.add(new int[] {xPos*SCALING, yPos*SCALING});
+
+
+
+		return randomLocations;
+
+	}
+
+	public ArrayList<int[]> randomLocationsNRooms(double placeProbability, int placeAttempts, int N){
+
+		// pick N random rooms
+		// attemp placeAttemps times to get a random location
+		// use placeProbability to determine if a randomLocation should be placed
+
+
+		ArrayList<int[]> randomLocations = new ArrayList<int[]>();
+
+		//		for every room in the map this routine tries to place an item placeAttempts time
+		//		if a random number is smaller than placeProbability then an item is placed randomly in that room
+
+		for(int i = 0; i < N; i++){
+			int randomRoomIndex = rand.nextInt(numRooms);
+			for(int j = 0; j<placeAttempts; j++){
+				if(placeProbability > Math.random()){
+					// start in the center of a random room		
+
+					int topLeftX = rooms[randomRoomIndex][0];
+					int topLeftY = rooms[randomRoomIndex][1];
+					int width = rooms[randomRoomIndex][2];
+					int height = rooms[randomRoomIndex][3];
+
+					int xPos = rand.nextInt((width-1)*World.TILE_WIDTH)+topLeftX*World.TILE_WIDTH;
+					int yPos = rand.nextInt((height-1)*World.TILE_WIDTH)+topLeftY*World.TILE_WIDTH;
+
+					randomLocations.add(new int[] {xPos*SCALING, yPos*SCALING});
+				}
+			}
+		}
+
+		return randomLocations;
+
+	}
+	public ArrayList<int[]> randomLocationsAllRooms(double placeProbability, int placeAttempts){
+
+
+		ArrayList<int[]> randomLocations = new ArrayList<int[]>();
 
 		//		for every room in the map this routine tries to place an item placeAttempts time
 		//		if a random number is smaller than placeProbability then an item is placed randomly in that room
@@ -144,18 +210,16 @@ public class LevelBuilder {
 					int xPos = rand.nextInt((width-1)*World.TILE_WIDTH)+topLeftX*World.TILE_WIDTH;
 					int yPos = rand.nextInt((height-1)*World.TILE_WIDTH)+topLeftY*World.TILE_WIDTH;
 
-					map[(int) (topLeftY + Math.floor(height/2)+1)][(int) (topLeftX + Math.floor(width/2)+1)] =5;
-
-
-
-					itemLocations.add(new int[] {xPos*SCALING, yPos*SCALING});
+					randomLocations.add(new int[] {xPos*SCALING, yPos*SCALING});
 				}
 			}
 		}
 
-		return itemLocations;
+		return randomLocations;
 
 	}
+
+
 
 
 	// change this to get a point in a random room

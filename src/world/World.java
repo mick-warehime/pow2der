@@ -1,12 +1,8 @@
 package world;
 
-import items.ItemBuilder;
-import items.ItemParser;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -16,33 +12,27 @@ import org.newdawn.slick.SpriteSheet;
 import org.xml.sax.SAXException;
 
 import collisions.ContextualCollisions;
-import collisions.PhysicalCollisionDetector;
-import render.LevelStaticRenderer;
-import actors.Actor;
-import actors.Player;
+ import render.LevelStaticRenderer;
+ import actors.Player;
 
 public class World {
 	public static SpriteSheet spriteSheet;
 
-	private List<Level> levels = new ArrayList<Level>();
-	private Player terri;
-	private ItemBuilder itemBuilder;
-
-	private CurrentLevelData currentLevelData = new CurrentLevelData();
-
-	private LevelStaticRenderer levelStaticRenderer;
+ 	private Player terri;
+ 
 
 	private ScreenPositionTracker screenTracker;
 
 	private MousePositionTracker mouseTracker;
+	
+	private LevelManager levelManager;
 
 	public final static int TILE_HEIGHT = 16;
 	public final static int TILE_WIDTH = 16;
 	
 	private boolean gameOver;
 
-	private ContextualCollisions contextuals;
-
+ 
 	public World(int [] mouseScreenPosition) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
 		spriteSheet = new SpriteSheet("data/metroidtiles.png",16,16);
@@ -50,22 +40,14 @@ public class World {
 		this.screenTracker = new ScreenPositionTracker();
 		this.mouseTracker = new MousePositionTracker(mouseScreenPosition);
 
-		// construct item builders
-		
-		ItemParser parser = new ItemParser();
-		
-		this.itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
 
 		gameOver = false;
 		
 		terri = new Player(mouseTracker.getMouseLevelPosition());
 
-		// width and height must be ODD
-		newLevel(31,21);
+		levelManager = new LevelManager(terri,5);
+	
 
-		currentLevelData.setCurrentLevel(levels.get(0));
-
-		
 
 	}
 
@@ -75,8 +57,9 @@ public class World {
 
 		
 
-		Level currentLevel = currentLevelData.getCurrentLevel();
-		
+		Level currentLevel = levelManager.getCurrentLevel();
+		LevelStaticRenderer levelStaticRenderer = levelManager.getRenderer(); 
+				
 		int maxX = currentLevel.getWidth()*LevelBuilder.SCALING*World.TILE_HEIGHT;
 		int maxY = currentLevel.getHeight()*LevelBuilder.SCALING*World.TILE_HEIGHT;
 		screenTracker.setLevelCoordinates((int) terri.getX(),(int)terri.getY(), maxX, maxY);
@@ -97,43 +80,18 @@ public class World {
 
 	public void update() throws SlickException, IOException {
 
-		contextuals.update();
 		mouseTracker.updateMousePosition();
-		currentLevelData.getCurrentLevel().update();
-
+		levelManager.update();
 		
 		if (terri.shouldRemove()){
 			System.out.println("Terri is dead!");
 			gameOver = true;
 		}
-
+		
+	 
 
 	}
-
-	public void newLevel(int levelWidth, int levelHeight) throws SlickException{
-
-		Level level = new Level(itemBuilder, levelWidth, levelHeight, terri);
-
-		level.assignToItems(currentLevelData);
-
-		levelStaticRenderer = new LevelStaticRenderer(level);
-
-		levels.add(level);		
-
-		
-		
-		this.contextuals = new ContextualCollisions(level);
-		for (Actor dude : level.getActors()){
-			dude.setCollisionHandlers(contextuals);
-			
-		}
-
-		terri.setPosition(level.getStartX(),  level.getStartY());
-		terri.setCollisionHandlers(contextuals);
-		
-		level.addObject(terri);
-
-	}
+	
 
 
 	public boolean gameOver(){

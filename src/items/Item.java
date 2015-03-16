@@ -112,7 +112,6 @@ public class Item extends StaticObject implements Interactive,Removeable, Broadc
 
 	public void setCurrentLevelData(CurrentLevelData currentLevelData) {
 		location.currentLevelData = currentLevelData;
-
 	}
 
 	/* Handles item's location */

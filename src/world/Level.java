@@ -2,6 +2,7 @@ package world;
 
 import gameobjects.BasicObject;
 import gameobjects.Door;
+import gameobjects.Stairs;
 import interfaces.Broadcaster;
 import interfaces.CollidesWithSolids;
 import interfaces.ObjectCreator;
@@ -52,6 +53,8 @@ public class Level {
 	private ArrayList<Shape> halls;
 	
 	private PhysicalCollisionDetector detector;
+	private ArrayList<Stairs> stairsUp;
+	private ArrayList<Stairs> stairsDown;
 	
 	
 
@@ -64,6 +67,8 @@ public class Level {
 		this.height = height;
 		
 		buildNewLevel(itemBuilder, player);
+		
+ 		
 		
 		this.detector = new PhysicalCollisionDetector(walls,basicObjects);
 		
@@ -81,7 +86,8 @@ public class Level {
 		this.updaters = new ArrayList<Updater>();
 		this.creators = new ArrayList<ObjectCreator>();
 		this.colliders = new ArrayList<CollidesWithSolids>();
-		
+		this.stairsUp = new ArrayList<Stairs>();
+		this.stairsDown = new ArrayList<Stairs>();
 		// build a new Level
 		LevelBuilder levelBuilder = new LevelBuilder(width,height);
 		
@@ -101,12 +107,27 @@ public class Level {
 		startY = startPosition[1];
 		
 		// build items using the levelbuilder to get the random locations
-		for(int[] itemLoc : levelBuilder.randomRoomLocations(0.75,3)){
+		for(int[] itemLoc : levelBuilder.randomLocationsAllRooms(0.75,3)){
 			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
 		}
 		
-		for(int[] enemyLoc : levelBuilder.randomRoomLocations(2,1)){
+		for(int[] enemyLoc : levelBuilder.randomLocationsAllRooms(1,2)){
 			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
+		}
+		
+		// build two sets of stairs to the next world
+		
+		
+//		for(int[] stairLoc : levelBuilder.randomLocationsNRooms(1,1,2)){
+		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
+			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],false);
+			stairsUp.add(stairs);
+			addObject(stairs);
+		}
+		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
+			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],true);
+			stairsDown.add(stairs);
+			addObject(stairs);
 		}
 		
 		
@@ -159,10 +180,36 @@ public class Level {
 		
 		checkAndRemoveRemovables();
 		
-
+		checkStairs();
 	}
 	
+	public void resetStairs(){
+		for(Stairs stairs : stairsUp){
+			stairs.setClimbed(false);
+		}
+		for(Stairs stairs : stairsDown){
+			stairs.setClimbed(false);
+		}
+	}
 	
+	public int checkStairs(){
+		for (BasicObject basic : basicObjects){
+			if (basic instanceof Stairs){
+				int stairClimb = ((Stairs) basic).climbed();
+				if(stairClimb!=0){
+					return stairClimb;
+				}
+			}
+		}
+		return 0;
+	}
+	
+	public ArrayList<Stairs> getStairsUp(){
+		return stairsUp;
+	}
+	public ArrayList<Stairs> getStairsDown(){
+		return stairsDown;
+	}
 
 
 	private void checkAndRemoveRemovables() {
@@ -297,7 +344,7 @@ public class Level {
 			this.colliders.add((CollidesWithSolids) obj);
 			((CollidesWithSolids) obj).assignCollisionDetector(detector);
 		}
-
+		
 	}
 
 
