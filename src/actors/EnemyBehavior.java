@@ -80,13 +80,17 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	}
 
 
+	private boolean movesTowardPlayer(){
+		return status.hasEffect(Effect.AGROED) & knowledge.playerIsVisible();
+	}
+	
 	private void decideMovement(){
 
 
 		// if the dude can see the player chase him, otherwise keep going in same direction
 		float[] currentDirection = status.getFacingDirection();
 
-		if(status.hasEffect(Effect.AGROED)){
+		if(movesTowardPlayer()){
 
 			// only update 
 			currentDirection = knowledge.directionToPlayer();

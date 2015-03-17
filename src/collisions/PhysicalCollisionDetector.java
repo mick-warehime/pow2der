@@ -9,40 +9,38 @@ import org.newdawn.slick.geom.Shape;
 
 /*
  * Given a shape, says if that shape is collided with any other 
- * physical shapes (blocks or basicObects that can collide)
+ * physical shapes (walls or basicObects that can collide)
  * 
  */
 
 public class PhysicalCollisionDetector  {
 
-	private ArrayList<Shape> blocks;
+	private ArrayList<Shape> walls;
 	
 	private ArrayList<BasicObject> basicObjects;
 
 
-	
-
-	public PhysicalCollisionDetector( ArrayList<Shape> blocks,  ArrayList<BasicObject> basicObjects){
-		this.blocks = blocks;
+	public PhysicalCollisionDetector( ArrayList<Shape> walls,  ArrayList<BasicObject> basicObjects){
+		this.walls = walls;
 		this.basicObjects = basicObjects;
-		
 	}
 	
 
 
-//Checks for collisions with blocks and game Objects
+//Checks for collisions with walls and game Objects
 	public boolean isCollidedWithSolids(Shape shape){	
 		boolean answer = false;
-		//	check if collided with permanent solid blocks	
-		answer = answer || isCollidedWithBlocks(shape);
+		//	check if collided with permanent solid walls	
+		answer = answer || isCollidedWithWalls(shape);
 		// check if collided with solid etherable Objects
 		answer = answer || isCollidedWithBasicObjects(shape);
 
 		return answer;
 	}
 
-	private boolean isCollidedWithBlocks(Shape shape){
-		for(Shape r: blocks ){
+	private boolean isCollidedWithWalls(Shape shape){
+		
+		for(Shape r: walls ){
 			if(shape.intersects(r)){
 				return true;
 			}	

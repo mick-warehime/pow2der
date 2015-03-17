@@ -261,7 +261,8 @@ public class LevelBuilder {
 	public int[][] getMap(){
 		return MAP;
 	}
-	public int[][] getMiniMap(){
+	
+	public int[][] getUnscaledMap(){
 		return map;
 	}
 

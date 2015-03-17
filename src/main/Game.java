@@ -90,8 +90,6 @@ public class Game extends BasicGame {
 		if( world.gameOver()){
 			newGame();
 		}
-		
-		
 
 	}
 

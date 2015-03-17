@@ -68,8 +68,6 @@ public class Level {
 
 		buildNewLevel(itemBuilder, player);
 
-
-
 		this.detector = new PhysicalCollisionDetector(walls,basicObjects);
 
 		for (CollidesWithSolids col : colliders){
@@ -199,6 +197,10 @@ public class Level {
 			}
 		}
 		return 0;
+	}
+	
+	public PhysicalCollisionDetector getDetector(){
+		return detector;
 	}
 
 	public ArrayList<Stairs> getStairsUp(){

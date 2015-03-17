@@ -20,13 +20,6 @@ public class Player extends Actor {
 
 	public Player(int [] mousePosition) throws SlickException {
 
- 			
-		
-		
-		
-		
-		
-		
 		Rectangle rect = new Rectangle(0f, 0f, 28, 28);
 		status = new Status(rect);
 		
