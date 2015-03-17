@@ -16,20 +16,20 @@ import org.newdawn.slick.geom.Shape;
 public class PhysicalCollisions  {
 
 	private ArrayList<Shape> blocks;
-	
+
 	private ArrayList<BasicObject> basicObjects;
 
 
-	
+
 
 	public PhysicalCollisions( ArrayList<Shape> blocks,  ArrayList<BasicObject> basicObjects){
 		this.blocks = blocks;
 		this.basicObjects = basicObjects;
 	}
-	
 
 
-//Checks for collisions with blocks and game Objects
+
+	//Checks for collisions with blocks and game Objects
 	public boolean isCollidedWithSolids(Shape shape){	
 		boolean answer = false;
 		//	check if collided with permanent solid blocks	
@@ -48,13 +48,13 @@ public class PhysicalCollisions  {
 		}
 		return false;
 	}
-	
+
 	private boolean isCollidedWithBasicObjects(Shape shape){
-		
+
 		for(BasicObject obj: basicObjects){
 			// don't check with its own shape and dont check with objects that are currently being held
 			assert (obj.getShape() != null) : "Error! Object" + obj + " has no shape!";
-			
+
 			if(obj.getShape() != shape){
 				if(obj.canCollide()){
 					if(shape.intersects(obj.getShape())){
