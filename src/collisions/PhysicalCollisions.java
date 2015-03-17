@@ -16,7 +16,6 @@ import org.newdawn.slick.geom.Shape;
 public class PhysicalCollisions  {
 
 	private ArrayList<Shape> blocks;
-
 	private ArrayList<BasicObject> basicObjects;
 
 

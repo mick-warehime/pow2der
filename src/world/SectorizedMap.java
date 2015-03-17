@@ -11,19 +11,17 @@ public class SectorizedMap {
 	private ArrayList<Sector> activeSectors;
 	private int sectorSize;
 
-	public SectorizedMap(int[][] map, int sectorSize){
+	public SectorizedMap(int[][] tileMap, int sectorSize){
 		this.sectorSize = sectorSize;
-		generateSectors(map,sectorSize);
+		generateSectors(tileMap,sectorSize);
 		activeSectors = new ArrayList<Sector>();
 	}
 
-	private void generateSectors(int[][] map, int size){
+	private void generateSectors(int[][] tileMap, int size){
 		sectors = new ArrayList<Sector>();
 		
-		int numRows = map.length;
-		int numCols = map[0].length;
-
-		
+		int numRows = tileMap.length;
+		int numCols = tileMap[0].length;
 
 		for(int col= 0; col < numCols; col+=size){
 

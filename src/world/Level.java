@@ -52,7 +52,7 @@ public class Level {
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
 
-	private PhysicalCollisions detector;
+	private PhysicalCollisions physicalCollisions;
 	private ArrayList<Stairs> stairsUp;
 	private ArrayList<Stairs> stairsDown;
 
@@ -70,10 +70,10 @@ public class Level {
 
 
 
-		this.detector = new PhysicalCollisions(walls,basicObjects);
+		this.physicalCollisions = new PhysicalCollisions(walls,basicObjects);
 
 		for (CollidesWithSolids col : colliders){
-			col.assignCollisionDetector(detector);
+			col.assignCollisionDetector(physicalCollisions);
 		}
 
 	};
@@ -161,8 +161,7 @@ public class Level {
 		}
 
 		ArrayList<Object> objsToAdd = new ArrayList<Object>();
-		for (Iterator<ObjectCreator> iterator = creators.iterator(); iterator.hasNext();) {
-			ObjectCreator creator = iterator.next();
+		for (ObjectCreator creator : creators) {
 
 			if (creator.hasObjects()){
 				for (Object obj: creator.popObjects()){
@@ -374,7 +373,7 @@ public class Level {
 		}
 		if (obj instanceof CollidesWithSolids){
 			this.colliders.add((CollidesWithSolids) obj);
-			((CollidesWithSolids) obj).assignCollisionDetector(detector);
+			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
 		}
 
 	}
@@ -389,6 +388,8 @@ public class Level {
 		}
 
 	}
+	
+	
 }
 
 
