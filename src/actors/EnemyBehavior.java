@@ -36,7 +36,6 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		
 		decideAttack();
 
-
 		decideMovement();
 
 
@@ -59,7 +58,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		if(status.hasEffects(Effect.EFFECTS_PREVENTING_MOVEMENT)){
 			return false;
 		}
-		if(!status.hasEffect(Effect.AGROED)){
+		if(!status.hasEffect(Effect.EFFECT_AGROED)){
 			return false;
 		}
 
@@ -69,8 +68,8 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 	private void getsAgro(){
 		
-		if(behaviorProfile.getsAgro(knowledge)){
-			status.gainEffect(Effect.AGROED,behaviorProfile.getAgroTime());
+		if(behaviorProfile.getsAgro(knowledge, status)){
+			status.gainEffect(Effect.EFFECT_AGROED,behaviorProfile.getAgroTime());
 		}
 
 	}
@@ -81,7 +80,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 
 	private boolean movesTowardPlayer(){
-		return status.hasEffect(Effect.AGROED) & knowledge.playerIsVisible();
+		return status.hasEffect(Effect.EFFECT_AGROED) & knowledge.playerIsVisible();
 	}
 	
 	private void decideMovement(){

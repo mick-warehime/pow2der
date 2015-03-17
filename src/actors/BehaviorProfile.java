@@ -53,16 +53,22 @@ public class BehaviorProfile {
 		return agroDistance;
 	}
 
-	public int getAttackCooldown() {
+	public int getAttackCooldown() {		 
 		return attackCooldown;
 	}
 
 
-	public boolean getsAgro(Knowledge knowledge) {
+	public boolean getsAgro(Knowledge knowledge, Status status) {
+		boolean getsAgro = false;
 
-		return knowledge.playerIsVisible() 
+		// can the guy see me and does he care
+		getsAgro = getsAgro |( knowledge.playerIsVisible() 
 				& knowledge.distToPlayer() < agroDistance
-				& agroOnSight;
+				& agroOnSight);
+		
+		getsAgro = getsAgro | status.hasEffect(Effect.EFFECT_LOSTHP);
+		
+		return getsAgro;
 	}
 	
 	

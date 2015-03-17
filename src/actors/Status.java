@@ -76,7 +76,12 @@ public class Status {
 		if (hp<=0){
 			gainEffect(Effect.EFFECT_DYING,1);
 		}
-		
+		if (increment<0){
+			gainEffect(Effect.EFFECT_LOSTHP,1);
+		}
+		if (increment>0){
+			gainEffect(Effect.EFFECT_GAINEDHP,1);
+		}
 		
 	}
 	

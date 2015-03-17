@@ -23,13 +23,6 @@ public class EnemyActionEngine extends ActorActionEngine {
 		this.behaviorProfile = behaviorProfile;
 		
 	}
-	
-	@Override
-	public void incrementHP(int increment) {
- 		status.gainEffect(Effect.AGROED,behaviorProfile.getAgroOnAttackTime());
-
-		status.incrementHP(increment);
-	}
 
 
 }
