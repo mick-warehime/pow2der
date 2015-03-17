@@ -67,14 +67,10 @@ public class World {
 		// draw current level
 		levelStaticRenderer.recordPlayerPosition((int) terri.getX(),(int)terri.getY());
 		levelStaticRenderer.render(graphics, screenTracker.getOffsetX(),screenTracker.getOffsetY());
-		
-		
+				
 		// draw level items/objects	
 		currentLevel.render(graphics,screenTracker.getOffsetX(),screenTracker.getOffsetY());
 
-		
-		
-		
 	}
 
 
@@ -88,8 +84,6 @@ public class World {
 			gameOver = true;
 		}
 		
-	 
-
 	}
 	
 

@@ -8,40 +8,51 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Shape;
 
 /*
+<<<<<<< HEAD:src/collisions/PhysicalCollisions.java
  * Provides information about physically collideable 
  * Objects in a level;
+=======
+ * Given a shape, says if that shape is collided with any other 
+ * physical shapes (walls or basicObects that can collide)
+>>>>>>> 0bbf8d6d39969e5f7355fd7f71e31604bd238416:src/collisions/PhysicalCollisionDetector.java
  * 
  */
 
 public class PhysicalCollisions  {
 
-	private ArrayList<Shape> blocks;
+	private ArrayList<Shape> walls;
 	
 	private ArrayList<BasicObject> basicObjects;
 
 
+<<<<<<< HEAD:src/collisions/PhysicalCollisions.java
 	
 
 	public PhysicalCollisions( ArrayList<Shape> blocks,  ArrayList<BasicObject> basicObjects){
 		this.blocks = blocks;
+=======
+	public PhysicalCollisionDetector( ArrayList<Shape> walls,  ArrayList<BasicObject> basicObjects){
+		this.walls = walls;
+>>>>>>> 0bbf8d6d39969e5f7355fd7f71e31604bd238416:src/collisions/PhysicalCollisionDetector.java
 		this.basicObjects = basicObjects;
 	}
 	
 
 
-//Checks for collisions with blocks and game Objects
+//Checks for collisions with walls and game Objects
 	public boolean isCollidedWithSolids(Shape shape){	
 		boolean answer = false;
-		//	check if collided with permanent solid blocks	
-		answer = answer || isCollidedWithBlocks(shape);
+		//	check if collided with permanent solid walls	
+		answer = answer || isCollidedWithWalls(shape);
 		// check if collided with solid etherable Objects
 		answer = answer || isCollidedWithBasicObjects(shape);
 
 		return answer;
 	}
 
-	private boolean isCollidedWithBlocks(Shape shape){
-		for(Shape r: blocks ){
+	private boolean isCollidedWithWalls(Shape shape){
+		
+		for(Shape r: walls ){
 			if(shape.intersects(r)){
 				return true;
 			}	

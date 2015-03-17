@@ -1,6 +1,8 @@
 package world;
 
 import gameobjects.Stairs;
+
+
 import items.ItemBuilder;
 import items.ItemParser;
 
@@ -18,6 +20,13 @@ import actors.Actor;
 import actors.Player;
 import collisions.ContextualCollisions;
 
+/* Generic menu class
+ * 
+ * Handles processing of its constituent `selection' elements.
+ * 
+ */
+
+
 public class LevelManager {
 
 	private int currentLevel;
@@ -27,16 +36,15 @@ public class LevelManager {
 	private LevelStaticRenderer levelStaticRenderer;
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
 	private ContextualCollisions contextuals;
-
+ 	
 	public LevelManager(Player terri, int numLevels) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
 		this.terri = terri;
 
 		levels = new ArrayList<Level>();
 
-		ItemParser parser = new ItemParser();
-
-		itemBuilder = new ItemBuilder(parser.getItemMaps(),"data/items.png");
+		
+		itemBuilder = new ItemBuilder(new ItemParser().getItemMaps(),"data/items.png");
 
 		// build an array of levels with length = numLevels 
 		// width and height must be ODD
@@ -46,34 +54,40 @@ public class LevelManager {
 			newLevel(levelWidth,levelHeight);
 		}
 		
+		// remove down stairs from level one and up stairs from last level
 		levels.get(0).removeStairsDown();
 		levels.get(numLevels-1).removeStairsUp();
 		
-
+		// set the current level to be level 0
 		setLevel(0,levels.get(0).getStartX(),levels.get(0).getStartY());
+		
+		
 
 	}
 
 
 
-	private void setLevel(int levelNumber,int xPos, int yPos) throws SlickException{
+	private void setLevel(int levelNumber, int xPos, int yPos) throws SlickException{
 		currentLevel = levelNumber;
 		
 		Level level = levels.get(currentLevel);
 
 		currentLevelData.setCurrentLevel(level);
 
+		// set his new position to the position of the stiars
+		terri.setPosition(xPos,yPos);
+		level.addObject(terri);
+		
 		contextuals = new ContextualCollisions(level);
 		for (Actor dude : level.getActors()){
 			dude.setCollisionHandlers(contextuals);
 		}
 
-		// set his new position to the position of the stiars
-		terri.setPosition(xPos,yPos);
-		terri.setCollisionHandlers(contextuals);
+		
 
-		level.addObject(terri);
-
+		// get the minimap and walls from the current level
+//		miniMap = new MiniMap(level.getMap(),level.getWalls(),level.getClosedDoors());
+ 
 		levelStaticRenderer = new LevelStaticRenderer(level);
 
 		level.assignToItems(currentLevelData);
@@ -86,15 +100,8 @@ public class LevelManager {
 		Level level = new Level(itemBuilder, levelWidth, levelHeight, terri);
 
 		level.assignToItems(currentLevelData);
-
-		levelStaticRenderer = new LevelStaticRenderer(level);
-
+	
 		levels.add(level);		
-
-		contextuals = new ContextualCollisions(level);
-		for (Actor dude : level.getActors()){
-			dude.setCollisionHandlers(contextuals);
-		}
 
 	}
 
@@ -142,7 +149,9 @@ public class LevelManager {
 
 	public void update() throws SlickException, IOException {
 		checkStairs();
-
+		
+		// update the miniMap using the players position in tile coordinates NOT PIXELS
+// 		miniMap.update(terri.getShape());
 		contextuals.update();
 		levels.get(currentLevel).update();		
 	}
