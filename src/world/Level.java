@@ -35,8 +35,8 @@ public class Level {
 	private int startX;
 	private int startY;
 
-	private int height;
-	private int width;
+	private int heightInTiles;
+	private int widthInTiles;
 
 	private int[][] map;
 
@@ -63,8 +63,8 @@ public class Level {
 	public Level(ItemBuilder itemBuilder, int width, int height, Player player) throws SlickException {
 
 
-		this.width = width;
-		this.height = height;
+		this.widthInTiles = width;
+		this.heightInTiles = height;
 
 		buildNewLevel(itemBuilder, player);
 
@@ -89,7 +89,7 @@ public class Level {
 		this.stairsUp = new ArrayList<Stairs>();
 		this.stairsDown = new ArrayList<Stairs>();
 		// build a new Level
-		LevelBuilder levelBuilder = new LevelBuilder(width,height);
+		LevelBuilder levelBuilder = new LevelBuilder(widthInTiles,heightInTiles);
 
 		// store the shapes for doors/walls/floors
 		walls = levelBuilder.getWalls();
@@ -343,11 +343,11 @@ public class Level {
 	public int getStartY(){
 		return startY;
 	}
-	public int getHeight(){
-		return height;	
+	public int getHeightInTiles(){
+		return heightInTiles;	
 	}
-	public int getWidth(){
-		return width;
+	public int getWidthInTiles(){
+		return widthInTiles;
 	}
 
 	public int[][] getMap(){
