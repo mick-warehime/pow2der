@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Shape;
 
 /*
- * Given a shape, says if that shape is collided with any other 
- * physical shapes (blocks or basicObects that can collide)
+ * Provides information about physically collideable 
+ * Objects in a level;
  * 
  */
 
-public class PhysicalCollisionDetector  {
+public class PhysicalCollisions  {
 
 	private ArrayList<Shape> blocks;
 	
@@ -22,7 +22,7 @@ public class PhysicalCollisionDetector  {
 
 	
 
-	public PhysicalCollisionDetector( ArrayList<Shape> blocks,  ArrayList<BasicObject> basicObjects){
+	public PhysicalCollisions( ArrayList<Shape> blocks,  ArrayList<BasicObject> basicObjects){
 		this.blocks = blocks;
 		this.basicObjects = basicObjects;
 		

@@ -20,7 +20,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
-import collisions.PhysicalCollisionDetector;
+import collisions.PhysicalCollisions;
 import actors.Actor;
 import actors.Enemy;
 import actors.Player;
@@ -52,7 +52,7 @@ public class Level {
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
 
-	private PhysicalCollisionDetector detector;
+	private PhysicalCollisions detector;
 	private ArrayList<Stairs> stairsUp;
 	private ArrayList<Stairs> stairsDown;
 
@@ -70,7 +70,7 @@ public class Level {
 
 
 
-		this.detector = new PhysicalCollisionDetector(walls,basicObjects);
+		this.detector = new PhysicalCollisions(walls,basicObjects);
 
 		for (CollidesWithSolids col : colliders){
 			col.assignCollisionDetector(detector);
