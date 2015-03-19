@@ -18,6 +18,7 @@ import actionEngines.ActionEngine;
 import collisions.BroadcasterCommandProvider;
 import collisions.ContextualCollisions;
 import collisions.PhysicalCollisions;
+import collisions.PhysicalCollisionsNew;
 import commands.CommandProviderAggregator;
 
 public abstract class Actor implements Removeable, Updater, ObjectCreator, CollidesWithSolids{
@@ -95,7 +96,7 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator, Colli
 	
 
 	
-	public void assignCollisionDetector(PhysicalCollisions detector){
+	public void assignCollisionDetector(PhysicalCollisionsNew detector){
 		status.setCollisionDetector(detector);
 		
 	}

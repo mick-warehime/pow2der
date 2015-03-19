@@ -12,6 +12,9 @@ Figure out how to do collision handling better, since abilityObjects also need i
 
 Make sure to put back in the collision detector addition for solid collideables
 Handle item’s being given the current level data.
+Still need to handle object creators appropriately, I think. also rendering…
+contextual collisions are not handled appropriately either.
+
 
 
 

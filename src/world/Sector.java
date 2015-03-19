@@ -197,6 +197,23 @@ public class Sector {
 
 
 
+
+
+
+	public  ArrayList<BasicObject> getBasicObjects() {
+		// TODO Auto-generated method stub
+		return this.basicObjects;
+	}
+
+
+
+
+
+
+	
+
+
+
 	
 	
 }

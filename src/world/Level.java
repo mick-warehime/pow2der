@@ -23,6 +23,7 @@ import actors.Actor;
 import actors.Enemy;
 import actors.Player;
 import collisions.PhysicalCollisions;
+import collisions.PhysicalCollisionsNew;
 
 
 
@@ -56,6 +57,7 @@ public class Level {
 	private ArrayList<Shape> halls;
 
 	private PhysicalCollisions physicalCollisions;
+	private PhysicalCollisionsNew physicalCollisionsNew;
 	private ArrayList<Stairs> stairsUp;
 	private ArrayList<Stairs> stairsDown;
 
@@ -80,9 +82,10 @@ public class Level {
 		
 
 		this.physicalCollisions = new PhysicalCollisions(walls,basicObjects);
+		this.physicalCollisionsNew = new PhysicalCollisionsNew(sectorMap,walls);
 
 		for (CollidesWithSolids col : colliders){
-			col.assignCollisionDetector(physicalCollisions);
+			col.assignCollisionDetector(physicalCollisionsNew);
 		}
 
 	};
@@ -299,13 +302,11 @@ public class Level {
 
 	public void render(Graphics g, int offsetX, int offsetY){		
 
-		for (BasicObject obj : basicObjects){
-			obj.render(g, offsetX, offsetY);
+		for (Sector sector : sectorMap.getActiveSectors()){
+			sector.render(g, offsetX, offsetY);
 		}
-
-		for (Actor actor : actors){	
-			actor.render(g, offsetX, offsetY);
-		}
+		
+		
 
 	}
 
@@ -363,8 +364,10 @@ public class Level {
 		
 		
 		if (obj instanceof CollidesWithSolids){
-			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
+			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisionsNew);
 		}
+		
+		
 
 	}
 
@@ -386,7 +389,7 @@ public class Level {
 		}
 		if (obj instanceof CollidesWithSolids){
 			this.colliders.add((CollidesWithSolids) obj);
-			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
+			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisionsNew);
 		}
 
 	}
@@ -402,79 +405,7 @@ public class Level {
 
 	}
 
-	/*
-	 * Stores sectors and keeps track of active ones
-	 * 
-	 */
-
-	class SectorMap{
-
-		private Sector[][] sectorGrid;
-		private ArrayList<Sector> activeSectors;
-
-		private int numRows;
-		private int numCols;
-		private int sectorWidthInPixels;
-		private int sectorHeightInPixels;
-
-		public SectorMap(int levelWidthInPixels, int levelHeightInPixels, int numXSectors, int numYSectors) throws SlickException{
-
-			numRows = numYSectors;
-			numCols = numXSectors;
-
-			sectorWidthInPixels = levelWidthInPixels/numXSectors;
-			sectorHeightInPixels = levelHeightInPixels/numYSectors;
-
-			assert sectorHeightInPixels*numYSectors == levelHeightInPixels : "Number of sectors must divide level dimensions!";
-			assert sectorWidthInPixels*numXSectors == levelWidthInPixels : "Number of sectors must divide level dimensions!";
-
-			
-			this.activeSectors = new ArrayList<Sector>();
-
-			sectorGrid = new Sector[numRows][numCols];
-
-			for (int i = 0; i<numRows; i++){
-				for (int j = 0; j<numCols; j++){
-					int xMin = j*sectorWidthInPixels;
-					int yMin = i*sectorHeightInPixels;
-					sectorGrid[i][j] = new Sector(xMin,yMin,sectorWidthInPixels,sectorHeightInPixels);
-					activeSectors.add(sectorGrid[i][j]); //All sectors added for now
-				}
-			}
-
-			
-
-		}
-
-		public void placeObjectInSector(Object obj, int xPos, int yPos) throws SlickException{
-
-			Sector sector = getSectorWithPosition(xPos,yPos);
-
-			sector.addObject(obj);
-
-		}
-
-		private Sector getSectorWithPosition(int xPos, int yPos) {
-
-			
-			
-			int i = yPos/(sectorHeightInPixels*numRows);
-			int j = xPos/(sectorWidthInPixels*numCols);
-			
-			return this.sectorGrid[i][j];
-
-		}
-		
-		public void refreshActiveSectors(){
-			
-		}
-		
-		public ArrayList<Sector> getActiveSectors(){
-			return this.activeSectors;
-		}
-
-
-	}
+	
 
 
 

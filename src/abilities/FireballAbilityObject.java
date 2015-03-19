@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
 import collisions.PhysicalCollisions;
+import collisions.PhysicalCollisionsNew;
 import render.ParticleRenderer;
 import commands.IncrementHPCommand;
 
@@ -23,7 +24,7 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster,
 	private float speed = 5;
 	private int damage = 2;
 	private boolean shouldRemove;
-	private PhysicalCollisions detector;
+	private PhysicalCollisionsNew detector;
 	
 	
 
@@ -114,7 +115,7 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster,
 
 
 	@Override
-	public void assignCollisionDetector(PhysicalCollisions detector) {
+	public void assignCollisionDetector(PhysicalCollisionsNew detector) {
 		this.detector = detector;
 		
 	}
