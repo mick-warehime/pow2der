@@ -79,7 +79,7 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator, Colli
 
 	
 
-	public void setCollisionHandlers( ContextualCollisions contextuals) {
+	public void setContextuals( ContextualCollisions contextuals) {
 
 		
 		

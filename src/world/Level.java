@@ -14,16 +14,15 @@ import items.ItemBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
-import collisions.PhysicalCollisions;
 import actors.Actor;
 import actors.Enemy;
 import actors.Player;
+import collisions.PhysicalCollisions;
 
 
 
@@ -37,6 +36,10 @@ public class Level {
 
 	private int heightInTiles;
 	private int widthInTiles;
+
+	private SectorMap sectorMap;
+	private int numXSectors = 1;
+	private int numYSectors = 1;
 
 	private int[][] map;
 
@@ -65,10 +68,16 @@ public class Level {
 
 		this.widthInTiles = width;
 		this.heightInTiles = height;
+		
+		this.sectorMap = 
+				new SectorMap(World.TILE_WIDTH*widthInTiles*LevelBuilder.SCALING,
+						World.TILE_HEIGHT*heightInTiles*LevelBuilder.SCALING,
+						numXSectors,
+						numYSectors);
 
 		buildNewLevel(itemBuilder, player);
 
-
+		
 
 		this.physicalCollisions = new PhysicalCollisions(walls,basicObjects);
 
@@ -108,28 +117,36 @@ public class Level {
 
 		// build items using the levelbuilder to get the random locations
 		for(int[] itemLoc : levelBuilder.randomLocationsAllRooms(0.75,3)){
-			addObject(itemBuilder.newItem(itemLoc[0],itemLoc[1]));
+			Item item = itemBuilder.newItem(itemLoc[0],itemLoc[1]);
+			addObjectOld(item);
+			addObject(item,(int)item.getShape().getX(),(int)item.getShape().getY());
 		}
 
 		for(int[] enemyLoc : levelBuilder.randomLocationsAllRooms(1,2)){
-			addObject(new Enemy(enemyLoc[0],enemyLoc[1],this,player));
+			Enemy enemy = new Enemy(enemyLoc[0],enemyLoc[1],this,player);
+			addObjectOld(enemy);
+			addObject(enemy,(int) enemy.getX(), (int) enemy.getY());
 		}
 
 		// build two sets of stairs to the next world
 		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
 			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],false);
 			stairsUp.add(stairs);
-			addObject(stairs);
+			addObjectOld(stairs);
 		}
 		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
 			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],true);
 			stairsDown.add(stairs);
-			addObject(stairs);
+			addObjectOld(stairs);
 		}
 
 
 		for(Shape doorShape : doors){
-			addObject(new Door(doorShape,  actors));
+			Door door = new Door(doorShape,  actors);
+			addObjectOld(door);
+			addObject(door,(int) doorShape.getX(), (int) doorShape.getY());
+			
+			
 		}
 
 
@@ -156,25 +173,11 @@ public class Level {
 
 	protected void update() throws SlickException, IOException{
 
-		for (Updater updater : updaters){
-			updater.update();
+		for( Sector sector:  sectorMap.getActiveSectors()){
+			sector.update();
 		}
-
-		ArrayList<Object> objsToAdd = new ArrayList<Object>();
-		for (ObjectCreator creator : creators) {
-
-			if (creator.hasObjects()){
-				for (Object obj: creator.popObjects()){
-					objsToAdd.add(obj);
-				}
-			}
-		}		
-
-		for(Object obj : objsToAdd){
-			addObject(obj);
-		}
-
-		checkAndRemoveRemovables();
+		
+		
 
 		checkStairs();
 	}
@@ -354,8 +357,18 @@ public class Level {
 		return map;
 	}
 
+	
+	public void addObject(Object obj, int xPos, int yPos) throws SlickException {
+		sectorMap.placeObjectInSector(obj, xPos, yPos);
+		
+		
+		if (obj instanceof CollidesWithSolids){
+			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
+		}
 
-	public void addObject(Object obj) throws SlickException {
+	}
+
+	public void addObjectOld(Object obj) throws SlickException {
 		if (obj instanceof Actor){
 			actors.add((Actor) obj);
 		}
@@ -388,8 +401,86 @@ public class Level {
 		}
 
 	}
-	
-	
+
+	/*
+	 * Stores sectors and keeps track of active ones
+	 * 
+	 */
+
+	class SectorMap{
+
+		private Sector[][] sectorGrid;
+		private ArrayList<Sector> activeSectors;
+
+		private int numRows;
+		private int numCols;
+		private int sectorWidthInPixels;
+		private int sectorHeightInPixels;
+
+		public SectorMap(int levelWidthInPixels, int levelHeightInPixels, int numXSectors, int numYSectors) throws SlickException{
+
+			numRows = numYSectors;
+			numCols = numXSectors;
+
+			sectorWidthInPixels = levelWidthInPixels/numXSectors;
+			sectorHeightInPixels = levelHeightInPixels/numYSectors;
+
+			assert sectorHeightInPixels*numYSectors == levelHeightInPixels : "Number of sectors must divide level dimensions!";
+			assert sectorWidthInPixels*numXSectors == levelWidthInPixels : "Number of sectors must divide level dimensions!";
+
+			
+			this.activeSectors = new ArrayList<Sector>();
+
+			sectorGrid = new Sector[numRows][numCols];
+
+			for (int i = 0; i<numRows; i++){
+				for (int j = 0; j<numCols; j++){
+					int xMin = j*sectorWidthInPixels;
+					int yMin = i*sectorHeightInPixels;
+					sectorGrid[i][j] = new Sector(xMin,yMin,sectorWidthInPixels,sectorHeightInPixels);
+					activeSectors.add(sectorGrid[i][j]); //All sectors added for now
+				}
+			}
+
+			
+
+		}
+
+		public void placeObjectInSector(Object obj, int xPos, int yPos) throws SlickException{
+
+			Sector sector = getSectorWithPosition(xPos,yPos);
+
+			sector.addObject(obj);
+
+		}
+
+		private Sector getSectorWithPosition(int xPos, int yPos) {
+
+			
+			
+			int i = yPos/(sectorHeightInPixels*numRows);
+			int j = xPos/(sectorWidthInPixels*numCols);
+			
+			return this.sectorGrid[i][j];
+
+		}
+		
+		public void refreshActiveSectors(){
+			
+		}
+		
+		public ArrayList<Sector> getActiveSectors(){
+			return this.activeSectors;
+		}
+
+
+	}
+
+
+
+
+
+
 }
 
 

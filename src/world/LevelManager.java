@@ -76,11 +76,11 @@ public class LevelManager {
 
 		// set his new position to the position of the stiars
 		terri.setPosition(xPos,yPos);
-		level.addObject(terri);
+		level.addObjectOld(terri);
 		
 		contextuals = new ContextualCollisions(level);
 		for (Actor dude : level.getActors()){
-			dude.setCollisionHandlers(contextuals);
+			dude.setContextuals(contextuals);
 		}
 
 		

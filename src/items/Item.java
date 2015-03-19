@@ -142,7 +142,7 @@ public class Item extends StaticObject implements Interactive,Removeable, Broadc
 			ownerShape = null; // Prevents memory leak
 
 			shape.setLocation(x, y);
-			currentLevelData.getCurrentLevel().addObject(owningItem);
+			currentLevelData.getCurrentLevel().addObject(owningItem,(int)x,(int) y);
 			storingInventory.removeItem(owningItem);
 			storingInventory = null; //Prevents memory leak
 			

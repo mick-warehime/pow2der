@@ -8,7 +8,11 @@ Broadcasters should not be given the colliding objects class, since it's kludgy 
 
 Figure out how to do collision handling better, since abilityObjects also need it.
 
-Changed player avatar move commands to the new version, removed obselete command and methods. Removed walking_X and walking_Y effects. 
+#########
+
+Make sure to put back in the collision detector addition for solid collideables
+Handle item’s being given the current level data.
+
 
 
 
