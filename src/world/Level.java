@@ -23,7 +23,6 @@ import actors.Actor;
 import actors.Enemy;
 import actors.Player;
 import collisions.PhysicalCollisions;
-import collisions.PhysicalCollisionsNew;
 
 
 
@@ -57,7 +56,6 @@ public class Level {
 	private ArrayList<Shape> halls;
 
 	private PhysicalCollisions physicalCollisions;
-	private PhysicalCollisionsNew physicalCollisionsNew;
 	private ArrayList<Stairs> stairsUp;
 	private ArrayList<Stairs> stairsDown;
 
@@ -81,11 +79,10 @@ public class Level {
 
 		
 
-		this.physicalCollisions = new PhysicalCollisions(walls,basicObjects);
-		this.physicalCollisionsNew = new PhysicalCollisionsNew(sectorMap,walls);
+		this.physicalCollisions = new PhysicalCollisions(sectorMap,walls);
 
 		for (CollidesWithSolids col : colliders){
-			col.assignCollisionDetector(physicalCollisionsNew);
+			col.assignCollisionDetector(physicalCollisions);
 		}
 
 	};
@@ -249,56 +246,7 @@ public class Level {
 	}
 
 
-	private void checkAndRemoveRemovables() {
-
-		HashSet<Object> toRemove = new HashSet<Object>();
-
-		for (Actor actor: actors){ 
-			if (actor.shouldRemove()){
-				toRemove.add(actor);
-			}
-		}
-
-		for (Broadcaster bcaster : broadcasters){
-			if (bcaster instanceof Removeable){
-				if (((Removeable) bcaster).shouldRemove()){
-					toRemove.add(bcaster);
-				}
-			}
-		}
-
-		for (BasicObject basic : basicObjects){
-			if (basic instanceof Removeable){
-				if (((Removeable) basic).shouldRemove()){
-					toRemove.add(basic);
-				}
-			}
-		}
-
-		for (Updater obj : updaters){
-			if (obj instanceof Removeable){
-				if (((Removeable) obj).shouldRemove()){
-					toRemove.add(obj);
-				}
-			}
-		}
-
-		for (ObjectCreator obj: creators){
-			if (obj instanceof Removeable){
-				if (((Removeable) obj).shouldRemove()){
-					toRemove.add(obj);
-				}
-			}
-		}
-
-		for (Object obj : toRemove){
-			removeFromAllLists(obj);
-			((Removeable)obj).onRemoveDo();
-		}
-
-
-
-	}
+	
 
 	public void render(Graphics g, int offsetX, int offsetY){		
 
@@ -364,7 +312,7 @@ public class Level {
 		
 		
 		if (obj instanceof CollidesWithSolids){
-			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisionsNew);
+			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
 		}
 		
 		
@@ -389,7 +337,7 @@ public class Level {
 		}
 		if (obj instanceof CollidesWithSolids){
 			this.colliders.add((CollidesWithSolids) obj);
-			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisionsNew);
+			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
 		}
 
 	}

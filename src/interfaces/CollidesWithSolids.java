@@ -3,7 +3,6 @@ package interfaces;
 import org.newdawn.slick.SlickException;
 
 import collisions.PhysicalCollisions;
-import collisions.PhysicalCollisionsNew;
 
 /*
  * An ingame object that needs to know if its collided with a solid object (wall or basic object)
@@ -12,6 +11,6 @@ import collisions.PhysicalCollisionsNew;
 
 public interface CollidesWithSolids {
 	
-	public void assignCollisionDetector(PhysicalCollisionsNew physicalCollisionsNew) throws SlickException;
+	public void assignCollisionDetector(PhysicalCollisions physicalCollisions) throws SlickException;
 
 }

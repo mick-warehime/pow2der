@@ -2,6 +2,8 @@ package collisions;
 
 
 import gameobjects.BasicObject;
+import world.Sector;
+import world.SectorMap;
 
 import java.util.ArrayList;
 
@@ -15,15 +17,15 @@ import org.newdawn.slick.geom.Shape;
 
 public class PhysicalCollisions  {
 
+	private SectorMap sectorMap;
 	private ArrayList<Shape> blocks;
-	private ArrayList<BasicObject> basicObjects;
 
 
 
 
-	public PhysicalCollisions( ArrayList<Shape> blocks,  ArrayList<BasicObject> basicObjects){
+	public PhysicalCollisions( SectorMap sectorMap, ArrayList<Shape> blocks){
+		this.sectorMap = sectorMap;
 		this.blocks = blocks;
-		this.basicObjects = basicObjects;
 	}
 
 
@@ -40,6 +42,10 @@ public class PhysicalCollisions  {
 	}
 
 	private boolean isCollidedWithBlocks(Shape shape){
+		
+		
+		
+		
 		for(Shape r: blocks ){
 			if(shape.intersects(r)){
 				return true;
@@ -50,7 +56,10 @@ public class PhysicalCollisions  {
 
 	private boolean isCollidedWithBasicObjects(Shape shape){
 
-		for(BasicObject obj: basicObjects){
+		Sector sector = sectorMap.getSectorWithPosition((int) shape.getX(), (int) shape.getY());
+		
+		
+		for(BasicObject obj: sector.getBasicObjects()){
 			// don't check with its own shape and dont check with objects that are currently being held
 			assert (obj.getShape() != null) : "Error! Object" + obj + " has no shape!";
 

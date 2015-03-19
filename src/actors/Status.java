@@ -8,7 +8,6 @@ import java.util.Iterator;
 import org.newdawn.slick.geom.Rectangle;
 
 import collisions.PhysicalCollisions;
-import collisions.PhysicalCollisionsNew;
 
 public class Status {
 
@@ -23,7 +22,7 @@ public class Status {
 	protected Inventory inventory;
 
 	private Rectangle rect;
-	private PhysicalCollisionsNew collisionDetector;
+	private PhysicalCollisions collisionDetector;
 
 	public Status(Rectangle rect) {
 		this.rect = rect;
@@ -37,7 +36,7 @@ public class Status {
 		return rect;
 	}
 
-	public void setCollisionDetector( PhysicalCollisionsNew detector){
+	public void setCollisionDetector( PhysicalCollisions detector){
 		this.collisionDetector = detector;
 	}
 
