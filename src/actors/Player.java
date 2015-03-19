@@ -27,8 +27,8 @@ public class Player extends Actor {
 		DirectionCommandProvider directionProvider = new DirectionCommandProvider(rect,mousePosition);
 		
 		commandProviderAggregator = new CommandProviderAggregator();
-		commandProviderAggregator.addProvider(keyboard);
-		commandProviderAggregator.addProvider(directionProvider);
+		commandProviderAggregator.addUniqueProvider(keyboard);
+		commandProviderAggregator.addUniqueProvider(directionProvider);
 		
 		
 

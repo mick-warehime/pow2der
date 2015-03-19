@@ -1,8 +1,12 @@
 package world;
 
+import interfaces.Broadcaster;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Shape;
 
 /*
  * Stores sectors and keeps track of active ones
@@ -73,6 +77,37 @@ public class SectorMap{
 	
 	public ArrayList<Sector> getActiveSectors(){
 		return this.activeSectors;
+	}
+
+	
+	
+	public HashSet<Sector> getSectorsNear(Shape shape){
+		
+		
+		
+		HashSet<Sector> output = new HashSet<Sector>();
+		
+		int x = (int) shape.getX();
+		int y = (int) shape.getY();
+		int height = (int) shape.getHeight();
+		int width = (int) shape.getWidth();
+		
+		
+		output.add(getSectorWithPosition(x-width, y-height));
+		output.add(getSectorWithPosition(x-width, y));
+		output.add(getSectorWithPosition(x-width, y+height));
+		output.add(getSectorWithPosition(x, y-height));
+		output.add(getSectorWithPosition(x, y));
+		output.add(getSectorWithPosition(x, y+height));
+		output.add(getSectorWithPosition(x+width, y-height));
+		output.add(getSectorWithPosition(x+width, y));
+		output.add(getSectorWithPosition(x+width,y+height));
+		
+		
+		
+		
+		return output;
+		
 	}
 
 

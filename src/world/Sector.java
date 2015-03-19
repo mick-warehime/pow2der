@@ -2,7 +2,7 @@ package world;
 
 import gameobjects.BasicObject;
 import interfaces.Broadcaster;
-import interfaces.CollidesWithSolids;
+import interfaces.Collider;
 import interfaces.ObjectCreator;
 import interfaces.Removeable;
 import interfaces.Updater;
@@ -34,9 +34,9 @@ public class Sector {
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Updater> updaters;
 	private ArrayList<ObjectCreator> creators;
-	private ArrayList<CollidesWithSolids> colliders;
+	private ArrayList<Collider> colliders;
 	
-	private ArrayList<CollidesWithSolids> newColliders;
+	private ArrayList<Collider> newColliders;
 
 	
 	public Sector( int xMin, int yMin, int width, int height) throws SlickException {
@@ -51,8 +51,8 @@ public class Sector {
 		this.basicObjects = new ArrayList<BasicObject>();
 		this.updaters = new ArrayList<Updater>();
 		this.creators = new ArrayList<ObjectCreator>();
-		this.colliders = new ArrayList<CollidesWithSolids>();
-		this.newColliders = new ArrayList<CollidesWithSolids>();
+		this.colliders = new ArrayList<Collider>();
+		this.newColliders = new ArrayList<Collider>();
 		
 		
 
@@ -193,9 +193,9 @@ public class Sector {
 		if (obj instanceof ObjectCreator){
 			creators.add((ObjectCreator) obj);
 		}
-		if (obj instanceof CollidesWithSolids){
-			this.colliders.add((CollidesWithSolids) obj); //Collision detector no longer assigned!
-			this.newColliders.add((CollidesWithSolids) obj);
+		if (obj instanceof Collider){
+			this.colliders.add((Collider) obj); //Collision detector no longer assigned!
+			this.newColliders.add((Collider) obj);
 		}
 
 	}
@@ -215,11 +215,21 @@ public class Sector {
 
 
 
-	public ArrayList<CollidesWithSolids> popNewColliders() {
+	public ArrayList<Collider> popNewColliders() {
 		@SuppressWarnings("unchecked")
-		ArrayList<CollidesWithSolids> output = (ArrayList<CollidesWithSolids>) newColliders.clone();
+		ArrayList<Collider> output = (ArrayList<Collider>) newColliders.clone();
 		newColliders.clear();
 		return output;
+	}
+
+
+
+
+
+
+	public ArrayList<Broadcaster> getBroadcasters() {
+		
+		return this.broadcasters;
 	}
 
 

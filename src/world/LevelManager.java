@@ -35,7 +35,6 @@ public class LevelManager {
 	private Player terri;
 	private LevelStaticRenderer levelStaticRenderer;
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
-	private ContextualCollisions contextuals;
  	
 	public LevelManager(Player terri, int numLevels) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
@@ -78,10 +77,7 @@ public class LevelManager {
 		terri.setPosition(xPos,yPos);
 		level.addObject(terri,xPos,yPos);
 		
-		contextuals = new ContextualCollisions(level);
-		for (Actor dude : level.getActors()){
-			dude.setContextuals(contextuals);
-		}
+		
 
 		
 
@@ -151,8 +147,7 @@ public class LevelManager {
 		checkStairs();
 		
 		// update the miniMap using the players position in tile coordinates NOT PIXELS
-// 		miniMap.update(terri.getShape());
-		contextuals.update();
+
 		levels.get(currentLevel).update();		
 	}
 }

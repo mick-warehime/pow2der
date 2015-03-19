@@ -10,10 +10,12 @@ Figure out how to do collision handling better, since abilityObjects also need i
 
 #########
 
-Make sure to put back in the collision detector addition for solid collideables
 Handle item’s being given the current level data.
-Still need to handle object creators appropriately, I think. also rendering…
 contextual collisions are not handled appropriately either.
+
+CollidesWithSolids interface now is Collider. It also has an assignContextualCollisions method, which is blank for non-actor colliders. ContextualCollisions is now a property of level. It’s now automatically assigned at level instantiation and when a new object is added to a sector. Like PhysicalCollisions, ContextualCollisions now uses SectorMap to check collisions, not the list owned by level.
+
+possible error: a broadcaster with an interaction range extending past its own sector won’t be detected by shapes in the adjacent sectors.
 
 
 

@@ -4,7 +4,7 @@ import gameobjects.BasicObject;
 import gameobjects.Door;
 import gameobjects.Stairs;
 import interfaces.Broadcaster;
-import interfaces.CollidesWithSolids;
+import interfaces.Collider;
 import interfaces.ObjectCreator;
 import interfaces.Removeable;
 import interfaces.Updater;
@@ -22,6 +22,7 @@ import org.newdawn.slick.geom.Shape;
 import actors.Actor;
 import actors.Enemy;
 import actors.Player;
+import collisions.ContextualCollisions;
 import collisions.PhysicalCollisions;
 
 
@@ -48,7 +49,7 @@ public class Level {
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Updater> updaters;
 	private ArrayList<ObjectCreator> creators;
-	private ArrayList<CollidesWithSolids> colliders;
+	private ArrayList<Collider> colliders;
 
 	private ArrayList<Shape> walls;
 	private ArrayList<Shape> doors;
@@ -58,6 +59,7 @@ public class Level {
 	private PhysicalCollisions physicalCollisions;
 	private ArrayList<Stairs> stairsUp;
 	private ArrayList<Stairs> stairsDown;
+	private ContextualCollisions contextualCollisions;
 
 
 
@@ -79,11 +81,18 @@ public class Level {
 
 		
 
-		this.physicalCollisions = new PhysicalCollisions(sectorMap,walls);
-
-		for (CollidesWithSolids col : colliders){
-			col.assignCollisionDetector(physicalCollisions);
+		physicalCollisions = new PhysicalCollisions(sectorMap,walls);
+		contextualCollisions = new ContextualCollisions(this, sectorMap);
+		
+		for (Collider col : colliders){
+			col.assignPhysicalCollisions(physicalCollisions);
 		}
+		
+		
+		for (Actor dude : actors){
+			dude.assignContextualCollisions(contextualCollisions);;
+		}
+		
 
 	};
 
@@ -94,7 +103,7 @@ public class Level {
 		this.basicObjects = new ArrayList<BasicObject>();
 		this.updaters = new ArrayList<Updater>();
 		this.creators = new ArrayList<ObjectCreator>();
-		this.colliders = new ArrayList<CollidesWithSolids>();
+		this.colliders = new ArrayList<Collider>();
 		this.stairsUp = new ArrayList<Stairs>();
 		this.stairsDown = new ArrayList<Stairs>();
 		// build a new Level
@@ -173,12 +182,16 @@ public class Level {
 
 	protected void update() throws SlickException, IOException{
 
+
+		contextualCollisions.update();
+		
 		for( Sector sector:  sectorMap.getActiveSectors()){
 			sector.update();
 			
 			
-			for (CollidesWithSolids collider : sector.popNewColliders()){
-				collider.assignCollisionDetector(physicalCollisions);
+			for (Collider collider : sector.popNewColliders()){
+				collider.assignPhysicalCollisions(physicalCollisions);
+				collider.assignContextualCollisions(contextualCollisions);
 			}
 			
 		}
@@ -317,8 +330,8 @@ public class Level {
 		sectorMap.placeObjectInSector(obj, xPos, yPos);
 		
 		
-		if (obj instanceof CollidesWithSolids){
-			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
+		if (obj instanceof Collider){
+			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
 		}
 		
 		
@@ -341,9 +354,9 @@ public class Level {
 		if (obj instanceof ObjectCreator){
 			creators.add((ObjectCreator) obj);
 		}
-		if (obj instanceof CollidesWithSolids){
-			this.colliders.add((CollidesWithSolids) obj);
-			((CollidesWithSolids) obj).assignCollisionDetector(physicalCollisions);
+		if (obj instanceof Collider){
+			this.colliders.add((Collider) obj);
+			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
 		}
 
 	}
