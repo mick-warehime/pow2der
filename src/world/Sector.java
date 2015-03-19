@@ -28,27 +28,31 @@ public class Sector {
 	
 	private Rectangle domain;
 
+	private ArrayList<Shape> walls;
 	private ArrayList<Actor> actors;
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Updater> updaters;
 	private ArrayList<ObjectCreator> creators;
 	private ArrayList<CollidesWithSolids> colliders;
+	
+	private ArrayList<CollidesWithSolids> newColliders;
 
-	private ArrayList<Shape> walls;
+	
 	public Sector( int xMin, int yMin, int width, int height) throws SlickException {
 
 
 		
 		this.domain = new Rectangle(xMin,yMin,width,height);
 
+		this.walls = new ArrayList<Shape>();
 		this.actors = new ArrayList<Actor>(); 
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
 		this.updaters = new ArrayList<Updater>();
 		this.creators = new ArrayList<ObjectCreator>();
 		this.colliders = new ArrayList<CollidesWithSolids>();
-
+		this.newColliders = new ArrayList<CollidesWithSolids>();
 		
 		
 
@@ -191,6 +195,7 @@ public class Sector {
 		}
 		if (obj instanceof CollidesWithSolids){
 			this.colliders.add((CollidesWithSolids) obj); //Collision detector no longer assigned!
+			this.newColliders.add((CollidesWithSolids) obj);
 		}
 
 	}
@@ -203,6 +208,18 @@ public class Sector {
 	public  ArrayList<BasicObject> getBasicObjects() {
 		// TODO Auto-generated method stub
 		return this.basicObjects;
+	}
+
+
+
+
+
+
+	public ArrayList<CollidesWithSolids> popNewColliders() {
+		@SuppressWarnings("unchecked")
+		ArrayList<CollidesWithSolids> output = (ArrayList<CollidesWithSolids>) newColliders.clone();
+		newColliders.clear();
+		return output;
 	}
 
 

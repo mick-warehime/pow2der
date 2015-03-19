@@ -54,6 +54,10 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster,
 	@Override
 	public void update() {
 		
+		if (detector == null) {
+			throw new NullPointerException("Attempted to update a fireball that hasn't yet been assigned a physical collisions instance");
+		}
+		
 		float oldX = shape.getX();
 		float oldY = shape.getY();
 

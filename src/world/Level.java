@@ -175,6 +175,12 @@ public class Level {
 
 		for( Sector sector:  sectorMap.getActiveSectors()){
 			sector.update();
+			
+			
+			for (CollidesWithSolids collider : sector.popNewColliders()){
+				collider.assignCollisionDetector(physicalCollisions);
+			}
+			
 		}
 		
 		
