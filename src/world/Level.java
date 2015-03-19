@@ -82,7 +82,7 @@ public class Level {
 		
 
 		physicalCollisions = new PhysicalCollisions(sectorMap,walls);
-		contextualCollisions = new ContextualCollisions(this, sectorMap);
+		contextualCollisions = new ContextualCollisions(sectorMap);
 		
 		for (Collider col : colliders){
 			col.assignPhysicalCollisions(physicalCollisions);

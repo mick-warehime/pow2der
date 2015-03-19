@@ -1,7 +1,5 @@
 package world;
 
-import interfaces.Broadcaster;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 

@@ -4,13 +4,11 @@ package collisions;
 import interfaces.Broadcaster;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 
-import world.Level;
 import world.Sector;
 import world.SectorMap;
 
