@@ -238,6 +238,15 @@ public class Level {
 
 		}
 		
+		for (Stairs stair : toRemove){
+			stairsAll.remove(stair);
+			for (Sector sector : sectorMap.getSectorsNear(stair.getShape())){
+				sector.removeFromAllLists(stair);
+			}
+			
+			
+		}
+		
 		
 
 
