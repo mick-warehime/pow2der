@@ -58,7 +58,7 @@ public class SectorMap{
 
 	}
 
-	public Sector getSectorWithPosition(int xPos, int yPos) {
+	private Sector getSectorWithPosition(int xPos, int yPos) {
 
 		
 		

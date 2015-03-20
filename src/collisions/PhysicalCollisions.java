@@ -42,10 +42,10 @@ public class PhysicalCollisions  {
 	}
 
 	private boolean isCollidedWithBlocks(Shape shape){
-		
-		
-		
-		
+
+
+
+
 		for(Shape r: blocks ){
 			if(shape.intersects(r)){
 				return true;
@@ -56,17 +56,18 @@ public class PhysicalCollisions  {
 
 	private boolean isCollidedWithBasicObjects(Shape shape){
 
-		Sector sector = sectorMap.getSectorWithPosition((int) shape.getX(), (int) shape.getY());
-		
-		
-		for(BasicObject obj: sector.getBasicObjects()){
-			// don't check with its own shape and dont check with objects that are currently being held
-			assert (obj.getShape() != null) : "Error! Object" + obj + " has no shape!";
+		for (Sector sector : sectorMap.getSectorsNear(shape)){
 
-			if(obj.getShape() != shape){
-				if(obj.canCollide()){
-					if(shape.intersects(obj.getShape())){
-						return true;
+
+			for(BasicObject obj: sector.getBasicObjects()){
+				// don't check with its own shape and dont check with objects that are currently being held
+				assert (obj.getShape() != null) : "Error! Object" + obj + " has no shape!";
+
+				if(obj.getShape() != shape){
+					if(obj.canCollide()){
+						if(shape.intersects(obj.getShape())){
+							return true;
+						}
 					}
 				}
 			}

@@ -16,9 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.xml.sax.SAXException;
 
 import render.LevelStaticRenderer;
-import actors.Actor;
 import actors.Player;
-import collisions.ContextualCollisions;
 
 /* Generic menu class
  * 

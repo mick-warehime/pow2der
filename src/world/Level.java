@@ -6,7 +6,6 @@ import gameobjects.Stairs;
 import interfaces.Broadcaster;
 import interfaces.Collider;
 import interfaces.ObjectCreator;
-import interfaces.Removeable;
 import interfaces.Updater;
 import items.Item;
 import items.ItemBuilder;
@@ -44,7 +43,6 @@ public class Level {
 
 	private int[][] map;
 
-	private ArrayList<Actor> actors;
 	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Updater> updaters;
@@ -76,29 +74,29 @@ public class Level {
 						World.TILE_HEIGHT*heightInTiles*LevelBuilder.SCALING,
 						numXSectors,
 						numYSectors);
+		
+		
+		contextualCollisions = new ContextualCollisions(sectorMap);
 
 		buildNewLevel(itemBuilder, player);
-
+		physicalCollisions = new PhysicalCollisions(sectorMap,walls);
 		
 
-		physicalCollisions = new PhysicalCollisions(sectorMap,walls);
-		contextualCollisions = new ContextualCollisions(sectorMap);
+		
 		
 		for (Collider col : colliders){
 			col.assignPhysicalCollisions(physicalCollisions);
+			col.assignContextualCollisions(contextualCollisions);
 		}
 		
 		
-		for (Actor dude : actors){
-			dude.assignContextualCollisions(contextualCollisions);;
-		}
+		
 		
 
 	};
 
 	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
 
-		this.actors = new ArrayList<Actor>(); 
 		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
 		this.updaters = new ArrayList<Updater>();
@@ -133,7 +131,7 @@ public class Level {
 
 		for(int[] enemyLoc : levelBuilder.randomLocationsAllRooms(1,2)){
 			Enemy enemy = new Enemy(enemyLoc[0],enemyLoc[1],this,player);
-			addObjectOld(enemy);
+			colliders.add(enemy);
 			addObject(enemy,(int) enemy.getX(), (int) enemy.getY());
 		}
 
@@ -151,7 +149,7 @@ public class Level {
 
 
 		for(Shape doorShape : doors){
-			Door door = new Door(doorShape,  actors);
+			Door door = new Door(doorShape);
 			addObjectOld(door);
 			addObject(door,(int) doorShape.getX(), (int) doorShape.getY());
 			
@@ -165,7 +163,7 @@ public class Level {
 
 
 	public void removeFromAllLists(Object obj){
-		removeFromList(obj,actors);
+		
 		removeFromList(obj,basicObjects);
 		removeFromList(obj,broadcasters);
 		removeFromList(obj,walls);
@@ -299,9 +297,7 @@ public class Level {
 	public ArrayList<Shape> getHalls(){
 		return halls;
 	}
-	public ArrayList<Actor> getActors(){
-		return actors;
-	}
+	
 	public ArrayList<Broadcaster> getBroadcasters(){
 		return broadcasters;	
 	}
@@ -332,6 +328,7 @@ public class Level {
 		
 		if (obj instanceof Collider){
 			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
+			((Collider) obj).assignContextualCollisions(contextualCollisions);
 		}
 		
 		
@@ -339,9 +336,7 @@ public class Level {
 	}
 
 	public void addObjectOld(Object obj) throws SlickException {
-		if (obj instanceof Actor){
-			actors.add((Actor) obj);
-		}
+		
 		if (obj instanceof BasicObject){
 			basicObjects.add((BasicObject) obj);
 		}
