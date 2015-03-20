@@ -12,10 +12,7 @@ The way doors check if they can close now is buggy: if more than one collision o
 
 #########
 
-Handle item’s being given the current level data.
-contextual collisions are not handled appropriately either.
-
-r
+TODO: Turn walls into static objects! Get rid of blocks altogether!
 
 
 

@@ -44,8 +44,6 @@ public class Level {
 	private ArrayList<Collider> colliders;
 
 	private ArrayList<Shape> walls;
-//	private ArrayList<Shape> floors;
-//	private ArrayList<Shape> halls;
 
 	private PhysicalCollisions physicalCollisions;
 	private ArrayList<Stairs> stairsUp;
@@ -103,6 +101,8 @@ public class Level {
 		ArrayList<Shape> doors = levelBuilder.getDoors();
 		ArrayList<Shape> floors = levelBuilder.getFloors();
 		ArrayList<Shape> halls = levelBuilder.getHalls();
+		
+		
 
 		renderer = new LevelStaticRenderer(walls,floors,halls);
 		
