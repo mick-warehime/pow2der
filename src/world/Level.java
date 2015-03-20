@@ -42,7 +42,6 @@ public class Level {
 	private int[][] map;
 
 	private ArrayList<BasicObject> basicObjects;
-	private ArrayList<Collider> colliders;
 
 
 	private PhysicalCollisions physicalCollisions;
@@ -69,7 +68,6 @@ public class Level {
 
 
 		contextualCollisions = new ContextualCollisions(sectorMap);
-
 		physicalCollisions = new PhysicalCollisions(sectorMap);
 		
 		buildNewLevel(itemBuilder, player);
@@ -77,10 +75,7 @@ public class Level {
 
 
 
-		for (Collider col : colliders){
-			col.assignPhysicalCollisions(physicalCollisions);
-			col.assignContextualCollisions(contextualCollisions);
-		}
+		
 
 
 
@@ -91,7 +86,6 @@ public class Level {
 	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
 
 		this.basicObjects = new ArrayList<BasicObject>();
-		this.colliders = new ArrayList<Collider>();
 		this.stairsUp = new ArrayList<Stairs>();
 		this.stairsDown = new ArrayList<Stairs>();
 		// build a new Level
@@ -130,7 +124,7 @@ public class Level {
 
 		for(int[] enemyLoc : levelBuilder.randomLocationsAllRooms(1,2)){
 			Enemy enemy = new Enemy(enemyLoc[0],enemyLoc[1],this,player);
-			colliders.add(enemy);
+			
 			addObject(enemy,(int) enemy.getX(), (int) enemy.getY());
 		}
 
@@ -164,7 +158,6 @@ public class Level {
 	public void removeFromAllLists(Object obj){
 
 		removeFromList(obj,basicObjects);
-		removeFromList(obj,colliders);
 	}
 
 	private void removeFromList(Object obj, ArrayList<?> list){
@@ -314,8 +307,10 @@ public class Level {
 	public void addObject(Object obj, int xPos, int yPos) throws SlickException {
 		sectorMap.placeObjectInSector(obj, xPos, yPos);
 
+		
 
 		if (obj instanceof Collider){
+			System.out.println("Added to " + obj + "the physical Collisions"+ physicalCollisions);
 			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
 			((Collider) obj).assignContextualCollisions(contextualCollisions);
 		}
@@ -331,10 +326,7 @@ public class Level {
 		}
 		
 		
-		if (obj instanceof Collider){
-			this.colliders.add((Collider) obj);
-			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
-		}
+		
 
 	}
 
