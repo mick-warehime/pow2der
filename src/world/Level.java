@@ -3,6 +3,7 @@ package world;
 import gameobjects.BasicObject;
 import gameobjects.Door;
 import gameobjects.Stairs;
+import gameobjects.Wall;
 import interfaces.Collider;
 import items.Item;
 import items.ItemBuilder;
@@ -35,15 +36,14 @@ public class Level {
 	private int widthInTiles;
 
 	private SectorMap sectorMap;
-	private int numXSectors = 1;
-	private int numYSectors = 1;
+	private int numXSectors = 2;
+	private int numYSectors = 2;
 
 	private int[][] map;
 
 	private ArrayList<BasicObject> basicObjects;
 	private ArrayList<Collider> colliders;
 
-	private ArrayList<Shape> walls;
 
 	private PhysicalCollisions physicalCollisions;
 	private ArrayList<Stairs> stairsUp;
@@ -70,8 +70,9 @@ public class Level {
 
 		contextualCollisions = new ContextualCollisions(sectorMap);
 
+		physicalCollisions = new PhysicalCollisions(sectorMap);
+		
 		buildNewLevel(itemBuilder, player);
-		physicalCollisions = new PhysicalCollisions(sectorMap,walls);
 
 
 
@@ -97,14 +98,14 @@ public class Level {
 		LevelBuilder levelBuilder = new LevelBuilder(widthInTiles,heightInTiles);
 
 		// store the shapes for doors/walls/floors
-		walls = levelBuilder.getWalls();
+		ArrayList<Shape> wallShapes = levelBuilder.getWalls();
 		ArrayList<Shape> doors = levelBuilder.getDoors();
 		ArrayList<Shape> floors = levelBuilder.getFloors();
 		ArrayList<Shape> halls = levelBuilder.getHalls();
 		
 		
 
-		renderer = new LevelStaticRenderer(walls,floors,halls);
+		renderer = new LevelStaticRenderer(floors,halls);
 		
 		map = levelBuilder.getMap();
 
@@ -115,6 +116,12 @@ public class Level {
 		startX = startPosition[0];
 		startY = startPosition[1];
 
+		for (Shape wallShape : wallShapes){
+			
+			addObject(new Wall(wallShape),(int) wallShape.getX(), (int)wallShape.getY());
+			
+		}
+		
 		// build items using the levelbuilder to get the random locations
 		for(int[] itemLoc : levelBuilder.randomLocationsAllRooms(0.75,3)){
 			Item item = itemBuilder.newItem(itemLoc[0],itemLoc[1]);
@@ -157,7 +164,6 @@ public class Level {
 	public void removeFromAllLists(Object obj){
 
 		removeFromList(obj,basicObjects);
-		removeFromList(obj,walls);
 		removeFromList(obj,colliders);
 	}
 
@@ -266,7 +272,8 @@ public class Level {
 
 
 	public ArrayList<Shape> getWalls(){
-		return walls;
+		
+		return new ArrayList<Shape>();
 	}
 
 	public ArrayList<Shape> getClosedDoors(){

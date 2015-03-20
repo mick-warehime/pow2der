@@ -10,9 +10,14 @@ Figure out how to do collision handling better, since abilityObjects also need i
 
 The way doors check if they can close now is buggy: if more than one collision occurs, one can allow the door to close even if the other doesn’t.
 
+Holding run but letting go of a move button keeps you running.
+
+Remove SpriteSheet from world (it shouldn’t be a global variable)
+
 #########
 
 TODO: Turn walls into static objects! Get rid of blocks altogether!
+
 
 
 
