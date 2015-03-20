@@ -14,7 +14,6 @@ Handle item’s being given the current level data.
 contextual collisions are not handled appropriately either.
 
 
-
 possible error: a broadcaster with an interaction range extending past its own sector won’t be detected by shapes in the adjacent sectors.
 
 

@@ -1,5 +1,8 @@
 package world;
 
+import gameobjects.BasicObject;
+import items.Item;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -105,6 +108,21 @@ public class SectorMap{
 		
 		
 		return output;
+		
+	}
+
+	public void assignToItems(CurrentLevelData currentLevelData) {
+		
+		for (int i = 0; i<numRows; i++){
+			for (int j = 0; j<numCols; j++){
+				for (BasicObject obj : sectorGrid[i][j].getBasicObjects()){
+					if (obj instanceof Item){
+						((Item)obj).setCurrentLevelData(currentLevelData);
+					}
+				}
+			}
+		}
+		
 		
 	}
 

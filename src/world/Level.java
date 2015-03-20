@@ -18,7 +18,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
-import actors.Actor;
 import actors.Enemy;
 import actors.Player;
 import collisions.ContextualCollisions;
@@ -43,10 +42,7 @@ public class Level {
 
 	private int[][] map;
 
-	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BasicObject> basicObjects;
-	private ArrayList<Updater> updaters;
-	private ArrayList<ObjectCreator> creators;
 	private ArrayList<Collider> colliders;
 
 	private ArrayList<Shape> walls;
@@ -68,39 +64,36 @@ public class Level {
 
 		this.widthInTiles = width;
 		this.heightInTiles = height;
-		
+
 		this.sectorMap = 
 				new SectorMap(World.TILE_WIDTH*widthInTiles*LevelBuilder.SCALING,
 						World.TILE_HEIGHT*heightInTiles*LevelBuilder.SCALING,
 						numXSectors,
 						numYSectors);
-		
-		
+
+
 		contextualCollisions = new ContextualCollisions(sectorMap);
 
 		buildNewLevel(itemBuilder, player);
 		physicalCollisions = new PhysicalCollisions(sectorMap,walls);
-		
 
-		
-		
+
+
+
 		for (Collider col : colliders){
 			col.assignPhysicalCollisions(physicalCollisions);
 			col.assignContextualCollisions(contextualCollisions);
 		}
-		
-		
-		
-		
+
+
+
+
 
 	};
 
 	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
 
-		this.broadcasters = new ArrayList<Broadcaster>(); 
 		this.basicObjects = new ArrayList<BasicObject>();
-		this.updaters = new ArrayList<Updater>();
-		this.creators = new ArrayList<ObjectCreator>();
 		this.colliders = new ArrayList<Collider>();
 		this.stairsUp = new ArrayList<Stairs>();
 		this.stairsDown = new ArrayList<Stairs>();
@@ -125,7 +118,6 @@ public class Level {
 		// build items using the levelbuilder to get the random locations
 		for(int[] itemLoc : levelBuilder.randomLocationsAllRooms(0.75,3)){
 			Item item = itemBuilder.newItem(itemLoc[0],itemLoc[1]);
-			addObjectOld(item);
 			addObject(item,(int)item.getShape().getX(),(int)item.getShape().getY());
 		}
 
@@ -150,10 +142,10 @@ public class Level {
 
 		for(Shape doorShape : doors){
 			Door door = new Door(doorShape);
-			addObjectOld(door);
+			
 			addObject(door,(int) doorShape.getX(), (int) doorShape.getY());
-			
-			
+
+
 		}
 
 
@@ -163,12 +155,9 @@ public class Level {
 
 
 	public void removeFromAllLists(Object obj){
-		
+
 		removeFromList(obj,basicObjects);
-		removeFromList(obj,broadcasters);
 		removeFromList(obj,walls);
-		removeFromList(obj,updaters);
-		removeFromList(obj,creators);
 		removeFromList(obj,colliders);
 	}
 
@@ -182,19 +171,19 @@ public class Level {
 
 
 		contextualCollisions.update();
-		
+
 		for( Sector sector:  sectorMap.getActiveSectors()){
 			sector.update();
-			
-			
+
+
 			for (Collider collider : sector.popNewColliders()){
 				collider.assignPhysicalCollisions(physicalCollisions);
 				collider.assignContextualCollisions(contextualCollisions);
 			}
-			
+
 		}
-		
-		
+
+
 
 		checkStairs();
 	}
@@ -263,15 +252,15 @@ public class Level {
 	}
 
 
-	
+
 
 	public void render(Graphics g, int offsetX, int offsetY){		
 
 		for (Sector sector : sectorMap.getActiveSectors()){
 			sector.render(g, offsetX, offsetY);
 		}
-		
-		
+
+
 
 	}
 
@@ -297,10 +286,8 @@ public class Level {
 	public ArrayList<Shape> getHalls(){
 		return halls;
 	}
+
 	
-	public ArrayList<Broadcaster> getBroadcasters(){
-		return broadcasters;	
-	}
 	public ArrayList<BasicObject> getBasicObjects(){
 		return basicObjects;
 	}
@@ -321,34 +308,27 @@ public class Level {
 		return map;
 	}
 
-	
+
 	public void addObject(Object obj, int xPos, int yPos) throws SlickException {
 		sectorMap.placeObjectInSector(obj, xPos, yPos);
-		
-		
+
+
 		if (obj instanceof Collider){
 			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
 			((Collider) obj).assignContextualCollisions(contextualCollisions);
 		}
-		
-		
+
+
 
 	}
 
 	public void addObjectOld(Object obj) throws SlickException {
-		
+
 		if (obj instanceof BasicObject){
 			basicObjects.add((BasicObject) obj);
 		}
-		if (obj instanceof Broadcaster){
-			broadcasters.add((Broadcaster) obj);
-		}
-		if (obj instanceof Updater){
-			updaters.add((Updater) obj);
-		}
-		if (obj instanceof ObjectCreator){
-			creators.add((ObjectCreator) obj);
-		}
+		
+		
 		if (obj instanceof Collider){
 			this.colliders.add((Collider) obj);
 			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
@@ -359,15 +339,13 @@ public class Level {
 
 
 	public void assignToItems(CurrentLevelData currentLevelData) {
-		for (BasicObject obj : basicObjects){
-			if (obj instanceof Item){
-				((Item)obj).setCurrentLevelData(currentLevelData);
-			}
-		}
+
+		sectorMap.assignToItems(currentLevelData);
+
 
 	}
 
-	
+
 
 
 
