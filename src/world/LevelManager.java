@@ -51,8 +51,8 @@ public class LevelManager {
 		}
 		
 		// remove down stairs from level one and up stairs from last level
-		levels.get(0).removeStairsDown();
-		levels.get(numLevels-1).removeStairsUp();
+		levels.get(0).removeStairs('D');
+		levels.get(numLevels-1).removeStairs('U');
 		
 		// set the current level to be level 0
 		setLevel(0,levels.get(0).getStartX(),levels.get(0).getStartY());
@@ -119,7 +119,7 @@ public class LevelManager {
 			// otherwise it constantly thinks you are climbing 
 			levels.get(currentLevel).resetStairs();
 
-			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairsDown();
+			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairs('D');
 			int xPos = (int) stairsDown.get(0).getShape().getX();
 			int yPos = (int) stairsDown.get(0).getShape().getY();
 
@@ -128,8 +128,8 @@ public class LevelManager {
 			// otherwise it constantly thinks you are climbing 
 			levels.get(currentLevel).resetStairs();
 			
-			ArrayList<Stairs> stairsUp = levels.get(nextLevel).getStairsUp();
-			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairsDown();
+			ArrayList<Stairs> stairsUp = levels.get(nextLevel).getStairs('U');
+			
 						
 			int xPos = (int) stairsUp.get(0).getShape().getX();
 			int yPos = (int) stairsUp.get(0).getShape().getY();

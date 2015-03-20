@@ -1,6 +1,5 @@
 package world;
 
-import gameobjects.BasicObject;
 import gameobjects.Door;
 import gameobjects.Stairs;
 import gameobjects.Wall;
@@ -41,14 +40,15 @@ public class Level {
 
 	private int[][] map;
 
-	private ArrayList<BasicObject> basicObjects;
-
-
-	private PhysicalCollisions physicalCollisions;
-	private ArrayList<Stairs> stairsUp;
-	private ArrayList<Stairs> stairsDown;
 	private ContextualCollisions contextualCollisions;
+	private PhysicalCollisions physicalCollisions;
 	private LevelStaticRenderer renderer;
+
+
+	private ArrayList<Stairs> stairsAll;
+
+
+
 
 
 
@@ -69,13 +69,9 @@ public class Level {
 
 		contextualCollisions = new ContextualCollisions(sectorMap);
 		physicalCollisions = new PhysicalCollisions(sectorMap);
-		
+
 		buildNewLevel(itemBuilder, player);
 
-
-
-
-		
 
 
 
@@ -85,9 +81,7 @@ public class Level {
 
 	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
 
-		this.basicObjects = new ArrayList<BasicObject>();
-		this.stairsUp = new ArrayList<Stairs>();
-		this.stairsDown = new ArrayList<Stairs>();
+		this.stairsAll = new ArrayList<Stairs>();
 		// build a new Level
 		LevelBuilder levelBuilder = new LevelBuilder(widthInTiles,heightInTiles);
 
@@ -96,11 +90,11 @@ public class Level {
 		ArrayList<Shape> doors = levelBuilder.getDoors();
 		ArrayList<Shape> floors = levelBuilder.getFloors();
 		ArrayList<Shape> halls = levelBuilder.getHalls();
-		
-		
+
+
 
 		renderer = new LevelStaticRenderer(floors,halls);
-		
+
 		map = levelBuilder.getMap();
 
 
@@ -111,11 +105,11 @@ public class Level {
 		startY = startPosition[1];
 
 		for (Shape wallShape : wallShapes){
-			
+
 			addObject(new Wall(wallShape),(int) wallShape.getX(), (int)wallShape.getY());
-			
+
 		}
-		
+
 		// build items using the levelbuilder to get the random locations
 		for(int[] itemLoc : levelBuilder.randomLocationsAllRooms(0.75,3)){
 			Item item = itemBuilder.newItem(itemLoc[0],itemLoc[1]);
@@ -124,26 +118,30 @@ public class Level {
 
 		for(int[] enemyLoc : levelBuilder.randomLocationsAllRooms(1,2)){
 			Enemy enemy = new Enemy(enemyLoc[0],enemyLoc[1],this,player);
-			
+
 			addObject(enemy,(int) enemy.getX(), (int) enemy.getY());
 		}
 
-		// build two sets of stairs to the next world
+		// build two sets of stairsAll to the next world
 		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
 			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],false);
-			stairsUp.add(stairs);
-			addObjectOld(stairs);
+			int x = (int) stairs.getShape().getX();
+			int y = (int) stairs.getShape().getY();
+			stairsAll.add(stairs);
+			addObject(stairs, x,y);
 		}
 		for(int[] stairLoc : levelBuilder.randomLocationsStartRoom()){
 			Stairs stairs = new Stairs(stairLoc[0],stairLoc[1],true);
-			stairsDown.add(stairs);
-			addObjectOld(stairs);
+			int x = (int) stairs.getShape().getX();
+			int y = (int) stairs.getShape().getY();
+			stairsAll.add(stairs);
+			addObject(stairs,x,y);
 		}
 
 
 		for(Shape doorShape : doors){
 			Door door = new Door(doorShape);
-			
+
 			addObject(door,(int) doorShape.getX(), (int) doorShape.getY());
 
 
@@ -155,16 +153,6 @@ public class Level {
 
 
 
-	public void removeFromAllLists(Object obj){
-
-		removeFromList(obj,basicObjects);
-	}
-
-	private void removeFromList(Object obj, ArrayList<?> list){
-		if (list.contains(obj)){
-			list.remove(obj);
-		}
-	}
 
 	protected void update() throws SlickException, IOException{
 
@@ -188,67 +176,76 @@ public class Level {
 	}
 
 	public void resetStairs(){
-		for(Stairs stairs : stairsUp){
+		for(Stairs stairs : stairsAll){
 			stairs.setClimbed(false);
 		}
-		for(Stairs stairs : stairsDown){
-			stairs.setClimbed(false);
-		}
+		
 	}
 
 	public int checkStairs(){
-		for (BasicObject basic : basicObjects){
-			if (basic instanceof Stairs){
-				int stairClimb = ((Stairs) basic).climbed();
-				if(stairClimb!=0){
-					return stairClimb;
-				}
+		for (Stairs stair : stairsAll){
+
+			int stairClimb = stair.climbed();
+			if(stairClimb!=0){
+				return stairClimb;
 			}
+
 		}
 		return 0;
 	}
 
-	public ArrayList<Stairs> getStairsUp(){
-		return stairsUp;
-	}
-	public ArrayList<Stairs> getStairsDown(){
-		return stairsDown;
-	}
-	public void removeStairsUp(){
-		stairsUp = new ArrayList<Stairs>();
-
-		HashSet<Object> toRemove = new HashSet<Object>();
-
-		for(BasicObject obj: basicObjects){
-			if(obj instanceof Stairs){
-				if( !((Stairs) obj).isStairsDown()){
-					toRemove.add(obj);
-				}
+	public ArrayList<Stairs> getStairs(char UorD){
+		boolean wantUp;
+		if (UorD == 'U' || UorD == 'u'){
+			wantUp = true;
+		}else if (UorD == 'D' || UorD == 'd'){
+			wantUp = false;
+		}else{
+			throw new UnsupportedOperationException("Improper input character to removeStairs");
+		}
+		
+		ArrayList<Stairs> output = new ArrayList<Stairs>();
+		
+		for (Stairs stair : stairsAll){
+			if ( wantUp^stair.isStairsDown()){
+				output.add(stair);
 			}
 		}
+		
+		
+		return output;
+	}
+	
 
-		for (Object obj : toRemove){
-			removeFromAllLists(obj);
+	public void removeStairs(char UorD){
+		
+		boolean wantRemoveUp;
+		if (UorD == 'U' || UorD == 'u'){
+			wantRemoveUp = true;
+		}else if (UorD == 'D' || UorD == 'd'){
+			wantRemoveUp = false;
+		}else{
+			throw new UnsupportedOperationException("Improper input character to removeStairs");
 		}
 
-	}
-	public void removeStairsDown(){
-		stairsDown = new ArrayList<Stairs>();
+		HashSet<Stairs> toRemove = new HashSet<Stairs>();
 
-		HashSet<Object> toRemove = new HashSet<Object>();
+		for(Stairs stair: stairsAll){
 
-		for(BasicObject obj: basicObjects){
-			if(obj instanceof Stairs){
-				if( ((Stairs) obj).isStairsDown()){
-					toRemove.add(obj);
-				}
+			if( wantRemoveUp^stair.isStairsDown()){
+				toRemove.add(stair);
 			}
-		}
 
-		for (Object obj : toRemove){
-			removeFromAllLists(obj);
 		}
+		
+		
+
+
+
 	}
+	
+	
+	
 
 
 
@@ -265,27 +262,19 @@ public class Level {
 
 
 	public ArrayList<Shape> getWalls(){
-		
+
 		return new ArrayList<Shape>();
 	}
 
 	public ArrayList<Shape> getClosedDoors(){
 		ArrayList<Shape> closedDoors = new ArrayList<Shape>();
-		for(BasicObject obj: basicObjects){
-			if(obj instanceof Door)
-				if(!((Door) obj).isOpen()){
-					closedDoors.add(obj.getShape());	
-				}
-
-		}
+		
 		return closedDoors;
 	}
-	
+
+
 
 	
-	public ArrayList<BasicObject> getBasicObjects(){
-		return basicObjects;
-	}
 	public int getStartX(){
 		return startX;
 	}
@@ -307,7 +296,7 @@ public class Level {
 	public void addObject(Object obj, int xPos, int yPos) throws SlickException {
 		sectorMap.placeObjectInSector(obj, xPos, yPos);
 
-		
+
 
 		if (obj instanceof Collider){
 			System.out.println("Added to " + obj + "the physical Collisions"+ physicalCollisions);
@@ -319,16 +308,7 @@ public class Level {
 
 	}
 
-	public void addObjectOld(Object obj) throws SlickException {
-
-		if (obj instanceof BasicObject){
-			basicObjects.add((BasicObject) obj);
-		}
-		
-		
-		
-
-	}
+	
 
 
 
@@ -340,7 +320,7 @@ public class Level {
 	}
 
 	public LevelStaticRenderer getRenderer() {
-		
+
 		return this.renderer;
 	}
 
