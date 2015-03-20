@@ -58,7 +58,8 @@ public class World {
 		
 
 		Level currentLevel = levelManager.getCurrentLevel();
-		LevelStaticRenderer levelStaticRenderer = levelManager.getRenderer(); 
+		
+		LevelStaticRenderer levelStaticRenderer = currentLevel.getRenderer(); 
 				
 		int maxX = currentLevel.getWidthInTiles()*LevelBuilder.SCALING*World.TILE_HEIGHT;
 		int maxY = currentLevel.getHeightInTiles()*LevelBuilder.SCALING*World.TILE_HEIGHT;

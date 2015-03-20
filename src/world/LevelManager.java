@@ -31,7 +31,6 @@ public class LevelManager {
 	private ArrayList<Level> levels;
 	private ItemBuilder itemBuilder;
 	private Player terri;
-	private LevelStaticRenderer levelStaticRenderer;
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
  	
 	public LevelManager(Player terri, int numLevels) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
@@ -82,7 +81,7 @@ public class LevelManager {
 		// get the minimap and walls from the current level
 //		miniMap = new MiniMap(level.getMap(),level.getWalls(),level.getClosedDoors());
  
-		levelStaticRenderer = new LevelStaticRenderer(level);
+		
 
 		level.assignToItems(currentLevelData);
 	}
@@ -105,10 +104,7 @@ public class LevelManager {
 
 
 
-	public LevelStaticRenderer getRenderer() {
-		// TODO Auto-generated method stub
-		return levelStaticRenderer;
-	}
+	
 
 	private void checkStairs() throws SlickException{
 		// look through the current level staircases

@@ -3,10 +3,7 @@ package world;
 import gameobjects.BasicObject;
 import gameobjects.Door;
 import gameobjects.Stairs;
-import interfaces.Broadcaster;
 import interfaces.Collider;
-import interfaces.ObjectCreator;
-import interfaces.Updater;
 import items.Item;
 import items.ItemBuilder;
 
@@ -18,6 +15,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
+import render.LevelStaticRenderer;
 import actors.Enemy;
 import actors.Player;
 import collisions.ContextualCollisions;
@@ -46,14 +44,14 @@ public class Level {
 	private ArrayList<Collider> colliders;
 
 	private ArrayList<Shape> walls;
-	private ArrayList<Shape> doors;
-	private ArrayList<Shape> floors;
-	private ArrayList<Shape> halls;
+//	private ArrayList<Shape> floors;
+//	private ArrayList<Shape> halls;
 
 	private PhysicalCollisions physicalCollisions;
 	private ArrayList<Stairs> stairsUp;
 	private ArrayList<Stairs> stairsDown;
 	private ContextualCollisions contextualCollisions;
+	private LevelStaticRenderer renderer;
 
 
 
@@ -102,10 +100,12 @@ public class Level {
 
 		// store the shapes for doors/walls/floors
 		walls = levelBuilder.getWalls();
-		doors = levelBuilder.getDoors();
-		floors = levelBuilder.getFloors();
-		halls = levelBuilder.getHalls();
+		ArrayList<Shape> doors = levelBuilder.getDoors();
+		ArrayList<Shape> floors = levelBuilder.getFloors();
+		ArrayList<Shape> halls = levelBuilder.getHalls();
 
+		renderer = new LevelStaticRenderer(walls,floors,halls);
+		
 		map = levelBuilder.getMap();
 
 
@@ -280,12 +280,7 @@ public class Level {
 		}
 		return closedDoors;
 	}
-	public ArrayList<Shape> getFloors(){
-		return floors;
-	}
-	public ArrayList<Shape> getHalls(){
-		return halls;
-	}
+	
 
 	
 	public ArrayList<BasicObject> getBasicObjects(){
@@ -343,6 +338,11 @@ public class Level {
 		sectorMap.assignToItems(currentLevelData);
 
 
+	}
+
+	public LevelStaticRenderer getRenderer() {
+		
+		return this.renderer;
 	}
 
 

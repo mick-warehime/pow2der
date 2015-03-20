@@ -8,13 +8,15 @@ Broadcasters should not be given the colliding objects class, since it's kludgy 
 
 Figure out how to do collision handling better, since abilityObjects also need it.
 
+The way doors check if they can close now is buggy: if more than one collision occurs, one can allow the door to close even if the other doesn’t.
+
 #########
 
 Handle item’s being given the current level data.
 contextual collisions are not handled appropriately either.
 
+r
 
-possible error: a broadcaster with an interaction range extending past its own sector won’t be detected by shapes in the adjacent sectors.
 
 
 

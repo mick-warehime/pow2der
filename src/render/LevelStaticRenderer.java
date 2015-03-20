@@ -36,7 +36,7 @@ public class LevelStaticRenderer extends Renderer{
 
 	private int tileSize;
 
-	public LevelStaticRenderer(Level level) throws SlickException {
+	public LevelStaticRenderer(ArrayList<Shape> walls,ArrayList<Shape> floors,ArrayList<Shape> halls) throws SlickException {
 		this.wallImage = World.spriteSheet.getSubImage(26,5);					
 		this.floorImage = World.spriteSheet.getSubImage(25,40);
 		this.hallImage = World.spriteSheet.getSubImage(60,25);
@@ -47,9 +47,9 @@ public class LevelStaticRenderer extends Renderer{
 		this.xDrawCutoffPixels = Game.WIDTH;
 		this.yDrawCutoffPixels = Game.HEIGHT;
 
-		this.walls = level.getWalls();
-		this.floors = level.getFloors();
-		this.halls = level.getHalls();
+		this.walls = walls;
+		this.floors = floors;
+		this.halls = halls;
 
 		// make a list of light sources??
 
