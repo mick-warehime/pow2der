@@ -133,7 +133,6 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 		float Sway = 40f;
 		float Jaggedness = 1 / Sway;
 
-		float[] prevPoint = startPt;
 		double prevDisplacement = 0;
 		for(int p = 1; p < positions.size(); p++){
 
@@ -154,7 +153,7 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 
 			double px = (startPt[0] + pos*tangent[0] +concavity*displacement*normal[0]);
 			double py = (startPt[1] + pos*tangent[1] + concavity*displacement*normal[1]);
-			float[] point  = new float[] {(float) px,(float) py};
+			
 
 
 			// create a new bolt line and store the points in case we want to add more bolties later
@@ -162,7 +161,6 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 			boltPoints.add(new float[] {(float) px,(float) py});
 
 
-			prevPoint = point;
 			prevDisplacement = displacement;
 
 		}
