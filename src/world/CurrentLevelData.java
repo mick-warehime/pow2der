@@ -16,8 +16,5 @@ public class CurrentLevelData {
 		return this.currentLevel;
 	}
 	
-	
-	
-	
-	
+	 
 }

@@ -296,6 +296,7 @@ public abstract class ActorActionEngine extends ActionEngine {
 
 
 	public void incrementHP(int increment) {
+ 		
 		status.incrementHP(increment);
 	}
 

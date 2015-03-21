@@ -10,4 +10,5 @@ Figure out how to do collision handling better, since abilityObjects also need i
 
 Changed player avatar move commands to the new version, removed obselete command and methods. Removed walking_X and walking_Y effects. 
 
-made a collidesWithSolids interface, which is an object that needs to know if it's collided with solids. Had track these objects, and assign them the detector accordingly. Assigned this interface to actors.
+
+

@@ -14,6 +14,7 @@ import render.ActorRenderer;
 import render.EnemyRenderer;
 import world.Level;
 import abilities.FireballAbility;
+import abilities.LightningAbility;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
 import commands.CommandProviderAggregator;
@@ -27,26 +28,33 @@ public class Enemy extends Actor implements Mover{
 	public Enemy(int xPixels, int yPixels, Level level, Player player) throws SlickException {
 		super();
 		
-		int numEnemies = 7;
+		int numEnemies = 2;
 		Random rand = new Random();
-		enemyID = rand.nextInt(numEnemies);
+//		enemyID = rand.nextInt(numEnemies);
+		enemyID = 0;
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		
 		commandProviderAggregator = new CommandProviderAggregator();
 				
 		status = new Status(rect);
-		status.incrementHP(-8);
+		status.incrementHP(8);
 		
 		abilitySlots = new AbilitySlots();
+//		if(enemyID==1){
+//		
 		abilitySlots.setAbility(new FireballAbility(),0);
+//		}else{
+//			abilitySlots.setAbility(new LightningAbility(),0);
+//		}
+			
 		
 		enemyGraphics = new EnemyRenderer("data/monster_bright.png", status,enemyID);
 
-		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate);
-
-		behavior = new EnemyBehavior(status, new Knowledge(this,player,level));
-
+		behavior = new EnemyBehavior(status, new Knowledge(this,player,level), enemyID);
+		
+		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate,behavior.getBehaviorProfile());
+		
 		commandProviderAggregator.addProvider(behavior);
 		
 	}

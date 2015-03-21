@@ -14,7 +14,7 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Path;
 import org.newdawn.slick.geom.Shape;
 
-import collisions.PhysicalCollisionDetector;
+import collisions.PhysicalCollisions;
 import actors.Player;
 import render.LightningLine;
 import render.LineObject;
@@ -60,7 +60,7 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 
 	}
 
-	private void makeShapeFromBoltPoints(PhysicalCollisionDetector detector) throws SlickException {
+	private void makeShapeFromBoltPoints(PhysicalCollisions detector) throws SlickException {
 		
 		
 		
@@ -227,7 +227,7 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	}
 
 	@Override
-	public void assignCollisionDetector(PhysicalCollisionDetector detector) throws SlickException {
+	public void assignCollisionDetector(PhysicalCollisions detector) throws SlickException {
 		makeShapeFromBoltPoints(detector);
 		
 		
