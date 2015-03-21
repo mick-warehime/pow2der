@@ -41,8 +41,8 @@ public class MenuHandler {
 		this.keyboardInputs = new KeyboardInputListener();
 		this.menuInputs = new MenuInputListener();
 		this.commandProviderAggregator = new CommandProviderAggregator();
-		commandProviderAggregator.addProvider(keyboardInputs);
-		commandProviderAggregator.addProvider(menuInputs);
+		commandProviderAggregator.addUniqueProvider(keyboardInputs);
+		commandProviderAggregator.addUniqueProvider(menuInputs);
 
 		this.menuHandlerData = new MenuHandlerData();
 		

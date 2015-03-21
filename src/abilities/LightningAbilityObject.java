@@ -1,7 +1,7 @@
 package abilities;
 
 import interfaces.Broadcaster;
-import interfaces.CollidesWithSolids;
+import interfaces.Collider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Path;
 import org.newdawn.slick.geom.Shape;
 
+import collisions.ContextualCollisions;
 import collisions.PhysicalCollisions;
 import actors.Player;
 import render.LightningLine;
@@ -21,7 +22,7 @@ import render.LineObject;
 import render.LineRenderer;
 import commands.IncrementHPCommand;
 
-public class LightningAbilityObject extends AbilityObject implements Broadcaster, CollidesWithSolids {
+public class LightningAbilityObject extends AbilityObject implements Broadcaster, Collider {
 
 	private int countDown;
 	private int damage = 2;
@@ -133,7 +134,6 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 		float Sway = 40f;
 		float Jaggedness = 1 / Sway;
 
-		float[] prevPoint = startPt;
 		double prevDisplacement = 0;
 		for(int p = 1; p < positions.size(); p++){
 
@@ -154,7 +154,7 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 
 			double px = (startPt[0] + pos*tangent[0] +concavity*displacement*normal[0]);
 			double py = (startPt[1] + pos*tangent[1] + concavity*displacement*normal[1]);
-			float[] point  = new float[] {(float) px,(float) py};
+			
 
 
 			// create a new bolt line and store the points in case we want to add more bolties later
@@ -162,7 +162,6 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 			boltPoints.add(new float[] {(float) px,(float) py});
 
 
-			prevPoint = point;
 			prevDisplacement = displacement;
 
 		}
@@ -229,13 +228,17 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	}
 
 	@Override
-	public void assignCollisionDetector(PhysicalCollisions detector) throws SlickException {
+	public void assignPhysicalCollisions(PhysicalCollisions detector) throws SlickException {
 		makeShapeFromBoltPoints(detector);
 		
 		
 		
 		
 		
+	}
+
+	@Override
+	public void assignContextualCollisions(ContextualCollisions contextuals) {		
 	}
 
 }

@@ -101,14 +101,13 @@ public class Knowledge {
 		Line line = new Line(x1, y1, x2, y2);
 
 		//Also check the basic game tiles
-		ArrayList<Shape> walls = level.getWalls();
+		ArrayList<Shape> walls = new ArrayList<Shape>();
 		for(Shape wall : walls){
 			if(line.intersects(wall)){
 				return false;
 			}
 		}
-		
-		ArrayList<Shape> doors = level.getClosedDoors();
+		ArrayList<Shape> doors = new ArrayList<Shape>();
 		for(Shape door : doors){
 			if(line.intersects(door)){
 				return false;

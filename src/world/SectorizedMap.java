@@ -7,23 +7,21 @@ import org.newdawn.slick.geom.Shape;
 
 public class SectorizedMap {
 
-	private ArrayList<Sector> sectors;
-	private ArrayList<Sector> activeSectors;
+	private ArrayList<SectorOld> sectorOlds;
+	private ArrayList<SectorOld> activeSectors;
 	private int sectorSize;
 
-	public SectorizedMap(int[][] map, int sectorSize){
+	public SectorizedMap(int[][] tileMap, int sectorSize){
 		this.sectorSize = sectorSize;
-		generateSectors(map,sectorSize);
-		activeSectors = new ArrayList<Sector>();
+		generateSectors(tileMap,sectorSize);
+		activeSectors = new ArrayList<SectorOld>();
 	}
 
-	private void generateSectors(int[][] map, int size){
-		sectors = new ArrayList<Sector>();
+	private void generateSectors(int[][] tileMap, int size){
+		sectorOlds = new ArrayList<SectorOld>();
 		
-		int numRows = map.length;
-		int numCols = map[0].length;
-
-		
+		int numRows = tileMap.length;
+		int numCols = tileMap[0].length;
 
 		for(int col= 0; col < numCols; col+=size){
 
@@ -51,7 +49,7 @@ public class SectorizedMap {
 				}
 				
 				Shape shape = new Rectangle(xMin,yMin,width,height);
-				sectors.add(new Sector(shape,tiles));
+				sectorOlds.add(new SectorOld(shape,tiles));
 			}
 		}
 
@@ -59,25 +57,25 @@ public class SectorizedMap {
 	
 	public void update(Shape playerShape){
 
-		activeSectors = new ArrayList<Sector>();
+		activeSectors = new ArrayList<SectorOld>();
 		
-		// create a box around the player and collide it with the sectors
+		// create a box around the player and collide it with the sectorOlds
 		int xTile = (int) (playerShape.getX()/World.TILE_WIDTH);
 		int yTile = (int) (playerShape.getY()/World.TILE_HEIGHT);
 		int xMin = (int) (xTile-sectorSize/2);
 		int yMin = (int) (yTile-sectorSize/2);
 		Shape playerSectorShape = new Rectangle(xMin,yMin,sectorSize,sectorSize);
 		
-		// add any overlaping sectors to the active sectors list
-		for(Sector sector : sectors){
-			if(playerSectorShape.intersects(sector.getShape())){		
-				activeSectors.add(sector);
+		// add any overlaping sectorOlds to the active sectorOlds list
+		for(SectorOld sectorOld : sectorOlds){
+			if(playerSectorShape.intersects(sectorOld.getShape())){		
+				activeSectors.add(sectorOld);
 			}
 		}
 	}
 	
 	
-	public ArrayList<Sector> getActiveSectors(){
+	public ArrayList<SectorOld> getActiveSectors(){
 		return activeSectors;
 	}
 

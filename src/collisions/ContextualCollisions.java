@@ -9,19 +9,20 @@ import java.util.Iterator;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Shape;
 
-import world.Level;
+import world.Sector;
+import world.SectorMap;
 
 public class ContextualCollisions {
 
 	// Objects that do something on collision
-	private ArrayList<Broadcaster> broadcasters;
 	private ArrayList<BroadcasterCommandProvider> listeners;
-
+	private SectorMap sectorMap;
+	
+	
 	
 
-	public ContextualCollisions(Level level){
-		level.getBasicObjects();
-		this.broadcasters = level.getBroadcasters();
+	public ContextualCollisions( SectorMap sectorMap){
+		this.sectorMap = sectorMap;
 		this.listeners = new ArrayList<BroadcasterCommandProvider>();
 	}
 	
@@ -33,12 +34,11 @@ public class ContextualCollisions {
 			Shape shape = listener.getOwnerShape();
 			Class<?> className = listener.getOwnerClass();
 			
-			for (Broadcaster bcaster : broadcasters){
-				if (shape.intersects(bcaster.getInteractionRange())){
-					bcaster.onCollisionDo(className, shape);
-					ArrayList<Command> commands = bcaster.onCollisionBroadcast(className, shape);
-					listener.addCommands(commands);
-				}
+			
+			for (Broadcaster bcaster : broadcastersInRangeOf(shape)){
+				bcaster.onCollisionDo(className, shape);
+				ArrayList<Command> commands = bcaster.onCollisionBroadcast(className, shape);
+				listener.addCommands(commands);
 			}
 			
 			
@@ -65,6 +65,22 @@ public class ContextualCollisions {
 
 
 	
+
+
+	private ArrayList<Broadcaster> broadcastersInRangeOf(Shape shape) {
+		ArrayList<Broadcaster> output = new ArrayList<Broadcaster>();
+		
+		
+		
+		for (Sector sector: sectorMap.getSectorsNear(shape)){
+
+			for (Broadcaster bcaster: sector.getBroadcasters()){
+				if (shape.intersects(bcaster.getInteractionRange())){ output.add(bcaster);}
+			}
+		}
+		
+		return output;
+	}
 
 
 	public void addListener(BroadcasterCommandProvider bcp) {

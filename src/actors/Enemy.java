@@ -55,7 +55,7 @@ public class Enemy extends Actor implements Mover{
 		
 		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate,behavior.getBehaviorProfile());
 		
-		commandProviderAggregator.addProvider(behavior);
+		commandProviderAggregator.addUniqueProvider(behavior);
 		
 	}
 

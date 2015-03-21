@@ -1,7 +1,7 @@
 package abilities;
 
 import interfaces.Broadcaster;
-import interfaces.CollidesWithSolids;
+import interfaces.Collider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,11 +11,12 @@ import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
-import collisions.PhysicalCollisions;
 import render.ParticleRenderer;
+import collisions.ContextualCollisions;
+import collisions.PhysicalCollisions;
 import commands.IncrementHPCommand;
 
-public class FireballAbilityObject extends AbilityObject implements Broadcaster, CollidesWithSolids {
+public class FireballAbilityObject extends AbilityObject implements Broadcaster, Collider {
 
 	private int countDown;
 	private int radius= 5;
@@ -52,6 +53,10 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster,
 
 	@Override
 	public void update() {
+		
+		if (detector == null) {
+			throw new NullPointerException("Attempted to update a fireball that hasn't yet been assigned a physical collisions instance");
+		}
 		
 		float oldX = shape.getX();
 		float oldY = shape.getY();
@@ -114,8 +119,15 @@ public class FireballAbilityObject extends AbilityObject implements Broadcaster,
 
 
 	@Override
-	public void assignCollisionDetector(PhysicalCollisions detector) {
+	public void assignPhysicalCollisions(PhysicalCollisions detector) {
 		this.detector = detector;
+		
+	}
+
+
+
+	@Override
+	public void assignContextualCollisions(ContextualCollisions contextuals) {
 		
 	}
 

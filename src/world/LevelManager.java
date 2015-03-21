@@ -16,9 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.xml.sax.SAXException;
 
 import render.LevelStaticRenderer;
-import actors.Actor;
 import actors.Player;
-import collisions.ContextualCollisions;
 
 /* Generic menu class
  * 
@@ -33,9 +31,7 @@ public class LevelManager {
 	private ArrayList<Level> levels;
 	private ItemBuilder itemBuilder;
 	private Player terri;
-	private LevelStaticRenderer levelStaticRenderer;
 	private CurrentLevelData currentLevelData = new CurrentLevelData();
-	private ContextualCollisions contextuals;
  	
 	public LevelManager(Player terri, int numLevels) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, SlickException{
 
@@ -55,8 +51,8 @@ public class LevelManager {
 		}
 		
 		// remove down stairs from level one and up stairs from last level
-		levels.get(0).removeStairsDown();
-		levels.get(numLevels-1).removeStairsUp();
+		levels.get(0).removeStairs('D');
+		levels.get(numLevels-1).removeStairs('U');
 		
 		// set the current level to be level 0
 		setLevel(0,levels.get(0).getStartX(),levels.get(0).getStartY());
@@ -76,19 +72,16 @@ public class LevelManager {
 
 		// set his new position to the position of the stiars
 		terri.setPosition(xPos,yPos);
-		level.addObject(terri);
+		level.addObject(terri,xPos,yPos);
 		
-		contextuals = new ContextualCollisions(level);
-		for (Actor dude : level.getActors()){
-			dude.setCollisionHandlers(contextuals);
-		}
+		
 
 		
 
 		// get the minimap and walls from the current level
 //		miniMap = new MiniMap(level.getMap(),level.getWalls(),level.getClosedDoors());
  
-		levelStaticRenderer = new LevelStaticRenderer(level);
+		
 
 		level.assignToItems(currentLevelData);
 	}
@@ -111,10 +104,7 @@ public class LevelManager {
 
 
 
-	public LevelStaticRenderer getRenderer() {
-		// TODO Auto-generated method stub
-		return levelStaticRenderer;
-	}
+	
 
 	private void checkStairs() throws SlickException{
 		// look through the current level staircases
@@ -129,7 +119,7 @@ public class LevelManager {
 			// otherwise it constantly thinks you are climbing 
 			levels.get(currentLevel).resetStairs();
 
-			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairsDown();
+			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairs('D');
 			int xPos = (int) stairsDown.get(0).getShape().getX();
 			int yPos = (int) stairsDown.get(0).getShape().getY();
 
@@ -138,8 +128,8 @@ public class LevelManager {
 			// otherwise it constantly thinks you are climbing 
 			levels.get(currentLevel).resetStairs();
 			
-			ArrayList<Stairs> stairsUp = levels.get(nextLevel).getStairsUp();
-			ArrayList<Stairs> stairsDown = levels.get(nextLevel).getStairsDown();
+			ArrayList<Stairs> stairsUp = levels.get(nextLevel).getStairs('U');
+			
 						
 			int xPos = (int) stairsUp.get(0).getShape().getX();
 			int yPos = (int) stairsUp.get(0).getShape().getY();
@@ -151,8 +141,7 @@ public class LevelManager {
 		checkStairs();
 		
 		// update the miniMap using the players position in tile coordinates NOT PIXELS
-// 		miniMap.update(terri.getShape());
-		contextuals.update();
+
 		levels.get(currentLevel).update();		
 	}
 }
