@@ -35,7 +35,8 @@ public class Knowledge {
 		// generate a search map using only the walls from the level
 				// create the levelmap searchable by the astar routine
 		levelMap = new LevelMap(level.getMap());
-		
+
+
 	}
 
 
@@ -106,7 +107,12 @@ public class Knowledge {
 				return false;
 			}
 		}
+<<<<<<< HEAD
+		
+		ArrayList<Shape> doors = level.getClosedDoors();
+=======
 		ArrayList<Shape> doors = new ArrayList<Shape>();
+>>>>>>> 991d0b8571a18af63a7e186afcf1ba9fc4d5712a
 		for(Shape door : doors){
 			if(line.intersects(door)){
 				return false;

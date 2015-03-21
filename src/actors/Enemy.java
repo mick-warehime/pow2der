@@ -51,7 +51,7 @@ public class Enemy extends Actor implements Mover{
 		
 		enemyGraphics = new EnemyRenderer("data/monster_bright.png", status,enemyID);
 
-		behavior = new EnemyBehavior(status, new Knowledge(this,player,level), enemyID);
+		behavior = new EnemyBehavior(status, new Knowledge(this, player,level), enemyID);
 		
 		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate,behavior.getBehaviorProfile());
 		
