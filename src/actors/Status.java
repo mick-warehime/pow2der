@@ -215,5 +215,10 @@ public class Status {
 		else {yDirection = direction;}
 	}
 
+	public PhysicalCollisions getPhysicalCollisions() {
+		// TODO Auto-generated method stub
+		return this.collisionDetector;
+	}
+
 
 }

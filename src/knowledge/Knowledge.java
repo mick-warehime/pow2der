@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Shape;
 
+import collisions.PhysicalCollisions;
 import pathfinding.AStarPathFinder;
 import pathfinding.LevelMap;
 import pathfinding.Path;
@@ -20,12 +21,14 @@ public class Knowledge {
 	private Enemy self;
 	private int searchDistance;
 	private float agroDistance;
+	private Status status;
 
-	public Knowledge(Enemy self, Player player, Level level){
+	public Knowledge(Enemy self, Player player, Level level, Status status){
 
 		this.player = player;
 		this.level = level;
 		this.self = self;
+		this.status = status;
 		
 		searchDistance = 15;
 							
@@ -80,19 +83,11 @@ public class Knowledge {
 
 		Line line = new Line(x1, y1, x2, y2);
 
-		//Also check the basic game tiles
-		ArrayList<Shape> walls = new ArrayList<Shape>();
-		for(Shape wall : walls){
-			if(line.intersects(wall)){
-				return false;
-			}
-		}
-		ArrayList<Shape> doors = new ArrayList<Shape>();
-		for(Shape door : doors){
-			if(line.intersects(door)){
-				return false;
-			}
-		}
+		
+		PhysicalCollisions physicalCollisions = status.getPhysicalCollisions();
+		if (physicalCollisions.isCollidedWithSolids(line)){ return false;}
+		
+
 			
 		return true;
 	}
