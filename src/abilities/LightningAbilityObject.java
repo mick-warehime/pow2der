@@ -1,7 +1,7 @@
 package abilities;
 
 import interfaces.Broadcaster;
-import interfaces.CollidesWithSolids;
+import interfaces.Collider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Path;
 import org.newdawn.slick.geom.Shape;
 
+import collisions.ContextualCollisions;
 import collisions.PhysicalCollisions;
 import actors.Player;
 import render.LightningLine;
@@ -21,7 +22,7 @@ import render.LineObject;
 import render.LineRenderer;
 import commands.IncrementHPCommand;
 
-public class LightningAbilityObject extends AbilityObject implements Broadcaster, CollidesWithSolids {
+public class LightningAbilityObject extends AbilityObject implements Broadcaster, Collider {
 
 	private int countDown;
 	private int damage = 2;
@@ -227,13 +228,17 @@ public class LightningAbilityObject extends AbilityObject implements Broadcaster
 	}
 
 	@Override
-	public void assignCollisionDetector(PhysicalCollisions detector) throws SlickException {
+	public void assignPhysicalCollisions(PhysicalCollisions detector) throws SlickException {
 		makeShapeFromBoltPoints(detector);
 		
 		
 		
 		
 		
+	}
+
+	@Override
+	public void assignContextualCollisions(ContextualCollisions contextuals) {		
 	}
 
 }

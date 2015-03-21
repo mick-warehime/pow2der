@@ -25,7 +25,7 @@ public class CommandProviderAggregator {
 
 	}
 
-	public void addProvider( CommandProvider provider){
+	public void addUniqueProvider( CommandProvider provider){
 		removeListenersOfClass(provider.getClass()); //The aggregator can only have one provider of a given class.
 		
 		providers.add(provider);

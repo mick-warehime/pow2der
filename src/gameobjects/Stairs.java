@@ -29,6 +29,7 @@ public class Stairs extends BasicObject implements Interactive, Broadcaster{
 	private static final int INTERACTION_RANGE = 20;
 
 	public Stairs(int topLeftX, int topLeftY, Boolean stairsDown) throws SlickException {
+		this.canCollide = false;
 		
 		shape = new Rectangle(topLeftX,topLeftY,World.TILE_WIDTH,World.TILE_HEIGHT);
 		
@@ -45,9 +46,7 @@ public class Stairs extends BasicObject implements Interactive, Broadcaster{
 
 
 
-	public boolean canCollide(){
-		return false;
-	}
+	
 
 	@Override
 	public void interact(int interactionType, Status status) {
@@ -55,8 +54,6 @@ public class Stairs extends BasicObject implements Interactive, Broadcaster{
 
 		if (interactionType != Interactive.INTERACTION_TOGGLE){return;}
 
-		
-//		if (shape.intersects(status.getRect())){return;}
 		
 		climbed = true;
 

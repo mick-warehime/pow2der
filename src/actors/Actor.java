@@ -1,6 +1,6 @@
 package actors;
 
-import interfaces.CollidesWithSolids;
+import interfaces.Collider;
 import interfaces.ObjectCreator;
 import interfaces.Removeable;
 import interfaces.Updater;
@@ -20,7 +20,7 @@ import collisions.ContextualCollisions;
 import collisions.PhysicalCollisions;
 import commands.CommandProviderAggregator;
 
-public abstract class Actor implements Removeable, Updater, ObjectCreator, CollidesWithSolids{
+public abstract class Actor implements Removeable, Updater, ObjectCreator, Collider{
 
 	protected ActorRenderer graphics;
 	protected CommandProviderAggregator commandProviderAggregator;
@@ -79,25 +79,21 @@ public abstract class Actor implements Removeable, Updater, ObjectCreator, Colli
 
 	
 
-	public void setCollisionHandlers( ContextualCollisions contextuals) {
-
-		
-		
-		
-		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(this.getClass(), this.getShape());
-		
-		commandProviderAggregator.addProvider(bcp);
-		
-		contextuals.addListener(bcp);
-		
 	
-	}
 	
 
 	
-	public void assignCollisionDetector(PhysicalCollisions detector){
+	public void assignPhysicalCollisions(PhysicalCollisions detector){
 		status.setCollisionDetector(detector);
 		
+	}
+	
+	public void assignContextualCollisions(ContextualCollisions contextuals){
+		BroadcasterCommandProvider bcp = new BroadcasterCommandProvider(this.getClass(), this.getShape());
+
+		commandProviderAggregator.addUniqueProvider(bcp);
+
+		contextuals.addListener(bcp);
 	}
 
 

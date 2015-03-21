@@ -53,7 +53,9 @@ public class Status {
 
 
 	public boolean isCollidedWithSolids(){
-
+		if (collisionDetector==null){
+			throw new NullPointerException("Collision Detector hasn't been set for this actor!");
+		}
 		return collisionDetector.isCollidedWithSolids(rect);
 
 	}

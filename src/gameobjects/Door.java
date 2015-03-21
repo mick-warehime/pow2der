@@ -24,13 +24,14 @@ import actors.Status;
 public class Door extends BasicObject implements Interactive, Broadcaster{
 	private boolean isOpen;
 	private boolean northSouth;
-	private ArrayList<Actor> actors;
 	private Rectangle interactionRange;
+	
+	private boolean canClose = true;
 	
 	private static final int INTERACTION_RANGE = 10;
 	
-	public Door(Shape doorShape, ArrayList<Actor> actors) throws SlickException {
-		this.actors  = actors;
+	public Door(Shape doorShape) throws SlickException {
+		
 		this.shape = doorShape;
 		
 		isOpen = false;
@@ -65,10 +66,8 @@ public class Door extends BasicObject implements Interactive, Broadcaster{
 		
 		if (shape.intersects(status.getRect())){return;}
 		
-		for(Actor actor : actors){
-			if(shape.intersects(actor.getShape())){
-				return;
-			}
+		if (!canClose){
+			return;
 		}
 		
 		isOpen = !isOpen;
@@ -79,42 +78,7 @@ public class Door extends BasicObject implements Interactive, Broadcaster{
 	
 
 
-	class DoorRenderer extends Renderer{
-
-		
-		
-		
-		private Image image;
-
-		public DoorRenderer() {
-			this.image = World.spriteSheet.getSubImage(52,36).copy();;
-			
-			if(northSouth){
-				image.setRotation(90);
-			}
-			
-		}
-
-		public void render(Graphics g, int offsetX, int offsetY){
-			if(!isOpen){
-				float x = shape.getX();
-				float y = shape.getY();
-				
-				if(northSouth){
-					for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
-						image.draw(x-offsetX,y-offsetY+j*World.TILE_HEIGHT);
-					}
-				}else{
-					for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
-						image.draw(x-offsetX+j*World.TILE_WIDTH,y-offsetY);
-					}
-				}
-
-			}
-			
-		}
-		
-	}
+	
 
 
 	public boolean isOpen() {
@@ -137,6 +101,12 @@ public class Door extends BasicObject implements Interactive, Broadcaster{
 	@Override
 	public void onCollisionDo(Class<?> collidingObjectClass,
 			Shape collidingObjectShape) {
+		
+		if (collidingObjectShape.intersects(shape)){
+			canCollide = false;
+		}else{
+			canCollide = true;
+		}
 		
 		
 	}
@@ -172,6 +142,43 @@ public class Door extends BasicObject implements Interactive, Broadcaster{
 	
 	
 
+	
+class DoorRenderer extends Renderer{
+
+		
+		
+		
+		private Image image;
+
+		public DoorRenderer() {
+			this.image = World.spriteSheet.getSubImage(52,36).copy();;
+			
+			if(northSouth){
+				image.setRotation(90);
+			}
+			
+		}
+
+		public void render(Graphics g, int offsetX, int offsetY){
+			if(!isOpen){
+				float x = shape.getX();
+				float y = shape.getY();
+				
+				if(northSouth){
+					for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
+						image.draw(x-offsetX,y-offsetY+j*World.TILE_HEIGHT);
+					}
+				}else{
+					for(int j = 0; j<LevelBuilder.DOORSIZE;j++){
+						image.draw(x-offsetX+j*World.TILE_WIDTH,y-offsetY);
+					}
+				}
+
+			}
+			
+		}
+		
+	}
 
 
 }

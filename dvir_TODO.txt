@@ -8,7 +8,17 @@ Broadcasters should not be given the colliding objects class, since it's kludgy 
 
 Figure out how to do collision handling better, since abilityObjects also need it.
 
-Changed player avatar move commands to the new version, removed obselete command and methods. Removed walking_X and walking_Y effects. 
+The way doors check if they can close now is buggy: if more than one collision occurs, one can allow the door to close even if the other doesn’t.
+
+Holding run but letting go of a move button keeps you running.
+
+Remove SpriteSheet from world (it shouldn’t be a global variable)
+
+#########
+
+TODO: Turn walls into static objects! Get rid of blocks altogether!
+
+
 
 
 

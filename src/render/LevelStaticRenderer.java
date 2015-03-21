@@ -10,8 +10,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
-import world.Level;
-import world.LevelBuilder;
 import world.World;
 
 /* 
@@ -21,10 +19,8 @@ import world.World;
 
 public class LevelStaticRenderer extends Renderer{
 
-	private ArrayList<Shape> walls;
 	private ArrayList<Shape> floors;
 	private ArrayList<Shape> halls;
-	private Image wallImage;
 	private Image floorImage;
 	private Image hallImage;
 
@@ -34,22 +30,19 @@ public class LevelStaticRenderer extends Renderer{
 	private int xDrawCutoffPixels;
 	private int yDrawCutoffPixels;
 
-	private int tileSize;
 
-	public LevelStaticRenderer(Level level) throws SlickException {
-		this.wallImage = World.spriteSheet.getSubImage(26,5);					
+	public LevelStaticRenderer(ArrayList<Shape> floors,ArrayList<Shape> halls) throws SlickException {
 		this.floorImage = World.spriteSheet.getSubImage(25,40);
 		this.hallImage = World.spriteSheet.getSubImage(60,25);
 
-
-		this.tileSize = World.TILE_HEIGHT;
+//
+//		this.tileSize = World.TILE_HEIGHT;
 
 		this.xDrawCutoffPixels = Game.WIDTH;
 		this.yDrawCutoffPixels = Game.HEIGHT;
 
-		this.walls = level.getWalls();
-		this.floors = level.getFloors();
-		this.halls = level.getHalls();
+		this.floors = floors;
+		this.halls = halls;
 
 		// make a list of light sources??
 
@@ -76,13 +69,13 @@ public class LevelStaticRenderer extends Renderer{
 
 		float alpha = 0.85f;
 
-		for (Shape wall : walls){
-			if(onScreen(wall,playerX,playerY)){
-				wallImage.setAlpha(alpha);
-				wallImage.draw(wall.getX()-offsetX,wall.getY()-offsetY);			
-			}
-
-		}
+//		for (Shape wall : walls){
+//			if(onScreen(wall,playerX,playerY)){
+//				wallImage.setAlpha(alpha);
+//				wallImage.draw(wall.getX()-offsetX,wall.getY()-offsetY);			
+//			}
+//
+//		}
 		for (Shape floor : floors){
 			if(onScreen(floor,playerX,playerY)){			
 				floorImage.setAlpha(alpha);
@@ -120,12 +113,6 @@ public class LevelStaticRenderer extends Renderer{
 
 	}
 
-
-
-	private double distToPlayer(Shape shape, int playerX, int playerY){
-		double distance2 = Math.pow(playerX-shape.getX(),2) + Math.pow(playerY-shape.getY(),2);  
-		return distance2;
-	}
 
 
 	@Override

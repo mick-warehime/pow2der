@@ -58,10 +58,11 @@ public class World {
 		
 
 		Level currentLevel = levelManager.getCurrentLevel();
-		LevelStaticRenderer levelStaticRenderer = levelManager.getRenderer(); 
+		
+		LevelStaticRenderer levelStaticRenderer = currentLevel.getRenderer(); 
 				
-		int maxX = currentLevel.getWidth()*LevelBuilder.SCALING*World.TILE_HEIGHT;
-		int maxY = currentLevel.getHeight()*LevelBuilder.SCALING*World.TILE_HEIGHT;
+		int maxX = currentLevel.getWidthInTiles()*LevelBuilder.SCALING*World.TILE_HEIGHT;
+		int maxY = currentLevel.getHeightInTiles()*LevelBuilder.SCALING*World.TILE_HEIGHT;
 		screenTracker.setLevelCoordinates((int) terri.getX(),(int)terri.getY(), maxX, maxY);
 		
 		// draw current level
