@@ -35,8 +35,8 @@ public class Level {
 	private int widthInTiles;
 
 	private SectorMap sectorMap;
-	private int numXSectors = 2;
-	private int numYSectors = 2;
+	private int numXSectors = 5;
+	private int numYSectors = 5;
 
 	private int[][] map;
 
@@ -85,15 +85,9 @@ public class Level {
 		// build a new Level
 		LevelBuilder levelBuilder = new LevelBuilder(widthInTiles,heightInTiles);
 
-		// store the shapes for doors/walls/floors
-		ArrayList<Shape> wallShapes = levelBuilder.getWalls();
-		ArrayList<Shape> doors = levelBuilder.getDoors();
-		ArrayList<Shape> floors = levelBuilder.getFloors();
-		ArrayList<Shape> halls = levelBuilder.getHalls();
+		
 
-
-
-		renderer = new LevelStaticRenderer(floors,halls);
+		renderer = new LevelStaticRenderer(levelBuilder.getFloors(),levelBuilder.getHalls());
 
 		map = levelBuilder.getMap();
 
@@ -104,7 +98,7 @@ public class Level {
 		startX = startPosition[0];
 		startY = startPosition[1];
 
-		for (Shape wallShape : wallShapes){
+		for (Shape wallShape : levelBuilder.getWalls()){
 
 			addObject(new Wall(wallShape),(int) wallShape.getX(), (int)wallShape.getY());
 
@@ -139,7 +133,7 @@ public class Level {
 		}
 
 
-		for(Shape doorShape : doors){
+		for(Shape doorShape : levelBuilder.getDoors()){
 			Door door = new Door(doorShape);
 
 			addObject(door,(int) doorShape.getX(), (int) doorShape.getY());
@@ -270,17 +264,9 @@ public class Level {
 	}
 
 
-	public ArrayList<Shape> getWalls(){
+	
 
-		return new ArrayList<Shape>();
-	}
-
-	public ArrayList<Shape> getClosedDoors(){
-		ArrayList<Shape> closedDoors = new ArrayList<Shape>();
-		
-		return closedDoors;
-	}
-
+	
 
 
 	
@@ -308,7 +294,6 @@ public class Level {
 
 
 		if (obj instanceof Collider){
-			System.out.println("Added to " + obj + "the physical Collisions"+ physicalCollisions);
 			((Collider) obj).assignPhysicalCollisions(physicalCollisions);
 			((Collider) obj).assignContextualCollisions(contextualCollisions);
 		}
