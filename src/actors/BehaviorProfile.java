@@ -18,10 +18,9 @@ public class BehaviorProfile {
 		agroDistance = 200;
 		attackDistance = 150;
 		attackCooldown = 120;
-		agroTime = 60;
-		updateSearchDirectionTime = 10;
-		agroOnAttackTime = 50000;
-		
+		agroTime = 500000;
+		updateSearchDirectionTime = 500000;
+ 		
 		// only difference between enemies is 
 		switch(enemyID){
 		case 0:			

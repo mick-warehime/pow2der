@@ -48,8 +48,8 @@ public class LevelManager {
 
 		// build an array of levels with length = numLevels 
 		// width and height must be ODD
-		int levelHeight = 21;
-		int levelWidth = 31;
+		int levelHeight = 17;
+		int levelWidth = 25;
 		for(int l = 0; l < numLevels; l++){
 			newLevel(levelWidth,levelHeight);
 		}

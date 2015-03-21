@@ -1,12 +1,12 @@
 #
 # A fatal error has been detected by the Java Runtime Environment:
 #
-#  SIGSEGV (0xb) at pc=0x000000012911cbd7, pid=9038, tid=4867
+#  SIGSEGV (0xb) at pc=0x00007fff916c70dd, pid=20861, tid=1811
 #
 # JRE version: Java(TM) SE Runtime Environment (8.0_20-b26) (build 1.8.0_20-b26)
 # Java VM: Java HotSpot(TM) 64-Bit Server VM (25.20-b23 mixed mode bsd-amd64 compressed oops)
 # Problematic frame:
-# C  0x000000012911cbd7
+# C  [libobjc.A.dylib+0x10dd]  objc_msgSend+0x1d
 #
 # Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
 #
@@ -18,188 +18,171 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x00007fd9f3001800):  JavaThread "main" [_thread_in_native, id=4867, stack(0x000000010c51c000,0x000000010c61c000)]
+Current thread (0x00007fbf73881800):  JavaThread "AppKit Thread" daemon [_thread_in_native, id=1811, stack(0x00007fff56052000,0x00007fff56852000)]
 
-siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x000000012911cbd7
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x000007fbf72d4440
 
 Registers:
-RAX=0x0000000000000001, RBX=0x00007fd9f14c1ae0, RCX=0x00007fff73bbf7a8, RDX=0x00007fd9f14be058
-RSP=0x000000010c61a9f0, RBP=0x000000010c61aa00, RSI=0x0000000400001e80, RDI=0x0000000500001e80
-R8 =0x000000010c61a980, R9 =0x000000010c61c000, R10=0x00007fd9f1689dc0, R11=0x00007fff73bbf7a8
-R12=0x00007fd9f14c0f10, R13=0x000000012911dcc6, R14=0x00007fd9f14bed10, R15=0x0000000000000000
-RIP=0x000000012911cbd7, EFLAGS=0x0000000000010206, ERR=0x0000000000000014
+RAX=0x00007fbf72d6cf90, RBX=0x00007fff5684d7b8, RCX=0x0000000000000000, RDX=0x00007fbf72f67090
+RSP=0x00007fff5684d5d8, RBP=0x00007fff5684d5e0, RSI=0x00007fff8c3702b4, RDI=0x00007fbf72d6cf90
+R8 =0x00007fff5684d5c0, R9 =0x0000000000000055, R10=0x00007fff8c3702b4, R11=0x000007fbf72d4428
+R12=0x00007fbf72f145b0, R13=0x00000000000f42ea, R14=0x00007fbf72f2d2c0, R15=0x00007fff5684d718
+RIP=0x00007fff916c70dd, EFLAGS=0x0000000000010206, ERR=0x0000000000000004
   TRAPNO=0x000000000000000e
 
-Top of Stack: (sp=0x000000010c61a9f0)
-0x000000010c61a9f0:   00007fd9f14c0ed0 00007fd9f14bed10
-0x000000010c61aa00:   000000010c61aa80 000000012911dd64
-0x000000010c61aa10:   00007fd90000001a 00007fd900000011
-0x000000010c61aa20:   00007fd9000000d4 00000001000000ba
-0x000000010c61aa30:   00007fd90000000c 0000000000000000
-0x000000010c61aa40:   0000000100000005 00007fff00000002
-0x000000010c61aa50:   00007fd90000008f 0000206400000018
-0x000000010c61aa60:   00001100000000d5 00007fd9f14c0ed0
-0x000000010c61aa70:   00007fd9f14c0ed0 00007fd9f14bed10
-0x000000010c61aa80:   000000010c61aac0 00007fff8a378766
-0x000000010c61aa90:   0000000000000001 0000000000000000
-0x000000010c61aaa0:   00007fd9f14c3ba0 0000000000000000
-0x000000010c61aab0:   00000000e00002c7 00007fd9f14be6d0
-0x000000010c61aac0:   000000010c61ab60 00007fff876d98bd
-0x000000010c61aad0:   000000010c61ab38 00007fd9f14bed10
-0x000000010c61aae0:   000000010c61ac0c 000000010c61abf8
-0x000000010c61aaf0:   0000000000000001 00007fd9f14bfea0
-0x000000010c61ab00:   0000be1f8a2c5c50 00007fd9f14bed10
-0x000000010c61ab10:   00007fd9f14c3a60 0000000000000000
-0x000000010c61ab20:   0000000138fa12fa 00007fd9f1742700
-0x000000010c61ab30:   00007fd9f14bed10 00007fd9f14bfea0
-0x000000010c61ab40:   0000000000000000 000000000000be1f
-0x000000010c61ab50:   00007fd9f30019e8 00007fd9f3001800
-0x000000010c61ab60:   000000010c61ac30 0000000129114bbb
-0x000000010c61ab70:   000000000000001a 0000000000000011
-0x000000010c61ab80:   d4111b6f000000d4 d5188f02000000ba
-0x000000010c61ab90:   001100000000000c 0018000000000000
-0x000000010c61aba0:   00001b0000000005 00008f0000000002
-0x000000010c61abb0:   d40000000000008f d500000000000018
-0x000000010c61abc0:   00b2b01b000000d5 00b2b01d00b2b01c
-0x000000010c61abd0:   00b2b01f00b2b01e 00b2b02100b2b020
-0x000000010c61abe0:   00b2b02300b2b022 00007fff90a27dd8 
+Top of Stack: (sp=0x00007fff5684d5d8)
+0x00007fff5684d5d8:   00007fff8a370cdc 00007fff5684d940
+0x00007fff5684d5e8:   00007fff8a262244 00007fff5684d66c
+0x00007fff5684d5f8:   00007fff5684d670 00007fff5684d674
+0x00007fff5684d608:   00007fff730e3c88 ffffffffffffffff
+0x00007fff5684d618:   00000000000007f8 00007fff730e3ca0
+0x00007fff5684d628:   00007fbf72f2d2c0 0000000000000000
+0x00007fff5684d638:   00007fff5684d710 0000000000000000
+0x00007fff5684d648:   00007fbf72f6d530 00007fff5684d790
+0x00007fff5684d658:   0000000000000055 00000000000f42ec
+0x00007fff5684d668:   00007fbf72f67090 00007fbf72f6cf40
+0x00007fff5684d678:   00007fbf72f145b0 0000000000000001
+0x00007fff5684d688:   00000000000f42ea 00007fbf72f145a0
+0x00007fff5684d698:   00007fff862827ba 0000000172c75e80
+0x00007fff5684d6a8:   00007fff72ad10d0 0000000042000000
+0x00007fff5684d6b8:   00007fff8628ae13 00007fff730ae1d0
+0x00007fff5684d6c8:   00007fff5684d798 0000000000000000
+0x00007fff5684d6d8:   00007fff74c508c8 0000000000000000
+0x00007fff5684d6e8:   0000000000000009 0001e40300000001
+0x00007fff5684d6f8:   00007fbf72f145d4 0000000000000000
+0x00007fff5684d708:   00000000003e0701 00007fbf72f6d5b0
+0x00007fff5684d718:   00007fbf72f2d2c0 0000000000000000
+0x00007fff5684d728:   00007fff8c3a834c 00007fff5684d7d0
+0x00007fff5684d738:   00007fff878e7513 00007fff5684d7b4
+0x00007fff5684d748:   00000000003e0801 00000000ffffffff
+0x00007fff5684d758:   00007fff74c508c8 00000000003e0800
+0x00007fff5684d768:   00007fff00000000 00007fff5684d860
+0x00007fff5684d778:   00007fff89d6aedc 00007fff74c508e8
+0x00007fff5684d788:   00007fff8c3a834c 0000000000000051
+0x00007fff5684d798:   0000000000000000 00000000000f42e1
+0x00007fff5684d7a8:   0000000000000053 0000000000000000
+0x00007fff5684d7b8:   00000000000f42ea 00007fff5684d834
+0x00007fff5684d7c8:   00000000003e1301 00000000ffffffff 
 
-Instructions: (pc=0x000000012911cbd7)
-0x000000012911cbb7:   
-[error occurred during error reporting (printing registers, top of stack, instructions near pc), id 0xb]
+Instructions: (pc=0x00007fff916c70dd)
+0x00007fff916c70bd:   00 00 00 48 85 ff 2e 74 7a 40 f6 c7 01 2e 75 7e
+0x00007fff916c70cd:   49 bb f8 ff ff ff ff 7f 00 00 4c 23 1f 49 89 f2
+0x00007fff916c70dd:   45 23 53 18 49 c1 e2 04 4d 03 53 10 49 3b 32 75
+0x00007fff916c70ed:   04 41 ff 62 08 49 83 3a 00 74 6a 4d 3b 53 10 74 
 
 Register to memory mapping:
 
-RAX=0x0000000000000001 is an unknown value
-RBX=0x00007fd9f14c1ae0 is an unknown value
-RCX=0x00007fff73bbf7a8: OBJC_CLASS_$___NSCFType+0 in /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation at 0x00007fff8a252000
-RDX=0x00007fd9f14be058 is an unknown value
-RSP=0x000000010c61a9f0 is pointing into the stack for thread: 0x00007fd9f3001800
-RBP=0x000000010c61aa00 is pointing into the stack for thread: 0x00007fd9f3001800
-RSI=0x0000000400001e80 is an unknown value
-RDI=0x0000000500001e80 is an unknown value
-R8 =0x000000010c61a980 is pointing into the stack for thread: 0x00007fd9f3001800
-R9 =0x000000010c61c000 is pointing into the stack for thread: 0x00007fd9f3001800
-R10=0x00007fd9f1689dc0 is an unknown value
-R11=0x00007fff73bbf7a8: OBJC_CLASS_$___NSCFType+0 in /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation at 0x00007fff8a252000
-R12=0x00007fd9f14c0f10 is an unknown value
-R13=0x000000012911dcc6 is an unknown value
-R14=0x00007fd9f14bed10 is an unknown value
-R15=0x0000000000000000 is an unknown value
+RAX=0x00007fbf72d6cf90 is an unknown value
+RBX=0x00007fff5684d7b8 is pointing into the stack for thread: 0x00007fbf73881800
+RCX=0x0000000000000000 is an unknown value
+RDX=0x00007fbf72f67090 is an unknown value
+RSP=0x00007fff5684d5d8 is pointing into the stack for thread: 0x00007fbf73881800
+RBP=0x00007fff5684d5e0 is pointing into the stack for thread: 0x00007fbf73881800
+RSI=0x00007fff8c3702b4: -[NSTitlebarContainerView shouldRoundCorners]+0x5ced6 in /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit at 0x00007fff8b99f000
+RDI=0x00007fbf72d6cf90 is an unknown value
+R8 =0x00007fff5684d5c0 is pointing into the stack for thread: 0x00007fbf73881800
+R9 =0x0000000000000055 is an unknown value
+R10=0x00007fff8c3702b4: -[NSTitlebarContainerView shouldRoundCorners]+0x5ced6 in /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit at 0x00007fff8b99f000
+R11=0x000007fbf72d4428 is an unknown value
+R12=0x00007fbf72f145b0 is an unknown value
+R13=0x00000000000f42ea is an unknown value
+R14=0x00007fbf72f2d2c0 is an unknown value
+R15=0x00007fff5684d718 is pointing into the stack for thread: 0x00007fbf73881800
 
 
-Stack: [0x000000010c51c000,0x000000010c61c000],  sp=0x000000010c61a9f0,  free space=1018k
+Stack: [0x00007fff56052000,0x00007fff56852000],  sp=0x00007fff5684d5d8,  free space=8173k
 Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
-C  0x000000012911cbd7
-C  0x000000012911dd64
-C  [CoreFoundation+0x126766]  _CFPFactoryCreateInstance+0x86
-C  [IOKit+0x88bd]  IOCreatePlugInInterfaceForService+0x32e
-C  [libjinput-osx.jnilib+0x1bbb]  Java_net_java_games_input_OSXHIDDeviceIterator_nNext+0x15b
-j  net.java.games.input.OSXHIDDeviceIterator.nNext(J)Lnet/java/games/input/OSXHIDDevice;+0
-j  net.java.games.input.OSXHIDDeviceIterator.next()Lnet/java/games/input/OSXHIDDevice;+4
-j  net.java.games.input.OSXEnvironmentPlugin.enumerateControllers()[Lnet/java/games/input/Controller;+17
-j  net.java.games.input.OSXEnvironmentPlugin.<init>()V+12
-v  ~StubRoutines::call_stub
-V  [libjvm.dylib+0x2d429e]  JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*)+0x6ae
-V  [libjvm.dylib+0x4a2b90]  Reflection::invoke(instanceKlassHandle, methodHandle, Handle, bool, objArrayHandle, BasicType, objArrayHandle, bool, Thread*)+0xdf8
-V  [libjvm.dylib+0x4a2eb9]  Reflection::invoke_constructor(oopDesc*, objArrayHandle, Thread*)+0x181
-V  [libjvm.dylib+0x3227ad]  JVM_NewInstanceFromConstructor+0x7c
-j  sun.reflect.NativeConstructorAccessorImpl.newInstance0(Ljava/lang/reflect/Constructor;[Ljava/lang/Object;)Ljava/lang/Object;+0
-j  sun.reflect.NativeConstructorAccessorImpl.newInstance([Ljava/lang/Object;)Ljava/lang/Object;+85
-j  sun.reflect.DelegatingConstructorAccessorImpl.newInstance([Ljava/lang/Object;)Ljava/lang/Object;+5
-j  java.lang.reflect.Constructor.newInstance([Ljava/lang/Object;)Ljava/lang/Object;+79
-j  java.lang.Class.newInstance()Ljava/lang/Object;+138
-j  net.java.games.input.DefaultControllerEnvironment.getControllers()[Lnet/java/games/input/Controller;+435
-j  org.lwjgl.input.Controllers.create()V+12
-j  org.newdawn.slick.Input.initControllers()V+11
-j  org.newdawn.slick.AppGameContainer.setup()V+144
-j  org.newdawn.slick.AppGameContainer.start()V+1
-j  main.Game.main([Ljava/lang/String;)V+53
-v  ~StubRoutines::call_stub
-V  [libjvm.dylib+0x2d429e]  JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*)+0x6ae
-V  [libjvm.dylib+0x309377]  jni_invoke_static(JNIEnv_*, JavaValue*, _jobject*, JNICallType, _jmethodID*, JNI_ArgumentPusher*, Thread*)+0x1bf
-V  [libjvm.dylib+0x302571]  jni_CallStaticVoidMethod+0x15d
-C  [java+0x2c82]  JavaMain+0x998
-C  [libsystem_pthread.dylib+0x3268]  _pthread_body+0x83
-C  [libsystem_pthread.dylib+0x31e5]  _pthread_body+0x0
-C  [libsystem_pthread.dylib+0x141d]  thread_start+0xd
-C  0x0000000000000000
+C  [libobjc.A.dylib+0x10dd]  objc_msgSend+0x1d
+C  [CoreFoundation+0x10244]  _CFXNotificationPost+0xc44
+C  [Foundation+0x2c31]  -[NSNotificationCenter postNotificationName:object:userInfo:]+0x42
+C  [AppKit+0xdd776]  -[NSSurface _disposeSurface]+0x98
+C  [AppKit+0xdd1da]  -[NSSurface setWindow:]+0x42
+C  [AppKit+0x3b9ef]  -[NSView _setWindow:]+0xa22
+C  [AppKit+0x3cc22]  -[NSView removeFromSuperview]+0x1c5
+C  [AppKit+0x9140a]  -[NSView removeFromSuperviewWithoutNeedingDisplay]+0x26
+C  [liblwjgl.jnilib+0x9c3e]  +[MacOSXKeyableWindow destroyWindow]+0xde
+C  [Foundation+0x65cdc]  __NSThreadPerformPerform+0x125
+C  [CoreFoundation+0x80681]  __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__+0x11
+C  [CoreFoundation+0x7280d]  __CFRunLoopDoSources0+0x10d
+C  [CoreFoundation+0x71e3f]  __CFRunLoopRun+0x39f
+C  [CoreFoundation+0x71858]  CFRunLoopRunSpecific+0x128
+C  [HIToolbox+0x2eaef]  RunCurrentEventLoopInMode+0xeb
+C  [HIToolbox+0x2e76e]  ReceiveNextEventCommon+0xb3
+C  [HIToolbox+0x2e6ab]  _BlockUntilNextEventMatchingListInModeWithFilter+0x47
+C  [AppKit+0x23f81]  _DPSNextEvent+0x3c4
+C  [AppKit+0x23730]  -[NSApplication nextEventMatchingMask:untilDate:inMode:dequeue:]+0xc2
+C  [libosxapp.dylib+0x242a]  -[NSApplicationAWT nextEventMatchingMask:untilDate:inMode:dequeue:]+0x7c
+C  [AppKit+0x17593]  -[NSApplication run]+0x252
+C  [libosxapp.dylib+0x223e]  +[NSApplicationAWT runAWTLoopWithApp:]+0x9c
+C  [libawt_lwawt.dylib+0x4494f]  -[AWTStarter starter:]+0x389
+C  [Foundation+0x65cdc]  __NSThreadPerformPerform+0x125
+C  [CoreFoundation+0x80681]  __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__+0x11
+C  [CoreFoundation+0x7280d]  __CFRunLoopDoSources0+0x10d
+C  [CoreFoundation+0x71e3f]  __CFRunLoopRun+0x39f
+C  [CoreFoundation+0x71858]  CFRunLoopRunSpecific+0x128
+C  [java+0x56cc]  CreateExecutionEnvironment+0x367
+C  [java+0x165c]  JLI_Launch+0x7a0
+C  [java+0x768a]  main+0x65
+C  [java+0xeb4]  start+0x34
+C  0x0000000000000006
 
-Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
-j  net.java.games.input.OSXHIDDeviceIterator.nNext(J)Lnet/java/games/input/OSXHIDDevice;+0
-j  net.java.games.input.OSXHIDDeviceIterator.next()Lnet/java/games/input/OSXHIDDevice;+4
-j  net.java.games.input.OSXEnvironmentPlugin.enumerateControllers()[Lnet/java/games/input/Controller;+17
-j  net.java.games.input.OSXEnvironmentPlugin.<init>()V+12
-v  ~StubRoutines::call_stub
-j  sun.reflect.NativeConstructorAccessorImpl.newInstance0(Ljava/lang/reflect/Constructor;[Ljava/lang/Object;)Ljava/lang/Object;+0
-j  sun.reflect.NativeConstructorAccessorImpl.newInstance([Ljava/lang/Object;)Ljava/lang/Object;+85
-j  sun.reflect.DelegatingConstructorAccessorImpl.newInstance([Ljava/lang/Object;)Ljava/lang/Object;+5
-j  java.lang.reflect.Constructor.newInstance([Ljava/lang/Object;)Ljava/lang/Object;+79
-j  java.lang.Class.newInstance()Ljava/lang/Object;+138
-j  net.java.games.input.DefaultControllerEnvironment.getControllers()[Lnet/java/games/input/Controller;+435
-j  org.lwjgl.input.Controllers.create()V+12
-j  org.newdawn.slick.Input.initControllers()V+11
-j  org.newdawn.slick.AppGameContainer.setup()V+144
-j  org.newdawn.slick.AppGameContainer.start()V+1
-j  main.Game.main([Ljava/lang/String;)V+53
-v  ~StubRoutines::call_stub
 
 ---------------  P R O C E S S  ---------------
 
 Java Threads: ( => current thread )
-  0x00007fd9f1914000 JavaThread "AWT-Shutdown" [_thread_blocked, id=28679, stack(0x0000000125ca5000,0x0000000125da5000)]
-  0x00007fd9f18ba000 JavaThread "AppKit Thread" daemon [_thread_in_native, id=1811, stack(0x00007fff547bf000,0x00007fff54fbf000)]
-  0x00007fd9f1827800 JavaThread "Service Thread" daemon [_thread_blocked, id=18179, stack(0x000000012429a000,0x000000012439a000)]
-  0x00007fd9f1827000 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=17667, stack(0x0000000124197000,0x0000000124297000)]
-  0x00007fd9f1826000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=17155, stack(0x0000000124094000,0x0000000124194000)]
-  0x00007fd9f280e800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=16643, stack(0x0000000123f91000,0x0000000124091000)]
-  0x00007fd9f1830000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=13327, stack(0x0000000123e8e000,0x0000000123f8e000)]
-  0x00007fd9f280c800 JavaThread "Finalizer" daemon [_thread_blocked, id=11523, stack(0x0000000122540000,0x0000000122640000)]
-  0x00007fd9f280b800 JavaThread "Reference Handler" daemon [_thread_blocked, id=11011, stack(0x000000012243d000,0x000000012253d000)]
-=>0x00007fd9f3001800 JavaThread "main" [_thread_in_native, id=4867, stack(0x000000010c51c000,0x000000010c61c000)]
+  0x00007fbf74b21000 JavaThread "AWT-Shutdown" [_thread_blocked, id=36871, stack(0x0000000122ee0000,0x0000000122fe0000)]
+=>0x00007fbf73881800 JavaThread "AppKit Thread" daemon [_thread_in_native, id=1811, stack(0x00007fff56052000,0x00007fff56852000)]
+  0x00007fbf7300d000 JavaThread "Service Thread" daemon [_thread_blocked, id=18179, stack(0x0000000122a07000,0x0000000122b07000)]
+  0x00007fbf74037800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=17667, stack(0x0000000122904000,0x0000000122a04000)]
+  0x00007fbf73800000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=17155, stack(0x0000000122801000,0x0000000122901000)]
+  0x00007fbf73825000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=16643, stack(0x00000001226fe000,0x00000001227fe000)]
+  0x00007fbf74833800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=16399, stack(0x00000001225fb000,0x00000001226fb000)]
+  0x00007fbf7400d000 JavaThread "Finalizer" daemon [_thread_blocked, id=11523, stack(0x0000000120cc1000,0x0000000120dc1000)]
+  0x00007fbf7400c000 JavaThread "Reference Handler" daemon [_thread_blocked, id=11011, stack(0x0000000120bbe000,0x0000000120cbe000)]
+  0x00007fbf73802000 JavaThread "main" [_thread_in_native, id=4867, stack(0x00000001094c4000,0x00000001095c4000)]
 
 Other Threads:
-  0x00007fd9f2001000 VMThread [stack: 0x000000012233a000,0x000000012243a000] [id=10499]
-  0x00007fd9f1831000 WatcherThread [stack: 0x000000012439d000,0x000000012449d000] [id=18691]
+  0x00007fbf74007800 VMThread [stack: 0x0000000120abb000,0x0000000120bbb000] [id=10499]
+  0x00007fbf73013000 WatcherThread [stack: 0x0000000122b0a000,0x0000000122c0a000] [id=18691]
 
 VM state:not at safepoint (normal execution)
 
 VM Mutex/Monitor currently owned by a thread: None
 
 Heap:
- PSYoungGen      total 38400K, used 8978K [0x0000000795580000, 0x0000000798000000, 0x00000007c0000000)
-  eden space 33280K, 26% used [0x0000000795580000,0x0000000795e44830,0x0000000797600000)
+ PSYoungGen      total 38400K, used 17987K [0x0000000795580000, 0x0000000798000000, 0x00000007c0000000)
+  eden space 33280K, 54% used [0x0000000795580000,0x0000000796710d58,0x0000000797600000)
   from space 5120K, 0% used [0x0000000797b00000,0x0000000797b00000,0x0000000798000000)
   to   space 5120K, 0% used [0x0000000797600000,0x0000000797600000,0x0000000797b00000)
  ParOldGen       total 87552K, used 0K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
   object space 87552K, 0% used [0x0000000740000000,0x0000000740000000,0x0000000745580000)
- Metaspace       used 6467K, capacity 6613K, committed 6912K, reserved 1056768K
-  class space    used 656K, capacity 693K, committed 768K, reserved 1048576K
+ Metaspace       used 8343K, capacity 8449K, committed 8576K, reserved 1056768K
+  class space    used 835K, capacity 855K, committed 896K, reserved 1048576K
 
-Card table byte_map: [0x000000011b9de000,0x000000011bddf000] byte_map_base: 0x0000000117fde000
+Card table byte_map: [0x000000011a10f000,0x000000011a510000] byte_map_base: 0x000000011670f000
 
-Marking Bits: (ParMarkBitMap*) 0x000000010be9c330
- Begin Bits: [0x000000011c496000, 0x000000011e496000)
- End Bits:   [0x000000011e496000, 0x0000000120496000)
+Marking Bits: (ParMarkBitMap*) 0x000000010a69c330
+ Begin Bits: [0x000000011abc7000, 0x000000011cbc7000)
+ End Bits:   [0x000000011cbc7000, 0x000000011ebc7000)
 
-Polling page: 0x000000010ad98000
+Polling page: 0x00000001095d4000
 
-CodeCache: size=245760Kb used=2021Kb max_used=2021Kb free=243738Kb
- bounds [0x000000010c61e000, 0x000000010c88e000, 0x000000011b61e000]
- total_blobs=829 nmethods=447 adapters=297
+CodeCache: size=245760Kb used=3586Kb max_used=3597Kb free=242174Kb
+ bounds [0x000000010ad4f000, 0x000000010b0df000, 0x0000000119d4f000]
+ total_blobs=1348 nmethods=940 adapters=323
  compilation: enabled
 
 Compilation events (10 events):
-Event: 0.491 Thread 0x00007fd9f1827000  443       3       java.util.AbstractMap::<init> (5 bytes)
-Event: 0.491 Thread 0x00007fd9f1827000 nmethod 443 0x000000010c816e50 code [0x000000010c816fc0, 0x000000010c817170]
-Event: 0.493 Thread 0x00007fd9f1827000  444       1       java.lang.System::getSecurityManager (4 bytes)
-Event: 0.493 Thread 0x00007fd9f1827000 nmethod 444 0x000000010c816bd0 code [0x000000010c816d20, 0x000000010c816e10]
-Event: 0.494 Thread 0x00007fd9f1827000  445       3       sun.misc.URLClassPath::getResource (74 bytes)
-Event: 0.494 Thread 0x00007fd9f1827000 nmethod 445 0x000000010c816550 code [0x000000010c8166e0, 0x000000010c816a58]
-Event: 0.497 Thread 0x00007fd9f1827000  446       3       java.net.URL::equals (24 bytes)
-Event: 0.497 Thread 0x00007fd9f1827000 nmethod 446 0x000000010c815e90 code [0x000000010c816020, 0x000000010c816468]
-Event: 0.497 Thread 0x00007fd9f1827000  447       3       java.net.URLStreamHandler::equals (45 bytes)
-Event: 0.497 Thread 0x00007fd9f1827000 nmethod 447 0x000000010c815690 code [0x000000010c815820, 0x000000010c815d58]
+Event: 16.256 Thread 0x00007fbf74037800  936       3       java.nio.Bits::putInt (20 bytes)
+Event: 16.256 Thread 0x00007fbf74037800 nmethod 936 0x000000010b0d0310 code [0x000000010b0d0480, 0x000000010b0d0678]
+Event: 16.286 Thread 0x00007fbf74037800  937       3       java.nio.HeapByteBuffer::getInt (18 bytes)
+Event: 16.287 Thread 0x00007fbf74037800 nmethod 937 0x000000010b0cf010 code [0x000000010b0cf220, 0x000000010b0cfb48]
+Event: 16.287 Thread 0x00007fbf74037800  938       3       java.nio.Bits::getInt (18 bytes)
+Event: 16.287 Thread 0x00007fbf74037800 nmethod 938 0x000000010b0d0e10 code [0x000000010b0d1020, 0x000000010b0d19d8]
+Event: 16.456 Thread 0x00007fbf73825000  939       4       java.util.HashMap::keySet (27 bytes)
+Event: 16.457 Thread 0x00007fbf73825000 nmethod 939 0x000000010b0ca3d0 code [0x000000010b0ca520, 0x000000010b0ca618]
+Event: 16.646 Thread 0x00007fbf73800000  940       4       java.nio.DirectByteBuffer::put (18 bytes)
+Event: 16.647 Thread 0x00007fbf73800000 nmethod 940 0x000000010b0ced90 code [0x000000010b0ceee0, 0x000000010b0cef78]
 
 GC Heap History (0 events):
 No events
@@ -208,28 +191,28 @@ Deoptimization events (0 events):
 No events
 
 Internal exceptions (10 events):
-Event: 0.487 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795dce978) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.488 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795dd43d8) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.489 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795dd7668) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.492 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795de8d48) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.492 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795dee760) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.493 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795df41e8) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.493 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795df6cc0) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.494 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795dfb8d0) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.495 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795e06a58) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
-Event: 0.497 Thread 0x00007fd9f3001800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000795e11418) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.829 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x000000079612e048) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.830 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x0000000796131438) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.830 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x00000007961375b0) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.834 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x000000079613f940) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.870 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x0000000796355400) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.873 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x000000079635c1e0) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.876 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x000000079635f920) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.876 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x0000000796363668) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 0.880 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x0000000796366ec8) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
+Event: 16.645 Thread 0x00007fbf73802000 Exception <a 'java/security/PrivilegedActionException'> (0x00000007964f1f10) thrown at [/HUDSON3/workspace/8-2-build-macosx-x86_64/jdk8u20/1074/hotspot/src/share/vm/prims/jvm.cpp, line 1275]
 
 Events (10 events):
-Event: 0.493 loading class net/java/games/input/Usage
-Event: 0.493 loading class net/java/games/input/Usage done
-Event: 0.493 loading class net/java/games/input/Component$Identifier$Axis
-Event: 0.493 loading class net/java/games/input/Component$Identifier$Axis done
-Event: 0.494 loading class net/java/games/input/KeyboardUsage
-Event: 0.494 loading class net/java/games/input/KeyboardUsage done
-Event: 0.494 loading class net/java/games/input/Component$Identifier$Key
-Event: 0.494 loading class net/java/games/input/Component$Identifier$Key done
-Event: 0.496 loading class net/java/games/input/ButtonUsage
-Event: 0.496 loading class net/java/games/input/ButtonUsage done
+Event: 6.659 Executing VM operation: RevokeBias
+Event: 6.659 Executing VM operation: RevokeBias done
+Event: 6.659 Thread 0x00007fbf74b09800 Thread exited: 0x00007fbf74b09800
+Event: 12.084 Thread 0x00007fbf74b21000 Thread added: 0x00007fbf74b21000
+Event: 13.085 Executing VM operation: RevokeBias
+Event: 13.085 Executing VM operation: RevokeBias done
+Event: 13.085 Thread 0x00007fbf74b21000 Thread exited: 0x00007fbf74b21000
+Event: 14.495 Thread 0x00007fbf74b21000 Thread added: 0x00007fbf74b21000
+Event: 16.645 loading class org/lwjgl/opengl/CallbackUtil
+Event: 16.645 loading class org/lwjgl/opengl/CallbackUtil done
 
 
 Dynamic libraries:
@@ -399,26 +382,26 @@ Dynamic libraries:
 0x00000000028c1000 	/System/Library/PrivateFrameworks/CoreSymbolication.framework/Versions/A/CoreSymbolication
 0x00000000028c1000 	/System/Library/PrivateFrameworks/Symbolication.framework/Versions/A/Symbolication
 0x00000000028c1000 	/System/Library/PrivateFrameworks/SpeechRecognitionCore.framework/Versions/A/SpeechRecognitionCore
-0x000000010b600000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/server/libjvm.dylib
+0x0000000109e00000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/server/libjvm.dylib
 0x00000000028c1000 	/usr/lib/libstdc++.6.dylib
-0x000000010ad56000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libverify.dylib
-0x000000010ad64000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libjava.dylib
-0x000000010ada2000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libzip.dylib
-0x0000000122642000 	/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/JavaRuntimeSupport
-0x0000000122658000 	/System/Library/Frameworks/JavaVM.framework/Versions/A/Frameworks/JavaNativeFoundation.framework/Versions/A/JavaNativeFoundation
-0x000000012266c000 	/System/Library/Frameworks/JavaVM.framework/Versions/A/JavaVM
+0x00000001095c6000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libverify.dylib
+0x000000010ad1b000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libjava.dylib
+0x00000001095de000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libzip.dylib
+0x00000001095e8000 	/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/JavaRuntimeSupport
+0x0000000120dc3000 	/System/Library/Frameworks/JavaVM.framework/Versions/A/Frameworks/JavaNativeFoundation.framework/Versions/A/JavaNativeFoundation
+0x0000000120dd7000 	/System/Library/Frameworks/JavaVM.framework/Versions/A/JavaVM
 0x00000000028c1000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Carbon
-0x0000000122678000 	/System/Library/PrivateFrameworks/JavaLaunching.framework/Versions/A/JavaLaunching
+0x0000000120de3000 	/System/Library/PrivateFrameworks/JavaLaunching.framework/Versions/A/JavaLaunching
 0x00000000028c1000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CommonPanels.framework/Versions/A/CommonPanels
 0x00000000028c1000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/Help.framework/Versions/A/Help
 0x00000000028c1000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/ImageCapture.framework/Versions/A/ImageCapture
 0x00000000028c1000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/OpenScripting.framework/Versions/A/OpenScripting
 0x00000000028c1000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/Print.framework/Versions/A/Print
 0x00000000028c1000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SecurityHI.framework/Versions/A/SecurityHI
-0x00000001244b6000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libawt.dylib
-0x0000000124565000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/./libmlib_image.dylib
-0x0000000124631000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libawt_lwawt.dylib
-0x00000001246e4000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/./libosxapp.dylib
+0x0000000122c23000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libawt.dylib
+0x0000000122cd2000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/./libmlib_image.dylib
+0x0000000122d9e000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libawt_lwawt.dylib
+0x0000000122e51000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/./libosxapp.dylib
 0x00000000028c1000 	/System/Library/Frameworks/ExceptionHandling.framework/Versions/A/ExceptionHandling
 0x00000000028c1000 	/System/Library/PrivateFrameworks/CoreServicesInternal.framework/Versions/A/CoreServicesInternal
 0x00000000028c1000 	/System/Library/PrivateFrameworks/CloudDocs.framework/Versions/A/CloudDocs
@@ -452,9 +435,9 @@ Dynamic libraries:
 0x00000000028c1000 	/System/Library/PrivateFrameworks/FindMyDevice.framework/Versions/A/FindMyDevice
 0x00000000028c1000 	/System/Library/Frameworks/LDAP.framework/Versions/A/LDAP
 0x00000000028c1000 	/usr/lib/libsasl2.2.dylib
-0x000000012744f000 	cl_kernels
-0x0000000127451000 	/System/Library/Frameworks/OpenCL.framework/Versions/A/Libraries/ImageFormats/unorm8_bgra.dylib
-0x0000000127440000 	cl_kernels
+0x0000000125bbc000 	cl_kernels
+0x0000000125bbe000 	/System/Library/Frameworks/OpenCL.framework/Versions/A/Libraries/ImageFormats/unorm8_bgra.dylib
+0x0000000125bad000 	cl_kernels
 0x00000000028c1000 	/System/Library/PrivateFrameworks/FamilyControls.framework/Versions/A/FamilyControls
 0x00000000028c1000 	/System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Frameworks/CommerceCore.framework/Versions/A/CommerceCore
 0x00000000028c1000 	/System/Library/PrivateFrameworks/SystemAdministration.framework/Versions/A/SystemAdministration
@@ -463,20 +446,21 @@ Dynamic libraries:
 0x00000000028c1000 	/System/Library/Frameworks/DirectoryService.framework/Versions/A/DirectoryService
 0x00000000028c1000 	/System/Library/PrivateFrameworks/LoginUIKit.framework/Versions/A/Frameworks/LoginUICore.framework/Versions/A/LoginUICore
 0x00000000028c1000 	/usr/lib/libodfde.dylib
-0x0000000128617000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libfontmanager.dylib
-0x000000012867d000 	/Users/mick/Documents/workspace/lwjgl-2.9.1/native/macosx/liblwjgl.jnilib
-0x000000012697e000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libjawt.dylib
+0x0000000126d84000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libfontmanager.dylib
+0x0000000126dea000 	/Users/mick/Documents/workspace/lwjgl-2.9.1/native/macosx/liblwjgl.jnilib
+0x00000001250ec000 	/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libjawt.dylib
 0x00000000028c1000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Resources/GLEngine.bundle/GLEngine
 0x00000000028c1000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLProgrammability.dylib
 0x0000000000000000 	/System/Library/Extensions/AppleIntelHD4000GraphicsGLDriver.bundle/Contents/MacOS/AppleIntelHD4000GraphicsGLDriver
 0x00000000028c1000 	/System/Library/PrivateFrameworks/IOAccelerator.framework/Versions/A/IOAccelerator
 0x00000000028c1000 	/System/Library/PrivateFrameworks/GPUSupport.framework/Versions/A/Libraries/libGPUSupportMercury.dylib
 0x00000000028c1000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Resources/GLRendererFloat.bundle/GLRendererFloat
-0x0000000129113000 	/Users/mick/Documents/workspace/lwjgl-2.9.1/native/macosx/libjinput-osx.jnilib
+0x0000000127665000 	/Users/mick/Documents/workspace/lwjgl-2.9.1/native/macosx/libjinput-osx.jnilib
+0x000000012766a000 	/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib
 
 VM Arguments:
 jvm_args: -Djava.library.path=/Users/mick/Documents/workspace/lwjgl-2.9.1/native/macosx:/Users/mick/Documents/workspace/lwjgl-2.9.1/native/macosx:/Users/mick/Documents/workspace/lwjgl-2.9.1/native/macosx -Dfile.encoding=UTF-8 
-java_command: main.Game
+java_command: particleTests.Main
 java_class_path (initial): /Users/mick/Documents/workspace/pow2r/bin:/Users/mick/Documents/workspace/slick/lib/slick.jar:/Users/mick/Documents/workspace/lwjgl-2.9.1/jar/jinput.jar:/Users/mick/Documents/workspace/lwjgl-2.9.1/jar/lwjgl_util.jar:/Users/mick/Documents/workspace/lwjgl-2.9.1/jar/lwjgl.jar
 Launcher Type: SUN_STANDARD
 
@@ -504,17 +488,17 @@ SIGQUIT: [libjvm.dylib+0x458bfd], sa_mask[0]=11111111011111110111111111111111, s
 
 OS:Bsduname:Darwin 14.1.0 Darwin Kernel Version 14.1.0: Mon Dec 22 23:10:38 PST 2014; root:xnu-2782.10.72~2/RELEASE_X86_64 x86_64
 rlimit: STACK 8192k, CORE 0k, NPROC 709, NOFILE 10240, AS infinity
-load average:1.05 1.38 1.41
+load average:1.24 1.50 1.42
 
 CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, erms, ht, tsc, tscinvbit, tscinv
 
-Memory: 4k page, physical 8388608k(2932436k free)
+Memory: 4k page, physical 8388608k(3389264k free)
 
 /proc/meminfo:
 
 
 vm_info: Java HotSpot(TM) 64-Bit Server VM (25.20-b23) for bsd-amd64 JRE (1.8.0_20-b26), built on Jul 30 2014 13:37:47 by "java_re" with gcc 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)
 
-time: Mon Mar 16 21:20:46 2015
-elapsed time: 0 seconds (0d 0h 0m 0s)
+time: Fri Mar 20 18:20:42 2015
+elapsed time: 16 seconds (0d 0h 0m 16s)
 

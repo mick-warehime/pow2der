@@ -18,9 +18,9 @@ public class Main extends StateBasedGame {
 		addState(new FireballParticleState(1));
 		addState(new DoubleHelix(2));
 		addState(new Explosion(3));
-//		addState(new Lightning(4));
+		addState(new Spiral(4));
 		
-		enterState(1);
+		enterState(3);
 	}
 	
 	public static void main(String args[]) throws SlickException{

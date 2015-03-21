@@ -11,7 +11,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
 import world.Level;
-import world.LevelBuilder;
 import world.World;
 
 /* 

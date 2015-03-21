@@ -18,9 +18,6 @@ public class LineRenderer extends Renderer{
 		this.lines = lines;
 	}
 
-
-
-
 	public void render(Graphics g, int offsetX, int offsetY) {
 		for(int line = 0; line < lines.size(); line++){
 			lines.get(line).render(g, offsetX, offsetY);

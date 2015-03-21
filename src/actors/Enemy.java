@@ -30,8 +30,8 @@ public class Enemy extends Actor implements Mover{
 		
 		int numEnemies = 2;
 		Random rand = new Random();
-//		enemyID = rand.nextInt(numEnemies);
-		enemyID = 0;
+		enemyID = rand.nextInt(numEnemies);
+//		enemyID = 0;
 		
 		Rectangle rect = new Rectangle(xPixels,yPixels,32,32);
 		
@@ -68,6 +68,7 @@ public class Enemy extends Actor implements Mover{
 	
 	public void render( Graphics g, int offsetX, int offsetY) {
 		enemyGraphics.render(g,offsetX, (int) offsetY);
+		behavior.render(g,offsetX, (int) offsetY);
 	}
 	
 
