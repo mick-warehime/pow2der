@@ -72,6 +72,7 @@ public class PhysicalCollisions  {
 			for (int j = 0; j<n; j++){
 				tileShape.setX(xTopLeft + j*tileWidth);
 				tileShape.setY(yTopLeft + i*tileHeight);
+				
 				if (isCollidedWithSolids(tileShape))
 				{map[i][j] = LevelBuilder.OBJECT_WALL_TILE;}
 				else

@@ -77,6 +77,11 @@ public class SectorMap{
 		int i = yPos/(sectorHeightInPixels*numRows);
 		int j = xPos/(sectorWidthInPixels*numCols);
 		
+		if (i<0) { i = 0;}
+		if (j<0) {j = 0;}
+		if (i>=numRows) {i = numRows-1;}
+		if (j>=numCols) {j = numCols-1;}
+		
 		return this.sectorGrid[i][j];
 
 	}
@@ -97,10 +102,12 @@ public class SectorMap{
 		
 		HashSet<Sector> output = new HashSet<Sector>();
 		
-		int x = (int) shape.getX();
-		int y = (int) shape.getY();
 		int height = (int) shape.getHeight();
 		int width = (int) shape.getWidth();
+		
+		int x = (int) shape.getX() + width/2;
+		int y = (int) shape.getY() + height/2;
+		
 		
 		
 		output.add(getSectorWithPosition(x-width, y-height));

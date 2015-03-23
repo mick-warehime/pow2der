@@ -16,9 +16,5 @@ Remove SpriteSheet from world (it shouldn’t be a global variable)
 
 #########
 
-TODO: Turn walls into static objects! Get rid of blocks altogether!
-
-
-
-
+finish adding local map functionality to physicalCollisions and incorporating it into knowledge pathfinding…
 

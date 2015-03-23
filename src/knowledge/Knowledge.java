@@ -56,16 +56,25 @@ public class Knowledge {
 		
 		int [][] tmap = status.getPhysicalCollisions().generateLocalMap(xTopLeft, yTopLeft, widthInTiles, heightInTiles, World.TILE_WIDTH, World.TILE_HEIGHT);
 		// create the astar data
-		LevelMap map = new LevelMap(level.getMap());
+		LevelMap map = new LevelMap(tmap);
 		AStarPathFinder astar = new AStarPathFinder(map,searchDistance,false);
 
+		System.out.println(tmap);
+		
 		// position of enemy in tiles
-		int sx = (int) (self.getCenterX()/World.TILE_WIDTH);
-		int sy = (int) (self.getCenterY()/World.TILE_HEIGHT);
+		int sx = (int) ((self.getCenterX()-xTopLeft)/World.TILE_WIDTH);
+		int sy = (int) ((self.getCenterY()-yTopLeft)/World.TILE_HEIGHT);
 
 		// position of the player in tiles
-		int tx = (int) (player.getCenterX()/ World.TILE_WIDTH);
-		int ty = (int) (player.getCenterY()/ World.TILE_HEIGHT);
+		int tx = (int) ((player.getCenterX()-xTopLeft)/ World.TILE_WIDTH);
+		int ty = (int) ((player.getCenterY()-yTopLeft)/ World.TILE_HEIGHT);
+//		// position of enemy in tiles
+//		int sx = (int) (self.getCenterX()/World.TILE_WIDTH);
+//		int sy = (int) (self.getCenterY()/World.TILE_HEIGHT);
+//
+//		// position of the player in tiles
+//		int tx = (int) (player.getCenterX()/ World.TILE_WIDTH);
+//		int ty = (int) (player.getCenterY()/ World.TILE_HEIGHT);
 
 		// try to calculate the astar path from enemy to player
 		Path path = astar.findPath(self, sx, sy, tx, ty);
