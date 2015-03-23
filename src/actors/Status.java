@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import collisions.PhysicalCollisions;
 
@@ -78,7 +79,12 @@ public class Status {
 		if (hp<=0){
 			gainEffect(Effect.EFFECT_DYING,1);
 		}
-		
+		if (increment<0){
+			gainEffect(Effect.EFFECT_LOSTHP,1);
+		}
+		if (increment>0){
+			gainEffect(Effect.EFFECT_GAINEDHP,1);
+		}
 		
 	}
 	
@@ -110,7 +116,9 @@ public class Status {
 		this.rect.setY(y);
 	}
 
-	
+	public Shape getShape(){
+		return rect;
+	}
 
 	
 

@@ -1,7 +1,11 @@
 package actors;
 
+import org.newdawn.slick.Graphics;
+
 import interfaces.CommandProvider;
 import pathfinding.Path;
+import pathfinding.PathHandler;
+import render.AStarRenderer;
 import knowledge.Knowledge;
 import commands.ActivateAbilityCommand;
 import commands.MoveCommand;
@@ -14,6 +18,9 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	private BehaviorProfile behaviorProfile;
 
 	private Path path;
+	private AStarRenderer aStarRenderer;
+	
+	private PathHandler pathHandler;
 
 	public EnemyBehavior(Status status, Knowledge knowledge, int enemyID) {
 		super(status);
@@ -26,16 +33,15 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	public BehaviorProfile getBehaviorProfile(){
 		return behaviorProfile;
 	}
-	
+
 	public void determine(){
 
 		commandStack.clear();
 
 		// check to see if you can now see the duder
 		getsAgro();
-		
-		decideAttack();
 
+		decideAttack();
 
 		decideMovement();
 
@@ -48,8 +54,64 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		}
 	}
 
-	private boolean canAttack(){
+
+	private void decideMovement(){
+
+
+		// if the dude can see the player chase him, otherwise keep going in same direction
+		float[] currentDirection = status.getFacingDirection();
+
+		if(movesTowardPlayer() ){
+
+			// only update 
+			currentDirection = knowledge.directionToPlayer();
+
+			status.gainEffect(Effect.EFFECT_AGRO, behaviorProfile.getAgroTime());
+			status.gainEffect(Effect.EFFECT_CHASING, behaviorProfile.getChaseTime());
+
+
+		 
+			// astar path should poop out a list of directions 
+			// like left left left up up up up right right right
+			// astar movement should just run through those
+			// this can just check if the astar list is empty
+
+		}else if (needsAstar() ){
+			path = knowledge.aStarPath();
+			aStarRenderer = new AStarRenderer(path);
+//			pathHandler = new PathHandler(status.getShape(),path,status.getPhysicalCollisions());
+		}
+
+		// make sure the dude bounces off walls
+		if (status.hasEffect(Effect.EFFECT_X_COLLISION)){
+			currentDirection[0] = (float) (2*Math.random()-1);			
+		}
+		if (status.hasEffect(Effect.EFFECT_Y_COLLISION)){
+			currentDirection[1] = (float) (2*Math.random()-1);
+		}
+
+		status.setFacingDirection(currentDirection);
+
+		commandStack.add(new MoveCommand(currentDirection));
+
+		return;
+	}
+
+	public void render(Graphics g, int offsetX, int offsetY){
 		
+		if(!(path==null) & status.hasEffect(Effect.EFFECT_CHASING)){
+			aStarRenderer.render(g,offsetX,offsetY);
+			float[] dir = pathHandler.getDirection();
+			
+		}
+	}
+
+
+
+
+
+	private boolean canAttack(){
+
 		if(!knowledge.playerIsVisible()){
 			return false;
 		}
@@ -59,7 +121,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		if(status.hasEffects(Effect.EFFECTS_PREVENTING_MOVEMENT)){
 			return false;
 		}
-		if(!status.hasEffect(Effect.AGROED)){
+		if(!status.hasEffect(Effect.EFFECT_AGROED)){
 			return false;
 		}
 
@@ -68,68 +130,22 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	}
 
 	private void getsAgro(){
-		
-		if(behaviorProfile.getsAgro(knowledge)){
-			status.gainEffect(Effect.AGROED,behaviorProfile.getAgroTime());
+
+		if(behaviorProfile.getsAgro(knowledge, status)){
+			status.gainEffect(Effect.EFFECT_AGROED,behaviorProfile.getAgroTime());
 		}
 
 	}
 
-	public boolean getsAstarDirection(){
+	public boolean needsAstar(){
+		
 		return status.hasEffect(Effect.EFFECT_CHASING) & !knowledge.playerIsVisible();
+//		return status.hasEffect(Effect.EFFECT_CHASING);
 	}
 
 
 	private boolean movesTowardPlayer(){
-		return status.hasEffect(Effect.AGROED) & knowledge.playerIsVisible();
-	}
-	
-	private void decideMovement(){
-
-
-		// if the dude can see the player chase him, otherwise keep going in same direction
-		float[] currentDirection = status.getFacingDirection();
-
-		if(movesTowardPlayer()){
-
-			// only update 
-			currentDirection = knowledge.directionToPlayer();
-
-			status.gainEffect(Effect.EFFECT_AGRO, behaviorProfile.getAgroTime());
-			status.gainEffect(Effect.EFFECT_CHASING, behaviorProfile.getChaseTime());
-
-
-//		}else if(getsAstarDirection()){
-			
-//			currentDirection = aStarMovement();
-			//
-			// astar path should poop out a list of directions 
-			// like left left left up up up up right right right
-			// astar movement should just run through those
-			// this can just check if the astar list is empty
-			
-		}else{
-
-			if (status.hasEffect(Effect.EFFECT_X_COLLISION)){
-				currentDirection[0] = (float) (2*Math.random()-1);			
-			}
-
-			if (status.hasEffect(Effect.EFFECT_Y_COLLISION)){
-				currentDirection[1] = (float) (2*Math.random()-1);
-			}
-		}
-
-
-		status.setFacingDirection(currentDirection);
-
-		commandStack.add(new MoveCommand(currentDirection));
-
-		return;
-	}
-
-	private float[] aStarMovement(){
-		
-		return null;
+		return status.hasEffect(Effect.EFFECT_AGROED) & knowledge.playerIsVisible();
 	}
 
 

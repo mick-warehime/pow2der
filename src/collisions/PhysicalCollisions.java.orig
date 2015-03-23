@@ -20,6 +20,13 @@ public class PhysicalCollisions  {
 
 	private SectorMap sectorMap;
 
+<<<<<<< HEAD
+	
+
+
+
+=======
+>>>>>>> fc4689ec6ecdba720bede5b666f4b30e72f4f170
 	public PhysicalCollisions( SectorMap sectorMap){
 		this.sectorMap = sectorMap;
 	}

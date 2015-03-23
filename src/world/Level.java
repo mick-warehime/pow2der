@@ -49,11 +49,6 @@ public class Level {
 
 
 
-
-
-
-
-
 	public Level(ItemBuilder itemBuilder, int width, int height, Player player) throws SlickException {
 
 
@@ -72,12 +67,7 @@ public class Level {
 
 		buildNewLevel(itemBuilder, player);
 
-
-
-
-
-
-	};
+	}
 
 	private void buildNewLevel(ItemBuilder itemBuilder, Player player) throws SlickException{
 

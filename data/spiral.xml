@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emitter imageName="" name="ray">
+  <spawnInterval enabled="true" max="10.0" min="1.0"/>
+  <spawnCount enabled="true" max="5" min="0"/>
+  <initialLife enabled="true" max="500.0" min="250.0"/>
+  <initialSize enabled="true" max="8.0" min="5.0"/>
+  <xOffset enabled="true" max="1.0" min="-1.0"/>
+  <yOffset enabled="true" max="1.0" min="-1.0"/>
+  <initialDistance enabled="false" max="0.0" min="0.0"/>
+  <speed enabled="true" max="75.0" min="0.0"/>
+  <!-- <length enabled="false" max="5000.0" min="1500.0"/> -->
+  <spread value="0"/>
+  <!-- <angularOffset value="90.0"/> -->
+  <growthFactor value="-5.0"/>
+  <gravityFactor value="0.0"/>
+  <startAlpha value="255.0"/>
+  <endAlpha value="0.0"/>
+  <color>
+
+    <!-- ice -->       
+       <step r="0.8" b="0.8" g="0.8" offset="0.0" />
+    
+    <!-- <step r="0.2" b="0.2" g=".2   " offset=".9"/>    -->
+  </color>
+</emitter>

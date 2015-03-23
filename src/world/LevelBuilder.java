@@ -1495,7 +1495,7 @@ public class LevelBuilder {
 
 
 	@SuppressWarnings("unused")
-	private void printMap(int[][] map){
+	public static void printMap(int[][] map){
 
 		int height = map.length;
 		int width = map[0].length;

@@ -18,10 +18,9 @@ public class BehaviorProfile {
 		agroDistance = 200;
 		attackDistance = 150;
 		attackCooldown = 120;
-		agroTime = 60;
-		updateSearchDirectionTime = 10;
-		agroOnAttackTime = 50000;
-		
+		agroTime = 50000;
+		updateSearchDirectionTime = 10000;
+ 		
 		// only difference between enemies is 
 		switch(enemyID){
 		case 0:			
@@ -53,16 +52,22 @@ public class BehaviorProfile {
 		return agroDistance;
 	}
 
-	public int getAttackCooldown() {
+	public int getAttackCooldown() {		 
 		return attackCooldown;
 	}
 
 
-	public boolean getsAgro(Knowledge knowledge) {
+	public boolean getsAgro(Knowledge knowledge, Status status) {
+		boolean getsAgro = false;
 
-		return knowledge.playerIsVisible() 
+		// can the guy see me and does he care
+		getsAgro = getsAgro |( knowledge.playerIsVisible() 
 				& knowledge.distToPlayer() < agroDistance
-				& agroOnSight;
+				& agroOnSight);
+		
+		getsAgro = getsAgro | status.hasEffect(Effect.EFFECT_LOSTHP);
+		
+		return getsAgro;
 	}
 	
 	

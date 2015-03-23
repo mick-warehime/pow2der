@@ -10,7 +10,10 @@ import pathfinding.AStarPathFinder;
 import pathfinding.LevelMap;
 import pathfinding.Path;
 import world.Level;
+<<<<<<< HEAD
+=======
 import world.LevelBuilder;
+>>>>>>> fc4689ec6ecdba720bede5b666f4b30e72f4f170
 import world.World;
 import actors.Enemy;
 import actors.Player;
@@ -39,6 +42,7 @@ public class Knowledge {
 
 
 	public Path aStarPath(){
+<<<<<<< HEAD
 		
 		
 		int xTopLeft =  (int) Math.min(self.getCenterX(), player.getCenterX());
@@ -56,6 +60,10 @@ public class Knowledge {
 		
 		int [][] tmap = status.getPhysicalCollisions().generateLocalMap(xTopLeft, yTopLeft, widthInTiles, heightInTiles, World.TILE_WIDTH, World.TILE_HEIGHT);
 		// create the astar data
+=======
+
+		// // create the astar data
+>>>>>>> fc4689ec6ecdba720bede5b666f4b30e72f4f170
 		LevelMap map = new LevelMap(level.getMap());
 		AStarPathFinder astar = new AStarPathFinder(map,searchDistance,false);
 
