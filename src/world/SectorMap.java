@@ -18,11 +18,15 @@ public class SectorMap{
 
 	private Sector[][] sectorGrid;
 	private ArrayList<Sector> activeSectors;
-
+	private int[][] solidMap;
+	
+	
 	private int numRows;
 	private int numCols;
 	private int sectorWidthInPixels;
 	private int sectorHeightInPixels;
+	
+	
 
 	public SectorMap(int levelWidthInPixels, int levelHeightInPixels, int numXSectors, int numYSectors) throws SlickException{
 
@@ -48,6 +52,11 @@ public class SectorMap{
 				activeSectors.add(sectorGrid[i][j]); //All sectors added for now
 			}
 		}
+		
+		int numXTiles = levelWidthInPixels/World.TILE_WIDTH;
+		int numYTiles = levelHeightInPixels/World.TILE_HEIGHT;
+		
+		solidMap = new int[numYTiles][numXTiles];
 
 		
 

@@ -39,9 +39,21 @@ public class Sector {
 	private ArrayList<Collider> newColliders;
 
 	
+
+	private int numXTiles;
+
+	private int numYTiles;
+	
+	
 	public Sector( int xMin, int yMin, int width, int height) throws SlickException {
 
+		
+		numXTiles = width/World.TILE_WIDTH;
+		numYTiles = height/World.TILE_HEIGHT;
+		assert (numXTiles)*World.TILE_WIDTH == width : "Sector width must be a multiple of tile width!";
+		assert (numYTiles)*World.TILE_HEIGHT == height : "Sector width must be a multiple of tile width!";
 
+	
 		
 		this.domain = new Rectangle(xMin,yMin,width,height);
 
@@ -55,7 +67,6 @@ public class Sector {
 		this.newColliders = new ArrayList<Collider>();
 		
 		
-
 		
 		
 
@@ -183,6 +194,9 @@ public class Sector {
 		}
 		if (obj instanceof BasicObject){
 			basicObjects.add((BasicObject) obj);
+			if (((BasicObject) obj).canCollide()){
+				addSolidToLocalMap(((BasicObject) obj).getShape());
+			}
 		}
 		if (obj instanceof Broadcaster){
 			broadcasters.add((Broadcaster) obj);
@@ -198,6 +212,16 @@ public class Sector {
 			this.newColliders.add((Collider) obj);
 		}
 
+	}
+
+
+
+
+
+
+	private void addSolidToLocalMap(Shape shape) {
+		
+		
 	}
 
 

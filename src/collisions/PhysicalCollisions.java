@@ -3,8 +3,10 @@ package collisions;
 
 import gameobjects.BasicObject;
 
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import world.LevelBuilder;
 import world.Sector;
 import world.SectorMap;
 
@@ -18,6 +20,7 @@ public class PhysicalCollisions  {
 
 	private SectorMap sectorMap;
 
+	
 
 
 
@@ -55,6 +58,36 @@ public class PhysicalCollisions  {
 			}
 		}
 		return false;
+	}
+	
+	
+	
+	public int[][] generateLocalMap(int xTopLeft, int yTopLeft, int widthInTiles, int heightInTiles, int tileWidth, int tileHeight){
+		
+		int m = heightInTiles;
+		int n = widthInTiles;
+		
+		int[][] map = new int[m][n];
+		
+		Rectangle tileShape = new Rectangle(xTopLeft,yTopLeft,tileWidth,tileHeight);
+		
+		for (int i = 0; i<m; i++){
+			for (int j = 0; j<n; j++){
+				tileShape.setX(xTopLeft + j*tileWidth);
+				tileShape.setY(yTopLeft + i*tileHeight);
+				if (isCollidedWithSolids(tileShape))
+				{map[i][j] = LevelBuilder.OBJECT_WALL_TILE;}
+				else
+				{
+				map[i][j] = LevelBuilder.OBJECT_ROOM_TILE;
+				}
+				
+			}
+			
+		}
+		
+		
+		return map;
 	}
 
 
