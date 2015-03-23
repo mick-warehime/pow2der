@@ -101,7 +101,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		
 		if(!(path==null) & status.hasEffect(Effect.EFFECT_CHASING)){
 			aStarRenderer.render(g,offsetX,offsetY);
-			float[] dir = pathHandler.getDirection();
+//			float[] dir = pathHandler.getDirection();
 			
 		}
 	}
