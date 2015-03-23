@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import collisions.PhysicalCollisions;
 
@@ -115,7 +116,9 @@ public class Status {
 		this.rect.setY(y);
 	}
 
-	
+	public Shape getShape(){
+		return rect;
+	}
 
 	
 
@@ -218,6 +221,11 @@ public class Status {
 
 		if (xOrY == 'x'){ xDirection = direction;}
 		else {yDirection = direction;}
+	}
+
+	public PhysicalCollisions getPhysicalCollisions() {
+		// TODO Auto-generated method stub
+		return this.collisionDetector;
 	}
 
 

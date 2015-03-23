@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Shape;
 
+import collisions.PhysicalCollisions;
 import pathfinding.AStarPathFinder;
 import pathfinding.LevelMap;
 import pathfinding.Path;
@@ -13,6 +14,7 @@ import world.LevelBuilder;
 import world.World;
 import actors.Enemy;
 import actors.Player;
+import actors.Status;
 
 
 public class Knowledge {
@@ -21,40 +23,38 @@ public class Knowledge {
 	private Level level;
 	private Enemy self;
 	private int searchDistance;
-	private LevelMap levelMap;
-	private int[][] astarMap;
+	private float agroDistance;
+	private Status status;
 
-	public Knowledge(Enemy self, Player player, Level level){
+	public Knowledge(Enemy self, Player player, Level level, Status status){
 
 		this.player = player;
 		this.level = level;
 		this.self = self;
-
+		this.status = status;
+		
 		searchDistance = 100;
-
-		// generate a search map using only the walls from the level
-				// create the levelmap searchable by the astar routine
-		levelMap = new LevelMap(level.getMap());
 		
 	}
 
 
 	public Path aStarPath(){
 
-		// create the astar data
-		AStarPathFinder astar = new AStarPathFinder(levelMap,searchDistance,false);
+		// // create the astar data
+		LevelMap map = new LevelMap(level.getMap());
+		AStarPathFinder astar = new AStarPathFinder(map,searchDistance,false);
 
 		// position of enemy in tiles
-		int sx = (int) (self.getX()/World.TILE_WIDTH);
-		int sy = (int) (self.getY()/World.TILE_HEIGHT);
+		int sx = (int) (self.getCenterX()/World.TILE_WIDTH);
+		int sy = (int) (self.getCenterY()/World.TILE_HEIGHT);
 
 		// position of the player in tiles
-		int tx = (int) (player.getX()/ World.TILE_WIDTH);
-		int ty = (int) (player.getY()/ World.TILE_HEIGHT);
+		int tx = (int) (player.getCenterX()/ World.TILE_WIDTH);
+		int ty = (int) (player.getCenterY()/ World.TILE_HEIGHT);
 
 		// try to calculate the astar path from enemy to player
 		Path path = astar.findPath(self, sx, sy, tx, ty);
-//		System.out.println(sx+" "+sy+" "+tx+" "+ty);
+ //		System.out.println(sx+" "+sy+" "+tx+" "+ty);
 //
 //
 //		int[][] mapCopy = level.getMap();
@@ -99,20 +99,12 @@ public class Knowledge {
 
 		Line line = new Line(x1, y1, x2, y2);
 
-		//Also check the basic game tiles
-		ArrayList<Shape> walls = new ArrayList<Shape>();
-		for(Shape wall : walls){
-			if(line.intersects(wall)){
-				return false;
-			}
-		}
-		ArrayList<Shape> doors = new ArrayList<Shape>();
-		for(Shape door : doors){
-			if(line.intersects(door)){
-				return false;
-			}
-		}
+		
+		PhysicalCollisions physicalCollisions = status.getPhysicalCollisions();
+		if (physicalCollisions.isCollidedWithSolids(line)){ return false;}
+		
 
+			
 		return true;
 	}
 
@@ -155,7 +147,7 @@ public class Knowledge {
 		xDir = xDir/length;
 		yDir = yDir/length;
 
-		System.out.println("X: "+xDir+" "+", Y: "+yDir);
+//		System.out.println("X: "+xDir+" "+", Y: "+yDir);
 		return new float[] {(float) xDir, (float) yDir};
 
 

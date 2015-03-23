@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Shape;
 
+import collisions.PhysicalCollisions;
 import pathfinding.AStarPathFinder;
 import pathfinding.LevelMap;
 import pathfinding.Path;
@@ -21,22 +22,30 @@ public class Knowledge {
 	private Level level;
 	private Enemy self;
 	private int searchDistance;
+<<<<<<< HEAD
 	private LevelMap levelMap;
 	private int[][] astarMap;
+=======
+	private float agroDistance;
+	private Status status;
+>>>>>>> a3f559516dfe7536705ef0e08479bb81e94a037d
 
-	public Knowledge(Enemy self, Player player, Level level){
+	public Knowledge(Enemy self, Player player, Level level, Status status){
 
 		this.player = player;
 		this.level = level;
 		this.self = self;
+<<<<<<< HEAD
 
 		searchDistance = 100;
 
 		// generate a search map using only the walls from the level
 				// create the levelmap searchable by the astar routine
 		levelMap = new LevelMap(level.getMap());
-
-
+=======
+		this.status = status;
+>>>>>>> a3f559516dfe7536705ef0e08479bb81e94a037d
+		
 	}
 
 
@@ -100,6 +109,7 @@ public class Knowledge {
 
 		Line line = new Line(x1, y1, x2, y2);
 
+<<<<<<< HEAD
 		//Also check the basic game tiles
 		ArrayList<Shape> walls = new ArrayList<Shape>();
 		for(Shape wall : walls){
@@ -107,18 +117,21 @@ public class Knowledge {
 				return false;
 			}
 		}
-<<<<<<< HEAD
-		
-		ArrayList<Shape> doors = level.getClosedDoors();
-=======
 		ArrayList<Shape> doors = new ArrayList<Shape>();
->>>>>>> 991d0b8571a18af63a7e186afcf1ba9fc4d5712a
 		for(Shape door : doors){
 			if(line.intersects(door)){
 				return false;
 			}
 		}
 
+=======
+		
+		PhysicalCollisions physicalCollisions = status.getPhysicalCollisions();
+		if (physicalCollisions.isCollidedWithSolids(line)){ return false;}
+		
+
+			
+>>>>>>> a3f559516dfe7536705ef0e08479bb81e94a037d
 		return true;
 	}
 

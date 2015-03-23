@@ -18,12 +18,8 @@ public class PhysicalCollisions  {
 
 	private SectorMap sectorMap;
 
-
-
-
 	public PhysicalCollisions( SectorMap sectorMap){
 		this.sectorMap = sectorMap;
-		
 	}
 
 
@@ -54,7 +50,9 @@ public class PhysicalCollisions  {
 				}
 			}
 		}
+		
 		return false;
+		
 	}
 
 

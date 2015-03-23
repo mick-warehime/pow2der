@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 
 import interfaces.CommandProvider;
 import pathfinding.Path;
+import pathfinding.PathHandler;
 import render.AStarRenderer;
 import knowledge.Knowledge;
 import commands.ActivateAbilityCommand;
@@ -18,6 +19,8 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 
 	private Path path;
 	private AStarRenderer aStarRenderer;
+	
+	private PathHandler pathHandler;
 
 	public EnemyBehavior(Status status, Knowledge knowledge, int enemyID) {
 		super(status);
@@ -76,6 +79,7 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 		}else if (needsAstar() ){
 			path = knowledge.aStarPath();
 			aStarRenderer = new AStarRenderer(path);
+//			pathHandler = new PathHandler(status.getShape(),path,status.getPhysicalCollisions());
 		}
 
 		// make sure the dude bounces off walls
@@ -94,8 +98,11 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	}
 
 	public void render(Graphics g, int offsetX, int offsetY){
+		
 		if(!(path==null) & status.hasEffect(Effect.EFFECT_CHASING)){
 			aStarRenderer.render(g,offsetX,offsetY);
+			float[] dir = pathHandler.getDirection();
+			
 		}
 	}
 
@@ -131,8 +138,9 @@ public class EnemyBehavior extends ActorBehavior implements CommandProvider{
 	}
 
 	public boolean needsAstar(){
-//		return status.hasEffect(Effect.EFFECT_CHASING) & !knowledge.playerIsVisible();
-		return status.hasEffect(Effect.EFFECT_CHASING);
+		
+		return status.hasEffect(Effect.EFFECT_CHASING) & !knowledge.playerIsVisible();
+//		return status.hasEffect(Effect.EFFECT_CHASING);
 	}
 
 
