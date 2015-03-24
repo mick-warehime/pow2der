@@ -65,9 +65,14 @@ public class LevelMap implements TileBasedMap {
 //		if(map[y][x]==LevelBuilder.OBJECT_DOOR){
 //			blocked = true;
 //		}
+		
 		if(map[y][x]==LevelBuilder.OBJECT_WALL_TILE){
 			blocked = true;
 		}
+		
+		
+		
+		
 		
 		return blocked;
 		

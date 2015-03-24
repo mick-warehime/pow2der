@@ -36,8 +36,8 @@ public class SectorMap{
 		sectorWidthInPixels = levelWidthInPixels/numXSectors;
 		sectorHeightInPixels = levelHeightInPixels/numYSectors;
 
-		assert sectorHeightInPixels*numYSectors == levelHeightInPixels : "Number of sectors must divide level dimensions!";
-		assert sectorWidthInPixels*numXSectors == levelWidthInPixels : "Number of sectors must divide level dimensions!";
+		assert sectorHeightInPixels*numYSectors == levelHeightInPixels : "Number of sectors must divide level dimensions! level height is " + levelHeightInPixels;
+		assert sectorWidthInPixels*numXSectors == levelWidthInPixels : "Number of sectors must divide level dimensions! level width is "+ levelWidthInPixels;
 
 		
 		this.activeSectors = new ArrayList<Sector>();

@@ -50,8 +50,8 @@ public class Sector {
 		
 		numXTiles = width/World.TILE_WIDTH;
 		numYTiles = height/World.TILE_HEIGHT;
-		assert (numXTiles)*World.TILE_WIDTH == width : "Sector width must be a multiple of tile width!";
-		assert (numYTiles)*World.TILE_HEIGHT == height : "Sector width must be a multiple of tile width!";
+		assert (numXTiles)*World.TILE_WIDTH == width : "Sector width must be a multiple of tile width! wdith = " + width;
+		assert (numYTiles)*World.TILE_HEIGHT == height : "Sector height must be a multiple of tile height! height = " + height;
 
 	
 		
