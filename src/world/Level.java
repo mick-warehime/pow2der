@@ -35,8 +35,8 @@ public class Level {
 	private int widthInTiles;
 
 	private SectorMap sectorMap;
-	private int numXSectors = 1;
-	private int numYSectors = 1;
+	private int numXSectors = 5;
+	private int numYSectors = 5;
 
 	private int[][] map;
 

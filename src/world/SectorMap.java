@@ -18,7 +18,6 @@ public class SectorMap{
 
 	private Sector[][] sectorGrid;
 	private ArrayList<Sector> activeSectors;
-	private int[][] solidMap;
 	
 	
 	private int numRows;
@@ -33,12 +32,16 @@ public class SectorMap{
 		numRows = numYSectors;
 		numCols = numXSectors;
 
-		sectorWidthInPixels = levelWidthInPixels/numXSectors;
-		sectorHeightInPixels = levelHeightInPixels/numYSectors;
-
-		assert sectorHeightInPixels*numYSectors == levelHeightInPixels : "Number of sectors must divide level dimensions! level height is " + levelHeightInPixels;
-		assert sectorWidthInPixels*numXSectors == levelWidthInPixels : "Number of sectors must divide level dimensions! level width is "+ levelWidthInPixels;
-
+		double sw = levelWidthInPixels/numXSectors;
+		double sh = levelHeightInPixels/numYSectors;
+		
+		/*
+		 * Ensures the each sector's dimensions can be broken up into fixed tile sizes
+		 * 
+		 */
+		sectorWidthInPixels = (int) (Math.ceil(sw/World.TILE_WIDTH)*World.TILE_WIDTH);
+		sectorHeightInPixels = (int) (Math.ceil(sh/World.TILE_HEIGHT)*World.TILE_HEIGHT);
+		
 		
 		this.activeSectors = new ArrayList<Sector>();
 
@@ -56,8 +59,7 @@ public class SectorMap{
 		int numXTiles = levelWidthInPixels/World.TILE_WIDTH;
 		int numYTiles = levelHeightInPixels/World.TILE_HEIGHT;
 		
-		solidMap = new int[numYTiles][numXTiles];
-
+		
 		
 
 	}
