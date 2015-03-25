@@ -59,7 +59,7 @@ public class PhysicalCollisions  {
 	
 	
 	
-	public int[][] generateLocalMap(int xTopLeft, int yTopLeft, int widthInTiles, int heightInTiles, int tileWidth, int tileHeight){
+	private int[][] generateLocalMap(int xTopLeft, int yTopLeft, int widthInTiles, int heightInTiles, int tileWidth, int tileHeight){
 		
 		int m = heightInTiles;
 		int n = widthInTiles;
@@ -86,6 +86,21 @@ public class PhysicalCollisions  {
 		
 		
 		return map;
+	}
+
+
+
+	public int[][] generateLocalMap(int[] localMapDimensions, int tileWidth,
+			int tileHeight) {
+		
+		int xTopLeft = localMapDimensions[0];
+		int yTopLeft = localMapDimensions[1];
+		int widthInTiles = localMapDimensions[2];
+		int heightInTiles = localMapDimensions[3];
+		
+		
+		return generateLocalMap( xTopLeft,  yTopLeft,  widthInTiles,  heightInTiles,  tileWidth,  tileHeight);
+			
 	}
 
 

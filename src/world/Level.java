@@ -101,7 +101,7 @@ public class Level {
 		}
 
 		for(int[] enemyLoc : levelBuilder.randomLocationsAllRooms(1,2)){
-			Enemy enemy = new Enemy(enemyLoc[0],enemyLoc[1],this,player);
+			Enemy enemy = new Enemy(enemyLoc[0],enemyLoc[1],player);
 
 			addObject(enemy,(int) enemy.getX(), (int) enemy.getY());
 		}

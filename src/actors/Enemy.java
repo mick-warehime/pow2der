@@ -25,7 +25,7 @@ public class Enemy extends Actor implements Mover{
 	private EnemyRenderer enemyGraphics;
 	private int enemyID;
 	
-	public Enemy(int xPixels, int yPixels, Level level, Player player) throws SlickException {
+	public Enemy(int xPixels, int yPixels, Player player) throws SlickException {
 		super();
 		
 		int numEnemies = 2;
@@ -51,7 +51,7 @@ public class Enemy extends Actor implements Mover{
 		
 		enemyGraphics = new EnemyRenderer("data/monster_bright.png", status,enemyID);
 
-		behavior = new EnemyBehavior(status, new Knowledge(this,player,level,status), enemyID);
+		behavior = new EnemyBehavior(status, new Knowledge(this,player,status), enemyID);
 		
 		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate,behavior.getBehaviorProfile());
 		

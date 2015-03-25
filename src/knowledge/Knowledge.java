@@ -1,35 +1,29 @@
 package knowledge;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Shape;
 
-import collisions.PhysicalCollisions;
 import pathfinding.AStarPathFinder;
 import pathfinding.LevelMap;
 import pathfinding.Path;
-import world.Level;
-import world.LevelBuilder;
 import world.World;
 import actors.Enemy;
 import actors.Player;
 import actors.Status;
+import collisions.PhysicalCollisions;
 
 
 public class Knowledge {
 
 	private Player player;
-	private Level level;
+	
 	private Enemy self;
 	private int searchDistance;
-	private float agroDistance;
 	private Status status;
 
-	public Knowledge(Enemy self, Player player, Level level, Status status){
+	public Knowledge(Enemy self, Player player, Status status){
 
 		this.player = player;
-		this.level = level;
+		
 		this.self = self;
 		this.status = status;
 		
@@ -38,64 +32,57 @@ public class Knowledge {
 	}
 
 
+	private int[] localMapDimensions(){
+		
+		int xTopLeft =  (int) Math.min(self.getCenterX(), player.getCenterX());
+		int yTopLeft =  (int) Math.min(self.getCenterY(), player.getCenterY());
+		
+		int dx =  (int) Math.abs(self.getCenterX()-player.getCenterX());
+		int dy =  (int) Math.abs(self.getCenterY()-player.getCenterY());
+		
+		xTopLeft -= (dx/2 + 50);
+		yTopLeft -= (dy/2 + 50);
+		
+		int widthInTiles = (2*dx+ 100)/World.TILE_WIDTH;
+		int heightInTiles = (2*dy+100)/World.TILE_HEIGHT;
+		
+		return new int[] {xTopLeft,yTopLeft,widthInTiles,heightInTiles};
+		
+	}
+	
+	private int [][] getLocalMap(){
+		
+		
+		
+		return status.getPhysicalCollisions().generateLocalMap(localMapDimensions(), World.TILE_WIDTH, World.TILE_HEIGHT);
+	}
+	
 	public Path aStarPath(){
 		
 		
-//		int xTopLeft =  (int) Math.min(self.getCenterX(), player.getCenterX());
-//		int yTopLeft =  (int) Math.min(self.getCenterY(), player.getCenterY());
-//		
-//		int dx =  (int) Math.abs(self.getCenterX()-player.getCenterX());
-//		int dy =  (int) Math.abs(self.getCenterY()-player.getCenterY());
-//		
-//		xTopLeft -= (dx/2 + 50);
-//		yTopLeft -= (dy/2 + 50);
-//		
-//		int widthInTiles = (2*dx+ 100)/World.TILE_WIDTH;
-//		int heightInTiles = (2*dy+100)/World.TILE_HEIGHT;
-//		
-//		
-//		int [][] tmap = status.getPhysicalCollisions().generateLocalMap(xTopLeft, yTopLeft, widthInTiles, heightInTiles, World.TILE_WIDTH, World.TILE_HEIGHT);
+		
+		
 		// create the astar data
-		LevelMap map = new LevelMap(level.getMap());
+		LevelMap map = new LevelMap(getLocalMap());
 		AStarPathFinder astar = new AStarPathFinder(map,searchDistance,false);
 
-		
-		
-////		// position of enemy in tiles
-//		int sx = (int) ((self.getCenterX()-xTopLeft)/World.TILE_WIDTH);
-//		int sy = (int) ((self.getCenterY()-yTopLeft)/World.TILE_HEIGHT);
-//
-//		// position of the player in tiles
-//		int tx = (int) ((player.getCenterX()-xTopLeft)/ World.TILE_WIDTH);
-//		int ty = (int) ((player.getCenterY()-yTopLeft)/ World.TILE_HEIGHT);
-//		
-		
-		
+		int [] mapDims = localMapDimensions();
 		
 		
 		// position of enemy in tiles
-		int sx = (int) (self.getCenterX()/World.TILE_WIDTH);
-		int sy = (int) (self.getCenterY()/World.TILE_HEIGHT);
+		int sx = (int) ((self.getCenterX()-mapDims[0])/World.TILE_WIDTH);
+		int sy = (int) ((self.getCenterY()-mapDims[1])/World.TILE_HEIGHT);
 
 		// position of the player in tiles
-		int tx = (int) (player.getCenterX()/ World.TILE_WIDTH);
-		int ty = (int) (player.getCenterY()/ World.TILE_HEIGHT);
+		int tx = (int) ((player.getCenterX()-mapDims[0])/ World.TILE_WIDTH);
+		int ty = (int) ((player.getCenterY()-mapDims[1])/ World.TILE_HEIGHT);
 
+		
+		
+		
 		// try to calculate the astar path from enemy to player
 		Path path = astar.findPath(self, sx, sy, tx, ty);
- //		System.out.println(sx+" "+sy+" "+tx+" "+ty);
-//
-//
-//		int[][] mapCopy = level.getMap();
-//
-//		mapCopy[sy][sx] = -1;
-//		if(!(path==null)){
-//			for(int p = (path.getLength()-1); p >1 ; p--){
-//				mapCopy[path.getY(p)][path.getX(p)] = -7;
-//			}
-//			mapCopy[ty][tx] = -2;
-//		}
-//		LevelBuilder.printMap(mapCopy);
+ 
 
 		return path;
 
