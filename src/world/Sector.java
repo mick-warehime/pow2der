@@ -17,6 +17,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import actors.Actor;
+import actors.Player;
 
 
 
@@ -24,8 +25,6 @@ import actors.Actor;
 
 public class Sector {
 
-
-	
 	private Rectangle domain;
 
 	private ArrayList<Shape> walls;
@@ -39,23 +38,19 @@ public class Sector {
 	private ArrayList<Collider> newColliders;
 
 	
-
-	private int numXTiles;
-
-	private int numYTiles;
 	
 	
-	public Sector( int xMin, int yMin, int width, int height) throws SlickException {
+	public Sector( int xMin, int yMin, int widthInPixels, int heightInPixels) throws SlickException {
 
 		
-		numXTiles = width/World.TILE_WIDTH;
-		numYTiles = height/World.TILE_HEIGHT;
-		assert (numXTiles)*World.TILE_WIDTH == width : "Sector width must be a multiple of tile width! wdith = " + width;
-		assert (numYTiles)*World.TILE_HEIGHT == height : "Sector height must be a multiple of tile height! height = " + height;
+//		numXTiles = width/World.TILE_WIDTH;
+//		numYTiles = height/World.TILE_HEIGHT;
+//		assert (numXTiles)*World.TILE_WIDTH == width : "Sector width must be a multiple of tile width! wdith = " + width;
+//		assert (numYTiles)*World.TILE_HEIGHT == height : "Sector height must be a multiple of tile height! height = " + height;
 
 	
-		
-		this.domain = new Rectangle(xMin,yMin,width,height);
+		this.domain = new Rectangle(xMin, yMin, widthInPixels,heightInPixels);
+
 
 		this.walls = new ArrayList<Shape>();
 		this.actors = new ArrayList<Actor>(); 
@@ -98,6 +93,29 @@ public class Sector {
 
 		for (Updater updater : updaters){
 			updater.update();
+			
+			boolean checkShape = false;
+			Shape shape = null;
+			if (updater instanceof BasicObject){
+				checkShape = true;
+				shape = ((BasicObject) updater).getShape();
+			}else if( updater instanceof Actor){
+				checkShape = true;
+				shape = ((Actor) updater).getShape();
+			}
+			if (checkShape){				
+				if( !domain.intersects(shape)){
+					if (updater instanceof Player){
+//						System.out.println("Shape is at: " + shape.getX() + "," + shape.getY());
+//						System.out.println("Domain is : (" +  domain.getX() + "," + domain.getY() + "),("
+//								+ (domain.getX()+domain.getWidth()) + "," + (domain.getY()+domain.getHeight()) + ")");
+//						System.out.println("object " + updater + "needs to move out of domain!");
+						
+					}
+				
+				}
+			}
+			
 		}
 
 		ArrayList<Object> objsToAdd = new ArrayList<Object>();

@@ -22,7 +22,7 @@ public class Game extends BasicGame {
 	static int PAUSE_STATE = 2;
 
 	public final static int WIDTH = 1200;
-	public final static int HEIGHT = 800;
+	public final static int HEIGHT = 750;
 	
 	static boolean fullscreen = false;
 	static boolean showFPS = true;

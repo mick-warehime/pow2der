@@ -76,8 +76,8 @@ public class SectorMap{
 
 		
 		
-		int i = yPos/(sectorHeightInPixels*numRows);
-		int j = xPos/(sectorWidthInPixels*numCols);
+		int i = yPos/(sectorHeightInPixels);
+		int j = xPos/(sectorWidthInPixels);
 		
 		if (i<0) { i = 0;}
 		if (j<0) {j = 0;}
