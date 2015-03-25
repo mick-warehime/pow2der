@@ -10,11 +10,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import pathfinding.Mover;
-import render.ActorRenderer;
 import render.EnemyRenderer;
-import world.Level;
 import abilities.FireballAbility;
-import abilities.LightningAbility;
 import actionEngines.AbilitySlots;
 import actionEngines.EnemyActionEngine;
 import commands.CommandProviderAggregator;
@@ -51,7 +48,7 @@ public class Enemy extends Actor implements Mover{
 		
 		enemyGraphics = new EnemyRenderer("data/monster_bright.png", status,enemyID);
 
-		behavior = new EnemyBehavior(status, new Knowledge(this,player,status), enemyID);
+		behavior = new EnemyBehavior(status, new Knowledge(player,status), enemyID);
 		
 		engine = new EnemyActionEngine(commandProviderAggregator, status, abilitySlots,objsToCreate,behavior.getBehaviorProfile());
 		

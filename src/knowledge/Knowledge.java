@@ -16,15 +16,13 @@ public class Knowledge {
 
 	private Player player;
 	
-	private Enemy self;
 	private int searchDistance;
 	private Status status;
 
-	public Knowledge(Enemy self, Player player, Status status){
+	public Knowledge( Player player, Status status){
 
 		this.player = player;
 		
-		this.self = self;
 		this.status = status;
 		
 		searchDistance = 100;
@@ -34,11 +32,11 @@ public class Knowledge {
 
 	private int[] localMapDimensions(){
 		
-		int xTopLeft =  (int) Math.min(self.getCenterX(), player.getCenterX());
-		int yTopLeft =  (int) Math.min(self.getCenterY(), player.getCenterY());
+		int xTopLeft =  (int) Math.min(status.getCenterX(), player.getCenterX());
+		int yTopLeft =  (int) Math.min(status.getCenterY(), player.getCenterY());
 		
-		int dx =  (int) Math.abs(self.getCenterX()-player.getCenterX());
-		int dy =  (int) Math.abs(self.getCenterY()-player.getCenterY());
+		int dx =  (int) Math.abs(status.getCenterX()-player.getCenterX());
+		int dy =  (int) Math.abs(status.getCenterY()-player.getCenterY());
 		
 		xTopLeft -= (dx/2 + 50);
 		yTopLeft -= (dy/2 + 50);
@@ -70,8 +68,8 @@ public class Knowledge {
 		
 		
 		// position of enemy in tiles
-		int sx = (int) ((self.getCenterX()-mapDims[0])/World.TILE_WIDTH);
-		int sy = (int) ((self.getCenterY()-mapDims[1])/World.TILE_HEIGHT);
+		int sx = (int) ((status.getCenterX()-mapDims[0])/World.TILE_WIDTH);
+		int sy = (int) ((status.getCenterY()-mapDims[1])/World.TILE_HEIGHT);
 
 		// position of the player in tiles
 		int tx = (int) ((player.getCenterX()-mapDims[0])/ World.TILE_WIDTH);
@@ -81,7 +79,7 @@ public class Knowledge {
 		
 		
 		// try to calculate the astar path from enemy to player
-		Path path = astar.findPath(self, sx, sy, tx, ty);
+		Path path = astar.findPath(null, sx, sy, tx, ty);
  
 
 		return path;
@@ -91,8 +89,8 @@ public class Knowledge {
 	public float distToPlayer(){
 
 		//Make a line from centers of player and object
-		float x1 = self.getCenterX();
-		float y1 = self.getCenterY();
+		float x1 = status.getCenterX();
+		float y1 = status.getCenterY();
 		float x2 = player.getCenterX();
 		float y2 = player.getCenterY();
 
@@ -108,8 +106,8 @@ public class Knowledge {
 
 
 		//Make a line from centers of player and object
-		float x1 = self.getX();
-		float y1 = self.getY();
+		float x1 = status.getX();
+		float y1 = status.getY();
 		float x2 = player.getX();
 		float y2 = player.getY();
 
@@ -130,8 +128,8 @@ public class Knowledge {
 	public float[] directionToPlayer() {
 
 		//Make a line from centers of player and object
-		float x1 = self.getCenterX();
-		float y1 = self.getCenterY();
+		float x1 = status.getCenterX();
+		float y1 = status.getCenterY();
 		float x2 = player.getCenterX();
 		float y2 = player.getCenterY();
 
